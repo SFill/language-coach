@@ -1,56 +1,53 @@
-from openai import OpenAI
 import os
-from fastapi import FastAPI
-
-
-from typing import Annotated
-
-from fastapi import Depends, FastAPI, HTTPException, Query
-from sqlmodel import Column, Field, JSON,  Session, SQLModel, create_engine, select, update
+from fastapi import FastAPI, HTTPException, Depends, Query
+from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import SQLModel, Field, Session, create_engine, select, update, Column, JSON
 from pydantic import BaseModel
-
+from typing import Annotated
+from openai import OpenAI
 
 class Chat(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     history: dict = Field(default_factory=dict, sa_column=Column(JSON))
 
-
 class Message(BaseModel):
     message: str
 
-
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
-
 connect_args = {"check_same_thread": False}
 engine = create_engine(sqlite_url, connect_args=connect_args)
 
-
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
-
 
 def get_session():
     with Session(engine) as session:
         yield session
 
-
 SessionDep = Annotated[Session, Depends(get_session)]
-
 
 app = FastAPI()
 
+# --- CORS MIDDLEWARE SETUP ---
+origins = ["*"]  # or ["*"] if you just want to allow everything
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# -----------------------------
 
 client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),  # This is the default and can be omitted
+    api_key=os.environ.get("OPENAI_API_KEY"),
 )
-
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
-
 
 @app.post('/api/coach/chat')
 def create_chat(session: SessionDep, chat: Chat):
@@ -59,23 +56,21 @@ def create_chat(session: SessionDep, chat: Chat):
     session.refresh(chat)
     return chat
 
-
 @app.get('/api/coach/chat/')
-def get_chat_list(session: SessionDep,
-                  offset: int = 0,
-                  limit: Annotated[int, Query(le=100)] = 100,):
+def get_chat_list(
+    session: SessionDep,
+    offset: int = 0,
+    limit: Annotated[int, Query(le=100)] = 100,
+):
     chats = session.exec(select(Chat).limit(limit).offset(offset)).all()
-
     return chats
-
 
 @app.get('/api/coach/chat/{id}')
 def get_chat(session: SessionDep, id: int):
     chat = session.get(Chat, id)
     if not chat:
-        raise HTTPException(status_code=404, detail="Hero not found")
+        raise HTTPException(status_code=404, detail="Chat not found")
     return chat
-
 
 @app.post('/api/coach/chat/{id}/message')
 def send_message(session: SessionDep, id: int, message: Message):
@@ -85,17 +80,17 @@ def send_message(session: SessionDep, id: int, message: Message):
         raise HTTPException(status_code=404, detail="Chat not found")
 
     # Ensure that history has a 'content' key which is a list
-    history = chat.history 
+    history = chat.history
     if 'content' not in history or not isinstance(history['content'], list):
         chat.history['content'] = []
 
-    # Append the user's message as an object
+    # Append the user's message
     history['content'].append({
         "role": "user",
         "content": message.message,
     })
 
-    # Save the updated chat history (you can either commit here or update later)
+    # Update DB with user's message
     session.exec(
         update(Chat)
         .where(Chat.id == id)
@@ -103,35 +98,34 @@ def send_message(session: SessionDep, id: int, message: Message):
     )
     session.commit()
 
-    # Use the list of message objects directly in the API call.
-    # This lets you specify different roles (e.g., "user", "assistant", "system")
+    # Call GPT or whichever model
     response_stream = client.chat.completions.create(
         messages=chat.history['content'],
-        model="gpt-4o-mini",
+        model="gpt-4o-mini",  # example placeholder model name
         stream=True,
     )
 
-    # Collect the assistant's response from the stream
+    # Collect assistant's response
     assistant_response = ''
     for chunk in response_stream:
-        # Accumulate the text from each streamed chunk.
         delta = chunk.choices[0].delta.content
         if delta:
             assistant_response += delta
 
-    # Append the assistant's message as an object in the chat history
+    # Append the assistant's message
     history['content'].append({
         "role": "assistant",
         "content": assistant_response,
     })
 
-    # Update the database with the new history.
+    # Update DB with assistant's response
     session.exec(
         update(Chat)
         .where(Chat.id == id)
         .values(history=history)
     )
     session.commit()
+
     return {
         'chat_bot_message': assistant_response
     }
