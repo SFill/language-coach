@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReverseContext from './ReverseContext'
 
 function App() {
   const [chatList, setChatList] = useState([]);         // All existing chats
@@ -221,6 +222,7 @@ function App() {
             <button onClick={handleSend}>Send</button>
           </div>
         </div>
+        <ReverseContext />
       </div>
     </div>
   );
