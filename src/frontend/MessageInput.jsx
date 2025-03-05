@@ -11,14 +11,22 @@ const MessageInput = ({ onSend }) => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    // When pressing Enter without Shift, send the message
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent newline insertion
+      handleSend();
+    }
+  };
+
   return (
     <div className="message-input">
-      <input
-        type="text"
+      <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+        onKeyDown={handleKeyDown}
         placeholder="Type your message..."
+        rows={3} // Adjust as needed
       />
       <button onClick={handleSend}>Send</button>
     </div>

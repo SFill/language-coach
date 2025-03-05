@@ -1,6 +1,9 @@
+import logging
 import os
+import re
 from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
+import requests
 from sqlmodel import SQLModel, Field, Session, create_engine, select, update, Column, JSON
 from pydantic import BaseModel
 from typing import Annotated
@@ -42,7 +45,7 @@ class Sentence(SQLModel, table=True):
 
     id: int = Field(primary_key=True)
     sentence: str
-    meta: list[dict]= Field(default_factory=list, sa_column=Column(JSON))
+    meta: list[dict] = Field(default_factory=list, sa_column=Column(JSON))
 
 
 sqlite_file_name = "database.db"
@@ -138,19 +141,20 @@ def send_message(session: SessionDep, id: int, message: Message):
     session.commit()
 
     # Call GPT or whichever model
-    response_stream = client.chat.completions.create(
-        messages=chat.history['content'],
-        model="gpt-4o-mini",  # example placeholder model name
-        stream=True,
-    )
+    # response_stream = client.chat.completions.create(
+    #     messages=chat.history['content'],
+    #     model="gpt-4o-mini",  # example placeholder model name
+    #     stream=True,
+    # )
 
-    # Collect assistant's response
-    assistant_response = ''
-    for chunk in response_stream:
-        delta = chunk.choices[0].delta.content
-        if delta:
-            assistant_response += delta
+    # # Collect assistant's response
+    # assistant_response = ''
+    # for chunk in response_stream:
+    #     delta = chunk.choices[0].delta.content
+    #     if delta:
+    #         assistant_response += delta
 
+    assistant_response = 'Hmm, you message is: \n' + message.message
     # Append the assistant's message
     history['content'].append({
         "role": "assistant",
@@ -175,10 +179,10 @@ def search_for_sentences(session: SessionDep, word: str):
     # Retrieve the sentences object
     reverse_index = session.exec(
         select(ReverseIndex).where(ReverseIndex.word == word)
-        ).all()
+    ).all()
     if not reverse_index:
         raise HTTPException(status_code=404, detail="word not found")
-    
+
     sentence_ids = reverse_index[0].sentence_ids
 
     sentences = session.exec(
@@ -186,3 +190,50 @@ def search_for_sentences(session: SessionDep, word: str):
     ).all()
 
     return sentences
+
+
+class GoogleTranslateHelper:
+
+    FILE_WITH_TOKEN_URL = 'https://translate.googleapis.com/_/translate_http/_/js/k=translate_http.tr.en_US.YusFYy3P_ro.O/am=AAg/d=1/exm=el_conf/ed=1/rs=AN8SPfq1Hb8iJRleQqQc8zhdzXmF9E56eQ/m=el_main'
+
+    TOKEN_REGEX = r"['\"]x-goog-api-key['\"]\s*:\s*['\"](\w{39})['\"]"
+
+    API_URL = 'https://translate-pa.googleapis.com/v1/translateHtml'
+
+    def _get_token(self):
+        response = requests.get(self.FILE_WITH_TOKEN_URL)
+
+        match = re.search(self.TOKEN_REGEX, str(response.content), re.IGNORECASE)
+        if match:
+            api_key = match.group(1)
+            logging.info('got API key from google')
+        else:
+            raise ValueError('No Api key in file')
+
+        return api_key
+
+    def translate(self, message, target, source='auto'):
+        url = "https://translate-pa.googleapis.com/v1/translateHtml"
+        headers = {
+            "Content-Type": "application/json+protobuf",
+            "X-Goog-API-Key": self._get_token(),
+        }
+        # [[["Hello, how are you?"],"en","ru"],"wt_lib"]
+        data = [[[message], source, target], "wt_lib"]
+
+        response = requests.post(url, headers=headers, json=data)
+        # [['Привет, как дела?']]
+        return response.json()[0][0]
+
+
+class TranslateTextRequest(BaseModel):
+    text: str
+    target: str
+
+
+@app.post('/api/translate')
+def translate_text(request: TranslateTextRequest):
+    helper = GoogleTranslateHelper()
+    return {
+        'text': helper.translate(request.text, request.target)
+    }

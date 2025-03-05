@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use a base URL that covers the /api/coach prefix.
-const API_BASE_URL = 'http://localhost:8000/api/coach';
+const API_BASE_URL = 'http://localhost:8000/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -11,7 +11,7 @@ const api = axios.create({
 // Get Chat List from GET /api/coach/chat/
 export const fetchChats = async () => {
   try {
-    const response = await api.get('/chat/');
+    const response = await api.get(`coach/chat/`);
     return response.data.sort((a, b) => a.id - b.id);
   } catch (error) {
     console.error('Error fetching chats:', error);
@@ -22,7 +22,7 @@ export const fetchChats = async () => {
 // Get Chat details from GET /api/coach/chat/{id}
 export const fetchChatById = async (id) => {
   try {
-    const response = await api.get(`/chat/${id}`);
+    const response = await api.get(`coach/chat/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error loading chat:', error);
@@ -33,7 +33,7 @@ export const fetchChatById = async (id) => {
 // Create a new chat using POST /api/coach/chat
 export const createNewChat = async () => {
   try {
-    const response = await api.post('/chat', {
+    const response = await api.post(`coach/chat`, {
       name: new Date().toLocaleString(),
       history: { content: [] },
     });
@@ -47,10 +47,21 @@ export const createNewChat = async () => {
 // Send a message using POST /api/coach/chat/{id}/message
 export const sendMessage = async (chatId, message) => {
   try {
-    const response = await api.post(`/chat/${chatId}/message`, { message });
+    const response = await api.post(`coach/chat/${chatId}/message`, { message });
     return response.data.chat_bot_message;
   } catch (error) {
     console.error('Error sending message:', error);
     return 'Sorry, something went wrong.';
   }
 };
+
+
+export const translateText = async (text,target) => {
+    try {
+      const response = await api.post(`translate`, { text, target });
+      return response.data.text;
+    } catch (error) {
+      console.error('Error sending message:', error);
+      return 'Sorry, something went wrong.';
+    }
+  };

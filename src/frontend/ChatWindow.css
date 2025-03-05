@@ -15,6 +15,7 @@
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
+  white-space: pre-line;
 }
 
 /* USER: anchored to the left */
