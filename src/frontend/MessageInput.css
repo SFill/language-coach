@@ -1,0 +1,17 @@
+.message-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.message-input button {
+  margin-left: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}

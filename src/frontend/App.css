@@ -1,42 +1,51 @@
+/* Global Styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+/* Layout Styles */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* If you want it centered vertically as well */
+  height: 90vh; 
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  max-width: 1000px;
+  height: 100%; /* Let it stretch within .main-container */
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
+/* 4) The chat area expands to fill remaining space, 
+   and scrolls when content overflows */
+.chat-container {
+  flex: 1;
+  /* Fills all leftover vertical space */
+  overflow-y: auto;
+  /* Only the chat should scroll */
+  padding: 20px;
+  background: #f0f0f0;
+  min-height: 10%;
+  max-height: 70%;
+  border-radius: 2cap;
 }
 
-.card {
-  padding: 2em;
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.read-the-docs {
-  color: #888;
+.chat {
+  display: flex;
+  flex-direction: row;
 }

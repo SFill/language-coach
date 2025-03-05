@@ -1,227 +1,72 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ReverseContext from './ReverseContext'
+import React, { useState, useEffect } from 'react';
+import ChatList from './ChatList';
+import ChatWindow from './ChatWindow';
+import MessageInput from './MessageInput';
+import ReverseContext from './ReverseContext';
+import { fetchChats, fetchChatById, createNewChat, sendMessage } from './api';
+import './App.css';
 
 function App() {
-  const [chatList, setChatList] = useState([]);         // All existing chats
+  const [chatList, setChatList] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
-  const [messages, setMessages] = useState([]);         // Current chat's messages
-  const [input, setInput] = useState('');
-  const chatContainerRef = useRef(null);
+  const [messages, setMessages] = useState([]);
 
-  // ----------------------------------------
-  // 1. LOAD ALL CHATS (sorted by id ascending)
-  // ----------------------------------------
   useEffect(() => {
-    fetchChats();
+    loadChats();
   }, []);
 
-  const fetchChats = async () => {
-    try {
-      const response = await fetch('http://localhost:8000/api/coach/chat/');
-      if (!response.ok) {
-        console.error('Failed to fetch chats');
-        return;
-      }
-      let data = await response.json();
-      // Sort by id ascending
-      data = data.sort((a, b) => a.id - b.id);
-      setChatList(data);
-    } catch (error) {
-      console.error('Error fetching chats:', error);
-    }
+  const loadChats = async () => {
+    const chats = await fetchChats();
+    setChatList(chats);
   };
 
-  // ----------------------------------------
-  // 2. LOAD A SELECTED CHAT'S MESSAGES
-  // ----------------------------------------
   const loadChat = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/coach/chat/${id}`);
-      if (!response.ok) {
-        console.error('Failed to load chat');
-        return;
-      }
-      const chatData = await response.json();
+    const chatData = await fetchChatById(id);
+    if (chatData) {
       setCurrentChatId(chatData.id);
-
-      // Convert from [{role, content}, ...] into our local [{sender, text}, ...]
-      if (chatData.history && Array.isArray(chatData.history.content)) {
-        const loadedMessages = chatData.history.content.map((item) => {
-          return {
-            sender: item.role === 'user' ? 'user' : 'bot',
-            text: item.content,
-          };
-        });
-        setMessages(loadedMessages);
-      } else {
-        setMessages([]);
-      }
-    } catch (error) {
-      console.error('Error loading chat:', error);
+      setMessages(
+        chatData.history?.content?.map((item) => ({
+          sender: item.role === 'user' ? 'user' : 'bot',
+          text: item.content,
+        })) || []
+      );
     }
   };
 
-  // ----------------------------------------
-  // 3. CREATE A NEW CHAT
-  // ----------------------------------------
-  const createNewChat = async () => {
-    const newChat = {
-      name: new Date().toLocaleString(), // Use date/time as name
-      history: { content: [] },
-    };
-    try {
-      const response = await fetch('http://localhost:8000/api/coach/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newChat),
-      });
-      if (!response.ok) {
-        console.error('Failed to create new chat');
-        return null;
-      }
-      const chatData = await response.json();
-      return chatData;
-    } catch (error) {
-      console.error('Error creating new chat:', error);
-      return null;
-    }
-  };
+  const handleSend = async (message) => {
+    if (!message.trim()) return;
 
-  // ----------------------------------------
-  // 4. SEND A MESSAGE TO THE BACKEND
-  // ----------------------------------------
-  const sendMessageToServer = async (chatId, userText) => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/coach/chat/${chatId}/message`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userText }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
-      const data = await response.json();
-      return data.chat_bot_message; // The assistant's reply
-    } catch (error) {
-      console.error('Error sending message:', error);
-      throw error;
-    }
-  };
-
-  // ----------------------------------------
-  // 5. HANDLE SENDING A USER MESSAGE
-  // ----------------------------------------
-  const handleSend = async () => {
-    if (!input.trim()) return;
-
-    // Add user's message locally
-    const userMessage = { sender: 'user', text: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
-    const userText = input.trim();
-    setInput('');
+    // Add user's message immediately
+    setMessages((prev) => [...prev, { sender: 'user', text: message.trim() }]);
 
     try {
       let chatId = currentChatId;
-      // If no active chat, create a new one
       if (!chatId) {
         const newChat = await createNewChat();
         if (!newChat) return;
         chatId = newChat.id;
         setCurrentChatId(chatId);
-        setChatList((prev) => [...prev, newChat]); // Add to side menu
+        setChatList((prev) => [...prev, newChat]);
       }
 
-      // Send message to backend, get bot reply
-      const botReply = await sendMessageToServer(chatId, userText);
-      // Add bot's reply locally
-      const botMessage = { sender: 'bot', text: botReply };
-      setMessages((prev) => [...prev, botMessage]);
+      const botReply = await sendMessage(chatId, message);
+      setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
     } catch (error) {
-      const errorMessage = {
-        sender: 'bot',
-        text: 'Sorry, something went wrong. Please try again.',
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, { sender: 'bot', text: 'Error sending message' }]);
     }
   };
 
-  // ----------------------------------------
-  // 6. AUTO-SCROLL WHEN MESSAGES CHANGE
-  // ----------------------------------------
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
   return (
     <div className="main-container">
-      {/* The .main-container uses flex from your CSS and centers content */}
-      <div 
-        className="app-container" 
-        /* Because your CSS sets .app-container to column,
-           we override it here to row so the side menu 
-           appears beside the chat area. 
-           If you want to keep column layout, you'll need
-           a different approach. */
-        style={{ display: 'flex', flexDirection: 'row', width: '70%', maxWidth: '1000px' }}
-      >
-        {/* --------------------- Sidecar Menu ----------------------- */}
-        <div 
-          className="sidecar-menu" 
-          style={{
-            width: '200px',
-            borderRight: '1px solid #ccc',
-            marginRight: '20px',
-          }}
-        >
-          <h3>Chats</h3>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {chatList.map((chat) => (
-              <li
-                key={chat.id}
-                style={{
-                  padding: '8px',
-                  margin: '4px 0',
-                  backgroundColor: chat.id === currentChatId ? '#ececec' : '#fff',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                }}
-                onClick={() => loadChat(chat.id)}
-              >
-                {/* Chat name is date/time */}
-                {chat.name} <br />
-                <small>(ID: {chat.id})</small>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* --------------------- Chat + Input Section ----------------------- */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          {/*  Chat container  */}
-          <div className="chat-container" ref={chatContainerRef}>
-            {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.sender}`}>
-                {msg.text}
-              </div>
-            ))}
-          </div>
-
-          {/*  Input container  */}
-          <div className="input-container">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSend();
-              }}
-              placeholder="Type your message here..."
-            />
-            <button onClick={handleSend}>Send</button>
+      <div className="app-container">
+        <div className="chat">
+        <ChatList chatList={chatList} currentChatId={currentChatId} loadChat={loadChat} />
+          <div className="chat-area">
+            <ChatWindow messages={messages} />
+            <MessageInput onSend={handleSend} />
           </div>
         </div>
+
         <ReverseContext />
       </div>
     </div>
