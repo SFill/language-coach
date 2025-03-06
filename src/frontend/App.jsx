@@ -11,9 +11,26 @@ function App() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
 
+  // Load all chats when the component mounts.
   useEffect(() => {
     loadChats();
+
+    // Check if URL has a chatId parameter.
+    const params = new URLSearchParams(window.location.search);
+    const chatIdFromUrl = params.get("chatId");
+    if (chatIdFromUrl) {
+      loadChat(chatIdFromUrl);
+    }
   }, []);
+
+  // Update the URL whenever the currentChatId changes.
+  useEffect(() => {
+    if (currentChatId) {
+      const params = new URLSearchParams(window.location.search);
+      params.set('chatId', currentChatId);
+      window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+  }, [currentChatId]);
 
   const loadChats = async () => {
     const chats = await fetchChats();
@@ -36,7 +53,7 @@ function App() {
   const handleSend = async (message) => {
     if (!message.trim()) return;
 
-    // Add user's message immediately
+    // Add user's message immediately.
     setMessages((prev) => [...prev, { sender: 'user', text: message.trim() }]);
 
     try {
@@ -60,7 +77,7 @@ function App() {
     <div className="main-container">
       <div className="app-container">
         <div className="chat">
-        <ChatList chatList={chatList} currentChatId={currentChatId} loadChat={loadChat} />
+          <ChatList chatList={chatList} currentChatId={currentChatId} loadChat={loadChat} />
           <div className="chat-area">
             <ChatWindow messages={messages} />
             <MessageInput onSend={handleSend} />
