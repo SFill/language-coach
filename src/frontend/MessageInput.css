@@ -1,17 +1,32 @@
 .message-input {
   display: flex;
-  padding: 10px;
-  border-top: 1px solid #ccc;
+  /* row-based flex container */
+  align-items: flex-start;
+  /* top-align both textarea and button */
+  gap: 8px;
+  /* spacing between elements */
+  width: 100%;
 }
+
 
 .message-input textarea {
   flex: 1;
+  /* let the textarea grow to fill the space */
+  box-sizing: border-box;
+  resize: none;
+  /* prevent manual resizing handle */
+  overflow: hidden;
+  /* hide scrollbars, auto-resized by JS */
   padding: 8px;
-  border: 1px solid #ccc;
+  font-size: 1rem;
+  min-height: 60px;
+  /* set a comfortable min height */
 }
 
 .message-input button {
-  margin-left: 8px;
-  padding: 8px 12px;
+  align-self: flex-start;
+  /* ensure the button remains at natural size */
+  padding: 8px 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
