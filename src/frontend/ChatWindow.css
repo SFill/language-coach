@@ -15,7 +15,7 @@
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
-  white-space: pre-line;
+  /* white-space: pre-wrap; */
 }
 
 /* USER: anchored to the left */
@@ -28,4 +28,21 @@
 .chat-message.bot {
   align-self: flex-end;    /* anchor on the right side */
   background-color: #87e199;
+}
+
+/* Example: Adjust spacing for lists within markdown */
+.chat-message ul,
+.chat-message ol {
+  margin: 0;           /* Remove default outer margins */
+  padding-left: 1.2em; /* Keep some left indentation for bullets/numbers */
+}
+
+.chat-message li {
+  margin-bottom: 0;    /* Remove extra spacing between list items */
+  line-height: 1.2;    /* Optionally reduce line height for denser text */
+}
+
+/* If paragraphs are also too spaced out, you can override them: */
+.chat-message p {
+  margin: 0.5em 0;     /* Less top/bottom margin for a more compact look */
 }

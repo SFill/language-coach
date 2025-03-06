@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { translateText } from './api.js';
 import './ChatWindow.css';
 
@@ -99,7 +101,7 @@ const ChatWindow = ({ messages }) => {
       // Ignore click events if there's an active selection.
       return;
     }
-    
+
     const target = e.target;
 
     // If clicked outside an element, hide toolbar.
@@ -238,7 +240,12 @@ const ChatWindow = ({ messages }) => {
       >
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
-            {msg.text}
+            <ReactMarkdown
+              // optional: add GitHub-flavored markdown
+              remarkPlugins={[remarkGfm]}
+            >
+              {msg.text}
+            </ReactMarkdown>
           </div>
         ))}
       </div>
