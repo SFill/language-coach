@@ -11,7 +11,6 @@ function App() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
 
-  // Load all chats when the component mounts.
   useEffect(() => {
     loadChats();
 
@@ -23,7 +22,6 @@ function App() {
     }
   }, []);
 
-  // Update the URL whenever the currentChatId changes.
   useEffect(() => {
     if (currentChatId) {
       const params = new URLSearchParams(window.location.search);
@@ -47,6 +45,16 @@ function App() {
           text: item.content,
         })) || []
       );
+    }
+  };
+
+  const startNewChat = async () => {
+    const newChat = await createNewChat();
+    if (newChat) {
+      setCurrentChatId(newChat.id);
+      setChatList(prev => [...prev, newChat]);
+      // Optionally, clear the messages when starting a new chat.
+      setMessages([]);
     }
   };
 
@@ -75,15 +83,22 @@ function App() {
 
   return (
     <div className="main-container">
+      <header>
+        <nav className="navbar">
+          <h3>Chats</h3>
+          <ChatList
+            chatList={chatList}
+            currentChatId={currentChatId}
+            loadChat={loadChat}
+            startNewChat={startNewChat}
+          />
+        </nav>
+      </header>
       <div className="app-container">
-        <div className="chat">
-          <ChatList chatList={chatList} currentChatId={currentChatId} loadChat={loadChat} />
-          <div className="chat-area">
-            <ChatWindow messages={messages} />
-            <MessageInput onSend={handleSend} />
-          </div>
+        <div className="chat-area">
+          <ChatWindow messages={messages} />
+          <MessageInput onSend={handleSend} />
         </div>
-
         <ReverseContext />
       </div>
     </div>

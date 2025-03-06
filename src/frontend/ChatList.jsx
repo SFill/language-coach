@@ -1,24 +1,24 @@
 import React from 'react';
 import './ChatList.css';
 
-const ChatList = ({ chatList, currentChatId, loadChat }) => {
+const ChatList = ({ chatList, currentChatId, loadChat, startNewChat }) => {
+  const handleSelect = (e) => {
+    loadChat(e.target.value);
+  };
+
   return (
     <div className="chat-list">
-      <h3>Chats</h3>
-      <ul>
-        {chatList.map(chat => (
-          <li
-            key={chat.id}
-            className={chat.id === currentChatId ? 'active' : ''}
-            onClick={() => loadChat(chat.id)}
-          >
-            {chat.name} <br />
-            <small>(ID: {chat.id})</small>
-          </li>
+      <select value={currentChatId || ''} onChange={handleSelect}>
+        {chatList.map((chat) => (
+          <option key={chat.id} value={chat.id}>
+            {chat.name}
+          </option>
         ))}
-      </ul>
+      </select>
+      <button onClick={startNewChat}>Start a New Chat</button>
     </div>
   );
 };
+
 
 export default ChatList;

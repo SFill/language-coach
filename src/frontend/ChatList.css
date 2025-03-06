@@ -1,22 +1,31 @@
-.chat-list {
-  width: 200px;
-  border-right: 1px solid #ccc;
-  margin-right: 20px;
-}
-
-.chat-list ul {
-  list-style: none;
-  padding: 0;
-}
-
-.chat-list li {
+.chat-list select {
+  width: 100%;
   padding: 8px;
-  margin: 4px 0;
-  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.chat-list button {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.chat-list li.active {
-  background-color: #ececec;
+.chat-list button:hover {
+  background-color: #0056b3;
+}
+
+
+.chat-list {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  /* Remove width or large margins if it causes it to wrap */
+  width: auto; 
+  border: none; 
 }

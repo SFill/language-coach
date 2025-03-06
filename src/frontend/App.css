@@ -10,8 +10,10 @@
 .main-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* If you want it centered vertically as well */
-  height: 90vh; 
+  align-items: center;
+  flex-direction: column;
+  /* If you want it centered vertically as well */
+  height: 90vh;
   width: 100%;
 }
 
@@ -20,7 +22,8 @@
   flex-direction: column;
   width: 70%;
   max-width: 1000px;
-  height: 100%; /* Let it stretch within .main-container */
+  height: 100%;
+  /* Let it stretch within .main-container */
   box-sizing: border-box;
 }
 
@@ -48,4 +51,29 @@
 .chat {
   display: flex;
   flex-direction: row;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar h3 {
+  margin: 0; /* Prevent heading from pushing things onto new line */
+}
+
+.navbar select {
+  padding: 6px;
+  width: fit-content;          /* Adjusts width to content size */
+  max-width: 350px;            /* Maximum width constraint */
+  min-width: 200px;            /* Minimum width constraint */
+  box-sizing: border-box;
+}
+
+.navbar button {
+  padding: 6px 12px;
+  cursor: pointer;
 }

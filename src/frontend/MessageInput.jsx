@@ -36,7 +36,7 @@ const MessageInput = ({ onSend }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type your homework..."
+        placeholder="Type your message..."
         rows={3} // minimum rows
       />
       <button onClick={handleSend}>Send</button>

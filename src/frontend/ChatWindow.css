@@ -2,8 +2,7 @@
   flex: 1;
   overflow-y: auto;
   padding: 10px;
-  border: 1px solid #ccc;
-
+  border-bottom: 1px solid #ccc;
   /* Ensure messages stack top to bottom */
   display: flex;
   flex-direction: column;
@@ -20,14 +19,15 @@
 
 /* USER: anchored to the left */
 .chat-message.user {
-  align-self: flex-start;    /* anchor on the left side */
+  align-self: flex-end;    /* anchor on the right side */
   background-color: #daf1ff; /* your chosen color */
 }
 
 /* BOT: anchored to the right */
 .chat-message.bot {
-  align-self: flex-end;    /* anchor on the right side */
-  background-color: #87e199;
+  align-self: flex-start;    /* anchor on the left side */
+  /* background-color: #87e199; */
+  max-width: 100%;
 }
 
 /* Example: Adjust spacing for lists within markdown */
