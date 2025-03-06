@@ -46,3 +46,7 @@
 .chat-message p {
   margin: 0.5em 0;     /* Less top/bottom margin for a more compact look */
 }
+
+/* .chat-message .fold-toggle{
+  background-image: ;
+} */

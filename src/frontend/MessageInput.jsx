@@ -54,7 +54,7 @@ const MessageInputWithToolbar = ({ onSend }) => {
     <div className="message-input">
       <div className="text-area-with-toolbar">
         {/* Toolbar is always visible above the textarea */}
-        <div className="selection-toolbar" style={{ marginBottom: '10px', padding: '5px', border: '1px solid #ccc', background: '#f9f9f9' }}>
+        <div className="selection-toolbar">
           <span style={{ marginRight: '10px' }}>
             {translatedText || selectedText}
           </span>

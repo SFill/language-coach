@@ -4,11 +4,17 @@ import remarkGfm from 'remark-gfm';
 import { translateText } from './api.js';
 import './ChatWindow.css';
 
+import downArrow from './assets/down-arrow.png'
+import rightArrow from './assets/right-arrow.png'
+
 const ChatWindow = ({ messages }) => {
   const containerRef = useRef(null);     // Outer container with position: relative
   const chatContainerRef = useRef(null);   // Scrollable chat window
 
   const [menuStyle, setMenuStyle] = useState({ display: 'none' });
+
+  // New state to track expanded messages for bot messages
+  const [expandedMessages, setExpandedMessages] = useState({});
 
   // We store info about the current “editing” context
   const [currentRange, setCurrentRange] = useState(null);       // Range for fresh text selection
@@ -21,6 +27,13 @@ const ChatWindow = ({ messages }) => {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const toggleExpanded = (index) => {
+    setExpandedMessages(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
 
   /**
    * Given a Range, adjust its boundaries if they fall inside a translated span.
@@ -66,7 +79,7 @@ const ChatWindow = ({ messages }) => {
   /**
    * 1) MOUSE/TAP SELECTION FLOW
    * When the user selects text and releases the mouse/touch, we adjust the range
-   * to remove any overlap with an existing translated span.
+   * to remove any overlap with an existing translated snippet.
    */
   const handleSelection = () => {
     const selection = window.getSelection();
@@ -225,6 +238,9 @@ const ChatWindow = ({ messages }) => {
     hideToolbar();
   };
 
+  const FOLD_THRESHOLD = 300; // Characters threshold to consider a message long
+  const FOLDED_MAX_HEIGHT = '100px'; // Maximum height for a folded message
+
   return (
     <div
       className="chat-window-container"
@@ -238,16 +254,60 @@ const ChatWindow = ({ messages }) => {
         onTouchEnd={handleSelection}
         onClick={handleClick}
       >
-        {messages.map((msg, index) => (
-          <div key={index} className={`chat-message ${msg.sender}`}>
-            <ReactMarkdown
-              // optional: add GitHub-flavored markdown
-              remarkPlugins={[remarkGfm]}
-            >
-              {msg.text}
-            </ReactMarkdown>
-          </div>
-        ))}
+        {messages.map((msg, index) => {
+          const isBot = msg.sender === 'bot';
+          const isLong = msg.text.length > FOLD_THRESHOLD;
+          const isExpanded = expandedMessages[index];
+          return (
+            <div key={index} className={`chat-message ${msg.sender}`}>
+              {isBot && isLong && (
+                <div
+                  className="fold-toggle"
+                  style={{ cursor: 'pointer', marginTop: '5px' }}
+                  onClick={() => toggleExpanded(index)}
+                >
+                  <img
+                    src={
+                      isExpanded
+                        ? downArrow
+                        : rightArrow
+                    }
+                    alt={isExpanded ? 'Collapse' : 'Expand'}
+                    style={{ width: '16px', height: '16px' }}
+                  />
+                </div>
+              )}
+              <div
+                style={
+                  isBot && isLong && !isExpanded
+                    ? { position: 'relative', maxHeight: FOLDED_MAX_HEIGHT, overflow: 'hidden' }
+                    : {}
+                }
+              >
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {msg.text}
+                </ReactMarkdown>
+
+                {/* Шторка-градиент, показывается только если сообщение свернуто */}
+                {isBot && isLong && !isExpanded && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '50px',
+                      pointerEvents: 'none',
+                      background: 'linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1))',
+                    }}
+                  />
+                )}
+
+              </div>
+
+            </div>
+          );
+        })}
       </div>
 
       {/* Toolbar shown above selected text or clicked snippet */}
@@ -262,7 +322,7 @@ const ChatWindow = ({ messages }) => {
           </button>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 
