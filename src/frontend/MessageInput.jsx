@@ -11,12 +11,15 @@ const MessageInputWithToolbar = ({ onSend }) => {
   // Auto-resize the textarea based on content
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      const textarea = textareaRef.current;
+      const prevScrollPosition = window.scrollY;
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      // prevent from auto scrolling when input text  
+      window.scrollTo({ top: prevScrollPosition, behavior: 'instant' });
     }
   }, [input]);
 
-  // When the user selects text, update the selectedText and clear any previous translation.
   const handleSelect = (e) => {
     const textarea = e.target;
     const start = textarea.selectionStart;
@@ -26,7 +29,6 @@ const MessageInputWithToolbar = ({ onSend }) => {
     setTranslatedText('');
   };
 
-  // When a translation button is pressed, always translate using the originally selected text.
   const handleTranslate = async (lang) => {
     if (!selectedText.trim()) return;
     const translation = await translateText(selectedText, lang);
@@ -53,7 +55,6 @@ const MessageInputWithToolbar = ({ onSend }) => {
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
-        {/* Toolbar is always visible above the textarea */}
         <div className="selection-toolbar">
           <span style={{ marginRight: '10px' }}>
             {translatedText || selectedText}
@@ -61,9 +62,9 @@ const MessageInputWithToolbar = ({ onSend }) => {
           <button onClick={() => handleTranslate('ru')}>ru</button>
           <button onClick={() => handleTranslate('en')}>en</button>
           <button onClick={() => handleTranslate('es')}>es</button>
+          <button onClick={handleSend}>Send</button>
         </div>
 
-        {/* Text area for message input */}
         <textarea
           ref={textareaRef}
           value={input}
@@ -71,10 +72,9 @@ const MessageInputWithToolbar = ({ onSend }) => {
           onSelect={handleSelect}
           onKeyDown={handleKeyDown}
           placeholder="Type your message..."
-          rows={3}
+          rows={1} // start small, it will grow
         />
       </div>
-      <button onClick={handleSend}>Send</button>
     </div>
   );
 };

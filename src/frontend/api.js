@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use a base URL that covers the /api/coach prefix.
-const API_BASE_URL = 'http://localhost:8000/api/';
+const API_BASE_URL = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:8000/api/' : 'http://localhost/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -56,12 +56,12 @@ export const sendMessage = async (chatId, message) => {
 };
 
 
-export const translateText = async (text,target) => {
-    try {
-      const response = await api.post(`translate`, { text, target });
-      return response.data.text;
-    } catch (error) {
-      console.error('Error sending message:', error);
-      return 'Sorry, something went wrong.';
-    }
-  };
+export const translateText = async (text, target) => {
+  try {
+    const response = await api.post(`translate`, { text, target });
+    return response.data.text;
+  } catch (error) {
+    console.error('Error sending message:', error);
+    return 'Sorry, something went wrong.';
+  }
+};
