@@ -3,11 +3,13 @@ import os
 import re
 from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import requests
 from sqlmodel import SQLModel, Field, Session, create_engine, select, update, Column, JSON
 from pydantic import BaseModel
 from typing import Annotated
 from openai import OpenAI
+from .constants import SYSTEM_PROMPT
 
 
 class Chat(SQLModel, table=True):
@@ -67,6 +69,7 @@ SessionDep = Annotated[Session, Depends(get_session)]
 
 app = FastAPI()
 
+
 # --- CORS MIDDLEWARE SETUP ---
 origins = ["*"]  # or ["*"] if you just want to allow everything
 app.add_middleware(
@@ -124,7 +127,7 @@ def send_message(session: SessionDep, id: int, message: Message):
     # Ensure that history has a 'content' key which is a list
     history = chat.history
     if 'content' not in history or not isinstance(history['content'], list):
-        chat.history['content'] = []
+        history['content'] = []
 
     # Append the user's message
     history['content'].append({
@@ -141,20 +144,25 @@ def send_message(session: SessionDep, id: int, message: Message):
     session.commit()
 
     # Call GPT or whichever model
-    # response_stream = client.chat.completions.create(
-    #     messages=chat.history['content'],
-    #     model="gpt-4o-mini",  # example placeholder model name
-    #     stream=True,
-    # )
+    response_stream = client.chat.completions.create(
+        messages=[
+            {
+                "role": "developer",
+                "content": SYSTEM_PROMPT,
+            }
+        ] + chat.history['content'],
+        model="gpt-4o-mini",  # example placeholder model name
+        stream=True,
+    )
 
-    # # Collect assistant's response
-    # assistant_response = ''
-    # for chunk in response_stream:
-    #     delta = chunk.choices[0].delta.content
-    #     if delta:
-    #         assistant_response += delta
+    # Collect assistant's response
+    assistant_response = ''
+    for chunk in response_stream:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            assistant_response += delta
 
-    assistant_response = 'Hmm, you message is: \n' + message.message
+    # assistant_response = 'Hmm, you message is: \n' + message.message
     # Append the assistant's message
     history['content'].append({
         "role": "assistant",
@@ -237,3 +245,7 @@ def translate_text(request: TranslateTextRequest):
     return {
         'text': helper.translate(request.text, request.target)
     }
+
+
+# Mount the static files (assuming your built assets are in /app/dist)
+app.mount("/", StaticFiles(directory="/app/dist", html=True), name="static")
