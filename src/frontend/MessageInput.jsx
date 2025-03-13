@@ -36,12 +36,12 @@ const MessageInputWithToolbar = ({ onSend }) => {
   };
 
   const handleSend = () => {
-    if (input.trim()) {
-      onSend(input);
-      setInput('');
-      setSelectedText('');
-      setTranslatedText('');
-    }
+    if (!selectedText.trim()) return;
+
+    onSend(selectedText);
+    // setInput('');
+    setSelectedText('');
+    setTranslatedText('');
   };
 
   const handleKeyDown = (e) => {

@@ -5,6 +5,7 @@ import MessageInput from './MessageInput';
 import ReverseContext from './ReverseContext';
 import { fetchChats, fetchChatById, createNewChat, sendMessage } from './api';
 import './App.css';
+import WordLists from './WordLists';
 
 function App() {
   const [chatList, setChatList] = useState([]);
@@ -100,6 +101,7 @@ function App() {
           <MessageInput onSend={handleSend} />
         </div>
         <ReverseContext />
+        <WordLists />
       </div>
     </div>
   );

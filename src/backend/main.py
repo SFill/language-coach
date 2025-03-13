@@ -1,3 +1,4 @@
+from enum import Enum
 import logging
 import os
 import re
@@ -247,5 +248,220 @@ def translate_text(request: TranslateTextRequest):
     }
 
 
-# Mount the static files (assuming your built assets are in /app/dist)
-app.mount("/", StaticFiles(directory="/app/dist", html=True), name="static")
+# ---------------------------
+# New Feature: Dictionary and Wordlist Endpoints
+# Adjusted models: store definitions for words and manage word lists.
+class Wordlist(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field()
+    # list of words (strings)
+    words: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+
+
+class Dictionary(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    word: str
+    # Store the dictionary API response (definition data) as a dict
+    word_meta: dict = Field(default_factory=dict, sa_column=Column(JSON))
+
+
+# ---------------------------
+# New Classes for Word Definitions
+class EnglishDialect(str, Enum):
+    us = 'us'
+    uk = 'uk'
+
+
+class WordDefinitionDetail(BaseModel):
+    definition: str
+    synonyms: list[str] = []
+    antonyms: list[str] = []
+    example: str | None = None
+
+
+class WordMeaning(BaseModel):
+    part_of_speech: str
+    definitions: list[WordDefinitionDetail]
+    synonyms: list[str] = []
+    antonyms: list[str] = []
+
+
+class EnglishWordDefinition(BaseModel):
+    audio_link: str | None
+    english_dialect: EnglishDialect
+    meanings: list[WordMeaning]
+
+
+# ---------------------------
+# Dictionary API Client
+class DictionaryApiClient:
+    url = 'https://api.dictionaryapi.dev/api/v2/entries/en/{}'
+
+    @staticmethod
+    def define(word: str) -> list:
+        response = requests.get(DictionaryApiClient.url.format(word))
+        if response.status_code != 200:
+            raise Exception(f"Error fetching definition for word: {word}")
+        return response.json()
+
+
+def parse_english_word_definition(api_data: list) -> EnglishWordDefinition:
+    """
+    Parse the API response (list) into an EnglishWordDefinition instance.
+    """
+    if not api_data:
+        return EnglishWordDefinition(audio_link=None, english_dialect=EnglishDialect.us, meanings=[])
+
+    entry = api_data[0]
+
+    # Pick the first valid audio link and determine dialect
+    audio_link = None
+    dialect = EnglishDialect.us
+    for phon in entry.get("phonetics", []):
+        audio = phon.get("audio")
+        if audio:
+            audio_link = audio
+            if "uk" in audio:
+                dialect = EnglishDialect.uk
+            else:
+                dialect = EnglishDialect.us
+            break
+
+    meanings = []
+    for meaning in entry.get("meanings", []):
+        part_of_speech = meaning.get("partOfSpeech")
+        synonyms = meaning.get("synonyms", [])
+        antonyms = meaning.get("antonyms", [])
+        definitions = []
+        for d in meaning.get("definitions", []):
+            definitions.append(WordDefinitionDetail(
+                definition=d.get("definition"),
+                synonyms=d.get("synonyms", []),
+                antonyms=d.get("antonyms", []),
+                example=d.get("example")
+            ))
+        meanings.append(WordMeaning(
+            part_of_speech=part_of_speech,
+            definitions=definitions,
+            synonyms=synonyms,
+            antonyms=antonyms
+        ))
+
+    return EnglishWordDefinition(
+        audio_link=audio_link,
+        english_dialect=dialect,
+        meanings=meanings
+    )
+
+
+# Helper function: retrieve a word's definition from the DB or via API if not already stored.
+def get_word_definition(word: str, session: Session) -> EnglishWordDefinition:
+    dictionary_entry = session.exec(select(Dictionary).where(Dictionary.word == word)).first()
+    if dictionary_entry is None:
+        try:
+            api_data = DictionaryApiClient.define(word)
+            english_def = parse_english_word_definition(api_data)
+        except Exception as e:
+            english_def = EnglishWordDefinition(audio_link=None, english_dialect=EnglishDialect.us, meanings=[])
+        dictionary_entry = Dictionary(word=word, word_meta=english_def.dict())
+        session.add(dictionary_entry)
+        session.commit()
+        session.refresh(dictionary_entry)
+    else:
+        english_def = EnglishWordDefinition(**dictionary_entry.word_meta)
+    return english_def
+
+
+# ---------------------------
+# Pydantic models for Wordlist endpoints
+class WordlistCreate(BaseModel):
+    name: str
+    words: list[str]
+
+
+class WordlistUpdate(BaseModel):
+    name: str | None = None
+    words: list[str] | None = None
+
+
+class WordDefinitionResponse(BaseModel):
+    word: str
+    definition: EnglishWordDefinition
+
+
+class WordlistResponse(BaseModel):
+    id: int
+    name: str
+    words: list[WordDefinitionResponse]
+
+
+@app.get('/api/wordlist/', response_model=list[WordlistResponse])
+def list_wordlists(session: SessionDep):
+    wordlists = session.exec(select(Wordlist)).all()
+    results = []
+    for wl in wordlists:
+        definitions = []
+        for word in wl.words:
+            eng_def = get_word_definition(word, session)
+            definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
+        results.append(WordlistResponse(id=wl.id, name=wl.name, words=definitions))
+    return results
+
+
+@app.post('/api/wordlist/', response_model=WordlistResponse)
+def create_wordlist(wordlist: WordlistCreate, session: SessionDep):
+    new_wordlist = Wordlist(name=wordlist.name, words=wordlist.words)
+    session.add(new_wordlist)
+    session.commit()
+    session.refresh(new_wordlist)
+    definitions = []
+    for word in new_wordlist.words:
+        eng_def = get_word_definition(word, session)
+        definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
+    return WordlistResponse(id=new_wordlist.id, name=new_wordlist.name, words=definitions)
+
+
+@app.get('/api/wordlist/{pk}', response_model=WordlistResponse)
+def get_wordlist(pk: int, session: SessionDep):
+    wl = session.get(Wordlist, pk)
+    if not wl:
+        raise HTTPException(status_code=404, detail="Wordlist not found")
+    definitions = []
+    for word in wl.words:
+        eng_def = get_word_definition(word, session)
+        definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
+    return WordlistResponse(id=wl.id, name=wl.name, words=definitions)
+
+
+@app.put('/api/wordlist/{pk}', response_model=WordlistResponse)
+def update_wordlist(pk: int, wordlist: WordlistUpdate, session: SessionDep):
+    wl = session.get(Wordlist, pk)
+    if not wl:
+        raise HTTPException(status_code=404, detail="Wordlist not found")
+    if wordlist.name is not None:
+        wl.name = wordlist.name
+    if wordlist.words is not None:
+        wl.words = wordlist.words
+    session.add(wl)
+    session.commit()
+    session.refresh(wl)
+    definitions = []
+    for word in wl.words:
+        eng_def = get_word_definition(word, session)
+        definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
+    return WordlistResponse(id=wl.id, name=wl.name, words=definitions)
+
+
+@app.delete('/api/wordlist/{pk}')
+def delete_wordlist(pk: int, session: SessionDep):
+    wl = session.get(Wordlist, pk)
+    if not wl:
+        raise HTTPException(status_code=404, detail="Wordlist not found")
+    session.delete(wl)
+    session.commit()
+    return {"detail": "Wordlist deleted"}
+
+
+if not os.getenv('BACKEND_ENV', None) == 'dev':
+    # Mount the static files (built assets are in /app/dist)
+    app.mount("/", StaticFiles(directory="/app/dist", html=True), name="static")
