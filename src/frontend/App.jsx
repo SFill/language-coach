@@ -60,7 +60,7 @@ function App() {
     }
   };
 
-  const handleSend = async (message) => {
+  const handleSend = async (message, isNote = false) => {
     if (!message.trim()) return;
 
     setMessages((prev) => [...prev, { sender: 'user', text: message.trim() }]);
@@ -75,7 +75,8 @@ function App() {
         setChatList((prev) => [...prev, newChat]);
       }
 
-      const botReply = await sendMessage(chatId, message);
+      const botReply = await sendMessage(chatId, {'message': message, 'is_note':isNote });
+      if (!botReply) return
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
     } catch (error) {
       setMessages((prev) => [...prev, { sender: 'bot', text: 'Error sending message' }]);

@@ -21,6 +21,7 @@ class Chat(SQLModel, table=True):
 
 class Message(BaseModel):
     message: str
+    is_note: bool = False 
 
 
 # CREATE TABLE IF NOT EXISTS reverse_index (
@@ -144,39 +145,42 @@ def send_message(session: SessionDep, id: int, message: Message):
     )
     session.commit()
 
-    # Call GPT or whichever model
-    response_stream = client.chat.completions.create(
-        messages=[
-            {
-                "role": "developer",
-                "content": SYSTEM_PROMPT,
-            }
-        ] + chat.history['content'],
-        model="gpt-4o-mini",  # example placeholder model name
-        stream=True,
-    )
+    if not message.is_note:
+        # Call GPT or whichever model
+        response_stream = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "developer",
+                    "content": SYSTEM_PROMPT,
+                }
+            ] + chat.history['content'],
+            model="gpt-4o-mini",  # example placeholder model name
+            stream=True,
+        )
 
-    # Collect assistant's response
-    assistant_response = ''
-    for chunk in response_stream:
-        delta = chunk.choices[0].delta.content
-        if delta:
-            assistant_response += delta
+        # Collect assistant's response
+        assistant_response = ''
+        for chunk in response_stream:
+            delta = chunk.choices[0].delta.content
+            if delta:
+                assistant_response += delta
 
-    # assistant_response = 'Hmm, you message is: \n' + message.message
-    # Append the assistant's message
-    history['content'].append({
-        "role": "assistant",
-        "content": assistant_response,
-    })
+        # assistant_response = 'Hmm, you message is: \n' + message.message
+        # Append the assistant's message
+        history['content'].append({
+            "role": "assistant",
+            "content": assistant_response,
+        })
 
-    # Update DB with assistant's response
-    session.exec(
-        update(Chat)
-        .where(Chat.id == id)
-        .values(history=history)
-    )
-    session.commit()
+        # Update DB with assistant's response
+        session.exec(
+            update(Chat)
+            .where(Chat.id == id)
+            .values(history=history)
+        )
+        session.commit()
+    else:
+        assistant_response = ''
 
     return {
         'chat_bot_message': assistant_response

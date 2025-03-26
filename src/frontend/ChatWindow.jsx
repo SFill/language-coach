@@ -94,7 +94,12 @@ const ChatWindow = ({ messages }) => {
       }
       setCurrentRange(adjustedRange);
       setTranslatedNode(null); // fresh selection, not a click
-      const text = adjustedRange.toString();
+      // const text = adjustedRange.toString();
+
+      let div = document.createElement('div');
+      div.appendChild(adjustedRange.cloneContents());
+      const text = div.innerHTML;
+
       setSelectedText(text);
       showToolbarAtRect(adjustedRange.getBoundingClientRect());
     } else {
@@ -110,18 +115,21 @@ const ChatWindow = ({ messages }) => {
    */
   const handleClick = (e) => {
     const selection = window.getSelection();
+    // debugger
     if (selection && !selection.isCollapsed) {
       // Ignore click events if there's an active selection.
       return;
     }
 
-    const target = e.target;
+    // const target = e.target;
+    const target = e.target.closest('span[data-translated]');
 
     // If clicked outside an element, hide toolbar.
     if (!target || target.nodeType !== 1) {
       hideToolbar();
       return;
     }
+    // debugger
 
     const isTranslated = target.getAttribute('data-translated') === 'true';
 
@@ -183,7 +191,7 @@ const ChatWindow = ({ messages }) => {
       const original = translatedNode.getAttribute('data-original-text');
       if (!original) return;
       const newTranslation = await translateText(original, lang);
-      translatedNode.textContent = newTranslation;
+      translatedNode.innerHTML = newTranslation;
       translatedNode.setAttribute('data-current-lang', lang);
       hideToolbar();
       return;
@@ -202,7 +210,8 @@ const ChatWindow = ({ messages }) => {
 
     // Create a new <span> to hold the translated text.
     const span = document.createElement('span');
-    span.textContent = newTranslation;
+    span.addEventListener('click', handleClick)
+    span.innerHTML = newTranslation;
     span.setAttribute('data-translated', 'true');
     span.setAttribute('data-original-text', textToTranslate);
     span.setAttribute('data-current-lang', lang);
@@ -229,7 +238,7 @@ const ChatWindow = ({ messages }) => {
     if (!originalText) return;
 
     // Option: revert textContent and remove translation-specific attributes.
-    translatedNode.textContent = originalText;
+    translatedNode.innerHTML = originalText;
     translatedNode.removeAttribute('data-translated');
     translatedNode.removeAttribute('data-original-text');
     translatedNode.removeAttribute('data-current-lang');
@@ -252,7 +261,7 @@ const ChatWindow = ({ messages }) => {
         ref={chatContainerRef}
         onMouseUp={handleSelection}
         onTouchEnd={handleSelection}
-        onClick={handleClick}
+        // onClick={handleClick}
       >
         {messages.map((msg, index) => {
           const isBot = msg.sender === 'bot';

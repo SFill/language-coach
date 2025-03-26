@@ -35,10 +35,10 @@ const MessageInputWithToolbar = ({ onSend }) => {
     setTranslatedText(translation);
   };
 
-  const handleSend = () => {
+  const handleSend = (isNote=false) => {
     if (!selectedText.trim()) return;
 
-    onSend(selectedText);
+    onSend(selectedText, isNote);
     // setInput('');
     setSelectedText('');
     setTranslatedText('');
@@ -63,6 +63,7 @@ const MessageInputWithToolbar = ({ onSend }) => {
           <button onClick={() => handleTranslate('en')}>en</button>
           <button onClick={() => handleTranslate('es')}>es</button>
           <button onClick={handleSend}>Send</button>
+          <button onClick={()=> handleSend(true)}>Send as note</button>
         </div>
 
         <textarea

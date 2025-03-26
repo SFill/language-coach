@@ -47,7 +47,7 @@ export const createNewChat = async () => {
 // Send a message using POST /api/coach/chat/{id}/message
 export const sendMessage = async (chatId, message) => {
   try {
-    const response = await api.post(`coach/chat/${chatId}/message`, { message });
+    const response = await api.post(`coach/chat/${chatId}/message`, message);
     return response.data.chat_bot_message;
   } catch (error) {
     console.error('Error sending message:', error);
