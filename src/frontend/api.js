@@ -65,3 +65,15 @@ export const translateText = async (text, target) => {
     return 'Sorry, something went wrong.';
   }
 };
+
+
+// Get Chat details from GET /api/words/{word}
+export const getWordDefinition = async (word) => {
+  try {
+    const response = await api.get(`words/${word}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error loading chat:', error);
+    return null;
+  }
+};

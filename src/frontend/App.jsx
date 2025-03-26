@@ -6,16 +6,18 @@ import ReverseContext from './ReverseContext';
 import { fetchChats, fetchChatById, createNewChat, sendMessage } from './api';
 import './App.css';
 import WordLists from './WordLists';
+import DictionaryPanel from './DictionaryPanel'; // Import the new component
+import SideDictionaryPanel from './SideDictionaryPanel';
 
 function App() {
   const [chatList, setChatList] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [showDictionary, setShowDictionary] = useState(false); // Toggle state
 
   useEffect(() => {
     loadChats();
 
-    // Check if URL has a chatId parameter.
     const params = new URLSearchParams(window.location.search);
     const chatIdFromUrl = params.get("chatId");
     if (chatIdFromUrl) {
@@ -54,7 +56,6 @@ function App() {
     if (newChat) {
       setCurrentChatId(newChat.id);
       setChatList(prev => [...prev, newChat]);
-      // Optionally, clear the messages when starting a new chat.
       setMessages([]);
     }
   };
@@ -62,7 +63,6 @@ function App() {
   const handleSend = async (message) => {
     if (!message.trim()) return;
 
-    // Add user's message immediately.
     setMessages((prev) => [...prev, { sender: 'user', text: message.trim() }]);
 
     try {
@@ -82,6 +82,10 @@ function App() {
     }
   };
 
+  const toggleDictionary = () => {
+    setShowDictionary(!showDictionary);
+  };
+
   return (
     <div className="main-container">
       <header>
@@ -93,15 +97,27 @@ function App() {
             loadChat={loadChat}
             startNewChat={startNewChat}
           />
+          <button onClick={toggleDictionary} className="toggle-button">
+            {showDictionary ? 'Hide Dictionary' : 'Show Dictionary'}
+          </button>
         </nav>
       </header>
-      <div className="app-container">
+      <div className="main-block">
+        <div className="left-area"></div>
         <div className="chat-area">
           <ChatWindow messages={messages} />
           <MessageInput onSend={handleSend} />
+
+          <ReverseContext />
+          <WordLists />
         </div>
-        <ReverseContext />
-        <WordLists />
+        <div className="dictionary-area">
+          {showDictionary && (
+            <SideDictionaryPanel word="home" />
+          )}
+        </div>
+
+
       </div>
     </div>
   );

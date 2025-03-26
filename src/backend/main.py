@@ -355,7 +355,7 @@ def parse_english_word_definition(api_data: list) -> EnglishWordDefinition:
 
 
 # Helper function: retrieve a word's definition from the DB or via API if not already stored.
-def get_word_definition(word: str, session: Session) -> EnglishWordDefinition:
+def _get_word_definition(word: str, session: Session) -> EnglishWordDefinition:
     dictionary_entry = session.exec(select(Dictionary).where(Dictionary.word == word)).first()
     if dictionary_entry is None:
         try:
@@ -402,7 +402,7 @@ def list_wordlists(session: SessionDep):
     for wl in wordlists:
         definitions = []
         for word in wl.words:
-            eng_def = get_word_definition(word, session)
+            eng_def = _get_word_definition(word, session)
             definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
         results.append(WordlistResponse(id=wl.id, name=wl.name, words=definitions))
     return results
@@ -416,7 +416,7 @@ def create_wordlist(wordlist: WordlistCreate, session: SessionDep):
     session.refresh(new_wordlist)
     definitions = []
     for word in new_wordlist.words:
-        eng_def = get_word_definition(word, session)
+        eng_def = _get_word_definition(word, session)
         definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
     return WordlistResponse(id=new_wordlist.id, name=new_wordlist.name, words=definitions)
 
@@ -428,7 +428,7 @@ def get_wordlist(pk: int, session: SessionDep):
         raise HTTPException(status_code=404, detail="Wordlist not found")
     definitions = []
     for word in wl.words:
-        eng_def = get_word_definition(word, session)
+        eng_def = _get_word_definition(word, session)
         definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
     return WordlistResponse(id=wl.id, name=wl.name, words=definitions)
 
@@ -447,7 +447,7 @@ def update_wordlist(pk: int, wordlist: WordlistUpdate, session: SessionDep):
     session.refresh(wl)
     definitions = []
     for word in wl.words:
-        eng_def = get_word_definition(word, session)
+        eng_def = _get_word_definition(word, session)
         definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
     return WordlistResponse(id=wl.id, name=wl.name, words=definitions)
 
@@ -460,6 +460,11 @@ def delete_wordlist(pk: int, session: SessionDep):
     session.delete(wl)
     session.commit()
     return {"detail": "Wordlist deleted"}
+
+
+@app.get('/api/words/{word}', response_model=EnglishWordDefinition)
+def get_word_definition(word: str, session: SessionDep) -> EnglishWordDefinition:
+    return _get_word_definition(word, session)
 
 
 if not os.getenv('BACKEND_ENV', None) == 'dev':

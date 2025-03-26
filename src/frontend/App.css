@@ -2,7 +2,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
 }
 
 
@@ -13,18 +12,16 @@
   align-items: center;
   flex-direction: column;
   /* If you want it centered vertically as well */
-  height: 90vh;
+  /* height: 90vh; */
   width: 100%;
 }
 
-.app-container {
+.main-block {
   display: flex;
-  flex-direction: column;
-  width: 70%;
-  max-width: 1000px;
-  height: 100%;
-  /* Let it stretch within .main-container */
-  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 50px);
+  align-items: start;
 }
 
 
@@ -43,9 +40,10 @@
 }
 
 .chat-area {
-  display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 60%;
+  min-width: 500px;
+  display: flex;
 }
 
 .chat {
@@ -62,18 +60,59 @@
 }
 
 .navbar h3 {
-  margin: 0; /* Prevent heading from pushing things onto new line */
+  margin: 0;
+  /* Prevent heading from pushing things onto new line */
 }
 
 .navbar select {
   padding: 6px;
-  width: fit-content;          /* Adjusts width to content size */
-  max-width: 350px;            /* Maximum width constraint */
-  min-width: 200px;            /* Minimum width constraint */
+  width: fit-content;
+  /* Adjusts width to content size */
+  max-width: 350px;
+  /* Maximum width constraint */
+  min-width: 200px;
+  /* Minimum width constraint */
   box-sizing: border-box;
 }
 
 .navbar button {
   padding: 6px 12px;
   cursor: pointer;
+}
+
+.main-block {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 50px);
+  height: 100%;
+  /* border: 5px solid yellow; */
+}
+
+
+/* The black block on the right */
+.dictionary-area {
+  /* border: 5px solid black; */
+  height: 100%;
+  min-width: 350px;
+  flex: 1;
+  /* to attach to the top */
+  position: sticky;
+  align-self: flex-start;
+  top: 0;
+
+  overflow-y: scroll;
+  max-height: calc(100vh - 50px);
+}
+
+
+.left-area {
+  flex: 1;
+  flex-shrink: 2;
+
+}
+
+@media screen and (max-width: 900px) {
+  .left-area {
+    display: none;
+  }
 }
