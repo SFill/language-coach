@@ -8,10 +8,6 @@ const MessageInputWithToolbar = ({ onSend }) => {
   const [translatedText, setTranslatedText] = useState('');
   const textareaRef = useRef(null);
 
-  //  style states
-  const [collapsing, setCollapsing] = useState(false);
-  const collapseTimeoutRef = useRef(null); // Store timer ID
-
   // Auto-resize the textarea based on content
   useEffect(() => {
     if (textareaRef.current) {
@@ -30,40 +26,19 @@ const MessageInputWithToolbar = ({ onSend }) => {
     const end = textarea.selectionEnd;
     const sel = input.substring(start, end);
     console.log(end - start)
-
-    // If new text is selected, cancel any pending collapse timeout.
-    if (collapseTimeoutRef.current) {
-      clearTimeout(collapseTimeoutRef.current);
-      collapseTimeoutRef.current = null;
-    }
-
-    // If there is a selection, update immediately
     if (sel.length > 0) {
-      // Clear any collapsing flag
-      setCollapsing(false);
       setSelectedText(sel);
       setTranslatedText('');
-    } else if (selectedText) {
-      // No selection now, but we had text before → trigger collapse
-      setCollapsing(true);
-      setTimeout(() => {
-        setSelectedText('');
-        setTranslatedText('');
-        setCollapsing(false);
-      }, 600); // duration should match your CSS transition
     }
+
   };
 
   const handleTranslate = async (lang) => {
     if (!selectedText.trim()) return;
     const translation = await translateText(selectedText, lang);
-    setCollapsing(true);
-    setTimeout(() => {
-      setTranslatedText(translation);
-      setCollapsing(false);
-    }, 10); // duration should match your CSS transition
+    setTranslatedText(translation);
   };
-  
+
 
   // TODO this is very basic
   // now I want to have option to ask question and send it as note, so senind as note adds whole message to the chat
@@ -97,8 +72,25 @@ const MessageInputWithToolbar = ({ onSend }) => {
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
+
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onSelect={handleSelect}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
+          rows={1} // start small, it will grow
+          onFocus={(e) => {
+            if (selectedText || translatedText) {
+              setSelectedText('');
+              setTranslatedText('');
+              e.target.setSelectionRange(0, 0); // clear the selection
+            }
+          }}
+        />
         <div className="selection-toolbar">
-          <span className={`${(translatedText || selectedText) ? 'toolbar-text-filled' : ''} ${collapsing ? 'collapsing' : ''}`}>
+          <span>
             {decodeHTML(translatedText || selectedText)}
           </span>
           <div className="buttons">
@@ -110,15 +102,6 @@ const MessageInputWithToolbar = ({ onSend }) => {
           </div>
         </div>
 
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onSelect={handleSelect}
-          onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
-          rows={1} // start small, it will grow
-        />
       </div>
     </div>
   );

@@ -41,7 +41,8 @@
 .selection-toolbar {
   /* Make the toolbar sticky at the top */
   position: sticky;
-  top: 0;
+  /* top: 0; */
+  bottom: 0;
   z-index: 10;
   background-color: #f9f9f9;
   padding: 5px 10px;
@@ -59,17 +60,8 @@
 
 /* Display the selected text */
 .selection-toolbar span {
-  /* font-size: 15px; */
+  font-size: 15px;
   color: #333;
-  /* TODO add some transition */
-  /* transition: height 1s;  */
-  transition: font-size 300ms 300ms ease-in, opacity 300ms 0ms ease-in;
-  /* max-height: 17px;  */
-  display: block;         /* Ensures block-level behavior */
-  overflow: hidden;       /* Needed for max-height transitions */
-  font-size: 0px;
-  opacity: 0;
-  
   /* Let this span grow/shrink and wrap if needed */
   min-height: 17px;
   flex: 1 1 auto;
@@ -82,18 +74,6 @@
   margin-right: 10px;
   /* Space between text and buttons (on the same line) */
   margin-bottom: 10px;
-}
-
-.selection-toolbar span.toolbar-text-filled {
-  font-size: 17px;
-  opacity: 1;
-  transition: font-size 300ms 0ms ease-in, opacity 300ms 300ms ease-in;
-}
-
-.selection-toolbar span.collapsing {
-  font-size: 0px;
-  opacity: 0;
-  transition: font-size 300ms 300ms ease-in, opacity 300ms 0ms ease-in;
 }
 
 
