@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { translateText } from './api.js';
 import './ChatWindow.css';
+import remarkBreaks from 'remark-breaks'
 
 import downArrow from './assets/down-arrow.png'
 import rightArrow from './assets/right-arrow.png'
@@ -293,7 +294,7 @@ const ChatWindow = ({ messages }) => {
                     : {}
                 }
               >
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <ReactMarkdown remarkPlugins={[remarkGfm,remarkBreaks]}>
                   {msg.text}
                 </ReactMarkdown>
 

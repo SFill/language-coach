@@ -8,6 +8,10 @@ const MessageInputWithToolbar = ({ onSend }) => {
   const [translatedText, setTranslatedText] = useState('');
   const textareaRef = useRef(null);
 
+  //  style states
+  const [collapsing, setCollapsing] = useState(false);
+  const collapseTimeoutRef = useRef(null); // Store timer ID
+
   // Auto-resize the textarea based on content
   useEffect(() => {
     if (textareaRef.current) {
@@ -25,17 +29,48 @@ const MessageInputWithToolbar = ({ onSend }) => {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const sel = input.substring(start, end);
-    setSelectedText(sel);
-    setTranslatedText('');
+    console.log(end - start)
+
+    // If new text is selected, cancel any pending collapse timeout.
+    if (collapseTimeoutRef.current) {
+      clearTimeout(collapseTimeoutRef.current);
+      collapseTimeoutRef.current = null;
+    }
+
+    // If there is a selection, update immediately
+    if (sel.length > 0) {
+      // Clear any collapsing flag
+      setCollapsing(false);
+      setSelectedText(sel);
+      setTranslatedText('');
+    } else if (selectedText) {
+      // No selection now, but we had text before → trigger collapse
+      setCollapsing(true);
+      setTimeout(() => {
+        setSelectedText('');
+        setTranslatedText('');
+        setCollapsing(false);
+      }, 600); // duration should match your CSS transition
+    }
   };
 
   const handleTranslate = async (lang) => {
     if (!selectedText.trim()) return;
     const translation = await translateText(selectedText, lang);
-    setTranslatedText(translation);
+    setCollapsing(true);
+    setTimeout(() => {
+      setTranslatedText(translation);
+      setCollapsing(false);
+    }, 10); // duration should match your CSS transition
   };
+  
 
-  const handleSend = (isNote=false) => {
+  // TODO this is very basic
+  // now I want to have option to ask question and send it as note, so senind as note adds whole message to the chat
+  // ask question cuts out a selected message from the text area and send to specific endpoint, I will format this message with question answer
+  // delete my and his notes
+  // tab eq 4 intends
+  const handleSend = (isNote = false) => {
     if (!selectedText.trim()) return;
 
     onSend(selectedText, isNote);
@@ -48,22 +83,31 @@ const MessageInputWithToolbar = ({ onSend }) => {
     // Allow Enter to insert a newline; send message on Ctrl + Enter
     if (e.key === 'Enter' && e.ctrlKey) {
       e.preventDefault();
-      handleSend();
+      handleSend(isNote = true);
     }
   };
+
+  function decodeHTML(html) {
+    // to decode nbsp and etc
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+  }
 
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
         <div className="selection-toolbar">
-          <span style={{ marginRight: '10px' }}>
-            {translatedText || selectedText}
+          <span className={`${(translatedText || selectedText) ? 'toolbar-text-filled' : ''} ${collapsing ? 'collapsing' : ''}`}>
+            {decodeHTML(translatedText || selectedText)}
           </span>
-          <button onClick={() => handleTranslate('ru')}>ru</button>
-          <button onClick={() => handleTranslate('en')}>en</button>
-          <button onClick={() => handleTranslate('es')}>es</button>
-          <button onClick={handleSend}>Send</button>
-          <button onClick={()=> handleSend(true)}>Send as note</button>
+          <div className="buttons">
+            <button onClick={() => handleTranslate('ru')}>🇷🇺</button>
+            <button onClick={() => handleTranslate('en')}>🇺🇸</button>
+            <button onClick={() => handleTranslate('es')}>🇪🇸</button>
+            <button onClick={() => handleSend(false)}>Ask a question</button>
+            <button onClick={() => handleSend(true)}>Send as note</button>
+          </div>
         </div>
 
         <textarea

@@ -74,7 +74,7 @@ function App() {
         setCurrentChatId(chatId);
         setChatList((prev) => [...prev, newChat]);
       }
-
+      
       const botReply = await sendMessage(chatId, {'message': message, 'is_note':isNote });
       if (!botReply) return
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
