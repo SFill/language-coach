@@ -41,7 +41,7 @@
 .selection-toolbar {
   /* Make the toolbar sticky at the top */
   position: sticky;
-  top: 0;
+  bottom: 0;
   z-index: 10;
   background-color: #f9f9f9;
   padding: 5px 10px;

@@ -63,7 +63,7 @@ const MessageInputWithToolbar = ({ onSend }) => {
       setCollapsing(false);
     }, 10); // duration should match your CSS transition
   };
-  
+
 
   // TODO this is very basic
   // now I want to have option to ask question and send it as note, so senind as note adds whole message to the chat
@@ -97,6 +97,24 @@ const MessageInputWithToolbar = ({ onSend }) => {
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
+
+
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onSelect={handleSelect}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
+          rows={1} // start small, it will grow
+          onFocus={(e) => {
+            if (selectedText || translatedText) {
+              setSelectedText('');
+              setTranslatedText('');
+              e.target.setSelectionRange(0, 0); // clear the selection
+            }
+          }}
+        />
         <div className="selection-toolbar">
           <span className={`${(translatedText || selectedText) ? 'toolbar-text-filled' : ''} ${collapsing ? 'collapsing' : ''}`}>
             {decodeHTML(translatedText || selectedText)}
@@ -109,16 +127,6 @@ const MessageInputWithToolbar = ({ onSend }) => {
             <button onClick={() => handleSend(true)}>Send as note</button>
           </div>
         </div>
-
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onSelect={handleSelect}
-          onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
-          rows={1} // start small, it will grow
-        />
       </div>
     </div>
   );
