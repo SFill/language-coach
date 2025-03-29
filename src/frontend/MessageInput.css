@@ -64,6 +64,9 @@
   color: #333;
   /* Let this span grow/shrink and wrap if needed */
   min-height: 17px;
+  max-height: 40vh;
+  overflow-y: auto;
+
   flex: 1 1 auto;
   min-width: 0;
   /* Ensures flex shrinking works properly */
