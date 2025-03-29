@@ -69,12 +69,6 @@ export const translateText = async (text, target) => {
 
 
 // Get Chat details from GET /api/words/{word}
-export const getWordDefinition = async (word) => {
-  try {
-    const response = await api.get(`words/${word}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error loading chat:', error);
-    return null;
-  }
+export const getWordDefinition = (word) => {
+  return api.get(`words/${word}`).then((res) => res.data);
 };

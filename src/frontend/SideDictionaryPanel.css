@@ -1,0 +1,64 @@
+.side-dictionary-panel {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .side-dictionary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .close-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+  }
+  
+  .side-dictionary-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+  
+  .audio-button {
+    display: block;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    background: #f0f0f0;
+    border: none;
+    padding: 0.5rem 1rem;
+  }
+  
+  .dialect-info {
+    font-style: italic;
+    color: #888;
+  }
+  
+  .meaning {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .definition-detail {
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    border-left: 3px solid #ddd;
+  }
+  
+  .example {
+    margin: 0.25rem 0;
+    font-style: italic;
+  }
+  
+  .error-text {
+    color: red;
+  }
+  

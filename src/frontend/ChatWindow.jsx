@@ -7,8 +7,9 @@ import remarkBreaks from 'remark-breaks'
 
 import downArrow from './assets/down-arrow.png'
 import rightArrow from './assets/right-arrow.png'
+import imgDictionary from './assets/dictionary.png'
 
-const ChatWindow = ({ messages }) => {
+const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const containerRef = useRef(null);     // Outer container with position: relative
   const chatContainerRef = useRef(null);   // Scrollable chat window
 
@@ -248,6 +249,17 @@ const ChatWindow = ({ messages }) => {
     hideToolbar();
   };
 
+  const checkInDictionary = () => {
+    onCheckInDictionary(selectedText)
+  }
+
+  const showDictionaryButton = () => {
+    // const textToTranslate = selectedText;
+    // return !(textToTranslate.trim().split(' ').length > 1);
+    // probably will need to hide that latter
+    return true;
+  }
+
   const FOLD_THRESHOLD = 300; // Characters threshold to consider a message long
   const FOLDED_MAX_HEIGHT = '100px'; // Maximum height for a folded message
 
@@ -262,7 +274,6 @@ const ChatWindow = ({ messages }) => {
         ref={chatContainerRef}
         onMouseUp={handleSelection}
         onTouchEnd={handleSelection}
-        // onClick={handleClick}
       >
         {messages.map((msg, index) => {
           const isBot = msg.sender === 'bot';
@@ -294,7 +305,7 @@ const ChatWindow = ({ messages }) => {
                     : {}
                 }
               >
-                <ReactMarkdown remarkPlugins={[remarkGfm,remarkBreaks]}>
+                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
                   {msg.text}
                 </ReactMarkdown>
 
@@ -325,6 +336,20 @@ const ChatWindow = ({ messages }) => {
         <button onClick={() => handleTranslate('ru')}>ru</button>
         <button onClick={() => handleTranslate('en')}>en</button>
         <button onClick={() => handleTranslate('es')}>es</button>
+        {
+          showDictionaryButton() &&
+
+          (<button onClick={() => checkInDictionary()}
+            style={{
+              backgroundImage: `url(${imgDictionary})`,
+              backgroundSize: 'cover', // optional
+              width: '25px',            // optional
+              height: '25px',           // optional
+              border: 'none',           // optional
+              cursor: 'pointer',         // optional
+            }}
+          ></button>)
+        }
 
         {translatedNode && (
           <button onClick={handleRollback} style={{ color: 'red' }}>

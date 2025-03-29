@@ -6,8 +6,8 @@ import ReverseContext from './ReverseContext';
 import { fetchChats, fetchChatById, createNewChat, sendMessage } from './api';
 import './App.css';
 import WordLists from './WordLists';
-import DictionaryPanel from './DictionaryPanel'; // Import the new component
 import SideDictionaryPanel from './SideDictionaryPanel';
+import WordListsManager from './wordList/WordListManager';
 
 function App() {
   const [chatList, setChatList] = useState([]);
@@ -87,6 +87,11 @@ function App() {
     setShowDictionary(!showDictionary);
   };
 
+  const [dictionaryWord, setDictionaryWord] = useState(''); // Toggle state
+  const checkInDictionary = (word) => {
+    setDictionaryWord(word)
+  }
+
   return (
     <div className="main-container">
       <header>
@@ -106,15 +111,16 @@ function App() {
       <div className="main-block">
         <div className="left-area"></div>
         <div className="chat-area">
-          <ChatWindow messages={messages} />
+          <ChatWindow messages={messages} onCheckInDictionary={setDictionaryWord} />
           <MessageInput onSend={handleSend} />
 
           <ReverseContext />
           <WordLists />
+          <WordListsManager/>
         </div>
         <div className="dictionary-area">
-          {showDictionary && (
-            <SideDictionaryPanel word="home" />
+          {dictionaryWord && (
+            <SideDictionaryPanel word={dictionaryWord} onClose={()=>setDictionaryWord('')}/>
           )}
         </div>
 
