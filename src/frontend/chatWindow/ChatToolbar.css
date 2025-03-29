@@ -1,0 +1,25 @@
+.chat-toolbar {
+    position: absolute;
+}
+
+.chat-toolbar button {
+    margin-right: 5px;
+}
+
+.dictionary-button {
+    background-image: url('../assets/dictionary.png');
+    background-size: cover;
+    /* optional */
+    width: 25px;
+    /* optional */
+    height: 25px;
+    /* optional */
+    border: none;
+    /* optional */
+    cursor: pointer;
+    /* optional */
+}
+
+.rollback-button {
+    color: red;
+}

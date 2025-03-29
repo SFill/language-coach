@@ -1,0 +1,49 @@
+.chat-message {
+    max-width: 60%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.chat-message.user {
+    align-self: flex-end;
+    /* anchor on the right side */
+    background-color: #daf1ff;
+    /* your chosen color */
+}
+
+.chat-message.bot {
+    align-self: flex-start;
+    /* anchor on the left side */
+    max-width: 100%;
+}
+
+.chat-message ul,
+.chat-message ol {
+    margin: 0;
+    /* Remove default outer margins */
+    padding-left: 1.2em;
+    /* Keep some left indentation for bullets/numbers */
+}
+
+.chat-message li {
+    margin-bottom: 0;
+    /* Remove extra spacing between list items */
+    line-height: 1.2;
+    /* Optionally reduce line height for denser text */
+}
+
+.chat-message p {
+    margin: 0.5em 0;
+    /* Less top/bottom margin for a more compact look */
+}
+
+.fold-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}

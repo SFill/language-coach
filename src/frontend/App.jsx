@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ChatList from './ChatList';
-import ChatWindow from './ChatWindow';
+import ChatWindow from './chatWindow/ChatWindow';
 import MessageInput from './MessageInput';
 import ReverseContext from './ReverseContext';
 import { fetchChats, fetchChatById, createNewChat, sendMessage } from './api';
@@ -74,8 +74,8 @@ function App() {
         setCurrentChatId(chatId);
         setChatList((prev) => [...prev, newChat]);
       }
-      
-      const botReply = await sendMessage(chatId, {'message': message, 'is_note':isNote });
+
+      const botReply = await sendMessage(chatId, { 'message': message, 'is_note': isNote });
       if (!botReply) return
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
     } catch (error) {
@@ -88,9 +88,6 @@ function App() {
   };
 
   const [dictionaryWord, setDictionaryWord] = useState(''); // Toggle state
-  const checkInDictionary = (word) => {
-    setDictionaryWord(word)
-  }
 
   return (
     <div className="main-container">
@@ -116,11 +113,11 @@ function App() {
 
           <ReverseContext />
           <WordLists />
-          <WordListsManager/>
+          <WordListsManager />
         </div>
         <div className="dictionary-area">
           {dictionaryWord && (
-            <SideDictionaryPanel word={dictionaryWord} onClose={()=>setDictionaryWord('')}/>
+            <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />
           )}
         </div>
 
