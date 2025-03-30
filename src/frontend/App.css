@@ -20,36 +20,11 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 100px);
   align-items: start;
 }
 
 
-/* 4) The chat area expands to fill remaining space, 
-   and scrolls when content overflows */
-.chat-container {
-  flex: 1;
-  /* Fills all leftover vertical space */
-  overflow-y: auto;
-  /* Only the chat should scroll */
-  padding: 20px;
-  background: #f0f0f0;
-  min-height: 10%;
-  max-height: 70%;
-  border-radius: 2cap;
-}
-
-.chat-area {
-  flex-direction: column;
-  width: 60%;
-  min-width: 500px;
-  display: flex;
-}
-
-.chat {
-  display: flex;
-  flex-direction: row;
-}
 
 .navbar {
   display: flex;
@@ -57,62 +32,50 @@
   gap: 1rem;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  width: 50%;
+  justify-content: center;
 }
 
 .navbar h3 {
   margin: 0;
+  width: 200px;
   /* Prevent heading from pushing things onto new line */
 }
 
-.navbar select {
-  padding: 6px;
-  width: fit-content;
-  /* Adjusts width to content size */
-  max-width: 350px;
-  /* Maximum width constraint */
-  min-width: 200px;
-  /* Minimum width constraint */
-  box-sizing: border-box;
+.navbar .nav-links {
+  width: 200px;
+  display: flex;
+}
+
+.navbar .nav-links a {
+  min-width: 100px;
+  padding: 8px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: None;
+  text-align: center;
+  margin: 0 10px;
 }
 
 .navbar button {
-  padding: 6px 12px;
+  width: 100px;
+  padding: 8px;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.main-block {
+.navbar button:hover {
+  background-color: #0056b3;
+}
+
+.page {
   display: flex;
+  flex-direction: row;
   width: 100%;
-  min-height: calc(100vh - 50px);
-  height: 100%;
-  /* border: 5px solid yellow; */
-}
-
-
-/* The black block on the right */
-.dictionary-area {
-  /* border: 5px solid black; */
-  height: 100%;
-  min-width: 350px;
-  flex: 1;
-  /* to attach to the top */
-  position: sticky;
-  align-self: flex-start;
-  top: 0;
-
-  overflow-y: scroll;
-  max-height: calc(100vh - 50px);
-}
-
-
-.left-area {
-  flex: 1;
-  flex-shrink: 2;
-
-}
-
-@media screen and (max-width: 900px) {
-  .left-area {
-    display: none;
-  }
 }

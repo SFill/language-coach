@@ -12,7 +12,7 @@ const api = axios.create({
 export const fetchChats = async () => {
   try {
     const response = await api.get(`coach/chat/`);
-    return response.data.sort((a, b) => a.id - b.id);
+    return response.data;
   } catch (error) {
     console.error('Error fetching chats:', error);
     return [];

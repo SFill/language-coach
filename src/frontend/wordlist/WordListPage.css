@@ -1,0 +1,17 @@
+.word-list-page{
+    min-height: 500px;
+}
+
+.word-list-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    /* max-width: 600px; */
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.word-list-page-container > div {
+    width: 100%;
+}

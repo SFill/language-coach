@@ -107,7 +107,7 @@ def get_chat_list(
     offset: int = 0,
     limit: Annotated[int, Query(le=100)] = 100,
 ):
-    chats = session.exec(select(Chat).limit(limit).offset(offset)).all()
+    chats = session.exec(select(Chat).order_by(Chat.id.desc()).limit(limit).offset(offset)).all()
     return chats
 
 

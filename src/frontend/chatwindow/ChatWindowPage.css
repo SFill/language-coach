@@ -1,0 +1,35 @@
+/* The black block on the right */
+.dictionary-area {
+    /* border: 5px solid black; */
+    height: 100%;
+    min-width: 350px;
+    flex: 1;
+    /* to attach to the top */
+    position: sticky;
+    align-self: flex-start;
+    top: 0;
+
+    overflow-y: scroll;
+    max-height: calc(100vh - 50px);
+}
+
+
+.left-area {
+    flex: 1;
+    flex-shrink: 2;
+
+}
+
+@media screen and (max-width: 900px) {
+    .left-area {
+        display: none;
+    }
+}
+
+
+.chat-window-page {
+    flex-direction: column;
+    width: 60%;
+    min-width: 500px;
+    display: flex;
+}
