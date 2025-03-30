@@ -50,10 +50,8 @@ function ChatWindowPage({ currentChatId }) {
                 <ChatWindow messages={messages} onCheckInDictionary={setDictionaryWord} />
                 <MessageInput onSend={handleSend} />
             </div>
-            <div className="dictionary-area">
-                {dictionaryWord && (
-                    <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />
-                )}
+            <div className={"dictionary-area" + (dictionaryWord ? "" : " hidden")}>
+                <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />
             </div>
         </div>
 
