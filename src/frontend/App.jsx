@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router';
 import ChatListPage from './ChatListPage';
 import ChatWindowPage from './chatwindow/ChatWindowPage';
 import WordListPage from './wordlist/WordListPage';
-import { fetchChats, createNewChat } from './api';
+import { fetchChats, createNewChat, deleteChat } from './api';
 import './App.css';
 
 function App() {
@@ -36,8 +36,9 @@ function App() {
     }
   };
 
-  const deleteChat = (chatId) => {
+  const onDeleteChat = async (chatId) => {
     if (!chatId) return;
+    await deleteChat(chatId)
     const updatedChats = chatList.filter(chat => chat.id !== chatId);
     setChatList(updatedChats);
     if (currentChatId === chatId) {
@@ -67,17 +68,17 @@ function App() {
           <Routes>
             <Route path="/" element={<ChatWindowPage currentChatId={currentChatId} />} />
             <Route path="/wordlist" element={<WordListPage />} />
-            <Route 
-              path="/chatlist" 
+            <Route
+              path="/chatlist"
               element={
-                <ChatListPage 
-                  chatList={chatList} 
-                  currentChatId={currentChatId} 
-                  loadChat={handleChatSelect} 
-                  startNewChat={startNewChat} 
-                  deleteChat={deleteChat}
+                <ChatListPage
+                  chatList={chatList}
+                  currentChatId={currentChatId}
+                  loadChat={handleChatSelect}
+                  startNewChat={startNewChat}
+                  deleteChat={onDeleteChat}
                 />
-              } 
+              }
             />
           </Routes>
         </div>

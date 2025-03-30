@@ -30,6 +30,17 @@ export const fetchChatById = async (id) => {
   }
 };
 
+// Delete Chat at DELETE /api/coach/chat/{id}
+export const deleteChat = async (id) => {
+  try {
+    const response = await api.delete(`coach/chat/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error loading chat:', error);
+    return null;
+  }
+};
+
 // Create a new chat using POST /api/coach/chat
 export const createNewChat = async () => {
   try {

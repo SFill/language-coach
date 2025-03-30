@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import requests
-from sqlmodel import SQLModel, Field, Session, create_engine, select, update, Column, JSON
+from sqlmodel import SQLModel, Field, Session, create_engine, select, update, Column, JSON, delete
 from pydantic import BaseModel
 from typing import Annotated
 from openai import OpenAI
@@ -21,7 +21,7 @@ class Chat(SQLModel, table=True):
 
 class Message(BaseModel):
     message: str
-    is_note: bool = False 
+    is_note: bool = False
 
 
 # CREATE TABLE IF NOT EXISTS reverse_index (
@@ -117,6 +117,15 @@ def get_chat(session: SessionDep, id: int):
     if not chat:
         raise HTTPException(status_code=404, detail="Chat not found")
     return chat
+
+
+@app.delete('/api/coach/chat/{id}')
+def delete_chat(session: SessionDep, id: int):
+
+    query = delete(Chat).where(Chat.id == id)
+    session.exec(query)
+    session.commit()
+    return {'status': 'ok'}
 
 
 @app.post('/api/coach/chat/{id}/message')
