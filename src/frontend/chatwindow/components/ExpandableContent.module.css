@@ -1,0 +1,28 @@
+.expandableContainer {
+    position: relative;
+}
+
+.expandableContainer ul,
+.expandableContainer ol {
+    margin: 0;
+    padding-left: 1.2em;
+}
+
+.expandableContainer li {
+    margin-bottom: 0;
+    line-height: 1.2;
+}
+
+.expandableContainer p {
+    margin: 0.5em 0;
+}
+
+.foldGradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}

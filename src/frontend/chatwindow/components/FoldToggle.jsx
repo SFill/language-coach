@@ -1,6 +1,6 @@
 import React from 'react';
-import downArrow from '../assets/down-arrow.png';
-import rightArrow from '../assets/right-arrow.png';
+import downArrow from '../../assets/down-arrow.png';
+import rightArrow from '../../assets/right-arrow.png';
 import './FoldToggle.css';
 
 const FoldToggle = ({ isExpanded, onClick }) => {

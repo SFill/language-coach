@@ -23,6 +23,7 @@
   position: relative;
   width: 100%;
   /* NO max-height, so it can grow with content */
+  /* margin-bottom: 50px; */
 }
 
 
