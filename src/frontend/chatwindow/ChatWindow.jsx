@@ -5,6 +5,7 @@ import './ChatWindow.css';
 
 const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const chatContainerRef = useRef(null);
+  const toolbarRef = useRef(null);
 
   // Create refs for each ChatMessage (using index as key for simplicity)
   const messageRefs = useRef([]);
@@ -15,6 +16,9 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const [selectedText, setSelectedText] = useState('');
   const [activeIsTranslated, setActiveIsTranslated] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
+  
+  // Flag to track if mousedown happened on selected text
+  const ignoreNextMouseUp = useRef(false);
 
   useEffect(() => {
     // Scroll to bottom when new messages arrive
@@ -22,6 +26,76 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    // Handle mousedown to detect clicks on selected text
+    const handleGlobalMouseDown = (e) => {
+      // Check if click happened inside the toolbar
+      if (toolbarRef.current && toolbarRef.current.contains(e.target)) {
+        // Don't set the ignore flag if clicking within toolbar
+        ignoreNextMouseUp.current = false;
+        return;
+      }
+      
+      const selection = window.getSelection();
+      
+      // If there's an active selection when mousedown happens,
+      // we'll ignore the subsequent mouseup to prevent toolbar from reappearing
+      if (selection && !selection.isCollapsed) {
+        ignoreNextMouseUp.current = true;
+      } else {
+        ignoreNextMouseUp.current = false;
+      }
+    };
+
+    // Single global mouseup handler for event delegation
+    const handleGlobalMouseUp = (e) => {
+      // Check if click happened inside the toolbar
+      if (toolbarRef.current && toolbarRef.current.contains(e.target)) {
+        // Don't hide the toolbar if clicking within it
+        return;
+      }
+      
+      // If this mouseup should be ignored (because mousedown happened on selected text)
+      if (ignoreNextMouseUp.current) {
+        ignoreNextMouseUp.current = false;
+        // Hide toolbar if it was showing
+        if (isToolbarVisible) {
+          setIsToolbarVisible(false);
+        }
+        return;
+      }
+
+      // Check if the selection is within any of our message components
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) {
+        // No valid selection, ignore
+        return;
+      }
+
+      // Find the message component that contains this selection
+      for (let i = 0; i < messageRefs.current.length; i++) {
+        const messageRef = messageRefs.current[i];
+        if (messageRef && messageRef.current && messageRef.current.checkSelectionWithinContainer) {
+          if (messageRef.current.checkSelectionWithinContainer()) {
+            // This message contains the selection, call its handler
+            messageRef.current.handleGlobalSelection(e);
+            return; // Once we've found a match, don't continue checking
+          }
+        }
+      }
+    };
+
+    // Add the single global listeners
+    document.addEventListener('mousedown', handleGlobalMouseDown);
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    
+    // Clean up
+    return () => {
+      document.removeEventListener('mousedown', handleGlobalMouseDown);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [messageRefs.current.length, isToolbarVisible]); // Depend on isToolbarVisible to properly update the closure
 
   // Callback from ChatMessage when text is selected or a translated span is clicked.
   // The extra "isTranslated" flag indicates if the selection already has a translation.
@@ -42,7 +116,6 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     });
 
     // Show the toolbar
-    console.log("handleTextSelect:setIsToolbarVisible(true);")
     setIsToolbarVisible(true);
   };
 
@@ -90,6 +163,7 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
       </div>
 
       <ChatToolbar
+        toolbarRef={toolbarRef}
         style={toolbarStyle}
         handleTranslate={handleToolbarTranslate}
         handleRollback={handleToolbarRollback}
@@ -97,7 +171,7 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         checkInDictionary={handleDictionaryLookup}
         showRollback={activeIsTranslated}
         isVisible={isToolbarVisible}
-        setIsVisible={setIsToolbarVisible}
+
       />
     </div>
   );

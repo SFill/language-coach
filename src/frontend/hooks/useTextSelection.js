@@ -77,33 +77,25 @@ export const useTextSelection = (onSelectionChange) => {
   };
 
   /**
-   * Global mouseup handler
+   * Check if the selection is within this component's container
    */
-  useEffect(() => {
-    const globalMouseUpHandler = (e) => {
-      console.log(e)
-      const selection = window.getSelection();
-      if (
-        selection &&
-        !selection.isCollapsed &&
-        containerRef.current &&
-        (containerRef.current.contains(selection.anchorNode) && containerRef.current.contains(selection.focusNode))
-      ) {
-        handleSelection(e);
-      }
-    };
-
-    document.addEventListener('mouseup', globalMouseUpHandler);
-    return () => {
-      document.removeEventListener('mouseup', globalMouseUpHandler);
-    };
-  }, [onSelectionChange]);
+  const checkSelectionWithinContainer = () => {
+    const selection = window.getSelection();
+    return (
+      selection &&
+      !selection.isCollapsed &&
+      containerRef.current &&
+      containerRef.current.contains(selection.anchorNode) &&
+      containerRef.current.contains(selection.focusNode)
+    );
+  };
 
   return {
     containerRef,
     currentRange,
     selectedText,
     handleSelection,
+    checkSelectionWithinContainer,
     findTranslatedParent
   };
 };

@@ -24,7 +24,6 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect }, ref) =>
         if (!target || target.nodeType !== 1) return;
         
         e.stopPropagation();
-        debugger;
         const isTranslated = target.getAttribute('data-translated') === 'true';
         if (isTranslated) {
             e.stopPropagation();
@@ -40,14 +39,19 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect }, ref) =>
     }, [onTextSelect, setTranslatedNode]);
 
     // Set up text selection handling
-    const { containerRef, currentRange, selectedText, handleSelection } =
-        useTextSelection((rect, text, isTranslated) => {
-            if (onTextSelect) {
-                onTextSelect(rect, text, isTranslated);
-            }
-        });
+    const { 
+        containerRef, 
+        currentRange, 
+        selectedText, 
+        handleSelection,
+        checkSelectionWithinContainer
+    } = useTextSelection((rect, text, isTranslated) => {
+        if (onTextSelect) {
+            onTextSelect(rect, text, isTranslated);
+        }
+    });
 
-    // Expose translation methods to parent via ref
+    // Expose methods to handle selection and translation to parent via ref
     React.useImperativeHandle(ref, () => ({
         handleTranslate: async (lang) => {
             if (translatedNode) {
@@ -64,13 +68,18 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect }, ref) =>
                 revertTranslation(translatedNode);
                 setTranslatedNode(null);
             }
-        }
+        },
+        // New method for the delegated mouseup handler
+        handleGlobalSelection: (e) => {
+            handleSelection(e);
+        },
+        // Expose the check method to determine if selection is in this component
+        checkSelectionWithinContainer
     }));
 
     return (
         <div
             ref={containerRef}
-            onTouchEnd={handleSelection}
             onClick={handleTranslatedClick}
         >
             <MarkdownContent content={content} />

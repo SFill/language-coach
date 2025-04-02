@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import './ChatToolbar.css';
 
 const ChatToolbar = ({ 
+  toolbarRef,
   style, 
   handleTranslate, 
   handleRollback, 
@@ -9,59 +10,7 @@ const ChatToolbar = ({
   checkInDictionary, 
   showRollback,
   isVisible,
-  setIsVisible
 }) => {
-  const toolbarRef = useRef(null);
-  
-  useEffect(() => {
-    // Global click handler
-    const handleGlobalClick = (e) => {
-      if (!toolbarRef.current) return;
-      
-      // Don't close if clicking on toolbar itself
-      if (toolbarRef.current.contains(e.target)) {
-        return;
-      }
-      
-      
-      // Don't close if clicking on a translated span
-      const isTranslatedSpan = isClickOnTranslatedText(e.target);
-      if (isTranslatedSpan) {
-        return;
-      }
-      
-      // Hide toolbar for all other clicks
-      setIsVisible(false);
-    };
-    
-    // Add global listener when toolbar is visible
-    if (isVisible) {
-      document.addEventListener('mouseup', handleGlobalClick);
-    }
-    
-    // Clean up
-    return () => {
-      document.removeEventListener('mouseup', handleGlobalClick);
-    };
-  }, [isVisible, setIsVisible]);
-  
-  // Helper to check if click is on translated text
-  const isClickOnTranslatedText = (element) => {
-    let current = element;
-    
-    // Walk up the DOM tree to find translated spans
-    while (current) {
-      if (
-        current.tagName === 'SPAN' && 
-        current.getAttribute('data-translated') === 'true'
-      ) {
-        return true;
-      }
-      current = current.parentElement;
-    }
-    
-    return false;
-  };
   
   const onClickHandler = (e) => {
     e.stopPropagation();
