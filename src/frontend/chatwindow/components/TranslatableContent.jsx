@@ -19,11 +19,12 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect }, ref) =>
 
     // Handle when a translated span is clicked
     const handleTranslatedClick = useCallback((e) => {
-        e.stopPropagation();
         const target = e.target.closest('span[data-translated]');
 
         if (!target || target.nodeType !== 1) return;
-
+        
+        e.stopPropagation();
+        debugger;
         const isTranslated = target.getAttribute('data-translated') === 'true';
         if (isTranslated) {
             e.stopPropagation();

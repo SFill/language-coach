@@ -81,12 +81,13 @@ export const useTextSelection = (onSelectionChange) => {
    */
   useEffect(() => {
     const globalMouseUpHandler = (e) => {
+      console.log(e)
       const selection = window.getSelection();
       if (
         selection &&
         !selection.isCollapsed &&
         containerRef.current &&
-        containerRef.current.contains(selection.anchorNode)
+        (containerRef.current.contains(selection.anchorNode) && containerRef.current.contains(selection.focusNode))
       ) {
         handleSelection(e);
       }
