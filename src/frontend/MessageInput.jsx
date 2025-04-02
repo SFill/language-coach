@@ -53,11 +53,14 @@ const MessageInputWithToolbar = ({ onSend }) => {
   };
 
   const handleSend = (isNote = false) => {
+    if (isNote) {
+      setInput('');
+      onSend(input, isNote);
+      return
+    }
     if (!selectedText.trim()) return;
 
     onSend(selectedText, isNote);
-
-    if (isNote) setInput('');
     setSelectedText('');
     setTranslatedText('');
   };
@@ -166,13 +169,13 @@ const MessageInputWithToolbar = ({ onSend }) => {
           onKeyDown={handleKeyDown}
           placeholder="Type your message... (Ctrl+B for bold, Ctrl+I for italic)"
           rows={1} // start small, it will grow
-          onFocus={(e) => {
-            if (selectedText || translatedText) {
-              setSelectedText('');
-              setTranslatedText('');
-              e.target.setSelectionRange(0, 0); // clear the selection
-            }
-          }}
+          // onFocus={(e) => {
+          //   if (selectedText || translatedText) {
+          //     setSelectedText('');
+          //     setTranslatedText('');
+          //     e.target.setSelectionRange(0, 0); // clear the selection
+          //   }
+          // }}
         />
         <div className="selection-toolbar">
           <span>
