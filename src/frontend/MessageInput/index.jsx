@@ -145,7 +145,15 @@ const MessageInput = ({ onSend }) => {
 
   return (
     <div className="message-input">
+
       <div className="text-area-with-toolbar">
+        <div className="selection-toolbar-div ">
+          <SelectionToolbar
+            displayText={displayText}
+            onTranslate={handleTranslate}
+            onSend={handleSendMessage}
+          />
+        </div>
         <TextEditor
           value={input}
           onChange={handleChange}
@@ -159,14 +167,10 @@ const MessageInput = ({ onSend }) => {
           textareaRef={textareaRef}
         />
 
-        <SelectionToolbar
-          displayText={displayText}
-          onTranslate={handleTranslate}
-          onSend={handleSendMessage}
-        />
+
       </div>
 
-      <CaretPositionDisplay caretInfo={caretInfo} />
+      {/* <CaretPositionDisplay caretInfo={caretInfo} /> */}
     </div>
   );
 };

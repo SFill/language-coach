@@ -20,12 +20,12 @@ const useTextSelection = (text, updateCaretInfo) => {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const sel = text.substring(start, end);
-    
+
     if (sel.length > 0) {
       setSelectedText(sel);
       setTranslatedText('');
     }
-    
+
     updateCaretInfo();
   }, [text, updateCaretInfo]);
 
@@ -34,7 +34,7 @@ const useTextSelection = (text, updateCaretInfo) => {
    */
   const handleTranslate = useCallback(async (lang) => {
     if (!selectedText.trim()) return;
-    
+
     try {
       const translation = await translateText(selectedText, lang);
       setTranslatedText(translation);
@@ -57,12 +57,13 @@ const useTextSelection = (text, updateCaretInfo) => {
    */
   const decodeHTML = useCallback((html) => {
     if (!html) return '';
-    
+
     // Use textarea trick to decode HTML entities
     const txt = document.createElement('textarea');
     txt.innerHTML = html;
     return txt.value;
   }, []);
+
 
   return {
     selectedText,

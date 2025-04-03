@@ -71,6 +71,12 @@ const useKeyboardShortcuts = (
       
       // For arrow keys, we need special handling to ensure VS Code-like scrolling
       if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        // because it's annoying
+        if ((e.key === "ArrowUp" || e.key === "ArrowDown") && !e.shiftKey ){
+          clearSelection();
+        }
+        
+
         const currentPosition = textarea.selectionStart;
         
         // Let the default browser behavior happen first

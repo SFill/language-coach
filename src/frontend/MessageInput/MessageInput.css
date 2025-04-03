@@ -24,8 +24,13 @@
   position: relative;
   width: 100%;
   /* Fixed height container for textarea */
-  height: 300px;
+  height: 500px;
 }
+
+.selection-toolbar-div {
+  min-height: 65px;
+}
+
 
 /* VS Code-like textarea with fixed height and scrolling */
 .vs-code-textarea {
@@ -57,10 +62,10 @@
 
 /* Toolbar that appears when text is selected */
 .selection-toolbar {
-  /* Make the toolbar sticky at the top */
-  position: sticky;
-  /* top: 0; */
-  bottom: 0;
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  top: 0;
   z-index: 10;
   background-color: #f9f9f9;
   padding: 5px 10px;
