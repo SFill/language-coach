@@ -14,3 +14,29 @@
     align-self: flex-start;
     max-width: 100%;
 }
+
+
+.chatMessage code {
+    white-space: wrap;
+}
+
+
+.chatMessage ul,
+.chatMessage ol {
+    margin: 0;
+    /* Remove default outer margins */
+    padding-left: 1.2em;
+    /* Keep some left indentation for bullets/numbers */
+}
+
+.chatMessage li {
+    margin-bottom: 0;
+    /* Remove extra spacing between list items */
+    line-height: 1.2;
+    /* Optionally reduce line height for denser text */
+}
+
+.chatMessage p {
+    margin: 0.5em 0;
+    /* Less top/bottom margin for a more compact look */
+}

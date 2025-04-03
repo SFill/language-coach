@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ChatWindow from './ChatWindow';
-import MessageInput from '../MessageInput';
+import MessageInput from '../MessageInput/index';
 import SideDictionaryPanel from '../SideDictionaryPanel';
 import { fetchChatById, sendMessage } from '../api';
 import './ChatWindowPage.css';
