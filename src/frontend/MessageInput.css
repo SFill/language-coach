@@ -6,6 +6,7 @@
   gap: 8px;
   width: 100%;
   padding-top: 10px;
+  position: relative;
 }
 
 /* The Send button */
@@ -22,20 +23,36 @@
 .text-area-with-toolbar {
   position: relative;
   width: 100%;
-  /* NO max-height, so it can grow with content */
-  /* margin-bottom: 50px; */
+  /* Fixed height container for textarea */
+  height: 300px;
 }
 
-
-.text-area-with-toolbar textarea {
+/* VS Code-like textarea with fixed height and scrolling */
+.vs-code-textarea {
   box-sizing: border-box;
   resize: none;
-  overflow: hidden;
   width: 100%;
   font-size: 1rem;
   padding: 8px;
-  min-height: 40px;
-  /* smaller min-height, it will expand */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  line-height: 20px; /* Match lineHeight in JS */
+  white-space: pre-wrap;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Caret position indicator (line, column) */
+.caret-position {
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  font-size: 12px;
+  color: #666;
+  background-color: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
 /* Toolbar that appears when text is selected */
@@ -58,7 +75,6 @@
   /* Vertically center items in their row */
 }
 
-
 /* Display the selected text */
 .selection-toolbar span {
   font-size: 15px;
@@ -79,7 +95,6 @@
   /* Space between text and buttons (on the same line) */
   margin-bottom: 10px;
 }
-
 
 /* Style for toolbar buttons */
 .selection-toolbar button {
