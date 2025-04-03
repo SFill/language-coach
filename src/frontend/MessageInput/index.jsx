@@ -92,8 +92,6 @@ const MessageInput = ({ onSend }) => {
     handleSendMessage
   );
 
-
-
   // Handle mouse events
   const handleMouseUp = useCallback(() => {
     // When clicking to position the cursor, we need to update both
@@ -142,12 +140,10 @@ const MessageInput = ({ onSend }) => {
     textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, []);
 
-
   return (
     <div className="message-input">
-
       <div className="text-area-with-toolbar">
-        <div className="selection-toolbar-div ">
+        <div className="selection-toolbar-div">
           <SelectionToolbar
             displayText={displayText}
             onTranslate={handleTranslate}
@@ -166,11 +162,7 @@ const MessageInput = ({ onSend }) => {
           onFocus={handleFocus}
           textareaRef={textareaRef}
         />
-
-
       </div>
-
-      {/* <CaretPositionDisplay caretInfo={caretInfo} /> */}
     </div>
   );
 };

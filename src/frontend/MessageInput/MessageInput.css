@@ -25,6 +25,7 @@
   width: 100%;
   /* Fixed height container for textarea */
   height: 500px;
+  margin-bottom: 80px;
 }
 
 .selection-toolbar-div {
@@ -42,7 +43,8 @@
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  line-height: 20px; /* Match lineHeight in JS */
+  line-height: 20px;
+  /* Match lineHeight in JS */
   white-space: pre-wrap;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -75,31 +77,45 @@
 
   /* Key properties for wrapping */
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   /* Vertically center items in their row */
+  flex-direction: column;
 }
 
-/* Display the selected text */
+/* Add this to your MessageInput.css file */
+
+/* Modify the span in the selection toolbar to truncate text */
 .selection-toolbar span {
   font-size: 15px;
   color: #333;
-  /* Let this span grow/shrink and wrap if needed */
   min-height: 17px;
   max-height: 40vh;
   overflow-y: auto;
 
   flex: 1 1 auto;
   min-width: 0;
-  /* Ensures flex shrinking works properly */
-  white-space: normal;
-  /* Allow text to wrap */
-  word-wrap: break-word;
-  /* Break long words if necessary */
+  white-space: nowrap;
+  /* Change from normal to nowrap */
+  overflow: hidden;
+  /* Add to hide overflowing text */
+  text-overflow: ellipsis;
+  /* Add to show ellipsis for truncated text */
+
   margin-right: 10px;
-  /* Space between text and buttons (on the same line) */
-  margin-bottom: 10px;
+
+  /* Add transition for smooth hover effect */
+  transition: white-space 0.3s ease, max-height 0.3s ease;
 }
+
+/* On hover, show the full text */
+.selection-toolbar:hover span {
+  white-space: normal;
+  /* Allow text to wrap on hover */
+  overflow-y: auto;
+  /* Enable scrolling if text is very long */
+  max-height: 40vh;
+  /* Set max height for very long text */
+}
+
 
 /* Style for toolbar buttons */
 .selection-toolbar button {
@@ -112,6 +128,7 @@
   border-radius: 3px;
   font-size: 14px;
   transition: background-color 0.2s ease;
+  margin-bottom: 10px;
 }
 
 /* Button container */
