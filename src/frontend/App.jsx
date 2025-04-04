@@ -23,9 +23,13 @@ function AppContent() {
   const navigate = useNavigate(); // React Router's navigate function
   const location = useLocation(); // Get current location
 
+  useEffect(()=>{
+    // load once for navbar mount, refresh when changes
+    loadChats();
+  }, [])
+
   // Extract chatId from location pathname instead of using useParams
   useEffect(() => {
-    loadChats();
 
     if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname == '\/') {
       // Extract chatId from location pathname using regex

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import ChatWindow from './ChatWindow';
 import MessageInput from '../MessageInput/index';
@@ -13,16 +13,31 @@ function ChatWindowPage({ onChatCreated }) {
     const [dictionaryWord, setDictionaryWord] = useState('');
     const [activeChatId, setActiveChatId] = useState(chatId);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
+    
+    // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
+    const isLoadingChat = useRef(false);
 
     useEffect(() => {
+        // Set chatId as the active chat when it changes from URL
         if (chatId) {
-            loadChat(chatId);
             setActiveChatId(chatId);
         }
     }, [chatId]);
 
+    // Separate effect to handle loading chat data when activeChatId changes
+    useEffect(() => {
+        if (activeChatId && !isLoadingChat.current) {
+            loadChat(activeChatId);
+        }
+    }, [activeChatId]);
+
     const loadChat = async (id) => {
+        if (isLoadingChat.current) return;
+        
         try {
+            isLoadingChat.current = true;
+            console.log('Loading chat:', id); // Debug log
+            
             const chatData = await fetchChatById(id);
             if (chatData) {
                 setMessages(
@@ -34,6 +49,8 @@ function ChatWindowPage({ onChatCreated }) {
             }
         } catch (error) {
             console.error('Error loading chat:', error);
+        } finally {
+            isLoadingChat.current = false;
         }
     };
 
