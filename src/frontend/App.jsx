@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate, useParams, useLocation } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router'; // Keep using 'react-router' if that's what's available
 import ChatListPage from './ChatListPage';
 import ChatWindowPage from './chatwindow/ChatWindowPage';
 import WordListPage from './wordlist/WordListPage';
-import { fetchChats, createNewChat, deleteChat } from './api';
+import { fetchChats, deleteChat } from './api';
 import './App.css';
 
 // Main App component to set up routes
@@ -18,22 +18,37 @@ function App() {
 // Content component that has access to router hooks
 function AppContent() {
   const [chatList, setChatList] = useState([]);
+  const [currentChatName, setCurrentChatName] = useState(null);
   const [currentChatId, setCurrentChatId] = useState(null);
   const navigate = useNavigate(); // React Router's navigate function
   const location = useLocation(); // Get current location
 
-  // Get chatId from URL if we're on a chat page
-  const params = useParams();
-  const chatIdFromUrl = params.chatId;
-
+  // Extract chatId from location pathname instead of using useParams
   useEffect(() => {
     loadChats();
 
-    // If we have a chatId in the URL, set it as current
-    if (chatIdFromUrl) {
-      setCurrentChatId(chatIdFromUrl);
+    if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname == '\/') {
+      // Extract chatId from location pathname using regex
+      const match = location.pathname.match(/\/chat\/(\d+)/);
+      const chatIdFromPath = match ? parseInt(match[1]) : null;
+      // set it, null if it's a default page
+      setCurrentChatId(chatIdFromPath);
     }
-  }, [chatIdFromUrl]);
+
+  }, [location.pathname]);
+
+  // Handle selection when chatList changes
+  useEffect(() => {
+    let foundChatName = null;
+    if (chatList.length > 0 && currentChatId) {
+      const currentChat = chatList.find(chat => chat.id === currentChatId);
+
+      if (currentChat) {
+        foundChatName = currentChat.name
+      }
+    }
+    setCurrentChatName(foundChatName)
+  }, [chatList, currentChatId]);
 
   const loadChats = async () => {
     const chats = await fetchChats();
@@ -76,14 +91,12 @@ function AppContent() {
     }
   };
 
-  const currentChat = chatList.find(chat => chat.id === currentChatId);
-  const currentChatName = currentChat ? currentChat.name : "Select Chat";
 
   return (
     <div className="main-container">
       <nav className="navbar">
         <h3 onClick={handleChatNameClick} style={{ cursor: 'pointer', color: 'inherit' }}>
-          {currentChatName}
+          {currentChatName || "Select Chat"}
         </h3>
         <div className="nav-links">
           <Link to="/">New chat</Link>
