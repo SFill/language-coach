@@ -21,14 +21,14 @@ function AppContent() {
   const [currentChatId, setCurrentChatId] = useState(null);
   const navigate = useNavigate(); // React Router's navigate function
   const location = useLocation(); // Get current location
-  
+
   // Get chatId from URL if we're on a chat page
   const params = useParams();
   const chatIdFromUrl = params.chatId;
 
   useEffect(() => {
     loadChats();
-    
+
     // If we have a chatId in the URL, set it as current
     if (chatIdFromUrl) {
       setCurrentChatId(chatIdFromUrl);
@@ -44,16 +44,6 @@ function AppContent() {
     setCurrentChatId(chatId);
     // Navigate without page reload
     navigate(`/chat/${chatId}`);
-  };
-
-  const startNewChat = async () => {
-    const newChat = await createNewChat();
-    if (newChat) {
-      setCurrentChatId(newChat.id);
-      setChatList(prev => [...prev, newChat]);
-      // Navigate to the new chat without page reload
-      navigate(`/chat/${newChat.id}`);
-    }
   };
 
   const onDeleteChat = async (chatId) => {
@@ -103,17 +93,17 @@ function AppContent() {
       <div className="main-block">
         <Routes>
           {/* Root path directly shows ChatWindowPage, no redirection */}
-          <Route 
-            path="/" 
-            element={<ChatWindowPage key={location.pathname}/>} 
+          <Route
+            path="/"
+            element={<ChatWindowPage key={location.pathname} />}
           />
-          
+
           {/* Individual chat route with path parameter */}
-          <Route 
-            path="/chat/:chatId" 
-            element={<ChatWindowPage key={location.pathname} />} 
+          <Route
+            path="/chat/:chatId"
+            element={<ChatWindowPage key={location.pathname} />}
           />
-          
+
           <Route path="/wordlist" element={<WordListPage />} />
           <Route
             path="/chatlist"
@@ -122,7 +112,6 @@ function AppContent() {
                 chatList={chatList}
                 currentChatId={currentChatId}
                 loadChat={handleChatSelect}
-                startNewChat={startNewChat}
                 deleteChat={onDeleteChat}
               />
             }

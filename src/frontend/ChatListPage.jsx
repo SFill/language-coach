@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import ChatListView from './ChatListView';
 
-const ChatListPage = ({ chatList, currentChatId, loadChat, startNewChat, deleteChat }) => {
+const ChatListPage = ({ chatList, currentChatId, loadChat, deleteChat }) => {
   const navigate = useNavigate();
 
   const handleSelect = (chatId) => {
