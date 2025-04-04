@@ -16,7 +16,7 @@ export function areCloseMatches(phraseA, phraseB) {
     // Count tokens in the intersection
     const intersection = new Set([...tokensA].filter(x => tokensB.has(x)));
 
-    if (tokensA.size == 1 || tokensB.size == 1) {
+    if (tokensB.size == 1) {
         // one word in phrase
         return intersection.size > 0
     }

@@ -1,25 +1,130 @@
 .chat-toolbar {
     position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
 }
 
 .chat-toolbar button {
     margin-right: 5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.chat-toolbar button:hover {
+    background-color: #e8e8e8;
 }
 
 .dictionary-button {
     background-image: url('../assets/dictionary.png');
     background-size: cover;
-    /* optional */
     width: 25px;
-    /* optional */
     height: 25px;
-    /* optional */
     border: none;
-    /* optional */
     cursor: pointer;
-    /* optional */
 }
 
 .rollback-button {
     color: red;
+}
+
+.add-word-button {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.move-word-button {
+    background-color: #f44336 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.list-dropdown {
+    position: absolute;
+    overflow: visible;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 1001;
+    max-height: 200px;
+    margin-top: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.list-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item:hover {
+    background-color: #f5f5f5;
+}
+
+.new-list {
+    border-top: 1px solid #ddd;
+    font-weight: bold;
+}
+
+.match-indicator-tooltip {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.match-indicator-tooltip img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
+.match-indicator-tooltip .tooltiptext {
+    visibility: hidden;
+    width: auto;
+    min-width: 120px;
+    max-width: 300px;
+    
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 16px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1002;
+    bottom: 125%;
+    right: 0;
+    margin-bottom: 5px;
+    white-space: wrap;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.match-indicator-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 5px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.match-indicator-tooltip:hover .tooltiptext {
+    visibility: visible;
 }

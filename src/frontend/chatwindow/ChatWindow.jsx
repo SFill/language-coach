@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatToolbar from './ChatToolbar';
 import './ChatWindow.css';
+import { normalizePhrase, areCloseMatches } from '../wordlist/utils';
 
 const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const chatContainerRef = useRef(null);
@@ -19,6 +20,25 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   
   // Flag to track if mousedown happened on selected text
   const ignoreNextMouseUp = useRef(false);
+  
+  // Add state for word lists (could be fetched from an API in a real application)
+  const [wordLists, setWordLists] = useState([
+    {
+      id: 1,
+      name: 'List A',
+      words: [
+        { word: 'best', definition: 'Definition of best...' },
+        { word: 'run away with someone', definition: 'Definition of run away...' },
+      ],
+    },
+    {
+      id: 2,
+      name: 'List B',
+      words: [
+        { word: 'key', definition: 'Definition of key...' },
+      ],
+    },
+  ]);
 
   useEffect(() => {
     // Scroll to bottom when new messages arrive
@@ -137,6 +157,121 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     console.log('Dictionary lookup for:', selectedText);
     onCheckInDictionary(selectedText);
   };
+  
+  // Word list management functions
+  const handleAddToList = (text, listId) => {
+    if (!text.trim()) return;
+    
+    // Check if the word already exists in any list as an exact match
+    const normalizedText = normalizePhrase(text);
+    const hasExactMatch = wordLists.some(list => 
+      list.words.some(w => normalizePhrase(w.word) === normalizedText)
+    );
+    
+    // If it's an exact match, don't add it
+    if (hasExactMatch) {
+      console.log('Word already exists in a list');
+      setIsToolbarVisible(false);
+      return;
+    }
+    
+    setWordLists(lists => lists.map(list => {
+      if (list.id === listId) {
+        return {
+          ...list,
+          words: [
+            ...list.words,
+            {
+              word: text.trim(),
+              definition: 'Added from chat window',
+            },
+          ],
+        };
+      }
+      return list;
+    }));
+    
+    // Hide toolbar after adding
+    setIsToolbarVisible(false);
+  };
+  
+  const handleMoveToList = (text, sourceListId, targetListId) => {
+    if (!text.trim() || sourceListId === targetListId) return;
+    
+    // First, find the word in the source list
+    let wordToMove = null;
+    const normalizedText = normalizePhrase(text);
+    
+    setWordLists(lists => {
+      // Find the word to move
+      const sourceList = lists.find(list => list.id === sourceListId);
+      if (sourceList) {
+        wordToMove = sourceList.words.find(w => 
+          normalizePhrase(w.word) === normalizedText ||
+          areCloseMatches(normalizePhrase(w.word), normalizedText)
+        );
+      }
+      
+      if (!wordToMove) {
+        wordToMove = { word: text.trim(), definition: 'Moved from another list' };
+      }
+      
+      // Update the lists
+      return lists.map(list => {
+        if (list.id === sourceListId) {
+          return {
+            ...list,
+            words: list.words.filter(w => 
+              normalizePhrase(w.word) !== normalizedText && 
+              !areCloseMatches(normalizePhrase(w.word), normalizedText)
+            ),
+          };
+        }
+        if (list.id === targetListId) {
+          // Check if the target list already has this word
+          const exists = list.words.some(w => 
+            normalizePhrase(w.word) === normalizedText || 
+            areCloseMatches(normalizePhrase(w.word), normalizedText)
+          );
+          
+          if (!exists) {
+            return {
+              ...list,
+              words: [...list.words, wordToMove],
+            };
+          }
+        }
+        return list;
+      });
+    });
+    
+    // Hide toolbar after moving
+    setIsToolbarVisible(false);
+  };
+  
+  const handleCreateNewList = (text) => {
+    if (!text.trim()) return;
+    
+    // Generate a new list ID
+    const newListId = Math.max(0, ...wordLists.map(l => l.id)) + 1;
+    
+    // Create a new list and add it to wordLists
+    const newList = {
+      id: newListId,
+      name: `Chat List ${newListId}`,
+      words: [
+        {
+          word: text.trim(),
+          definition: 'First word in new list',
+        }
+      ],
+    };
+    
+    setWordLists([...wordLists, newList]);
+    
+    // Hide toolbar after creating new list
+    setIsToolbarVisible(false);
+  };
 
   return (
     <div
@@ -171,7 +306,11 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         checkInDictionary={handleDictionaryLookup}
         showRollback={activeIsTranslated}
         isVisible={isToolbarVisible}
-
+        selectedText={selectedText}
+        wordLists={wordLists}
+        onAddToList={handleAddToList}
+        onMoveToList={handleMoveToList}
+        onCreateNewList={handleCreateNewList}
       />
     </div>
   );
