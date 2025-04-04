@@ -17,10 +17,7 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const [selectedText, setSelectedText] = useState('');
   const [activeIsTranslated, setActiveIsTranslated] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
-  
-  // Flag to track if mousedown happened on selected text
-  const ignoreNextMouseUp = useRef(false);
-  
+
   // Add state for word lists (could be fetched from an API in a real application)
   const [wordLists, setWordLists] = useState([
     {
@@ -48,25 +45,6 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   }, [messages]);
 
   useEffect(() => {
-    // Handle mousedown to detect clicks on selected text
-    const handleGlobalMouseDown = (e) => {
-      // Check if click happened inside the toolbar
-      if (toolbarRef.current && toolbarRef.current.contains(e.target)) {
-        // Don't set the ignore flag if clicking within toolbar
-        ignoreNextMouseUp.current = false;
-        return;
-      }
-      
-      const selection = window.getSelection();
-      
-      // If there's an active selection when mousedown happens,
-      // we'll ignore the subsequent mouseup to prevent toolbar from reappearing
-      if (selection && !selection.isCollapsed) {
-        ignoreNextMouseUp.current = true;
-      } else {
-        ignoreNextMouseUp.current = false;
-      }
-    };
 
     // Single global mouseup handler for event delegation
     const handleGlobalMouseUp = (e) => {
@@ -75,16 +53,12 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         // Don't hide the toolbar if clicking within it
         return;
       }
-      
-      // If this mouseup should be ignored (because mousedown happened on selected text)
-      if (ignoreNextMouseUp.current) {
-        ignoreNextMouseUp.current = false;
-        // Hide toolbar if it was showing
-        if (isToolbarVisible) {
-          setIsToolbarVisible(false);
-        }
-        return;
+      if (isToolbarVisible) {
+        // when click outside the toolbar, we want to hide it
+        setIsToolbarVisible(false)
+        return
       }
+
 
       // Check if the selection is within any of our message components
       const selection = window.getSelection();
@@ -107,12 +81,10 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     };
 
     // Add the single global listeners
-    document.addEventListener('mousedown', handleGlobalMouseDown);
     document.addEventListener('mouseup', handleGlobalMouseUp);
-    
+
     // Clean up
     return () => {
-      document.removeEventListener('mousedown', handleGlobalMouseDown);
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
   }, [messageRefs.current.length, isToolbarVisible]); // Depend on isToolbarVisible to properly update the closure
@@ -157,24 +129,24 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     console.log('Dictionary lookup for:', selectedText);
     onCheckInDictionary(selectedText);
   };
-  
+
   // Word list management functions
   const handleAddToList = (text, listId) => {
     if (!text.trim()) return;
-    
+
     // Check if the word already exists in any list as an exact match
     const normalizedText = normalizePhrase(text);
-    const hasExactMatch = wordLists.some(list => 
+    const hasExactMatch = wordLists.some(list =>
       list.words.some(w => normalizePhrase(w.word) === normalizedText)
     );
-    
+
     // If it's an exact match, don't add it
     if (hasExactMatch) {
       console.log('Word already exists in a list');
-      setIsToolbarVisible(false);
+      // setIsToolbarVisible(false);
       return;
     }
-    
+
     setWordLists(lists => lists.map(list => {
       if (list.id === listId) {
         return {
@@ -190,50 +162,50 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
       }
       return list;
     }));
-    
+
     // Hide toolbar after adding
-    setIsToolbarVisible(false);
+    // setIsToolbarVisible(false);
   };
-  
+
   const handleMoveToList = (text, sourceListId, targetListId) => {
     if (!text.trim() || sourceListId === targetListId) return;
-    
+
     // First, find the word in the source list
     let wordToMove = null;
     const normalizedText = normalizePhrase(text);
-    
+
     setWordLists(lists => {
       // Find the word to move
       const sourceList = lists.find(list => list.id === sourceListId);
       if (sourceList) {
-        wordToMove = sourceList.words.find(w => 
+        wordToMove = sourceList.words.find(w =>
           normalizePhrase(w.word) === normalizedText ||
           areCloseMatches(normalizePhrase(w.word), normalizedText)
         );
       }
-      
+
       if (!wordToMove) {
         wordToMove = { word: text.trim(), definition: 'Moved from another list' };
       }
-      
+
       // Update the lists
       return lists.map(list => {
         if (list.id === sourceListId) {
           return {
             ...list,
-            words: list.words.filter(w => 
-              normalizePhrase(w.word) !== normalizedText && 
+            words: list.words.filter(w =>
+              normalizePhrase(w.word) !== normalizedText &&
               !areCloseMatches(normalizePhrase(w.word), normalizedText)
             ),
           };
         }
         if (list.id === targetListId) {
           // Check if the target list already has this word
-          const exists = list.words.some(w => 
-            normalizePhrase(w.word) === normalizedText || 
+          const exists = list.words.some(w =>
+            normalizePhrase(w.word) === normalizedText ||
             areCloseMatches(normalizePhrase(w.word), normalizedText)
           );
-          
+
           if (!exists) {
             return {
               ...list,
@@ -244,17 +216,17 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         return list;
       });
     });
-    
+
     // Hide toolbar after moving
-    setIsToolbarVisible(false);
+    // setIsToolbarVisible(false);
   };
-  
+
   const handleCreateNewList = (text) => {
     if (!text.trim()) return;
-    
+
     // Generate a new list ID
     const newListId = Math.max(0, ...wordLists.map(l => l.id)) + 1;
-    
+
     // Create a new list and add it to wordLists
     const newList = {
       id: newListId,
@@ -266,9 +238,9 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         }
       ],
     };
-    
+
     setWordLists([...wordLists, newList]);
-    
+
     // Hide toolbar after creating new list
     setIsToolbarVisible(false);
   };

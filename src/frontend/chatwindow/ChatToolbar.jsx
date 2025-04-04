@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './ChatToolbar.css';
 import { normalizePhrase, areCloseMatches } from '../wordlist/utils';
 
-const ChatToolbar = ({ 
+const ChatToolbar = ({
   toolbarRef,
-  style, 
-  handleTranslate, 
-  handleRollback, 
-  showDictionaryButton, 
-  checkInDictionary, 
+  style,
+  handleTranslate,
+  handleRollback,
+  showDictionaryButton,
+  checkInDictionary,
   showRollback,
   isVisible,
   selectedText,
@@ -18,11 +18,9 @@ const ChatToolbar = ({
   onCreateNewList,
 }) => {
   const [showListDropdown, setShowListDropdown] = useState(false);
-  
-  const onClickHandler = (e) => {
-    e.stopPropagation();
-  };
-  
+
+
+
   // If not visible, don't render
   if (!isVisible) {
     return null;
@@ -31,7 +29,7 @@ const ChatToolbar = ({
   // Find if the selected text is already in any list (exact or close match)
   const findMatch = (text) => {
     if (!text || !wordLists) return null;
-    
+
     const normalizedNew = normalizePhrase(text);
 
     for (const list of wordLists) {
@@ -70,54 +68,51 @@ const ChatToolbar = ({
   };
 
   const handleAddToList = (listId) => {
-    setShowListDropdown(false);
+
     if (onAddToList) onAddToList(selectedText, listId);
   };
 
   const handleMoveToList = (targetListId) => {
-    setShowListDropdown(false);
     if (onMoveToList && match) onMoveToList(selectedText, match.listId, targetListId);
   };
 
   const handleCreateNewList = () => {
-    setShowListDropdown(false);
     if (onCreateNewList) onCreateNewList(selectedText);
   };
 
   return (
-    <div 
-      className="chat-toolbar" 
-      style={style} 
-      onClick={onClickHandler}
+    <div
+      className="chat-toolbar"
+      style={style}
       ref={toolbarRef}
     >
       <button onClick={() => handleTranslate('ru')}>ru</button>
       <button onClick={() => handleTranslate('en')}>en</button>
       <button onClick={() => handleTranslate('es')}>es</button>
-      
+
       {showDictionaryButton() && (
         <button onClick={checkInDictionary} className="dictionary-button"></button>
       )}
-      
+
       {selectedText && (
         <>
           {isInList ? (
             <button onClick={toggleDropdown} className="move-word-button">
-             m
+              m
             </button>
           ) : (
             <button onClick={toggleDropdown} className="add-word-button">
               a
             </button>
           )}
-          
+
           {showListDropdown && (
             <div className="list-dropdown">
               {wordLists?.map(list => {
                 // Check if this list has an exact or close match
                 let exactMatchWord = null;
                 let closeMatchWord = null;
-                
+
                 for (const w of list.words) {
                   if (normalizePhrase(w.word) === normalizePhrase(selectedText)) {
                     exactMatchWord = w.word;
@@ -127,7 +122,7 @@ const ChatToolbar = ({
                     if (!exactMatchWord) break; // If we already found an exact match, no need to keep looking
                   }
                 }
-                
+
                 // Truncate match text if too long for tooltip
                 const truncateText = (text, maxLength = 30) => {
                   if (text && text.length > maxLength) {
@@ -135,18 +130,18 @@ const ChatToolbar = ({
                   }
                   return text;
                 };
-                
+
                 return (
-                  <div 
-                    key={list.id} 
+                  <div
+                    key={list.id}
                     className="list-item"
                     onClick={() => isInList ? handleMoveToList(list.id) : handleAddToList(list.id)}
                   >
-                    {list.name} 
+                    {list.name}
                     {exactMatchWord && (
                       <div className="match-indicator-tooltip">
-                        <img 
-                          src="/src/frontend/assets/toolbar-exact-match.png" 
+                        <img
+                          src="/src/frontend/assets/toolbar-exact-match.png"
                           alt="Exact match"
                         />
                         <span className="tooltiptext">Exact match: "{truncateText(exactMatchWord)}"</span>
@@ -154,8 +149,8 @@ const ChatToolbar = ({
                     )}
                     {closeMatchWord && !exactMatchWord && (
                       <div className="match-indicator-tooltip">
-                        <img 
-                          src="/src/frontend/assets/toolbar-close-match.png" 
+                        <img
+                          src="/src/frontend/assets/toolbar-close-match.png"
                           alt="Close match"
                         />
                         <span className="tooltiptext">Close match: "{truncateText(closeMatchWord)}"</span>
@@ -164,7 +159,7 @@ const ChatToolbar = ({
                   </div>
                 );
               })}
-              
+
               {!isInList && (
                 <div className="list-item new-list" onClick={handleCreateNewList}>
                   Create new list
@@ -174,7 +169,7 @@ const ChatToolbar = ({
           )}
         </>
       )}
-      
+
       {showRollback && (
         <button onClick={handleRollback} className="rollback-button">
           Rollback
