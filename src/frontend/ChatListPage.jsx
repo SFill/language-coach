@@ -7,7 +7,7 @@ const ChatListPage = ({ chatList, currentChatId, loadChat, startNewChat, deleteC
 
   const handleSelect = (chatId) => {
     loadChat(chatId);
-    navigate("/"); // Navigate back to the chat window page after selection
+    navigate(`/chat/${chatId}`); // Navigate back to the chat window page after selection
   };
 
   return (

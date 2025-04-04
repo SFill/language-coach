@@ -1,44 +1,106 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router';
 import ChatWindow from './ChatWindow';
 import MessageInput from '../MessageInput/index';
 import SideDictionaryPanel from '../SideDictionaryPanel';
-import { fetchChatById, sendMessage } from '../api';
+import { fetchChatById, sendMessage, createNewChat } from '../api';
 import './ChatWindowPage.css';
 
-function ChatWindowPage({ currentChatId }) {
+function ChatWindowPage() {
+    const { chatId } = useParams(); // Get chatId from URL path parameter
+    const navigate = useNavigate(); // React Router's navigate function
     const [messages, setMessages] = useState([]);
     const [dictionaryWord, setDictionaryWord] = useState('');
+    const [activeChatId, setActiveChatId] = useState(chatId);
+    const [isCreatingChat, setIsCreatingChat] = useState(false);
 
     useEffect(() => {
-        if (currentChatId) {
-            loadChat(currentChatId);
-            // Update URL with current chatId
-            const params = new URLSearchParams(window.location.search);
-            params.set('chatId', currentChatId);
-            window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+        if (chatId) {
+            loadChat(chatId);
+            setActiveChatId(chatId);
         }
-    }, [currentChatId]);
+    }, [chatId]);
 
     const loadChat = async (id) => {
-        const chatData = await fetchChatById(id);
-        if (chatData) {
-            setMessages(
-                chatData.history?.content?.map((item) => ({
-                    sender: item.role === 'user' ? 'user' : 'bot',
-                    text: item.content,
-                })) || []
-            );
+        try {
+            const chatData = await fetchChatById(id);
+            if (chatData) {
+                setMessages(
+                    chatData.history?.content?.map((item) => ({
+                        sender: item.role === 'user' ? 'user' : 'bot',
+                        text: item.content,
+                    })) || []
+                );
+            }
+        } catch (error) {
+            console.error('Error loading chat:', error);
         }
+    };
+
+    const ensureActiveChatId = async () => {
+        // If we already have an active chat ID, return it
+        if (activeChatId) {
+            return activeChatId;
+        }
+        
+        // If we're already creating a chat, don't create another one
+        if (isCreatingChat) {
+            return null;
+        }
+        
+        try {
+            setIsCreatingChat(true);
+            // Create a new chat if no active chat
+            const newChat = await createNewChat();
+            
+            if (newChat && newChat.id) {
+                setActiveChatId(newChat.id);
+                
+                // Update the URL without triggering a navigation/reload
+                window.history.pushState({}, '', `/chat/${newChat.id}`);
+                
+                return newChat.id;
+            }
+        } catch (error) {
+            console.error('Failed to create new chat:', error);
+            return null;
+        } finally {
+            setIsCreatingChat(false);
+        }
+        return null;
     };
 
     const handleSend = async (message, isNote = false) => {
         if (!message.trim()) return;
-        setMessages(prev => [...prev, { sender: 'user', text: message.trim() }]);
+        
+        // Add user message to UI immediately
+        const userMessage = { sender: 'user', text: message.trim() };
+        setMessages(prev => [...prev, userMessage]);
+        
         try {
-            const botReply = await sendMessage(currentChatId, { message, is_note: isNote });
+            // Ensure we have a valid chat ID before sending the message
+            const chatId = await ensureActiveChatId();
+            
+            if (!chatId) {
+                setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not create or find an active chat.' }]);
+                return;
+            }
+            
+            // After we have a valid chat ID, navigate to the new chat URL if we're at root
+            // This needs to happen after we've added the user message to the state
+            if (window.location.pathname === '/' && chatId !== activeChatId) {
+                // Use React Router's navigate after ensuring we've updated our local state
+                setTimeout(() => {
+                    navigate(`/chat/${chatId}`, { replace: true });
+                }, 0);
+            }
+            
+            const botReply = await sendMessage(chatId, { message, is_note: isNote });
             if (!botReply) return;
+            
             setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
         } catch (error) {
+            console.error('Error sending message:', error);
             setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
         }
     };
@@ -54,7 +116,6 @@ function ChatWindowPage({ currentChatId }) {
                 <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />
             </div>
         </div>
-
     );
 }
 
