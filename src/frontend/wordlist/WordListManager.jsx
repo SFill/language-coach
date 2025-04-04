@@ -70,23 +70,23 @@ function WordListsManager() {
   const handleAddWord = () => {
     if (!inputWord.trim()) return;
 
+    let messageToSet = `"${inputWord}" added to list ID ${selectedListId}`
     const match = findMatch(inputWord);
     if (match) {
       if (match.matchType === 'exact') {
-        setMessage(
-          `Exact match found in "${match.listName}": "${match.word}". Word not added.`
-        );
+        messageToSet = 
+          `Exact match found in "${match.listName}": "${match.word}". Word not added.`;
+        setMessage(messageToSet);
+        return;
       } else if (match.matchType === 'close') {
-        setMessage(
-          `Close match found in "${match.listName}": "${match.word}". Word not added.`
-        );
+        messageToSet = 
+          `Close match found in "${match.listName}": "${match.word}". Word will be added.`;
       } else {
-        setMessage(
-          `Part of phrase match found in "${match.listName}": "${match.word}". Word not added.`
-        );
+        messageToSet = 
+          `Part of phrase match found in "${match.listName}": "${match.word}". Word will be added.`;
       }
-      return;
     }
+    debugger;
 
     // If no match, add new word to selected list
     const updatedLists = lists.map((list) => {
@@ -106,7 +106,7 @@ function WordListsManager() {
     });
 
     setLists(updatedLists);
-    setMessage(`"${inputWord}" added to list ID ${selectedListId}`);
+    setMessage(messageToSet);
     setInputWord('');
   };
 

@@ -5,22 +5,26 @@ export function getUniqueTokens(phrase) {
 }
 
 export function areCloseMatches(phraseA, phraseB) {
+    // play around with that
     const tokensA = getUniqueTokens(phraseA);
     const tokensB = getUniqueTokens(phraseB);
 
-    if (!(tokensA.size >= 4 || tokensB.size >= 4)) return false;
+    if (!(tokensA.size >= 2 || tokensB.size >= 2)) return false;
 
     // Count unique tokens across both sets
     const union = new Set([...tokensA, ...tokensB]);
     // Count tokens in the intersection
     const intersection = new Set([...tokensA].filter(x => tokensB.has(x)));
 
-    // Number of different tokens is union - intersection
-    const diffCount = union.size - intersection.size;
-    return diffCount <= 2;
+    if (tokensA.size == 1 || tokensB.size == 1) {
+        // one word in phrase
+        return intersection.size > 0
+    }
+    // phrases
+    return intersection.size / union.size >= 0.5;
 }
 
-export function isPartOfPhrase(phraseA, phraseB){
+export function isPartOfPhrase(phraseA, phraseB) {
     const tokensA = getUniqueTokens(phraseA);
     const tokensB = getUniqueTokens(phraseB);
 
@@ -43,7 +47,7 @@ export function normalizePhrase(phrase) {
         .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?!]/g, "")
         .replace(/^(|a|an)\s+/, "")
         .trim();
-    // tODO remove the except phrases like the best, the sun, and etc, like that are used only with that
+    // TODO remove the except phrases like the best, the sun, and etc, like that are used only with that
 }
 
 // export { areCloseMatches, getUniqueTokens }
