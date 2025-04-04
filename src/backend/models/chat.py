@@ -7,6 +7,11 @@ class Chat(SQLModel, table=True):
     name: str = Field(index=True)
     history: dict = Field(default_factory=dict, sa_column=Column(JSON))
 
+class ChatListResponse(BaseModel):
+    id: int 
+    name: str
+
+
 class Message(BaseModel):
     """Schema for chat messages."""
     message: str

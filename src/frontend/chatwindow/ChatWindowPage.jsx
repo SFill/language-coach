@@ -6,7 +6,7 @@ import SideDictionaryPanel from '../SideDictionaryPanel';
 import { fetchChatById, sendMessage, createNewChat } from '../api';
 import './ChatWindowPage.css';
 
-function ChatWindowPage() {
+function ChatWindowPage({ onChatCreated }) {
     const { chatId } = useParams(); // Get chatId from URL path parameter
     const navigate = useNavigate(); // React Router's navigate function
     const [messages, setMessages] = useState([]);
@@ -54,12 +54,18 @@ function ChatWindowPage() {
             const newChat = await createNewChat();
             
             if (newChat && newChat.id) {
-                setActiveChatId(newChat.id);
+                const newChatId = newChat.id;
+                setActiveChatId(newChatId);
                 
                 // Update the URL without triggering a navigation/reload
-                window.history.pushState({}, '', `/chat/${newChat.id}`);
+                window.history.pushState({}, '', `/chat/${newChatId}`);
                 
-                return newChat.id;
+                // Notify parent component that a new chat was created
+                if (onChatCreated) {
+                    onChatCreated(newChatId);
+                }
+                
+                return newChatId;
             }
         } catch (error) {
             console.error('Failed to create new chat:', error);

@@ -3,7 +3,7 @@ from sqlmodel import Session, select, update, delete
 from fastapi import HTTPException
 from openai import OpenAI
 
-from ..models.chat import Chat, Message
+from ..models.chat import Chat, ChatListResponse, Message
 from ..constants import SYSTEM_PROMPT
 
 # Initialize OpenAI client
@@ -18,9 +18,10 @@ def create_chat(session: Session, chat: Chat) -> Chat:
     session.refresh(chat)
     return chat
 
-def get_chat_list(session: Session, offset: int = 0, limit: int = 100) -> list[Chat]:
+def get_chat_list(session: Session, offset: int = 0, limit: int = 100) -> list[ChatListResponse]:
     """Get a list of chat sessions."""
     chats = session.exec(select(Chat).order_by(Chat.id.desc()).limit(limit).offset(offset)).all()
+    chats = [ChatListResponse(id=chat.id, name=chat.name) for chat in chats]
     return chats
 
 def get_chat(session: Session, id: int) -> Chat:

@@ -91,6 +91,11 @@ function AppContent() {
     }
   };
 
+  // This function will be passed to ChatWindowPage to notify when a new chat is created
+  const onChatCreated = (newChatId) => {
+    loadChats(); // Reload the chat list to include the new chat
+    setCurrentChatId(newChatId); // Update the current chat ID
+  };
 
   return (
     <div className="main-container">
@@ -108,13 +113,13 @@ function AppContent() {
           {/* Root path directly shows ChatWindowPage, no redirection */}
           <Route
             path="/"
-            element={<ChatWindowPage key={location.pathname} />}
+            element={<ChatWindowPage key={location.pathname} onChatCreated={onChatCreated} />}
           />
 
           {/* Individual chat route with path parameter */}
           <Route
             path="/chat/:chatId"
-            element={<ChatWindowPage key={location.pathname} />}
+            element={<ChatWindowPage key={location.pathname} onChatCreated={onChatCreated} />}
           />
 
           <Route path="/wordlist" element={<WordListPage />} />

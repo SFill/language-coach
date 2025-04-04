@@ -3,7 +3,7 @@ from typing import Annotated
 from sqlmodel import Session
 
 from ..database import get_session
-from ..models.chat import Chat, Message
+from ..models.chat import Chat, ChatListResponse, Message
 from ..services.chat_service import (
     create_chat, get_chat_list, get_chat,
     delete_chat, send_message
@@ -22,7 +22,7 @@ def create_chat_endpoint(session: SessionDep, chat: Chat):
     return create_chat(session, chat)
 
 
-@router.get('/')
+@router.get('/', response_model=list[ChatListResponse])
 def get_chat_list_endpoint(
     session: SessionDep,
     offset: int = 0,
