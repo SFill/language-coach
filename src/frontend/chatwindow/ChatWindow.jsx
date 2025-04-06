@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatToolbar from './ChatToolbar';
 import './ChatWindow.css';
-import { normalizePhrase, areCloseMatches } from '../wordlist/utils';
+import { useWordlist } from '../wordlist/WordlistContext';
 
 const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const chatContainerRef = useRef(null);
@@ -18,24 +18,18 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   const [activeIsTranslated, setActiveIsTranslated] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
-  // Add state for word lists (could be fetched from an API in a real application)
-  const [wordLists, setWordLists] = useState([
-    {
-      id: 1,
-      name: 'List A',
-      words: [
-        { word: 'best', definition: 'Definition of best...' },
-        { word: 'run away with someone', definition: 'Definition of run away...' },
-      ],
-    },
-    {
-      id: 2,
-      name: 'List B',
-      words: [
-        { word: 'key', definition: 'Definition of key...' },
-      ],
-    },
-  ]);
+  // Use the wordlist context
+  // Load wordlists is done internally
+  const { 
+    wordlists, 
+    loading: wordlistsLoading, 
+    error: wordlistsError,
+    addWordToList, 
+    moveWordBetweenLists, 
+    createNewListWithWord, 
+    refreshWordlists
+  } = useWordlist();
+
 
   useEffect(() => {
     // Scroll to bottom when new messages arrive
@@ -45,7 +39,6 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
   }, [messages]);
 
   useEffect(() => {
-
     // Single global mouseup handler for event delegation
     const handleGlobalMouseUp = (e) => {
       // Check if click happened inside the toolbar
@@ -55,10 +48,9 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
       }
       if (isToolbarVisible) {
         // when click outside the toolbar, we want to hide it
-        setIsToolbarVisible(false)
-        return
+        setIsToolbarVisible(false);
+        return;
       }
-
 
       // Check if the selection is within any of our message components
       const selection = window.getSelection();
@@ -130,119 +122,20 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     onCheckInDictionary(selectedText);
   };
 
-  // Word list management functions
-  const handleAddToList = (text, listId) => {
-    if (!text.trim()) return;
-
-    // Check if the word already exists in any list as an exact match
-    const normalizedText = normalizePhrase(text);
-    const hasExactMatch = wordLists.some(list =>
-      list.words.some(w => normalizePhrase(w.word) === normalizedText)
-    );
-
-    // If it's an exact match, don't add it
-    if (hasExactMatch) {
-      console.log('Word already exists in a list');
-      // setIsToolbarVisible(false);
-      return;
-    }
-
-    setWordLists(lists => lists.map(list => {
-      if (list.id === listId) {
-        return {
-          ...list,
-          words: [
-            ...list.words,
-            {
-              word: text.trim(),
-              definition: 'Added from chat window',
-            },
-          ],
-        };
-      }
-      return list;
-    }));
-
-    // Hide toolbar after adding
-    // setIsToolbarVisible(false);
+  // Wordlist management handlers
+  const handleAddToList = async (text, listId) => {
+    if (!text.trim()) return null;
+    return addWordToList(text, listId);
   };
 
-  const handleMoveToList = (text, sourceListId, targetListId) => {
-    if (!text.trim() || sourceListId === targetListId) return;
-
-    // First, find the word in the source list
-    let wordToMove = null;
-    const normalizedText = normalizePhrase(text);
-
-    setWordLists(lists => {
-      // Find the word to move
-      const sourceList = lists.find(list => list.id === sourceListId);
-      if (sourceList) {
-        wordToMove = sourceList.words.find(w =>
-          normalizePhrase(w.word) === normalizedText ||
-          areCloseMatches(normalizePhrase(w.word), normalizedText)
-        );
-      }
-
-      if (!wordToMove) {
-        wordToMove = { word: text.trim(), definition: 'Moved from another list' };
-      }
-
-      // Update the lists
-      return lists.map(list => {
-        if (list.id === sourceListId) {
-          return {
-            ...list,
-            words: list.words.filter(w =>
-              normalizePhrase(w.word) !== normalizedText &&
-              !areCloseMatches(normalizePhrase(w.word), normalizedText)
-            ),
-          };
-        }
-        if (list.id === targetListId) {
-          // Check if the target list already has this word
-          const exists = list.words.some(w =>
-            normalizePhrase(w.word) === normalizedText ||
-            areCloseMatches(normalizePhrase(w.word), normalizedText)
-          );
-
-          if (!exists) {
-            return {
-              ...list,
-              words: [...list.words, wordToMove],
-            };
-          }
-        }
-        return list;
-      });
-    });
-
-    // Hide toolbar after moving
-    // setIsToolbarVisible(false);
+  const handleMoveToList = async (text, sourceListId, targetListId) => {
+    if (!text.trim() || sourceListId === targetListId) return null;
+    return moveWordBetweenLists(text, sourceListId, targetListId);
   };
 
-  const handleCreateNewList = (text) => {
-    if (!text.trim()) return;
-
-    // Generate a new list ID
-    const newListId = Math.max(0, ...wordLists.map(l => l.id)) + 1;
-
-    // Create a new list and add it to wordLists
-    const newList = {
-      id: newListId,
-      name: `Chat List ${newListId}`,
-      words: [
-        {
-          word: text.trim(),
-          definition: 'First word in new list',
-        }
-      ],
-    };
-
-    setWordLists([...wordLists, newList]);
-
-    // Hide toolbar after creating new list
-    setIsToolbarVisible(false);
+  const handleCreateNewList = async (text) => {
+    if (!text.trim()) return null;
+    return createNewListWithWord(text);
   };
 
   return (
@@ -279,7 +172,7 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
         showRollback={activeIsTranslated}
         isVisible={isToolbarVisible}
         selectedText={selectedText}
-        wordLists={wordLists}
+        wordLists={wordlists}
         onAddToList={handleAddToList}
         onMoveToList={handleMoveToList}
         onCreateNewList={handleCreateNewList}

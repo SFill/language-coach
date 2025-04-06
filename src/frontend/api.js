@@ -57,7 +57,6 @@ export const createNewChat = async () => {
 
 // Send a message using POST /api/coach/chat/{id}/message
 export const sendMessage = async (chatId, message) => {
-  debugger
   try {
     const response = await api.post(`coach/chat/${chatId}/message`, message);
     return response.data.chat_bot_message;
@@ -66,7 +65,6 @@ export const sendMessage = async (chatId, message) => {
     return 'Sorry, something went wrong.';
   }
 };
-
 
 export const translateText = async (text, target) => {
   try {
@@ -78,8 +76,89 @@ export const translateText = async (text, target) => {
   }
 };
 
-
-// Get Chat details from GET /api/words/{word}
+// Get word definition from GET /api/words/{word}
 export const getWordDefinition = (word) => {
   return api.get(`words/${word}`).then((res) => res.data);
+};
+
+// ========== Wordlist API Methods ==========
+
+// Get all wordlists from GET /api/wordlist/
+export const fetchWordlists = async () => {
+  try {
+    const response = await api.get(`wordlist/`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching wordlists:', error);
+    return [];
+  }
+};
+
+// Get a specific wordlist by ID from GET /api/wordlist/{id}
+export const fetchWordlistById = async (id) => {
+  try {
+    const response = await api.get(`wordlist/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error loading wordlist:', error);
+    return null;
+  }
+};
+
+// Create a new wordlist using POST /api/wordlist/
+export const createWordlist = async (wordlistData) => {
+  try {
+    const response = await api.post(`wordlist/`, wordlistData);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating wordlist:', error);
+    return null;
+  }
+};
+
+// Update a wordlist using post /api/wordlist/{id}
+export const updateWordlist = async (id, wordlistData) => {
+  try {
+    const response = await api.post(`wordlist/${id}`, wordlistData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating wordlist:', error);
+    return null;
+  }
+};
+
+// Delete a wordlist using DELETE /api/wordlist/{id}
+export const deleteWordlist = async (id) => {
+  try {
+    const response = await api.delete(`wordlist/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting wordlist:', error);
+    return null;
+  }
+};
+
+// Update wordlists before page refresh using sendBeacon
+export const updateWordListsBeforeRefresh = (dirtyLists) => {
+  if (!dirtyLists || dirtyLists.length === 0) return;
+  
+  dirtyLists.forEach(list => {
+    const updateData = {
+      name: list.name,
+      words: list.words.map(w => w.word)
+    };
+    
+    // Prepare the data as JSON
+    const blob = new Blob(
+      [JSON.stringify(updateData)], 
+      { type: 'application/json' }
+    );
+    
+    // Use sendBeacon which is designed for page unload scenarios
+    const endpoint = `${API_BASE_URL}wordlist/${list.id}`;
+    navigator.sendBeacon(endpoint, blob);
+    console.log("updates "+ list)
+  });
+  
+  console.log(`Synced ${dirtyLists.length} lists on page unload`);
 };

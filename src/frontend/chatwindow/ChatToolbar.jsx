@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ChatToolbar.css';
 import { normalizePhrase, areCloseMatches } from '../wordlist/utils';
 
@@ -18,8 +18,6 @@ const ChatToolbar = ({
   onCreateNewList,
 }) => {
   const [showListDropdown, setShowListDropdown] = useState(false);
-
-
 
   // If not visible, don't render
   if (!isVisible) {
@@ -61,23 +59,38 @@ const ChatToolbar = ({
 
   const match = selectedText ? findMatch(selectedText) : null;
   const isInList = !!match;
+  const isAddToNewListButtonAvailable = match ? match.matchType != 'exact' : true
 
   const toggleDropdown = (e) => {
     e.stopPropagation();
     setShowListDropdown(!showListDropdown);
   };
 
-  const handleAddToList = (listId) => {
+  const handleAddToList = async (listId) => {
+    if (!onAddToList) return;
 
-    if (onAddToList) onAddToList(selectedText, listId);
+    const result = await onAddToList(selectedText, listId);
+    if (result && result.message) {
+      console.log(result.message);
+    }
   };
 
-  const handleMoveToList = (targetListId) => {
-    if (onMoveToList && match) onMoveToList(selectedText, match.listId, targetListId);
+  const handleMoveToList = async (targetListId) => {
+    if (!onMoveToList || !match) return;
+
+    const result = await onMoveToList(selectedText, match.listId, targetListId);
+    if (result && result.message) {
+      console.log(result.message);
+    }
   };
 
-  const handleCreateNewList = () => {
-    if (onCreateNewList) onCreateNewList(selectedText);
+  const handleCreateNewList = async () => {
+    if (!onCreateNewList) return;
+
+    const result = await onCreateNewList(selectedText);
+    if (result && result.message) {
+      console.log(result.message);
+    }
   };
 
   return (
@@ -113,23 +126,23 @@ const ChatToolbar = ({
                 let exactMatchWord = null;
                 let closeMatchWord = null;
 
-                for (const w of list.words) {
-                  if (normalizePhrase(w.word) === normalizePhrase(selectedText)) {
-                    exactMatchWord = w.word;
-                    break;
-                  } else if (areCloseMatches(normalizePhrase(w.word), normalizePhrase(selectedText))) {
-                    closeMatchWord = w.word;
-                    if (!exactMatchWord) break; // If we already found an exact match, no need to keep looking
-                  }
+              for (const w of list.words) {
+                if (normalizePhrase(w.word) === normalizePhrase(selectedText)) {
+                  exactMatchWord = w.word;
+                  break;
+                } else if (areCloseMatches(normalizePhrase(w.word), normalizePhrase(selectedText))) {
+                  closeMatchWord = w.word;
+                  if (!exactMatchWord) break; // If we already found an exact match, no need to keep looking
                 }
+              }
 
-                // Truncate match text if too long for tooltip
-                const truncateText = (text, maxLength = 30) => {
-                  if (text && text.length > maxLength) {
-                    return text.substring(0, maxLength) + '...';
-                  }
-                  return text;
-                };
+              // Truncate match text if too long for tooltip
+              const truncateText = (text, maxLength = 30) => {
+                if (text && text.length > maxLength) {
+                  return text.substring(0, maxLength) + '...';
+                }
+                return text;
+              };
 
                 return (
                   <div
@@ -160,7 +173,7 @@ const ChatToolbar = ({
                 );
               })}
 
-              {!isInList && (
+              {isAddToNewListButtonAvailable && (
                 <div className="list-item new-list" onClick={handleCreateNewList}>
                   Create new list
                 </div>

@@ -4,7 +4,7 @@ from sqlmodel import Session, select
 
 from ..database import get_session
 from ..models.wordlist import (
-    Wordlist, WordlistCreate, WordlistUpdate, 
+    Wordlist, WordlistCreate, WordlistUpdate,
     WordlistResponse, WordDefinitionResponse
 )
 from ..services.dictionary_service import get_word_definition
@@ -37,7 +37,7 @@ def create_wordlist_endpoint(wordlist: WordlistCreate, session: SessionDep):
     session.add(new_wordlist)
     session.commit()
     session.refresh(new_wordlist)
-    
+
     definitions = []
     for word in new_wordlist.words:
         eng_def = get_word_definition(word, session)
@@ -51,30 +51,31 @@ def get_wordlist_endpoint(pk: int, session: SessionDep):
     wl = session.get(Wordlist, pk)
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
-    
+
     definitions = []
     for word in wl.words:
         eng_def = get_word_definition(word, session)
         definitions.append(WordDefinitionResponse(word=word, definition=eng_def))
     return WordlistResponse(id=wl.id, name=wl.name, words=definitions)
 
-
-@router.put('/{pk}', response_model=WordlistResponse)
+# we use sendBeacon method when page unloads to sync changes, but it only supports POST.
+#  https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
+@router.post('/{pk}', response_model=WordlistResponse)
 def update_wordlist_endpoint(pk: int, wordlist: WordlistUpdate, session: SessionDep):
     """Update a wordlist."""
     wl = session.get(Wordlist, pk)
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
-    
+
     if wordlist.name is not None:
         wl.name = wordlist.name
     if wordlist.words is not None:
         wl.words = wordlist.words
-    
+
     session.add(wl)
     session.commit()
     session.refresh(wl)
-    
+
     definitions = []
     for word in wl.words:
         eng_def = get_word_definition(word, session)
@@ -88,7 +89,7 @@ def delete_wordlist_endpoint(pk: int, session: SessionDep):
     wl = session.get(Wordlist, pk)
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
-    
+
     session.delete(wl)
     session.commit()
     return {"detail": "Wordlist deleted"}

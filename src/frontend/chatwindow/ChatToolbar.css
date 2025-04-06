@@ -57,7 +57,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     z-index: 1001;
-    max-height: 200px;
+    max-height: 300px;
     margin-top: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
@@ -74,9 +74,24 @@
     background-color: #f5f5f5;
 }
 
+.list-item .sync-status {
+    font-size: 0.8em;
+    color: #777;
+    margin-left: 5px;
+    font-style: italic;
+}
+
 .new-list {
     border-top: 1px solid #ddd;
     font-weight: bold;
+}
+
+.status-message {
+    padding: 8px 12px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    font-size: 0.9em;
 }
 
 .match-indicator-tooltip {

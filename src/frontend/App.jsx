@@ -4,13 +4,17 @@ import ChatListPage from './ChatListPage';
 import ChatWindowPage from './chatwindow/ChatWindowPage';
 import WordListPage from './wordlist/WordListPage';
 import { fetchChats, deleteChat } from './api';
+import WordlistProvider from './wordlist/WordlistContext';
 import './App.css';
 
 // Main App component to set up routes
 function App() {
   return (
     <Router>
-      <AppContent />
+      <WordlistProvider>
+        <AppContent />
+      </WordlistProvider>
+
     </Router>
   );
 }
@@ -23,7 +27,7 @@ function AppContent() {
   const navigate = useNavigate(); // React Router's navigate function
   const location = useLocation(); // Get current location
 
-  useEffect(()=>{
+  useEffect(() => {
     // load once for navbar mount, refresh when changes
     loadChats();
   }, [])
