@@ -13,7 +13,7 @@ function ChatWindowPage({ onChatCreated }) {
     const [dictionaryWord, setDictionaryWord] = useState('');
     const [activeChatId, setActiveChatId] = useState(chatId);
     const [isCreatingChat, setIsCreatingChat] = useState(false);
-    
+
     // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
     const isLoadingChat = useRef(false);
 
@@ -22,6 +22,7 @@ function ChatWindowPage({ onChatCreated }) {
         if (chatId) {
             setActiveChatId(chatId);
         }
+        console.log("[chatId]) " + chatId)
     }, [chatId]);
 
     // Separate effect to handle loading chat data when activeChatId changes
@@ -29,15 +30,16 @@ function ChatWindowPage({ onChatCreated }) {
         if (activeChatId && !isLoadingChat.current) {
             loadChat(activeChatId);
         }
+        console.log("[activeChatId]) " + activeChatId)
     }, [activeChatId]);
 
     const loadChat = async (id) => {
         if (isLoadingChat.current) return;
-        
+
         try {
             isLoadingChat.current = true;
             console.log('Loading chat:', id); // Debug log
-            
+
             const chatData = await fetchChatById(id);
             if (chatData) {
                 setMessages(
@@ -64,24 +66,24 @@ function ChatWindowPage({ onChatCreated }) {
         if (isCreatingChat) {
             return null;
         }
-        
+
         try {
             setIsCreatingChat(true);
             // Create a new chat if no active chat
             const newChat = await createNewChat();
-            
+
             if (newChat && newChat.id) {
                 const newChatId = newChat.id;
                 setActiveChatId(newChatId);
-                
-                // Update the URL without triggering a navigation/reload
-                window.history.pushState({}, '', `/chat/${newChatId}`);
-                
+
+                // Update the URL without triggering a navigation/reload using history.replaceState
+                window.history.replaceState({}, '', `/chat/${newChatId}`);
+
                 // Notify parent component that a new chat was created
                 if (onChatCreated) {
                     onChatCreated(newChatId);
                 }
-                
+
                 return newChatId;
             }
         } catch (error) {
@@ -95,11 +97,11 @@ function ChatWindowPage({ onChatCreated }) {
 
     const handleSend = async (message, isNote = false) => {
         if (!message.trim()) return;
-        
+
         // Add user message to UI immediately
         const userMessage = { sender: 'user', text: message.trim() };
         setMessages(prev => [...prev, userMessage]);
-        
+
         try {
             // Ensure we have a valid chat ID before sending the message
             const chatId = await ensureActiveChatId();
@@ -121,11 +123,11 @@ function ChatWindowPage({ onChatCreated }) {
             const botReply = await sendMessage(chatId, { message, is_note: isNote });
             if (!botReply) return;
             
-            setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
-        } catch (error) {
-            console.error('Error sending message:', error);
-            setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
-        }
+                    setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
+            } catch (error) {
+                console.error('Error sending message:', error);
+                setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
+            }
     };
 
     return (

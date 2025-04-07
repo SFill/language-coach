@@ -30,19 +30,19 @@ function AppContent() {
   useEffect(() => {
     // load once for navbar mount, refresh when changes
     loadChats();
+    console.log("loadChats() init")
   }, [])
 
   // Extract chatId from location pathname instead of using useParams
   useEffect(() => {
-
-    if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname == '\/') {
+    if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname === '/') {
       // Extract chatId from location pathname using regex
       const match = location.pathname.match(/\/chat\/(\d+)/);
       const chatIdFromPath = match ? parseInt(match[1]) : null;
       // set it, null if it's a default page
       setCurrentChatId(chatIdFromPath);
     }
-
+    console.log("[location.pathname])")
   }, [location.pathname]);
 
   // Handle selection when chatList changes
@@ -56,6 +56,7 @@ function AppContent() {
       }
     }
     setCurrentChatName(foundChatName)
+    console.log("[chatList, currentChatId])")
   }, [chatList, currentChatId]);
 
   const loadChats = async () => {
