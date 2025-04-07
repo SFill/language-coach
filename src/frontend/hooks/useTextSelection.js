@@ -64,6 +64,7 @@ export const useTextSelection = (onSelectionChange) => {
         
         let div = document.createElement('div');
         div.appendChild(adjustedRange.cloneContents());
+        // because we use it to translate and replace html on the page 
         const text = div.innerHTML;
         
         setSelectedText(text);

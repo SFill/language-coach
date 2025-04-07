@@ -19,6 +19,12 @@ const ChatToolbar = ({
 }) => {
   const [showListDropdown, setShowListDropdown] = useState(false);
 
+  const selectedTextWithNoTags = (() => {
+    const temp = document.createElement('div');
+    temp.innerHTML = selectedText;
+    return temp.textContent || temp.innerText || '';
+  })();
+
   // If not visible, don't render
   if (!isVisible) {
     return null;
@@ -33,7 +39,7 @@ const ChatToolbar = ({
     for (const list of wordLists) {
       for (const w of list.words) {
         // Exact match
-        if (areExactMatches(w.word, selectedText)) {
+        if (areExactMatches(w.word, selectedTextWithNoTags)) {
           matches.push({
             matchType: 'exact',
             word: w.word,
@@ -67,7 +73,7 @@ const ChatToolbar = ({
   const handleAddToList = async (listId) => {
     if (!onAddToList) return;
 
-    const result = await onAddToList(selectedText, listId);
+    const result = await onAddToList(selectedTextWithNoTags, listId);
     if (result && result.message) {
       console.log(result.message);
     }
@@ -76,7 +82,7 @@ const ChatToolbar = ({
   const handleMoveToList = async (targetListId) => {
     // it's an exact match
     if (!onMoveToList || !exactMatch) return;
-    const result = await onMoveToList(selectedText, exactMatch.listId, targetListId);
+    const result = await onMoveToList(selectedTextWithNoTags, exactMatch.listId, targetListId);
 
     if (result && result.message) {
       console.log(result.message);
@@ -106,7 +112,7 @@ const ChatToolbar = ({
         <button onClick={checkInDictionary} className="dictionary-button"></button>
       )}
 
-      {selectedText && (
+      {selectedTextWithNoTags && (
         <>
           {isInList ? (
             <button onClick={toggleDropdown} className="move-word-button">
@@ -127,7 +133,7 @@ const ChatToolbar = ({
 
                 for (const w of list.words) {
 
-                  if (!areExactMatches(w.word, selectedText) && areCloseMatches(w.word, selectedText)) {
+                  if (!areExactMatches(w.word, selectedTextWithNoTags) && areCloseMatches(w.word, selectedTextWithNoTags)) {
                     closeMatches.push(w.word);
                   }
                 }
