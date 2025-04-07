@@ -4,6 +4,10 @@ export function getUniqueTokens(phrase) {
     return new Set(normalized.split(/\s+/).filter(Boolean));
 }
 
+export function areExactMatches(phraseA, phraseB) {
+    return phraseA.trim() == phraseB.trim()
+}
+
 export function areCloseMatches(phraseA, phraseB) {
     // play around with that
     const tokensA = getUniqueTokens(phraseA);

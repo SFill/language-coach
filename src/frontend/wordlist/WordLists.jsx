@@ -1,16 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-// Use a base URL that covers the /api/coach prefix.
-const API_BASE_URL =
-  import.meta.env.VITE_ENVIRONMENT === "dev"
-    ? "http://localhost:8000/api/"
-    : "http://localhost/api/";
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: { "Content-Type": "application/json" },
-});
+import React, { useState } from "react";
+import { useWordlist } from "./WordlistContext";
 
 // Helper function to split an array into chunks of the given size
 const chunkArray = (arr, size) => {
@@ -22,26 +11,11 @@ const chunkArray = (arr, size) => {
 };
 
 function WordLists() {
-  const [wordLists, setWordLists] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { wordlists, loading, error } = useWordlist();
+  
   // For each word list, store the currently expanded card (if any)
   // Format: { [listId]: { rowIndex, cardIndex, wordItem } }
   const [expanded, setExpanded] = useState({});
-
-  useEffect(() => {
-    api
-      .get("wordlist/")
-      .then((response) => {
-        setWordLists(response.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch word lists:", err);
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
 
   const handleCardClick = (listId, rowIndex, cardIndex, wordItem) => {
     setExpanded((prev) => {
@@ -67,16 +41,24 @@ function WordLists() {
   };
 
   if (loading) return <p>Loading word lists...</p>;
-  if (error) return <p>Error fetching word lists.</p>;
+  if (error) return <p>Error fetching word lists: {error}</p>;
+  if (!wordlists || wordlists.length === 0) return <p>No word lists available.</p>;
 
   return (
     <div style={{ padding: "1rem" }}>
-      {wordLists.map((list) => {
+      {wordlists.map((list) => {
         // Break the words into rows of 3 cards each.
-        const rows = chunkArray(list.words, 3);
+        const rows = chunkArray(list.words || [], 3);
         return (
           <div key={list.id} style={{ marginBottom: "2rem" }}>
-            <h2 style={{ marginBottom: "1rem" }}>{list.name}</h2>
+            <h2 style={{ marginBottom: "1rem" }}>
+              {list.name}
+              {list._isDirty && (
+                <span style={{ fontSize: "0.8rem", color: "#777", marginLeft: "0.5rem" }}>
+                  (unsaved changes)
+                </span>
+              )}
+            </h2>
             {rows.map((row, rowIndex) => (
               <React.Fragment key={rowIndex}>
                 {/* Render the row of cards as a grid */}
@@ -102,7 +84,7 @@ function WordLists() {
                       }}
                     >
                       <h3 style={{ margin: 0 }}>{wordItem.word}</h3>
-                      {wordItem.definition.audio_link && (
+                      {wordItem.definition && wordItem.definition.audio_link && (
                         <button
                           onClick={(e) =>
                             playSound(e, wordItem.definition.audio_link)
@@ -134,14 +116,16 @@ function WordLists() {
                         <h4>
                           Definitions for {expanded[list.id].wordItem.word}
                         </h4>
-                        {expanded[list.id].wordItem.definition.meanings.map(
+                        {expanded[list.id].wordItem.definition && 
+                         expanded[list.id].wordItem.definition.meanings && 
+                         expanded[list.id].wordItem.definition.meanings.map(
                           (meaning, idx) => (
                             <div key={idx} style={{ marginTop: "0.5rem" }}>
                               <p>
                                 <strong>Part of Speech:</strong>{" "}
                                 {meaning.part_of_speech}
                               </p>
-                              {meaning.definitions.map((defDetail, dIdx) => (
+                              {meaning.definitions && meaning.definitions.map((defDetail, dIdx) => (
                                 <div key={dIdx} style={{ marginBottom: "0.5rem" }}>
                                   <p>
                                     <strong>Definition:</strong>{" "}
@@ -154,13 +138,13 @@ function WordLists() {
                                   )}
                                 </div>
                               ))}
-                              {meaning.synonyms.length > 0 && (
+                              {meaning.synonyms && meaning.synonyms.length > 0 && (
                                 <p>
                                   <strong>Synonyms:</strong>{" "}
                                   {meaning.synonyms.join(", ")}
                                 </p>
                               )}
-                              {meaning.antonyms.length > 0 && (
+                              {meaning.antonyms && meaning.antonyms.length > 0 && (
                                 <p>
                                   <strong>Antonyms:</strong>{" "}
                                   {meaning.antonyms.join(", ")}
@@ -168,6 +152,11 @@ function WordLists() {
                               )}
                             </div>
                           )
+                        )}
+                        {(!expanded[list.id].wordItem.definition || 
+                          !expanded[list.id].wordItem.definition.meanings ||
+                          expanded[list.id].wordItem.definition.meanings.length === 0) && (
+                          <p>No detailed definition available.</p>
                         )}
                       </div>
                     </div>

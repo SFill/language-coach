@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ChatToolbar.css';
-import { normalizePhrase, areCloseMatches } from '../wordlist/utils';
+import { areExactMatches, areCloseMatches } from '../wordlist/utils';
 
 const ChatToolbar = ({
   toolbarRef,
@@ -26,40 +26,38 @@ const ChatToolbar = ({
 
   // Find if the selected text is already in any list (exact or close match)
   const findMatch = (text) => {
-    if (!text || !wordLists) return null;
+    if (!text || !wordLists) return [];
 
-    const normalizedNew = normalizePhrase(text);
+    const matches = []
 
     for (const list of wordLists) {
       for (const w of list.words) {
-        const normalizedExisting = normalizePhrase(w.word);
         // Exact match
-        if (normalizedExisting === normalizedNew) {
-          return {
+        if (areExactMatches(w.word, selectedText)) {
+          matches.push({
             matchType: 'exact',
             word: w.word,
             listId: list.id,
             listName: list.name,
-          };
+          });
         }
         // Close match
-        if (areCloseMatches(normalizedExisting, normalizedNew)) {
-          return {
+        if (areCloseMatches(w.word, selectedText)) {
+          matches.push({
             matchType: 'close',
             word: w.word,
             listId: list.id,
             listName: list.name,
-          };
+          });
         }
       }
     }
-    // No match found
-    return null;
+    return matches;
   };
 
-  const match = selectedText ? findMatch(selectedText) : null;
-  const isInList = !!match;
-  const isAddToNewListButtonAvailable = match ? match.matchType != 'exact' : true
+  const matches = findMatch(selectedText);
+  const isInList = matches.length > 0;
+  const exactMatch = matches.find(match => match.matchType === 'exact') || null;
 
   const toggleDropdown = (e) => {
     e.stopPropagation();
@@ -76,9 +74,10 @@ const ChatToolbar = ({
   };
 
   const handleMoveToList = async (targetListId) => {
-    if (!onMoveToList || !match) return;
+    // it's an exact match
+    if (!onMoveToList || !exactMatch) return;
+    const result = await onMoveToList(selectedText, exactMatch.listId, targetListId);
 
-    const result = await onMoveToList(selectedText, match.listId, targetListId);
     if (result && result.message) {
       console.log(result.message);
     }
@@ -123,32 +122,29 @@ const ChatToolbar = ({
             <div className="list-dropdown">
               {wordLists?.map(list => {
                 // Check if this list has an exact or close match
-                let exactMatchWord = null;
-                let closeMatchWord = null;
+                let exactMatchWord = list.id == exactMatch?.listId ? exactMatch.word : null;
+                let closeMatches = [];
 
-              for (const w of list.words) {
-                if (normalizePhrase(w.word) === normalizePhrase(selectedText)) {
-                  exactMatchWord = w.word;
-                  break;
-                } else if (areCloseMatches(normalizePhrase(w.word), normalizePhrase(selectedText))) {
-                  closeMatchWord = w.word;
-                  if (!exactMatchWord) break; // If we already found an exact match, no need to keep looking
-                }
-              }
+                for (const w of list.words) {
 
-              // Truncate match text if too long for tooltip
-              const truncateText = (text, maxLength = 30) => {
-                if (text && text.length > maxLength) {
-                  return text.substring(0, maxLength) + '...';
+                  if (!areExactMatches(w.word, selectedText) && areCloseMatches(w.word, selectedText)) {
+                    closeMatches.push(w.word);
+                  }
                 }
-                return text;
-              };
+
+                // Truncate match text if too long for tooltip
+                const truncateText = (text, maxLength = 70) => {
+                  if (text && text.length > maxLength) {
+                    return text.substring(0, maxLength) + '...';
+                  }
+                  return text;
+                };
 
                 return (
                   <div
                     key={list.id}
                     className="list-item"
-                    onClick={() => isInList ? handleMoveToList(list.id) : handleAddToList(list.id)}
+                    onClick={() => exactMatch ? handleMoveToList(list.id) : handleAddToList(list.id)}
                   >
                     {list.name}
                     {exactMatchWord && (
@@ -160,20 +156,21 @@ const ChatToolbar = ({
                         <span className="tooltiptext">Exact match: "{truncateText(exactMatchWord)}"</span>
                       </div>
                     )}
-                    {closeMatchWord && !exactMatchWord && (
+                    {closeMatches.length > 0 && (
+                      // TODO: add multiple close matches indicator
                       <div className="match-indicator-tooltip">
                         <img
                           src="/src/frontend/assets/toolbar-close-match.png"
                           alt="Close match"
                         />
-                        <span className="tooltiptext">Close match: "{truncateText(closeMatchWord)}"</span>
+                        <span className="tooltiptext">Close match: "{truncateText(closeMatches[0])}"</span>
                       </div>
                     )}
                   </div>
                 );
               })}
 
-              {isAddToNewListButtonAvailable && (
+              {!exactMatch && (
                 <div className="list-item new-list" onClick={handleCreateNewList}>
                   Create new list
                 </div>
