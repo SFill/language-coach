@@ -11,8 +11,8 @@ const chunkArray = (arr, size) => {
 };
 
 function WordLists() {
-  const { wordlists, loading, error } = useWordlist();
-  
+  const { wordlists, loading, error, removeWordFromList } = useWordlist();
+
   // For each word list, store the currently expanded card (if any)
   // Format: { [listId]: { rowIndex, cardIndex, wordItem } }
   const [expanded, setExpanded] = useState({});
@@ -37,6 +37,27 @@ function WordLists() {
     if (audioLink) {
       const audio = new Audio(audioLink);
       audio.play();
+    }
+  };
+
+  const handleDeleteWord = (e, listId, word) => {
+    e.stopPropagation(); // Prevent card expansion when clicking delete
+
+    // Call the removeWordFromList function from context
+    const result = removeWordFromList(word, listId);
+
+    // Optional: show a confirmation or message
+    if (result && result.success) {
+      // If the deleted word was expanded, collapse it
+      setExpanded((prev) => {
+        if (prev[listId] && prev[listId].wordItem.word === word) {
+          return { ...prev, [listId]: null };
+        }
+        return prev;
+      });
+    } else if (result && !result.success) {
+      console.error(result.message);
+      // Optional: display an error message to the user
     }
   };
 
@@ -81,6 +102,7 @@ function WordLists() {
                         padding: "1rem",
                         cursor: "pointer",
                         textAlign: "center",
+                        position: "relative",
                       }}
                     >
                       <h3 style={{ margin: 0 }}>{wordItem.word}</h3>
@@ -94,6 +116,27 @@ function WordLists() {
                           Play Sound
                         </button>
                       )}
+
+                      {/* Delete button */}
+                      <button
+                        onClick={(e) => handleDeleteWord(e, list.id, wordItem.word)}
+                        style={{
+                          position: "absolute",
+                          top: "0.5rem",
+                          right: "0.5rem",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          color: "#f44336",
+                          fontSize: "1rem",
+                          fontWeight: "bold",
+                          padding: "0.2rem 0.5rem",
+                          borderRadius: "4px",
+                        }}
+                        title="Delete word"
+                      >
+                        ×
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -116,48 +159,48 @@ function WordLists() {
                         <h4>
                           Definitions for {expanded[list.id].wordItem.word}
                         </h4>
-                        {expanded[list.id].wordItem.definition && 
-                         expanded[list.id].wordItem.definition.meanings && 
-                         expanded[list.id].wordItem.definition.meanings.map(
-                          (meaning, idx) => (
-                            <div key={idx} style={{ marginTop: "0.5rem" }}>
-                              <p>
-                                <strong>Part of Speech:</strong>{" "}
-                                {meaning.part_of_speech}
-                              </p>
-                              {meaning.definitions && meaning.definitions.map((defDetail, dIdx) => (
-                                <div key={dIdx} style={{ marginBottom: "0.5rem" }}>
-                                  <p>
-                                    <strong>Definition:</strong>{" "}
-                                    {defDetail.definition}
-                                  </p>
-                                  {defDetail.example && (
+                        {expanded[list.id].wordItem.definition &&
+                          expanded[list.id].wordItem.definition.meanings &&
+                          expanded[list.id].wordItem.definition.meanings.map(
+                            (meaning, idx) => (
+                              <div key={idx} style={{ marginTop: "0.5rem" }}>
+                                <p>
+                                  <strong>Part of Speech:</strong>{" "}
+                                  {meaning.part_of_speech}
+                                </p>
+                                {meaning.definitions && meaning.definitions.map((defDetail, dIdx) => (
+                                  <div key={dIdx} style={{ marginBottom: "0.5rem" }}>
                                     <p>
-                                      <em>Example: {defDetail.example}</em>
+                                      <strong>Definition:</strong>{" "}
+                                      {defDetail.definition}
                                     </p>
-                                  )}
-                                </div>
-                              ))}
-                              {meaning.synonyms && meaning.synonyms.length > 0 && (
-                                <p>
-                                  <strong>Synonyms:</strong>{" "}
-                                  {meaning.synonyms.join(", ")}
-                                </p>
-                              )}
-                              {meaning.antonyms && meaning.antonyms.length > 0 && (
-                                <p>
-                                  <strong>Antonyms:</strong>{" "}
-                                  {meaning.antonyms.join(", ")}
-                                </p>
-                              )}
-                            </div>
-                          )
-                        )}
-                        {(!expanded[list.id].wordItem.definition || 
+                                    {defDetail.example && (
+                                      <p>
+                                        <em>Example: {defDetail.example}</em>
+                                      </p>
+                                    )}
+                                  </div>
+                                ))}
+                                {meaning.synonyms && meaning.synonyms.length > 0 && (
+                                  <p>
+                                    <strong>Synonyms:</strong>{" "}
+                                    {meaning.synonyms.join(", ")}
+                                  </p>
+                                )}
+                                {meaning.antonyms && meaning.antonyms.length > 0 && (
+                                  <p>
+                                    <strong>Antonyms:</strong>{" "}
+                                    {meaning.antonyms.join(", ")}
+                                  </p>
+                                )}
+                              </div>
+                            )
+                          )}
+                        {(!expanded[list.id].wordItem.definition ||
                           !expanded[list.id].wordItem.definition.meanings ||
                           expanded[list.id].wordItem.definition.meanings.length === 0) && (
-                          <p>No detailed definition available.</p>
-                        )}
+                            <p>No detailed definition available.</p>
+                          )}
                       </div>
                     </div>
                   )}

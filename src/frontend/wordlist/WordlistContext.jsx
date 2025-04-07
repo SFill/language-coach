@@ -319,7 +319,46 @@ export function WordlistProvider({ children }) {
     }
   }, [wordlists, loadWordlists]);
 
-  // Context value
+
+  // Remove a word from a list
+  const removeWordFromList = useCallback((word, listId) => {
+    if (!word.trim()) {
+      return { success: false, message: 'No word provided' };
+    }
+
+    // Find the target list
+    const targetList = wordlists.find(list => list.id === listId);
+    if (!targetList) {
+      return { success: false, message: 'List not found' };
+    }
+
+    // Find the word in the list
+    const wordIndex = targetList.words.findIndex(w =>
+      areExactMatches(w.word, word)
+    );
+
+    if (wordIndex === -1) {
+      return { success: false, message: `Word "${word}" not found in list` };
+    }
+
+    // Update the list in local state for immediate UI feedback
+    const updatedList = {
+      ...targetList,
+      _isDirty: true,
+      words: targetList.words.filter((_, i) => i !== wordIndex)
+    };
+
+    setWordlists(prev =>
+      prev.map(list => list.id === listId ? updatedList : list)
+    );
+
+    return {
+      success: true,
+      message: `Removed "${word}" from list "${targetList.name}"`,
+    };
+  }, [wordlists]);
+
+  // context value:
   const value = {
     wordlists,
     loading,
@@ -330,7 +369,9 @@ export function WordlistProvider({ children }) {
     moveWordBetweenLists,
     createNewListWithWord,
     syncWithBackend,
+    removeWordFromList,  // Add this line
   };
+
 
   return (
     <WordlistContext.Provider value={value}>
