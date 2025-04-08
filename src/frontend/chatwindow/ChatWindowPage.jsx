@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate, useLocation } from 'react-router';
 import ChatWindow from './ChatWindow';
 import MessageInput from '../MessageInput/index';
 import SideDictionaryPanel from '../SideDictionaryPanel';
@@ -9,29 +9,23 @@ import './ChatWindowPage.css';
 function ChatWindowPage({ onChatCreated }) {
     const { chatId } = useParams(); // Get chatId from URL path parameter
     const navigate = useNavigate(); // React Router's navigate function
+    const location = useLocation();
     const [messages, setMessages] = useState([]);
     const [dictionaryWord, setDictionaryWord] = useState('');
-    const [activeChatId, setActiveChatId] = useState(chatId);
-    const [isCreatingChat, setIsCreatingChat] = useState(false);
 
     // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
     const isLoadingChat = useRef(false);
 
     useEffect(() => {
+
         // Set chatId as the active chat when it changes from URL
         if (chatId) {
-            setActiveChatId(chatId);
+            loadChat(chatId);
         }
         console.log("[chatId]) " + chatId)
+        // do not include location.state because we cover initial message sending by changing chatId
     }, [chatId]);
 
-    // Separate effect to handle loading chat data when activeChatId changes
-    useEffect(() => {
-        if (activeChatId && !isLoadingChat.current) {
-            loadChat(activeChatId);
-        }
-        console.log("[activeChatId]) " + activeChatId)
-    }, [activeChatId]);
 
     const loadChat = async (id) => {
         if (isLoadingChat.current) return;
@@ -54,80 +48,51 @@ function ChatWindowPage({ onChatCreated }) {
         } finally {
             isLoadingChat.current = false;
         }
+
+        const initialMessage = location.state?.initialMessage;
+
+        if (initialMessage) {
+            // Clear state to prevent reprocessing
+            navigate(location.pathname, { replace: true, state: {} });
+
+            // Process the message
+            await handleSend(initialMessage.message, initialMessage.isNote);
+        }
+        console.log("location.state " + location.state)
     };
 
-    const ensureActiveChatId = async () => {
-        // If we already have an active chat ID, return it
-        if (activeChatId) {
-            return activeChatId;
-        }
-        
-        // If we're already creating a chat, don't create another one
-        if (isCreatingChat) {
-            return null;
-        }
-
-        try {
-            setIsCreatingChat(true);
-            // Create a new chat if no active chat
-            const newChat = await createNewChat();
-
-            if (newChat && newChat.id) {
-                const newChatId = newChat.id;
-                setActiveChatId(newChatId);
-
-                // Update the URL without triggering a navigation/reload using history.replaceState
-                window.history.replaceState({}, '', `/chat/${newChatId}`);
-
-                // Notify parent component that a new chat was created
-                if (onChatCreated) {
-                    onChatCreated(newChatId);
-                }
-
-                return newChatId;
-            }
-        } catch (error) {
-            console.error('Failed to create new chat:', error);
-            return null;
-        } finally {
-            setIsCreatingChat(false);
-        }
-        return null;
-    };
 
     const handleSend = async (message, isNote = false) => {
         if (!message.trim()) return;
+
+        if (!chatId) {
+            try {
+                const newChat = await createNewChat();
+                // Notify parent component that a new chat was created
+                onChatCreated(newChat.id, { message, isNote });
+                return
+            } catch (error) {
+                setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not create or find an active chat.' }]);
+                console.log(error);
+                return;
+            }
+        }
+
 
         // Add user message to UI immediately
         const userMessage = { sender: 'user', text: message.trim() };
         setMessages(prev => [...prev, userMessage]);
 
         try {
-            // Ensure we have a valid chat ID before sending the message
-            const chatId = await ensureActiveChatId();
-            
-            if (!chatId) {
-                setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not create or find an active chat.' }]);
-                return;
-            }
-            
-            // After we have a valid chat ID, navigate to the new chat URL if we're at root
-            // This needs to happen after we've added the user message to the state
-            if (window.location.pathname === '/' && chatId !== activeChatId) {
-                // Use React Router's navigate after ensuring we've updated our local state
-                setTimeout(() => {
-                    navigate(`/chat/${chatId}`, { replace: true });
-                }, 0);
-            }
-            
+
             const botReply = await sendMessage(chatId, { message, is_note: isNote });
             if (!botReply) return;
-            
-                    setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
-            } catch (error) {
-                console.error('Error sending message:', error);
-                setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
-            }
+
+            setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
+        } catch (error) {
+            console.error('Error sending message:', error);
+            setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
+        }
     };
 
     return (

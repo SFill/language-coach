@@ -159,7 +159,7 @@ const MessageInput = ({ onSend }) => {
           onMouseUp={handleMouseUp}
           onWheel={handleWheel}
           onScroll={handleScroll}
-          onFocus={handleFocus}
+          // onFocus={handleFocus}
           textareaRef={textareaRef}
         />
       </div>

@@ -35,12 +35,15 @@ function AppContent() {
 
   // Extract chatId from location pathname instead of using useParams
   useEffect(() => {
+    console.log("currentChatId " +currentChatId)
     if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname === '/') {
       // Extract chatId from location pathname using regex
       const match = location.pathname.match(/\/chat\/(\d+)/);
       const chatIdFromPath = match ? parseInt(match[1]) : null;
       // set it, null if it's a default page
-      setCurrentChatId(chatIdFromPath);
+      if (chatIdFromPath !== currentChatId) {
+        setCurrentChatId(chatIdFromPath);
+      }
     }
     console.log("[location.pathname])")
   }, [location.pathname]);
@@ -101,9 +104,14 @@ function AppContent() {
   };
 
   // This function will be passed to ChatWindowPage to notify when a new chat is created
-  const onChatCreated = (newChatId) => {
+  const onChatCreated = (newChatId, message) => {
     loadChats(); // Reload the chat list to include the new chat
     setCurrentChatId(newChatId); // Update the current chat ID
+    // Pass message as state in navigation
+    navigate(`/chat/${newChatId}`, {
+      state: { initialMessage: message, },
+      replace: true
+    });
   };
 
   return (
@@ -128,7 +136,7 @@ function AppContent() {
           {/* Individual chat route with path parameter */}
           <Route
             path="/chat/:chatId"
-            element={<ChatWindowPage key={location.pathname} onChatCreated={onChatCreated} />}
+            element={<ChatWindowPage onChatCreated={onChatCreated} />}
           />
 
           <Route path="/wordlist" element={<WordListPage />} />
