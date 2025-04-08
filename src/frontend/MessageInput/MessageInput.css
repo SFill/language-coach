@@ -143,3 +143,26 @@
 .selection-toolbar button:hover {
   background-color: #0056b3;
 }
+
+/* Style for active translation buttons */
+.selection-toolbar button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Animation for "Translating..." text */
+@keyframes ellipsis-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.selection-toolbar span.translating {
+  animation: ellipsis-pulse 1.5s infinite;
+}
+
+/* Make sure the active language button styling doesn't override other button properties */
+.selection-toolbar button.active-language {
+  background-color: #4CAF50;
+  color: white;
+}

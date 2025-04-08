@@ -11,9 +11,9 @@ import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 // Import components
 import TextEditor from './TextEditor';
 import SelectionToolbar from './SelectionToolbar';
-import CaretPositionDisplay from './CaretPositionDisplay';
 
 const LOCAL_STORAGE_KEY = 'language-coach-message-input';
+const PREFERRED_LANGUAGE_KEY = 'language-coach-preferred-language';
 
 /**
  * MessageInput Component
@@ -28,15 +28,13 @@ const MessageInput = ({ onSend }) => {
   // Create ref for the textarea
   const textareaRef = useRef(null);
 
-  // Use local storage for text persistence
+  // Use local storage for text persistence and language preference
   const [input, setInput] = useLocalStorage(LOCAL_STORAGE_KEY, '');
+  const [savedLanguage, setSavedLanguage] = useLocalStorage(PREFERRED_LANGUAGE_KEY, 'en');
 
   // Set up caret tracking
   const {
-    caretInfo,
     updateCaretInfo,
-    updateCaretInfoWithoutScrolling,
-    calculateVisualLine,
     calculateTotalVisualLines
   } = useCaretTracking(textareaRef, input);
 
@@ -52,14 +50,21 @@ const MessageInput = ({ onSend }) => {
     input
   );
 
-  // Handle text selections and translations
+  // Handle text selections and translations with persisted language preference
   const {
     selectedText,
     handleSelect,
     handleTranslate,
     clearSelection,
-    displayText
-  } = useTextSelection(input, updateCaretInfo);
+    displayText,
+    preferredLanguage,
+    isTranslating
+  } = useTextSelection(
+    input, 
+    updateCaretInfo, 
+    savedLanguage, 
+    (newLanguage) => setSavedLanguage(newLanguage)
+  );
 
   // Handle sending messages
   const handleSendMessage = useCallback((isNote = false) => {
@@ -136,9 +141,6 @@ const MessageInput = ({ onSend }) => {
   }, [scrollHandleScroll]);
 
   // Handle focus and blur
-  const handleFocus = useCallback(() => {
-    textareaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
-  }, []);
 
   return (
     <div className="message-input">
@@ -148,6 +150,8 @@ const MessageInput = ({ onSend }) => {
             displayText={displayText}
             onTranslate={handleTranslate}
             onSend={handleSendMessage}
+            preferredLanguage={preferredLanguage}
+            isTranslating={isTranslating}
           />
         </div>
         <TextEditor
@@ -159,7 +163,6 @@ const MessageInput = ({ onSend }) => {
           onMouseUp={handleMouseUp}
           onWheel={handleWheel}
           onScroll={handleScroll}
-          // onFocus={handleFocus}
           textareaRef={textareaRef}
         />
       </div>

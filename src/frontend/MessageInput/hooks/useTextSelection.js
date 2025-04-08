@@ -1,16 +1,23 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { translateText } from '../../api'; // Adjust path as needed
 
 /**
- * Hook to manage text selection and translation
+ * Hook to manage text selection and translation with delay
  * 
  * @param {string} text - The full text content
  * @param {Function} updateCaretInfo - Function to update caret position
+ * @param {string} initialPreferredLanguage - Initially preferred language from localStorage
+ * @param {Function} onLanguageChange - Callback when language preference changes
  * @returns {Object} Selection-related state and functions
  */
-const useTextSelection = (text, updateCaretInfo) => {
+const useTextSelection = (text, updateCaretInfo, initialPreferredLanguage = 'en', onLanguageChange = null) => {
   const [selectedText, setSelectedText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
+  const [preferredLanguage, setPreferredLanguage] = useState(initialPreferredLanguage);
+  const [isTranslating, setIsTranslating] = useState(false);
+  
+  // Reference to store the translation timer
+  const translationTimer = useRef(null);
 
   /**
    * Handles text selection in the textarea
@@ -23,33 +30,95 @@ const useTextSelection = (text, updateCaretInfo) => {
 
     if (sel.length > 0) {
       setSelectedText(sel);
-      setTranslatedText('');
+      
+      // Clear any existing translation timer
+      if (translationTimer.current) {
+        clearTimeout(translationTimer.current);
+      }
+      
+      // Only schedule a translation if we have a preferred language
+      if (preferredLanguage) {
+        // Reset the timer - will translate after the delay
+        translationTimer.current = setTimeout(() => {
+          translateToLanguage(preferredLanguage, sel);
+        }, 700); // 700ms delay
+      } else {
+        // Just clear the translation if no language is set
+        setTranslatedText('');
+      }
     }
 
     updateCaretInfo();
-  }, [text, updateCaretInfo]);
+  }, [text, updateCaretInfo, preferredLanguage]);
 
   /**
-   * Translates the selected text into the specified language
+   * Translates text to the specified language
+   * Private helper function used by handleTranslate
    */
-  const handleTranslate = useCallback(async (lang) => {
-    if (!selectedText.trim()) return;
-
+  const translateToLanguage = async (lang, textToTranslate) => {
+    if (!textToTranslate || !textToTranslate.trim()) return;
+    
+    setIsTranslating(true);
+    
     try {
-      const translation = await translateText(selectedText, lang);
+      const translation = await translateText(textToTranslate, lang);
       setTranslatedText(translation);
     } catch (error) {
       console.error('Translation error:', error);
       // Could set an error state here if needed
+    } finally {
+      setIsTranslating(false);
     }
-  }, [selectedText]);
+  };
+
+  /**
+   * Translates the selected text into the specified language
+   */
+  const handleTranslate = useCallback((lang) => {
+    // Update the preferred language
+    setPreferredLanguage(lang);
+    
+    // Notify parent component about language change if callback exists
+    if (onLanguageChange) {
+      onLanguageChange(lang);
+    }
+    
+    // Clear any existing translation timer
+    if (translationTimer.current) {
+      clearTimeout(translationTimer.current);
+      translationTimer.current = null;
+    }
+    
+    // Immediately translate the currently selected text
+    if (selectedText.trim()) {
+      translateToLanguage(lang, selectedText);
+    }
+  }, [selectedText, onLanguageChange]);
 
   /**
    * Clears selection and translation state
    */
   const clearSelection = useCallback(() => {
+    // Cancel any pending translation
+    if (translationTimer.current) {
+      clearTimeout(translationTimer.current);
+      translationTimer.current = null;
+    }
+    
     setSelectedText('');
     setTranslatedText('');
+    // Note: we don't clear preferredLanguage to remember the user's preference
+  }, []);
+
+  /**
+   * Cleanup effect to clear timers on unmount
+   */
+  useEffect(() => {
+    return () => {
+      if (translationTimer.current) {
+        clearTimeout(translationTimer.current);
+      }
+    };
   }, []);
 
   /**
@@ -64,14 +133,15 @@ const useTextSelection = (text, updateCaretInfo) => {
     return txt.value;
   }, []);
 
-
   return {
     selectedText,
     handleSelect,
     handleTranslate,
     clearSelection,
     decodeHTML,
-    displayText: decodeHTML(translatedText || selectedText)
+    displayText: decodeHTML(translatedText || selectedText),
+    preferredLanguage,
+    isTranslating
   };
 };
 

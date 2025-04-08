@@ -7,8 +7,16 @@ import React, { useRef, useEffect, useState } from 'react';
  * @param {string} props.displayText - Text to display (selected or translated)
  * @param {Function} props.onTranslate - Function for translation
  * @param {Function} props.onSend - Function to send message
+ * @param {string} props.preferredLanguage - Currently active language for translation
+ * @param {boolean} props.isTranslating - Flag indicating if translation is in progress
  */
-const SelectionToolbar = ({ displayText, onTranslate, onSend }) => {
+const SelectionToolbar = ({ 
+  displayText, 
+  onTranslate, 
+  onSend, 
+  preferredLanguage = null,
+  isTranslating = false 
+}) => {
   const spanRef = useRef(null);
   const [isTruncated, setIsTruncated] = useState(false);
 
@@ -28,13 +36,42 @@ const SelectionToolbar = ({ displayText, onTranslate, onSend }) => {
     window.addEventListener('resize', checkTruncation);
     return () => window.removeEventListener('resize', checkTruncation);
   }, [displayText]);
+  
+  // Function to get button style based on language
+  const getButtonStyle = (lang) => {
+    if (preferredLanguage === lang) {
+      return {
+        backgroundColor: '#4CAF50', // Green background for active language
+        color: 'white'
+      };
+    }
+    return {}; // Default style for inactive languages
+  };
 
   return (
     <div className="selection-toolbar">
       <div className="buttons">
-        <button onClick={() => onTranslate('ru')}>🇷🇺</button>
-        <button onClick={() => onTranslate('en')}>🇺🇸</button>
-        <button onClick={() => onTranslate('es')}>🇪🇸</button>
+        <button 
+          onClick={() => onTranslate('ru')} 
+          style={getButtonStyle('ru')}
+          disabled={isTranslating}
+        >
+          🇷🇺
+        </button>
+        <button 
+          onClick={() => onTranslate('en')} 
+          style={getButtonStyle('en')}
+          disabled={isTranslating}
+        >
+          🇺🇸
+        </button>
+        <button 
+          onClick={() => onTranslate('es')} 
+          style={getButtonStyle('es')}
+          disabled={isTranslating}
+        >
+          🇪🇸
+        </button>
         <button onClick={() => onSend(false)}>Ask a question</button>
         <button onClick={() => onSend(true)}>Send as note</button>
       </div>
@@ -42,9 +79,8 @@ const SelectionToolbar = ({ displayText, onTranslate, onSend }) => {
         ref={spanRef}
         className={isTruncated ? 'truncated' : ''}
       >
-        {displayText}
+        {isTranslating ? 'Translating...' : displayText}
       </span>
-
     </div>
   );
 };
