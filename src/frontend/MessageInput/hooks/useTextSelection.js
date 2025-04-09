@@ -59,6 +59,8 @@ const useTextSelection = (text, updateCaretInfo, initialPreferredLanguage = 'en'
     if (!textToTranslate || !textToTranslate.trim()) return;
     
     setIsTranslating(true);
+
+    textToTranslate = textToTranslate.replaceAll(/\n/g,'<br/>')
     
     try {
       const translation = await translateText(textToTranslate, lang);
@@ -127,9 +129,11 @@ const useTextSelection = (text, updateCaretInfo, initialPreferredLanguage = 'en'
   const decodeHTML = useCallback((html) => {
     if (!html) return '';
 
+    // First replace <br> tags with newlines
+    let processed = html.replace(/<br\s*\/?> ?/gi, '\n');
     // Use textarea trick to decode HTML entities
     const txt = document.createElement('textarea');
-    txt.innerHTML = html;
+    txt.innerHTML = processed;
     return txt.value;
   }, []);
 

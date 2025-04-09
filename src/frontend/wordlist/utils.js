@@ -25,7 +25,7 @@ export function areCloseMatches(phraseA, phraseB) {
         return intersection.size > 0
     }
     // phrases
-    return intersection.size / union.size >= 0.5;
+    return (intersection.size / union.size >= 0.5) || (intersection.size / tokensB.size >= 0.8);
 }
 
 export function isPartOfPhrase(phraseA, phraseB) {

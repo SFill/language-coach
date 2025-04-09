@@ -108,7 +108,7 @@
 
 /* On hover, show the full text */
 .selection-toolbar:hover span {
-  white-space: normal;
+  white-space: pre-wrap;
   /* Allow text to wrap on hover */
   overflow-y: auto;
   /* Enable scrolling if text is very long */
