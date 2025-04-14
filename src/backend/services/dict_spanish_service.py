@@ -2,8 +2,15 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import re
-from typing import Dict, List, Optional, Union, Any
+from typing import Dict, List, Optional, Any, Tuple
+from sqlmodel import Session, select
+from fastapi import HTTPException
 
+from ..models.dict_spanish import (
+    SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
+    Participle, ConjugationForm, Example, Translation, 
+    Sense, PosGroup, AudioInfo, Pronunciation
+)
 
 class SpanishDictClient:
     """
@@ -20,7 +27,7 @@ class SpanishDictClient:
         self.session = requests.Session()
         self.session.headers.update(self.HEADERS)
     
-    def get_word_data(self, word: str) -> Dict[str, Any]:
+    def get_word_data(self, word: str) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """
         Get comprehensive data for a specific word
         
@@ -28,7 +35,9 @@ class SpanishDictClient:
             word: The word to look up
             
         Returns:
-            Dictionary containing all available information about the word
+            Tuple containing:
+            - Dictionary with word definitions
+            - Dictionary with audio and pronunciation info
         """
         url = f"{self.BASE_URL}/translate/{word}"
         response = self.session.get(url)
@@ -37,9 +46,22 @@ class SpanishDictClient:
         soup = BeautifulSoup(response.text, 'html.parser')
         
         # Extract initial state data if available
-        data = self._extract_initial_state(soup)
+        component_data = self._extract_initial_state(soup)
+        
+        if not component_data:
+            return {}, {}
             
-        return data['sdDictionaryResultsProps']['entry']['neodict']
+        # Extract word definitions
+        word_defs = {}
+        if 'sdDictionaryResultsProps' in component_data and 'entry' in component_data['sdDictionaryResultsProps']:
+            word_defs = component_data['sdDictionaryResultsProps']['entry'].get('neodict', {})
+        
+        # Extract audio and pronunciation info
+        audio_info = {}
+        if 'resultCardHeaderProps' in component_data and 'headwordAndQuickdefsProps' in component_data['resultCardHeaderProps']:
+            audio_info = component_data['resultCardHeaderProps']['headwordAndQuickdefsProps']
+        
+        return word_defs, audio_info
     
     def _extract_initial_state(self, soup: BeautifulSoup) -> Dict[str, Any]:
         """
@@ -79,20 +101,21 @@ class SpanishDictClient:
         
         # Check if verb data is available in the extracted data
         if not (data and "verb" in data and "paradigms" in data["verb"]):
-            return 
+            return {}
+            
         paradigms = data["verb"]["paradigms"]
         
         # Process the paradigms into a more user-friendly format
         result = {
             "infinitive": data["verb"].get("infinitive", verb),
             "translation": data["verb"].get("infinitiveTranslation", ""),
-            "isReflexive": data["verb"].get("isReflexive", False),
+            "is_reflexive": data["verb"].get("isReflexive", False),
             "tenses": {}
         }
         
         # Add participles if available
         if "pastParticiple" in data["verb"]:
-            result["pastParticiple"] = {
+            result["past_participle"] = {
                 "spanish": data["verb"]["pastParticiple"].get("word", ""),
                 "english": data["verb"]["pastParticiple"].get("wordTranslation", {}).get("word", "")
             }
@@ -113,7 +136,7 @@ class SpanishDictClient:
                 pronoun = conj.get("pronoun", "")
                 if pronoun and "word" in conj:
                     # Handle multiple forms (comma-separated)
-                    forms = conj["word"].split(",") if "," in conj["word"] else [conj["word"]]
+                    forms = conj["word"].split(", ") if ", " in conj["word"] else [conj["word"]]
                     
                     # Get translation if available
                     translation = ""
@@ -130,89 +153,315 @@ class SpanishDictClient:
                 result["tenses"][tense_name] = tense_dict
         
         return result
-            
-        
-    
-    def get_examples(self, word: str, limit: int = 10) -> List[Dict[str, str]]:
-        """
-        Get usage examples for a word
-        
-        Args:
-            word: The word to find examples for
-            limit: Maximum number of examples to return
-            
-        Returns:
-            List of example sentences
-        """
-        # TODO doesnot work
-        url = f"{self.BASE_URL}/examples/{word}"
-        response = self.session.get(url)
-        response.raise_for_status()
-        
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        examples = []
-        example_divs = soup.select("div.example")
-        
-        for div in example_divs[:limit]:
-            spanish = div.select_one(".spanish")
-            english = div.select_one(".english")
-            
-            if spanish and english:
-                examples.append({
-                    "spanish": spanish.get_text(strip=True),
-                    "english": english.get_text(strip=True)
-                })
-        
-        return examples
 
 
-# Example usage
-if __name__ == "__main__":
-    client = SpanishDictClient()
+# Database model for caching Spanish dictionary data
+from sqlmodel import SQLModel, Field, Column, JSON
+
+class SpanishDictionary(SQLModel, table=True):
+    """Model for cached Spanish dictionary entries."""
+    __tablename__ = 'spanish_dictionary'
     
-    # Example 1: Get word data
-    word_data = client.get_word_data("hablando")
-    print("Word data for 'api':")
-    # print(json.dumps(word_data, indent=2, ensure_ascii=False))
+    id: int | None = Field(default=None, primary_key=True)
+    word: str = Field(index=True)
+    word_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    audio_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    conjugation_data: Optional[dict] = Field(default=None, sa_column=Column(JSON))
+
+
+def parse_audio_info(raw_audio_data: Dict[str, Any]) -> Tuple[Optional[AudioInfo], Optional[AudioInfo]]:
+    """Parse raw audio data into AudioInfo models."""
+    spanish_audio = None
+    english_audio = None
     
-    # Example 2: Get conjugations for a verb
-    conjugations = client.get_conjugations("hablar")
-    # print("\nConjugations for 'hablar':")
-    print(conjugations)
-    
-    # # Print a more readable sample of the conjugations
-    # if conjugations and "tenses" in conjugations:
-    #     print(f"Infinitive: {conjugations['infinitive']} - Translation: {conjugations['translation']}")
+    # Extract Spanish audio info
+    if 'headword' in raw_audio_data:
+        hw = raw_audio_data['headword']
+        pronunciations = []
         
-    #     # Print present indicative tense as an example
-    #     if "presentIndicative" in conjugations["tenses"]:
-    #         print("\nPresent Indicative:")
-    #         present_tense = conjugations["tenses"]["presentIndicative"]
-    #         for pronoun, data in present_tense.items():
-    #             forms = ", ".join(data["forms"])
-    #             translation = data["translation"]
-    #             print(f"  {pronoun}: {forms} ({translation})")
-                
-    #     # Print preterite indicative tense as another example
-    #     if "preteritIndicative" in conjugations["tenses"]:
-    #         print("\nPreterite Indicative:")
-    #         preterite_tense = conjugations["tenses"]["preteritIndicative"]
-    #         for pronoun, data in preterite_tense.items():
-    #             forms = ", ".join(data["forms"])
-    #             translation = data["translation"]
-    #             print(f"  {pronoun}: {forms} ({translation})")
+        for pron in hw.get('pronunciations', []):
+            pronunciations.append(Pronunciation(
+                id=pron.get('id'),
+                ipa=pron.get('ipa'),
+                region=pron.get('region'),
+                has_video=bool(pron.get('hasVideo', 0))
+            ))
         
-    #     # Show available tenses
-    #     print("\nAvailable tenses:")
-    #     for tense in conjugations["tenses"].keys():
-    #         print(f"  - {tense}")
-    # else:
-    #     print(json.dumps(conjugations, indent=2, ensure_ascii=False))
+        spanish_audio = AudioInfo(
+            text=hw.get('displayText', ''),
+            audio_url=hw.get('audioUrl'),
+            pronunciations=pronunciations,
+            lang=hw.get('wordLang', 'es')
+        )
     
+    # Extract English audio info
+    if 'quickdef1' in raw_audio_data and raw_audio_data['quickdef1']:
+        qd = raw_audio_data['quickdef1']
+        pronunciations = []
+        
+        for pron in qd.get('pronunciations', []):
+            pronunciations.append(Pronunciation(
+                id=pron.get('id'),
+                ipa=pron.get('ipa'),
+                region=pron.get('region'),
+                has_video=bool(pron.get('hasVideo', 0))
+            ))
+        
+        english_audio = AudioInfo(
+            text=qd.get('displayText', ''),
+            audio_url=qd.get('audioUrl'),
+            pronunciations=pronunciations,
+            lang=qd.get('wordLang', 'en')
+        )
     
-    # Example 4: Get examples
-    examples = client.get_examples("casa")
-    print("\nExamples for 'casa':")
-    print(json.dumps(examples, indent=2, ensure_ascii=False))
+    return spanish_audio, english_audio
+
+
+def parse_examples(raw_examples: List[Dict[str, str]]) -> List[Example]:
+    """Parse raw examples into Example models."""
+    examples = []
     
+    for example in raw_examples:
+        if 'textEs' in example and 'textEn' in example:
+            examples.append(Example(
+                spanish=example['textEs'],
+                english=example['textEn']
+            ))
+    
+    return examples
+
+
+def parse_translations(raw_translations: List[Dict[str, Any]]) -> List[Translation]:
+    """Parse raw translations into Translation models."""
+    translations = []
+    
+    for trans in raw_translations:
+        # Parse examples
+        examples = parse_examples(trans.get('examples', []))
+        
+        translations.append(Translation(
+            translation=trans.get('translation', ''),
+            examples=examples,
+            context=trans.get('contextEn', '')
+        ))
+    
+    return translations
+
+
+def parse_senses(raw_senses: List[Dict[str, Any]]) -> List[Sense]:
+    """Parse raw senses into Sense models."""
+    senses = []
+    
+    for sense in raw_senses:
+        translations = parse_translations(sense.get('translations', []))
+        
+        senses.append(Sense(
+            context_en=sense.get('contextEn', ''),
+            context_es=sense.get('contextEs', ''),
+            gender=sense.get('gender'),
+            translations=translations
+        ))
+    
+    return senses
+
+
+def parse_pos_groups(raw_pos_groups: List[Dict[str, Any]]) -> List[PosGroup]:
+    """Parse raw POS groups into PosGroup models."""
+    pos_groups = []
+    
+    for group in raw_pos_groups:
+        pos = group.get('pos', {}).get('nameEn', '')
+        senses = parse_senses(group.get('senses', []))
+        
+        pos_groups.append(PosGroup(
+            pos=pos,
+            senses=senses
+        ))
+    
+    return pos_groups
+
+
+def parse_spanish_word_data(raw_data: List[Dict[str, Any]]) -> List[SpanishWordEntry]:
+    """Parse raw API data into SpanishWordEntry models."""
+    if not raw_data:
+        return []
+    
+    entries = []
+    for entry_data in raw_data:
+        try:
+            subheadword = entry_data.get('subheadword', '')
+            pos_groups = parse_pos_groups(entry_data.get('posGroups', []))
+            
+            entries.append(SpanishWordEntry(
+                word=subheadword,
+                pos_groups=pos_groups
+            ))
+        except Exception as e:
+            print(f"Error parsing word entry: {e}")
+    
+    return entries
+
+
+def collect_verb_examples(word_data: List[Dict[str, Any]]) -> List[Example]:
+    """Collect examples of verb usage from word data."""
+    all_examples = []
+    
+    for entry in word_data:
+        for pos_group in entry.get('posGroups', []):
+            pos_name = pos_group.get('pos', {}).get('nameEn', '').lower()
+            
+            if 'verb' in pos_name:
+                # Collect examples
+                for sense in pos_group.get('senses', []):
+                    for translation_item in sense.get('translations', []):
+                        for example in translation_item.get('examples', []):
+                            if 'textEs' in example and 'textEn' in example:
+                                all_examples.append(Example(
+                                    spanish=example['textEs'],
+                                    english=example['textEn']
+                                ))
+    
+    return all_examples
+
+
+def parse_conjugation_data(raw_data: Dict[str, Any], verb_examples: List[Example]) -> Optional[VerbConjugations]:
+    """Parse raw conjugation data into VerbConjugations model."""
+    if not raw_data:
+        return None
+    
+    try:
+        # Process participles
+        past_participle = None
+        if "past_participle" in raw_data:
+            past_participle = Participle(
+                spanish=raw_data["past_participle"]["spanish"],
+                english=raw_data["past_participle"]["english"]
+            )
+        
+        gerund = None
+        if "gerund" in raw_data:
+            gerund = Participle(
+                spanish=raw_data["gerund"]["spanish"],
+                english=raw_data["gerund"]["english"]
+            )
+        
+        # Process tenses
+        tenses = {}
+        for tense_name, tense_data in raw_data.get("tenses", {}).items():
+            conjugations = {}
+            for pronoun, conj_data in tense_data.items():
+                conjugations[pronoun] = ConjugationForm(
+                    forms=conj_data["forms"],
+                    translation=conj_data["translation"]
+                )
+            tenses[tense_name] = conjugations
+        
+        return VerbConjugations(
+            infinitive=raw_data["infinitive"],
+            translation=raw_data["translation"],
+            is_reflexive=raw_data["is_reflexive"],
+            past_participle=past_participle,
+            gerund=gerund,
+            tenses=tenses,
+            examples=verb_examples
+        )
+    except Exception as e:
+        print(f"Error parsing conjugation data: {e}")
+        return None
+
+
+def is_verb(word_data: List[Dict[str, Any]]) -> bool:
+    """Check if the word is a verb based on its part of speech."""
+    for entry in word_data:
+        for pos_group in entry.get('posGroups', []):
+            pos_name = pos_group.get('pos', {}).get('nameEn', '').lower()
+            if 'verb' in pos_name:
+                return True
+    return False
+
+
+def get_spanish_word_definition(word: str, include_conjugations: bool = False, session: Session = None) -> SpanishWordDefinition:
+    """
+    Get a Spanish word definition from cache or the SpanishDict API.
+    
+    Args:
+        word: The word to look up
+        include_conjugations: Whether to include verb conjugations
+        session: Database session for caching
+        
+    Returns:
+        SpanishWordDefinition object with word information
+    """
+    # Check cache if session is provided
+    if session:
+        dictionary_entry = session.exec(
+            select(SpanishDictionary).where(SpanishDictionary.word == word)
+        ).first()
+        
+        if dictionary_entry:
+            word_data = dictionary_entry.word_data
+            audio_data = dictionary_entry.audio_data
+            conjugation_data = dictionary_entry.conjugation_data
+    else:
+        dictionary_entry = None
+        word_data = None
+        audio_data = None
+        conjugation_data = None
+    
+    # If not in cache or no session provided, fetch word data from API
+    if not word_data or not audio_data:
+        client = SpanishDictClient()
+        word_data, audio_data = client.get_word_data(word)
+        
+        # Cache the data if session is provided
+        if session and word_data:
+            if dictionary_entry:
+                # Update existing entry
+                dictionary_entry.word_data = word_data
+                dictionary_entry.audio_data = audio_data
+            else:
+                # Create new entry
+                dictionary_entry = SpanishDictionary(
+                    word=word,
+                    word_data=word_data,
+                    audio_data=audio_data
+                )
+            session.add(dictionary_entry)
+            session.commit()
+    
+    # Fetch conjugation data if this is a verb and conjugations are requested
+    if include_conjugations and is_verb(word_data):
+        # Check if we already have conjugation data in cache
+        if not conjugation_data and dictionary_entry:
+            client = SpanishDictClient()
+            conjugation_data = client.get_conjugations(word)
+            
+            # Update cache with conjugation data
+            if session and conjugation_data:
+                dictionary_entry.conjugation_data = conjugation_data
+                session.add(dictionary_entry)
+                session.commit()
+        # If no cache or not in cache, fetch from API
+        elif not conjugation_data:
+            client = SpanishDictClient()
+            conjugation_data = client.get_conjugations(word)
+    
+    # Parse the data into our Pydantic models
+    entries = parse_spanish_word_data(word_data)
+    
+    # Parse audio data
+    spanish_audio, english_audio = parse_audio_info(audio_data)
+    
+    # Parse conjugation data if available
+    conjugations = None
+    if include_conjugations and conjugation_data:
+        verb_examples = collect_verb_examples(word_data)
+        conjugations = parse_conjugation_data(conjugation_data, verb_examples)
+    
+    return SpanishWordDefinition(
+        word=word,
+        entries=entries,
+        conjugations=conjugations,
+        spanish_audio=spanish_audio,
+        english_audio=english_audio
+    )
