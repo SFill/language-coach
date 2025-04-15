@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Depends
-from typing import Annotated
+from fastapi import APIRouter, Depends, Query
+from typing import Annotated, Dict
 from sqlmodel import Session
 
 from ..database import get_session
-from ..models.wordlist import EnglishWordDefinition
-from ..services.dictionary_service import get_word_definition
+from ..services.unified_dictionary_service import get_word_definition
 from ..services.sentence_service import search_for_sentences
 
 # Create router
@@ -14,10 +13,25 @@ router = APIRouter(prefix="/api", tags=["dictionary"])
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
-@router.get('/words/{word}', response_model=EnglishWordDefinition)
-def get_word_definition_endpoint(word: str, session: SessionDep) -> EnglishWordDefinition:
-    """Get the definition of a word."""
-    return get_word_definition(word, session)
+@router.get('/words/{word}')
+def get_word_definition_endpoint(
+    word: str, 
+    session: SessionDep,
+    language: str = Query("en", description="Language code (en or es)"),
+    include_conjugations: bool = Query(False, description="Include verb conjugations (Spanish only)")
+) -> Dict:
+    """
+    Get the definition of a word in the specified language.
+    
+    Args:
+        word: The word to look up
+        language: Language code ('en' for English, 'es' for Spanish)
+        include_conjugations: Whether to include verb conjugations (Spanish only)
+        
+    Returns:
+        Dictionary with word definition
+    """
+    return get_word_definition(word, language, session, include_conjugations)
 
 
 @router.get('/coach/index/words/{word}')

@@ -1,7 +1,7 @@
 from enum import Enum
 from sqlmodel import SQLModel, Field, Column, JSON
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 class Wordlist(SQLModel, table=True):
     """Model for word lists."""
@@ -15,45 +15,75 @@ class Dictionary(SQLModel, table=True):
     word: str
     word_meta: dict = Field(default_factory=dict, sa_column=Column(JSON))
 
-# Pydantic schemas for API
+# Common models for both languages
+class Example(BaseModel):
+    """Example of word usage."""
+    source_text: str  # Spanish text for Spanish, English example for English
+    target_text: str  # English translation for Spanish, additional context for English
+
+class AudioInfo(BaseModel):
+    """Audio information for a word."""
+    text: str
+    audio_url: Optional[str] = None
+    lang: str  # 'es' for Spanish, 'en' for English
+
+# English dictionary specific models
 class EnglishDialect(str, Enum):
     us = 'us'
     uk = 'uk'
 
-class WordDefinitionDetail(BaseModel):
-    definition: str
-    synonyms: list[str] = []
-    antonyms: list[str] = []
-    example: str | None = None
+class EnglishTranslation(BaseModel):
+    """Translation information for an English word."""
+    translation: str  = "" # Definition in English, is not provided
+    examples: List[Example] = []
 
-class WordMeaning(BaseModel):
-    part_of_speech: str
-    definitions: list[WordDefinitionDetail]
-    synonyms: list[str] = []
-    antonyms: list[str] = []
+class EnglishSense(BaseModel):
+    """Sense information for an English word."""
+    context_en: str = ""  # Context or usage note
+    translations: List[EnglishTranslation] = []
+    synonyms: List[str] = []
+    antonyms: List[str] = []
+
+class EnglishPosGroup(BaseModel):
+    """Group of senses by part of speech for an English word."""
+    pos: str  # Name of the part of speech
+    senses: List[EnglishSense] = []
+
+class EnglishWordEntry(BaseModel):
+    """Entry for an English word."""
+    word: str
+    pos_groups: List[EnglishPosGroup] = []
 
 class EnglishWordDefinition(BaseModel):
-    audio_link: str | None = None
-    english_dialect: EnglishDialect
-    meanings: list[WordMeaning]
-
-class WordlistCreate(BaseModel):
-    name: str
-    words: list[str]
-
-class WordlistUpdate(BaseModel):
-    name: str | None = None
-    words: list[str] | None = None
-
-class WordDefinitionResponse(BaseModel):
+    """Definition structure for an English word."""
     word: str
-    definition: EnglishWordDefinition
+    entries: List[EnglishWordEntry] = []
+    audio: Optional[AudioInfo] = None
+    dialect: Optional[EnglishDialect] = EnglishDialect.us
+
+# Shared response models
+class WordDefinitionResponse(BaseModel):
+    """Generic response model for word definitions."""
+    word: str
+    definition: Dict  # This will be either EnglishWordDefinition or SpanishWordDefinition
 
 class WordlistResponse(BaseModel):
+    """Response model for wordlists."""
     id: int
     name: str
-    words: list[WordDefinitionResponse]
+    words: List[WordDefinitionResponse]
+
+class WordlistCreate(BaseModel):
+    """Model for creating a new wordlist."""
+    name: str
+    words: List[str]
+
+class WordlistUpdate(BaseModel):
+    """Model for updating a wordlist."""
+    name: Optional[str] = None
+    words: Optional[List[str]] = None
 
 class TranslateTextRequest(BaseModel):
+    """Request model for text translation."""
     text: str
     target: str

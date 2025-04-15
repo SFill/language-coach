@@ -75,7 +75,7 @@ def send_message(session: Session, id: int, message: Message) -> dict:
                     "content": SYSTEM_PROMPT,
                 }
             ] + chat.history['content'],
-            model="gpt-4o-mini",  # example placeholder model name
+            model="gpt-4o",  # example placeholder model name
             stream=True,
         )
 

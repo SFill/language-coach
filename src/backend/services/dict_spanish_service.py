@@ -8,15 +8,17 @@ from fastapi import HTTPException
 
 from ..models.dict_spanish import (
     SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
-    Participle, ConjugationForm, Example, Translation, 
-    Sense, PosGroup, AudioInfo, Pronunciation
+    Participle, ConjugationForm, Translation, 
+    Sense, PosGroup, Pronunciation
 )
+from ..models.wordlist import Example, AudioInfo
 
 class SpanishDictClient:
     """
     A client for parsing and extracting information from SpanishDict.com
     """
     
+    # [... Client implementation unchanged ...]
     BASE_URL = "https://www.spanishdict.com"
     HEADERS = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -83,12 +85,6 @@ class SpanishDictClient:
     def get_conjugations(self, verb: str) -> Dict[str, Any]:
         """
         Get conjugation tables for a verb
-        
-        Args:
-            verb: The verb to look up conjugations for
-            
-        Returns:
-            Dictionary containing conjugation tables
         """
         url = f"{self.BASE_URL}/conjugate/{verb}"
         response = self.session.get(url)
@@ -177,40 +173,20 @@ def parse_audio_info(raw_audio_data: Dict[str, Any]) -> Tuple[Optional[AudioInfo
     # Extract Spanish audio info
     if 'headword' in raw_audio_data:
         hw = raw_audio_data['headword']
-        pronunciations = []
-        
-        for pron in hw.get('pronunciations', []):
-            pronunciations.append(Pronunciation(
-                id=pron.get('id'),
-                ipa=pron.get('ipa'),
-                region=pron.get('region'),
-                has_video=bool(pron.get('hasVideo', 0))
-            ))
         
         spanish_audio = AudioInfo(
             text=hw.get('displayText', ''),
             audio_url=hw.get('audioUrl'),
-            pronunciations=pronunciations,
             lang=hw.get('wordLang', 'es')
         )
     
     # Extract English audio info
     if 'quickdef1' in raw_audio_data and raw_audio_data['quickdef1']:
         qd = raw_audio_data['quickdef1']
-        pronunciations = []
-        
-        for pron in qd.get('pronunciations', []):
-            pronunciations.append(Pronunciation(
-                id=pron.get('id'),
-                ipa=pron.get('ipa'),
-                region=pron.get('region'),
-                has_video=bool(pron.get('hasVideo', 0))
-            ))
         
         english_audio = AudioInfo(
             text=qd.get('displayText', ''),
             audio_url=qd.get('audioUrl'),
-            pronunciations=pronunciations,
             lang=qd.get('wordLang', 'en')
         )
     
@@ -224,8 +200,8 @@ def parse_examples(raw_examples: List[Dict[str, str]]) -> List[Example]:
     for example in raw_examples:
         if 'textEs' in example and 'textEn' in example:
             examples.append(Example(
-                spanish=example['textEs'],
-                english=example['textEn']
+                source_text=example['textEs'],
+                target_text=example['textEn']
             ))
     
     return examples
@@ -317,8 +293,8 @@ def collect_verb_examples(word_data: List[Dict[str, Any]]) -> List[Example]:
                         for example in translation_item.get('examples', []):
                             if 'textEs' in example and 'textEn' in example:
                                 all_examples.append(Example(
-                                    spanish=example['textEs'],
-                                    english=example['textEn']
+                                    source_text=example['textEs'],
+                                    target_text=example['textEn']
                                 ))
     
     return all_examples
@@ -380,7 +356,7 @@ def is_verb(word_data: List[Dict[str, Any]]) -> bool:
     return False
 
 
-def get_spanish_word_definition(word: str, include_conjugations: bool = False, session: Session = None) -> SpanishWordDefinition:
+def get_spanish_word_definition(word: str, include_conjugations: bool = False, session: Session = None) -> dict:
     """
     Get a Spanish word definition from cache or the SpanishDict API.
     
@@ -390,18 +366,20 @@ def get_spanish_word_definition(word: str, include_conjugations: bool = False, s
         session: Database session for caching
         
     Returns:
-        SpanishWordDefinition object with word information
+        Dictionary with word information to match WordDefinitionResponse format
     """
     # Check cache if session is provided
     if session:
         dictionary_entry = session.exec(
             select(SpanishDictionary).where(SpanishDictionary.word == word)
         ).first()
+    else:
+        dictionary_entry = None
         
-        if dictionary_entry:
-            word_data = dictionary_entry.word_data
-            audio_data = dictionary_entry.audio_data
-            conjugation_data = dictionary_entry.conjugation_data
+    if dictionary_entry:
+        word_data = dictionary_entry.word_data
+        audio_data = dictionary_entry.audio_data
+        conjugation_data = dictionary_entry.conjugation_data
     else:
         dictionary_entry = None
         word_data = None
@@ -458,10 +436,14 @@ def get_spanish_word_definition(word: str, include_conjugations: bool = False, s
         verb_examples = collect_verb_examples(word_data)
         conjugations = parse_conjugation_data(conjugation_data, verb_examples)
     
-    return SpanishWordDefinition(
+    # Create the SpanishWordDefinition object
+    spanish_def = SpanishWordDefinition(
         word=word,
         entries=entries,
         conjugations=conjugations,
         spanish_audio=spanish_audio,
         english_audio=english_audio
     )
+    
+    # Return as dictionary to match WordDefinitionResponse format
+    return spanish_def.dict()

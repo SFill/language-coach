@@ -1,36 +1,34 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
-
-
-class Example(BaseModel):
-    """Example of word usage."""
-    spanish: str
-    english: str
+from ..models.wordlist import Example, AudioInfo
 
 
 class Translation(BaseModel):
-    """Simplified translation information."""
+    """Translation information for a Spanish word."""
     translation: str
     examples: List[Example] = []
     context: str = ""
 
 
 class Sense(BaseModel):
-    """Simplified sense information for a word."""
+    """Sense information for a Spanish word."""
     context_en: str
     context_es: str
     gender: Optional[str] = None
     translations: List[Translation] = []
+    # TODO reserved fields, always empty, add support
+    synonyms: List[str] = []
+    antonyms: List[str] = []
 
 
 class PosGroup(BaseModel):
-    """Simplified group of senses by part of speech."""
-    pos: str  # Just the name of the part of speech
+    """Group of senses by part of speech for a Spanish word."""
+    pos: str  # Name of the part of speech
     senses: List[Sense] = []
 
 
 class SpanishWordEntry(BaseModel):
-    """Simplified entry for a Spanish word."""
+    """Entry for a Spanish word."""
     word: str
     pos_groups: List[PosGroup] = []
 
@@ -42,14 +40,6 @@ class Pronunciation(BaseModel):
     ipa: Optional[str] = None  # International Phonetic Alphabet
     region: Optional[str] = None  # LATAM, SPAIN, etc.
     has_video: Optional[bool] = None
-
-
-class AudioInfo(BaseModel):
-    """Audio information for a word."""
-    text: str
-    audio_url: Optional[str] = None
-    pronunciations: List[Pronunciation] = []
-    lang: str  # 'es' for Spanish, 'en' for English
 
 
 # Conjugation models
@@ -83,7 +73,7 @@ class VerbConjugations(BaseModel):
 
 # Combined word definition model
 class SpanishWordDefinition(BaseModel):
-    """Simplified definition for a Spanish word."""
+    """Definition for a Spanish word."""
     word: str
     entries: List[SpanishWordEntry]
     conjugations: Optional[VerbConjugations] = None
@@ -96,9 +86,3 @@ class SpanishWordRequest(BaseModel):
     """Request for Spanish word information."""
     word: str
     include_conjugations: bool = False
-
-
-class SpanishWordResponse(BaseModel):
-    """Response with Spanish word information."""
-    word: str
-    definition: SpanishWordDefinition
