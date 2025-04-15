@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useWordlist } from "./WordlistContext";
+import styles from "./WordLists.module.css";
 
 // Helper function to split an array into chunks of the given size
 const chunkArray = (arr, size) => {
@@ -11,14 +12,20 @@ const chunkArray = (arr, size) => {
 };
 
 function WordLists() {
-  const { wordlists, loading, error, removeWordFromList } = useWordlist();
+  const { 
+    wordlists, 
+    loading, 
+    error, 
+    removeWordFromList, 
+    currentLanguage 
+  } = useWordlist();
+  
+  const [expandedState, setExpandedState] = useState({});
 
   // For each word list, store the currently expanded card (if any)
   // Format: { [listId]: { rowIndex, cardIndex, wordItem } }
-  const [expanded, setExpanded] = useState({});
-
   const handleCardClick = (listId, rowIndex, cardIndex, wordItem) => {
-    setExpanded((prev) => {
+    setExpandedState((prev) => {
       // If the same card is clicked again, collapse it.
       if (
         prev[listId] &&
@@ -32,10 +39,25 @@ function WordLists() {
     });
   };
 
-  const playSound = (e, audioLink) => {
+  const playSound = (e, wordItem) => {
     e.stopPropagation();
-    if (audioLink) {
-      const audio = new Audio(audioLink);
+    
+    let audioUrl = null;
+    
+    // Determine audio URL based on language and definition structure
+    if (currentLanguage === "en" && wordItem.definition?.audio?.audio_url) {
+      audioUrl = wordItem.definition.audio.audio_url;
+    } else if (currentLanguage === "es") {
+      // Prefer Spanish audio if available, fall back to English
+      if (wordItem.definition?.spanish_audio?.audio_url) {
+        audioUrl = wordItem.definition.spanish_audio.audio_url;
+      } else if (wordItem.definition?.english_audio?.audio_url) {
+        audioUrl = wordItem.definition.english_audio.audio_url;
+      }
+    }
+    
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
       audio.play();
     }
   };
@@ -46,93 +68,151 @@ function WordLists() {
     // Call the removeWordFromList function from context
     const result = removeWordFromList(word, listId);
 
-    // Optional: show a confirmation or message
+    // If the deleted word was expanded, collapse it
     if (result && result.success) {
-      // If the deleted word was expanded, collapse it
-      setExpanded((prev) => {
+      setExpandedState((prev) => {
         if (prev[listId] && prev[listId].wordItem.word === word) {
           return { ...prev, [listId]: null };
         }
         return prev;
       });
-    } else if (result && !result.success) {
-      console.error(result.message);
-      // Optional: display an error message to the user
     }
+  };
+
+  // Helper function to render definitions based on the unified structure
+  const renderDefinitionContent = (wordItem) => {
+    const def = wordItem.definition;
+    if (!def) return <p>No definition available.</p>;
+    
+    // Check for the new unified structure (entries with pos_groups)
+    if (def.entries && Array.isArray(def.entries)) {
+      return (
+        <>
+          {def.entries.map((entry, entryIndex) => (
+            <div key={entryIndex} className={styles.definitionEntry}>
+              {/* POS Groups */}
+              {entry.pos_groups && entry.pos_groups.map((posGroup, posIndex) => (
+                <div key={posIndex} className={styles.posGroup}>
+                  <h5 className={styles.partOfSpeech}>{posGroup.pos}</h5>
+                  
+                  {/* Senses */}
+                  {posGroup.senses && posGroup.senses.map((sense, senseIndex) => (
+                    <div key={senseIndex} className={styles.sense}>
+                      {/* Context/Definition */}
+                      {currentLanguage === "en" && sense.context_en && (
+                        <p className={styles.definition}>
+                          <span className={styles.definitionNumber}>{senseIndex + 1}.</span> {sense.context_en}
+                        </p>
+                      )}
+                      
+                      {/* Translations (Spanish) */}
+                      {currentLanguage === "es" && sense.translations && sense.translations.map((translation, transIndex) => (
+                        <div key={transIndex} className={styles.translation}>
+                          {translation.translation && (
+                            <p className={styles.translationText}>
+                              <span className={styles.definitionNumber}>{senseIndex + 1}.{transIndex + 1}</span> {translation.translation}
+                            </p>
+                          )}
+                          
+                          {/* Examples */}
+                          {translation.examples && translation.examples.length > 0 && (
+                            <div className={styles.examples}>
+                              {translation.examples.map((example, exIndex) => (
+                                <div key={exIndex} className={styles.example}>
+                                  <p className={styles.sourceText}>{example.source_text}</p>
+                                  {example.source_text !== example.target_text && (
+                                    <p className={styles.targetText}>{example.target_text}</p>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      
+                      {/* Synonyms and Antonyms */}
+                      {sense.synonyms && sense.synonyms.length > 0 && (
+                        <p className={styles.synonyms}>
+                          <strong>Synonyms:</strong> {sense.synonyms.join(", ")}
+                        </p>
+                      )}
+                      {sense.antonyms && sense.antonyms.length > 0 && (
+                        <p className={styles.antonyms}>
+                          <strong>Antonyms:</strong> {sense.antonyms.join(", ")}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+          
+        </>
+      );
+    }
+
+    
+    return <p>No detailed definition available.</p>;
   };
 
   if (loading) return <p>Loading word lists...</p>;
   if (error) return <p>Error fetching word lists: {error}</p>;
-  if (!wordlists || wordlists.length === 0) return <p>No word lists available.</p>;
+  if (!wordlists || wordlists.length === 0) return <p>No word lists available for {currentLanguage === "en" ? "English" : "Spanish"}.</p>;
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div className={styles.wordlistsContainer}>
+      <div className={styles.languageInfo}>
+        <p>Displaying {currentLanguage === "en" ? "English" : "Spanish"} word lists</p>
+      </div>
+      
       {wordlists.map((list) => {
         // Break the words into rows of 3 cards each.
         const rows = chunkArray(list.words || [], 3);
         return (
-          <div key={list.id} style={{ marginBottom: "2rem" }}>
-            <h2 style={{ marginBottom: "1rem" }}>
+          <div key={list.id} className={styles.wordlist}>
+            <h2 className={styles.listName}>
               {list.name}
               {list._isDirty && (
-                <span style={{ fontSize: "0.8rem", color: "#777", marginLeft: "0.5rem" }}>
+                <span className={styles.dirtyIndicator}>
                   (unsaved changes)
+                </span>
+              )}
+              {list.language && list.language !== currentLanguage && (
+                <span className={styles.languageBadge}>
+                  {list.language.toUpperCase()}
                 </span>
               )}
             </h2>
             {rows.map((row, rowIndex) => (
               <React.Fragment key={rowIndex}>
                 {/* Render the row of cards as a grid */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: "1rem",
-                  }}
-                >
+                <div className={styles.cardRow}>
                   {row.map((wordItem, cardIndex) => (
                     <div
                       key={wordItem.word}
                       onClick={() =>
                         handleCardClick(list.id, rowIndex, cardIndex, wordItem)
                       }
-                      style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        padding: "1rem",
-                        cursor: "pointer",
-                        textAlign: "center",
-                        position: "relative",
-                      }}
+                      className={styles.wordCard}
                     >
-                      <h3 style={{ margin: 0 }}>{wordItem.word}</h3>
-                      {wordItem.definition && wordItem.definition.audio_link && (
+                      <h3 className={styles.wordTitle}>{wordItem.word}</h3>
+                      
+                      {/* Audio button based on unified dictionary structure */}
+                      {(currentLanguage === "en" && wordItem.definition?.audio?.audio_url) || 
+                       (currentLanguage === "es" && (wordItem.definition?.spanish_audio?.audio_url || wordItem.definition?.english_audio?.audio_url)) ? (
                         <button
-                          onClick={(e) =>
-                            playSound(e, wordItem.definition.audio_link)
-                          }
-                          style={{ marginTop: "0.5rem" }}
+                          onClick={(e) => playSound(e, wordItem)}
+                          className={styles.audioButton}
                         >
                           Play Sound
                         </button>
-                      )}
+                      ) : null}
 
                       {/* Delete button */}
                       <button
                         onClick={(e) => handleDeleteWord(e, list.id, wordItem.word)}
-                        style={{
-                          position: "absolute",
-                          top: "0.5rem",
-                          right: "0.5rem",
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          color: "#f44336",
-                          fontSize: "1rem",
-                          fontWeight: "bold",
-                          padding: "0.2rem 0.5rem",
-                          borderRadius: "4px",
-                        }}
+                        className={styles.deleteButton}
                         title="Delete word"
                       >
                         ×
@@ -140,67 +220,16 @@ function WordLists() {
                     </div>
                   ))}
                 </div>
+                
                 {/* Insert a definition row below this row if a card in this row is expanded */}
-                {expanded[list.id] &&
-                  expanded[list.id].rowIndex === rowIndex && (
-                    <div
-                      style={{
-                        overflow: "hidden",
-                        transition: "max-height 0.3s ease, opacity 0.3s ease",
-                        maxHeight: "500px",
-                        opacity: 1,
-                        padding: "1rem",
-                        border: "1px solid #eee",
-                        marginTop: "1rem",
-                        backgroundColor: "#f9f9f9",
-                      }}
-                    >
-                      <div>
-                        <h4>
-                          Definitions for {expanded[list.id].wordItem.word}
+                {expandedState[list.id] &&
+                  expandedState[list.id].rowIndex === rowIndex && (
+                    <div className={styles.expandedDefinition}>
+                      <div className={styles.definitionContent}>
+                        <h4 className={styles.definitionTitle}>
+                          {currentLanguage === "en" ? "Definition" : "Translation"} for {expandedState[list.id].wordItem.word}
                         </h4>
-                        {expanded[list.id].wordItem.definition &&
-                          expanded[list.id].wordItem.definition.meanings &&
-                          expanded[list.id].wordItem.definition.meanings.map(
-                            (meaning, idx) => (
-                              <div key={idx} style={{ marginTop: "0.5rem" }}>
-                                <p>
-                                  <strong>Part of Speech:</strong>{" "}
-                                  {meaning.part_of_speech}
-                                </p>
-                                {meaning.definitions && meaning.definitions.map((defDetail, dIdx) => (
-                                  <div key={dIdx} style={{ marginBottom: "0.5rem" }}>
-                                    <p>
-                                      <strong>Definition:</strong>{" "}
-                                      {defDetail.definition}
-                                    </p>
-                                    {defDetail.example && (
-                                      <p>
-                                        <em>Example: {defDetail.example}</em>
-                                      </p>
-                                    )}
-                                  </div>
-                                ))}
-                                {meaning.synonyms && meaning.synonyms.length > 0 && (
-                                  <p>
-                                    <strong>Synonyms:</strong>{" "}
-                                    {meaning.synonyms.join(", ")}
-                                  </p>
-                                )}
-                                {meaning.antonyms && meaning.antonyms.length > 0 && (
-                                  <p>
-                                    <strong>Antonyms:</strong>{" "}
-                                    {meaning.antonyms.join(", ")}
-                                  </p>
-                                )}
-                              </div>
-                            )
-                          )}
-                        {(!expanded[list.id].wordItem.definition ||
-                          !expanded[list.id].wordItem.definition.meanings ||
-                          expanded[list.id].wordItem.definition.meanings.length === 0) && (
-                            <p>No detailed definition available.</p>
-                          )}
+                        {renderDefinitionContent(expandedState[list.id].wordItem)}
                       </div>
                     </div>
                   )}

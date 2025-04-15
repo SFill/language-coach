@@ -335,7 +335,7 @@ def parse_conjugation_data(raw_data: Dict[str, Any], verb_examples: List[Example
         return VerbConjugations(
             infinitive=raw_data["infinitive"],
             translation=raw_data["translation"],
-            is_reflexive=raw_data["is_reflexive"],
+            is_reflexive=raw_data["is_reflexive"]> 0, # probably 1 and bigger means yes
             past_participle=past_participle,
             gerund=gerund,
             tenses=tenses,

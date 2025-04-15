@@ -1,0 +1,267 @@
+.wordlistsContainer {
+  padding: 1rem;
+}
+
+.languageToggle {
+  display: flex;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.languageButton {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.languageButton.active {
+  background-color: #2196f3;
+  color: white;
+  border-color: #1976d2;
+}
+
+.wordlist {
+  margin-bottom: 2rem;
+}
+
+.cardRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.wordCard {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1rem;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
+
+.wordCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wordTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.audioButton {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.audioButton:hover {
+  background-color: #e0e0e0;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #f44336;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.deleteButton:hover {
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.expandedDefinition {
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 500px;
+  opacity: 1;
+  padding: 1rem;
+  border: 1px solid #eee;
+  margin: 0 0 1.5rem 0;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.definitionContent {
+  margin-bottom: 0.5rem;
+}
+
+.definitionTitle {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.definitionEntry {
+  margin-bottom: 1rem;
+}
+
+.posGroup {
+  margin-bottom: 1rem;
+}
+
+.partOfSpeech {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #444;
+  font-style: italic;
+}
+
+.sense {
+  margin-bottom: 0.8rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid #ddd;
+}
+
+.definition {
+  margin: 0.3rem 0;
+}
+
+.definitionNumber {
+  font-weight: bold;
+  margin-right: 0.3rem;
+}
+
+.translation {
+  margin: 0.5rem 0;
+}
+
+.translationText {
+  margin: 0.3rem 0;
+}
+
+.examples {
+  margin-top: 0.3rem;
+  margin-left: 1rem;
+}
+
+.example {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.sourceText {
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+
+.targetText {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.synonyms,
+.antonyms {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+/* Conjugation styles */
+.conjugations {
+  margin-top: 1.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.tense {
+  margin-bottom: 1rem;
+}
+
+.conjugationTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.conjugationTable tr {
+  border-bottom: 1px solid #eee;
+}
+
+.conjugationTable tr:last-child {
+  border-bottom: none;
+}
+
+.pronoun {
+  font-weight: bold;
+  width: 30%;
+  padding: 0.3rem;
+}
+
+.forms {
+  padding: 0.3rem;
+}
+
+.definitionDetail {
+  margin-bottom: 0.75rem;
+}
+
+.meaning {
+  margin-bottom: 1rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .cardRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .cardRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.listName {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.dirtyIndicator {
+  font-size: 0.8rem;
+  color: #777;
+  margin-left: 0.5rem;
+  font-weight: normal;
+}
+
+.languageBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2196f3;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  margin-left: 0.5rem;
+}
+
+.languageInfo {
+  margin-bottom: 1rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}

@@ -1,0 +1,38 @@
+.languagePicker {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .languageButton {
+    background: none;
+    border: 1px solid #e0e0e0;
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.3rem 0.6rem;
+    margin: 0 0.2rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+  
+  .languageButton:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .languageButton.active {
+    background-color: #4CAF50 ;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .languagePicker {
+      margin-left: 0.5rem;
+    }
+    
+    .languageButton {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.7rem;
+    }
+  }

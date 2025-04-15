@@ -77,16 +77,24 @@ export const translateText = async (text, target) => {
 };
 
 // Get word definition from GET /api/words/{word}
-export const getWordDefinition = (word) => {
-  return api.get(`words/${word}`).then((res) => res.data);
+export const getWordDefinition = (word, language = "en", includeConjugations = false) => {
+  const params = {
+    language,
+    include_conjugations: includeConjugations
+  };
+
+  return api.get(`words/${word}`, { params }).then((res) => res.data);
 };
 
 // ========== Wordlist API Methods ==========
 
 // Get all wordlists from GET /api/wordlist/
-export const fetchWordlists = async () => {
+export const fetchWordlists = async (language = null) => {
+  const params = {
+    language,
+  };
   try {
-    const response = await api.get(`wordlist/`);
+    const response = await api.get(`wordlist/`, { params });
     return response.data;
   } catch (error) {
     console.error('Error fetching wordlists:', error);
@@ -141,24 +149,24 @@ export const deleteWordlist = async (id) => {
 // Update wordlists before page refresh using sendBeacon
 export const updateWordListsBeforeRefresh = (dirtyLists) => {
   if (!dirtyLists || dirtyLists.length === 0) return;
-  
+
   dirtyLists.forEach(list => {
     const updateData = {
       name: list.name,
       words: list.words.map(w => w.word)
     };
-    
+
     // Prepare the data as JSON
     const blob = new Blob(
-      [JSON.stringify(updateData)], 
+      [JSON.stringify(updateData)],
       { type: 'application/json' }
     );
-    
+
     // Use sendBeacon which is designed for page unload scenarios
     const endpoint = `${API_BASE_URL}wordlist/${list.id}`;
     navigator.sendBeacon(endpoint, blob);
-    console.log("updates "+ list)
+    console.log("updates " + list)
   });
-  
+
   console.log(`Synced ${dirtyLists.length} lists on page unload`);
 };

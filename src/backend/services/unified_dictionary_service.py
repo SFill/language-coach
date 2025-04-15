@@ -29,21 +29,3 @@ def get_word_definition(word: str, language: str = "en", session: Session = None
             raise HTTPException(status_code=400, detail=f"Unsupported language: {language}")
     except Exception as e:
         raise
-        # # Return an empty definition structure if there's an error
-        # if language.lower() == "en":
-        #     return {
-        #         "word": word,
-        #         "entries": [],
-        #         "audio": None,
-        #         "dialect": "us"
-        #     }
-        # elif language.lower() == "es":
-        #     return {
-        #         "word": word,
-        #         "entries": [],
-        #         "conjugations": None,
-        #         "spanish_audio": None,
-        #         "english_audio": None
-        #     }
-        # else:
-        #     raise HTTPException(status_code=400, detail=f"Unsupported language: {language}")

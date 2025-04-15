@@ -11,28 +11,45 @@ import { normalizePhrase, areCloseMatches, areExactMatches } from './utils';
 // Create the context
 const WordlistContext = createContext();
 
+// LocalStorage key for language preference
+const LANGUAGE_STORAGE_KEY = 'language_preference';
+
 // Custom hook to use the wordlist context
 export function useWordlist() {
   return useContext(WordlistContext);
 }
 
 export function WordlistProvider({ children }) {
+  // Initialize language from localStorage or default to English
+  const [currentLanguage, setCurrentLanguage] = useState(() => {
+    const savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    return savedLanguage || "en";
+  });
+
   const [wordlists, setWordlists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const lastSyncTime = useRef(null);
   const syncInProgress = useRef(false);
 
+  // Save language preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+  }, [currentLanguage]);
+
   // Load wordlists from API
-  const loadWordlists = useCallback(async (force = false) => {
+  const loadWordlists = useCallback(async (force = false, language = null) => {
     // Prevent multiple simultaneous sync operations
     if (syncInProgress.current && !force) return;
 
     syncInProgress.current = true;
     setLoading(true);
 
+    // Use the provided language or current language state
+    const langToUse = language || currentLanguage;
+
     try {
-      const data = await fetchWordlists();
+      const data = await fetchWordlists(langToUse);
       setWordlists(data);
       lastSyncTime.current = new Date();
       setError(null);
@@ -43,7 +60,7 @@ export function WordlistProvider({ children }) {
       setLoading(false);
       syncInProgress.current = false;
     }
-  }, []);
+  }, [currentLanguage]);
 
   // Use a ref to track the current wordlists without causing effect dependencies
   const wordlistsRef = useRef([]);
@@ -73,8 +90,9 @@ export function WordlistProvider({ children }) {
         const syncPromises = dirtyLists.map(list =>
           updateWordlist(list.id, {
             name: list.name,
-            words: list.words.map(w => w.word)
-          })
+            words: list.words.map(w => w.word),
+            language: list.language || currentLanguage // Include language attribute
+          }, currentLanguage)
         );
 
         await Promise.all(syncPromises);
@@ -99,7 +117,12 @@ export function WordlistProvider({ children }) {
 
     // Clean up interval on unmount
     return () => clearInterval(syncInterval);
-  }, [loadWordlists]); // Remove wordlists from dependencies
+  }, [loadWordlists, currentLanguage]); 
+
+  // Load wordlists when language changes
+  useEffect(() => {
+    loadWordlists(true, currentLanguage);
+  }, [currentLanguage, loadWordlists]);
 
   // Save wordlists before window unload
   useEffect(() => {
@@ -114,6 +137,32 @@ export function WordlistProvider({ children }) {
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, []);
+
+  // Change the current language
+  const changeLanguage = useCallback((language) => {
+    if (language === currentLanguage) return;
+    
+    // Sync any dirty lists before changing language
+    const dirtyLists = wordlistsRef.current.filter(list => list._isDirty);
+    if (dirtyLists.length > 0) {
+      const syncPromises = dirtyLists.map(list =>
+        updateWordlist(list.id, {
+          name: list.name,
+          words: list.words.map(w => w.word),
+          language: list.language || currentLanguage
+        }, currentLanguage)
+      );
+      
+      Promise.all(syncPromises).then(() => {
+        setCurrentLanguage(language);
+      }).catch(err => {
+        console.error("Error syncing before language change:", err);
+        setCurrentLanguage(language); // Change language anyway
+      });
+    } else {
+      setCurrentLanguage(language);
+    }
+  }, [currentLanguage]);
 
   // Find a word in any list (exact or close match)
   const findWordInLists = useCallback((text) => {
@@ -132,6 +181,7 @@ export function WordlistProvider({ children }) {
             word: w.word,
             listId: list.id,
             listName: list.name,
+            language: list.language || currentLanguage
           };
         }
 
@@ -142,6 +192,7 @@ export function WordlistProvider({ children }) {
             word: w.word,
             listId: list.id,
             listName: list.name,
+            language: list.language || currentLanguage
           };
         }
       }
@@ -149,7 +200,7 @@ export function WordlistProvider({ children }) {
 
     // No match found
     return null;
-  }, [wordlists]);
+  }, [wordlists, currentLanguage]);
 
   // Add a word to a list
   const addWordToList = useCallback((word, listId) => {
@@ -210,7 +261,7 @@ export function WordlistProvider({ children }) {
     );
 
     if (sourceWordIndex === -1) {
-      return { success: false, message: `Word ${normalizedWord} not found in source list ${JSON.stringify(sourceList)}` };
+      return { success: false, message: `Word not found in source list` };
     }
 
     // Get the word with its definition
@@ -260,8 +311,9 @@ export function WordlistProvider({ children }) {
       // Create the list in the backend - we need to do this immediately since we need an ID
       const result = await createWordlist({
         name: newListName,
-        words: [word.trim()]
-      });
+        words: [word.trim()],
+        language: currentLanguage // Include language when creating new list
+      }, currentLanguage);
 
       if (!result) {
         throw new Error('Failed to create list');
@@ -282,7 +334,7 @@ export function WordlistProvider({ children }) {
         message: 'Failed to create new list',
       };
     }
-  }, []);
+  }, [currentLanguage]);
 
   // Force sync with backend
   const syncWithBackend = useCallback(async () => {
@@ -300,8 +352,9 @@ export function WordlistProvider({ children }) {
         const syncPromises = dirtyLists.map(list =>
           updateWordlist(list.id, {
             name: list.name,
-            words: list.words.map(w => w.word)
-          })
+            words: list.words.map(w => w.word),
+            language: list.language || currentLanguage
+          }, currentLanguage)
         );
 
         await Promise.all(syncPromises);
@@ -317,8 +370,7 @@ export function WordlistProvider({ children }) {
     } finally {
       syncInProgress.current = false;
     }
-  }, [wordlists, loadWordlists]);
-
+  }, [wordlists, loadWordlists, currentLanguage]);
 
   // Remove a word from a list
   const removeWordFromList = useCallback((word, listId) => {
@@ -363,15 +415,16 @@ export function WordlistProvider({ children }) {
     wordlists,
     loading,
     error,
+    currentLanguage,
+    changeLanguage,
     refreshWordlists: loadWordlists,
     findWordInLists,
     addWordToList,
     moveWordBetweenLists,
     createNewListWithWord,
     syncWithBackend,
-    removeWordFromList,  // Add this line
+    removeWordFromList,
   };
-
 
   return (
     <WordlistContext.Provider value={value}>

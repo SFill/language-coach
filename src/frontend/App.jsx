@@ -5,6 +5,7 @@ import ChatWindowPage from './chatwindow/ChatWindowPage';
 import WordListPage from './wordlist/WordListPage';
 import { fetchChats, deleteChat } from './api';
 import WordlistProvider from './wordlist/WordlistContext';
+import LanguagePicker from './LanguagePicker';
 import './App.css';
 
 // Main App component to set up routes
@@ -35,7 +36,7 @@ function AppContent() {
 
   // Extract chatId from location pathname instead of using useParams
   useEffect(() => {
-    console.log("currentChatId " +currentChatId)
+    console.log("currentChatId " + currentChatId)
     if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname === '/') {
       // Extract chatId from location pathname using regex
       const match = location.pathname.match(/\/chat\/(\d+)/);
@@ -123,6 +124,9 @@ function AppContent() {
         <div className="nav-links">
           <Link to="/">New chat</Link>
           <Link to="/wordlist">My words</Link>
+        </div>
+        <div className="nav-controls">
+          <LanguagePicker />
         </div>
       </nav>
       <div className="main-block">

@@ -1,0 +1,167 @@
+.panel {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.closeButton {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.audioButton {
+  display: block;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: #f0f0f0;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.dialectInfo {
+  font-style: italic;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.wordEntry {
+  margin-bottom: 1.5rem;
+}
+
+.meaning {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.definitionDetail {
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid #ddd;
+}
+
+.translation {
+  margin: 0.5rem 0;
+}
+
+.examples {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.example {
+  margin: 0.5rem 0;
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.source {
+  font-style: italic;
+  margin-bottom: 0.25rem;
+}
+
+.target {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.errorText {
+  color: #e53935;
+  font-weight: bold;
+}
+
+/* Conjugation styles */
+.conjugationsSection {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.toggleConjugationsButton {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.conjugations {
+  margin-top: 1rem;
+}
+
+.tense {
+  margin-bottom: 1.5rem;
+}
+
+.conjugationTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+
+.conjugationTable tr {
+  border-bottom: 1px solid #eee;
+}
+
+.conjugationTable tr:last-child {
+  border-bottom: none;
+}
+
+.conjugationTable td {
+  padding: 0.5rem;
+}
+
+.pronoun {
+  font-weight: bold;
+  width: 20%;
+}
+
+.forms {
+  width: 40%;
+}
+
+.translationCell {
+  color: #666;
+  font-style: italic;
+  width: 40%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.languageBadge {
+  display: inline-block;
+  background-color: #f0f0f0;
+  color: #666;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
