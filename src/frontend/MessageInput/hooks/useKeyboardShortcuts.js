@@ -193,12 +193,12 @@ const useKeyboardShortcuts = (
         });
       }
     }
-
+    // TODO doensot work well, fix later
     // Undo - Ctrl+Z
-    if (e.key === 'z' && e.ctrlKey && !e.shiftKey) {
-      e.preventDefault();
-      undo();
-    }
+    // if (e.key === 'z' && e.ctrlKey && !e.shiftKey) {
+    //   e.preventDefault();
+    //   undo();
+    // }
 
     // Redo - Ctrl+Y or Ctrl+Shift+Z
     else if ((e.key === 'y' && e.ctrlKey) || (e.key === 'z' && e.ctrlKey && e.shiftKey)) {

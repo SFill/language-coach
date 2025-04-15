@@ -93,12 +93,13 @@ const useUndoRedo = (textareaRef, initialText, setText, updateCaretAndScroll) =>
     const lengthDiff = Math.abs(newText.length - lastPushedTextRef.current.length);
     charsSinceLastHistoryRef.current += lengthDiff;
     
-    // If significant change (10+ chars) or it's been a while since last push
-    const significantChange = charsSinceLastHistoryRef.current >= 10;
+    // If significant change (15+ chars) or it's been a while since last push
+    const significantChange = charsSinceLastHistoryRef.current >= 15;
     
     if (significantChange) {
       // Push immediately for significant changes
       pushHistory(newText, caretPosition, selectionEnd);
+      debugger
     } else {
       // Otherwise, schedule a push if timer not already running
       if (!historyTimerRef.current) {
@@ -159,6 +160,7 @@ const useUndoRedo = (textareaRef, initialText, setText, updateCaretAndScroll) =>
         pushHistory(textarea.value, textarea.selectionStart, textarea.selectionEnd);
       }
     }
+    debugger
     if (historyIndex > 0) {
       // Mark to ignore next push from setText
     //   ignoreNextPushRef.current = true;
