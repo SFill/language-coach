@@ -19,6 +19,7 @@ const SelectionToolbar = ({
 }) => {
   const spanRef = useRef(null);
   const [isTruncated, setIsTruncated] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Detect if text would be truncated
   useEffect(() => {
@@ -48,6 +49,22 @@ const SelectionToolbar = ({
     return {}; // Default style for inactive languages
   };
 
+  // Function to handle copying text to clipboard
+  const handleCopy = () => {
+    if (!displayText || isTranslating) return;
+    
+    navigator.clipboard.writeText(displayText)
+      .then(() => {
+        // Show copied indicator
+        setCopied(true);
+        // Hide the indicator after 2 seconds
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+  };
+
   return (
     <div className="selection-toolbar">
       <div className="buttons">
@@ -74,6 +91,13 @@ const SelectionToolbar = ({
         </button>
         <button onClick={() => onSend(false)}>Ask a question</button>
         <button onClick={() => onSend(true)}>Send as note</button>
+        <button 
+          onClick={handleCopy} 
+          disabled={!displayText || isTranslating}
+          title="Copy to clipboard"
+        >
+          {copied ? '✓ Copied!' : '📋 Copy'}
+        </button>
       </div>
       <span
         ref={spanRef}
