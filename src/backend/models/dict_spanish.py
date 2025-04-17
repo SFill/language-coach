@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
+
+from sqlmodel import JSON, Column, Field, SQLModel
 from ..models.wordlist import Example, AudioInfo
 
 
@@ -86,3 +88,14 @@ class SpanishWordRequest(BaseModel):
     """Request for Spanish word information."""
     word: str
     include_conjugations: bool = False
+
+# Database model for caching Spanish dictionary data
+class SpanishDictionary(SQLModel, table=True):
+    """Model for cached Spanish dictionary entries."""
+    __tablename__ = 'spanish_dictionary'
+
+    id: int | None = Field(default=None, primary_key=True)
+    word: str = Field(index=True)
+    word_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    audio_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    conjugation_data: Optional[dict] = Field(default=None, sa_column=Column(JSON))

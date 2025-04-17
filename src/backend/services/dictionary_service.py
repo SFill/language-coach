@@ -128,10 +128,10 @@ def get_word_definition(word: str, session: Session) -> dict:
             
         # Store as dictionary for flexibility
         # TODO uncomment
-        # dictionary_entry = Dictionary(word=word, word_meta=english_def.dict())
-        # session.add(dictionary_entry)
-        # session.commit()
-        # session.refresh(dictionary_entry)
+        dictionary_entry = Dictionary(word=word, word_meta=english_def.dict())
+        session.add(dictionary_entry)
+        session.commit()
+        session.refresh(dictionary_entry)
         
         return english_def.dict()
     else:

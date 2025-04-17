@@ -6,6 +6,8 @@ from typing import Dict, List, Optional, Any, Tuple
 from sqlmodel import Session, select
 from fastapi import HTTPException
 
+from backend.models.dict_spanish import SpanishDictionary
+
 from ..models.dict_spanish import (
     SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
     Participle, ConjugationForm, Translation, 
@@ -149,20 +151,6 @@ class SpanishDictClient:
                 result["tenses"][tense_name] = tense_dict
         
         return result
-
-
-# Database model for caching Spanish dictionary data
-from sqlmodel import SQLModel, Field, Column, JSON
-
-class SpanishDictionary(SQLModel, table=True):
-    """Model for cached Spanish dictionary entries."""
-    __tablename__ = 'spanish_dictionary'
-    
-    id: int | None = Field(default=None, primary_key=True)
-    word: str = Field(index=True)
-    word_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
-    audio_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
-    conjugation_data: Optional[dict] = Field(default=None, sa_column=Column(JSON))
 
 
 def parse_audio_info(raw_audio_data: Dict[str, Any]) -> Tuple[Optional[AudioInfo], Optional[AudioInfo]]:

@@ -26,33 +26,87 @@ export function WordlistProvider({ children }) {
     return savedLanguage || "en";
   });
 
+  // Store all wordlists (both languages)
+  const [allWordlists, setAllWordlists] = useState([]);
+  
+  // Store filtered wordlists for the current language (derived state)
   const [wordlists, setWordlists] = useState([]);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const lastSyncTime = useRef(null);
   const syncInProgress = useRef(false);
+  
+  // Track which languages we've loaded
+  const loadedLanguages = useRef(new Set());
 
   // Save language preference to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    
+    // Filter wordlists for current language when it changes
+    filterWordlistsByLanguage(currentLanguage);
   }, [currentLanguage]);
 
-  // Load wordlists from API
-  const loadWordlists = useCallback(async (force = false, language = null) => {
+  // Filter wordlists for the current language
+  const filterWordlistsByLanguage = useCallback((language) => {
+    const filtered = allWordlists.filter(list => list.language === language);
+    setWordlists(filtered);
+  }, [allWordlists]);
+
+  // Load wordlists from API - optimized to load all languages
+  const loadWordlists = useCallback(async (force = false) => {
     // Prevent multiple simultaneous sync operations
     if (syncInProgress.current && !force) return;
 
     syncInProgress.current = true;
     setLoading(true);
 
-    // Use the provided language or current language state
-    const langToUse = language || currentLanguage;
-
     try {
-      const data = await fetchWordlists(langToUse);
-      setWordlists(data);
+      // First, check if we already have English wordlists
+      if (!loadedLanguages.current.has('en') || force) {
+        const enWordlists = await fetchWordlists('en');
+        
+        // Add in-memory flags to each wordlist
+        const processedEnWordlists = enWordlists.map(list => ({
+          ...list,
+          _isDirty: false
+        }));
+        
+        // Update allWordlists, preserving Spanish wordlists if they exist
+        setAllWordlists(prevAll => {
+          const existingEs = prevAll.filter(list => list.language === 'es');
+          return [...existingEs, ...processedEnWordlists];
+        });
+        
+        loadedLanguages.current.add('en');
+      }
+      
+      // Then, check if we already have Spanish wordlists
+      if (!loadedLanguages.current.has('es') || force) {
+        const esWordlists = await fetchWordlists('es');
+        
+        // Add in-memory flags to each wordlist
+        const processedEsWordlists = esWordlists.map(list => ({
+          ...list,
+          _isDirty: false
+        }));
+        
+        // Update allWordlists, preserving English wordlists
+        setAllWordlists(prevAll => {
+          const existingEn = prevAll.filter(list => list.language === 'en');
+          return [...existingEn, ...processedEsWordlists];
+        });
+        
+        loadedLanguages.current.add('es');
+      }
+      
+      // Update the timestamp of the last successful sync
       lastSyncTime.current = new Date();
       setError(null);
+      
+      // Filter for the current language
+      filterWordlistsByLanguage(currentLanguage);
     } catch (err) {
       console.error('Failed to load wordlists:', err);
       setError('Failed to load word lists. Please try again later.');
@@ -60,45 +114,67 @@ export function WordlistProvider({ children }) {
       setLoading(false);
       syncInProgress.current = false;
     }
-  }, [currentLanguage]);
+  }, [currentLanguage, filterWordlistsByLanguage]);
+
+  // Update filtered wordlists when allWordlists changes
+  useEffect(() => {
+    filterWordlistsByLanguage(currentLanguage);
+  }, [allWordlists, currentLanguage, filterWordlistsByLanguage]);
 
   // Use a ref to track the current wordlists without causing effect dependencies
-  const wordlistsRef = useRef([]);
+  const allWordlistsRef = useRef([]);
 
   // Update the ref whenever wordlists changes
   useEffect(() => {
-    wordlistsRef.current = wordlists;
-  }, [wordlists]);
+    allWordlistsRef.current = allWordlists;
+  }, [allWordlists]);
 
   // Initial load on component mount and set up sync
   useEffect(() => {
-    // Initial load
+    // Initial load - get both languages at once
     loadWordlists();
 
     // Function to check for and sync dirty lists
     const syncDirtyLists = async () => {
       if (syncInProgress.current) return;
 
-      const currentLists = wordlistsRef.current;
+      const currentLists = allWordlistsRef.current;
       const dirtyLists = currentLists.filter(list => list._isDirty);
       if (dirtyLists.length === 0) return;
 
       syncInProgress.current = true;
 
       try {
-        // Push changes to backend
-        const syncPromises = dirtyLists.map(list =>
-          updateWordlist(list.id, {
-            name: list.name,
-            words: list.words.map(w => w.word),
-            language: list.language || currentLanguage // Include language attribute
-          }, currentLanguage)
-        );
-
-        await Promise.all(syncPromises);
+        // Group dirty lists by language for more efficient updates
+        const enDirtyLists = dirtyLists.filter(list => list.language === 'en');
+        const esDirtyLists = dirtyLists.filter(list => list.language === 'es');
+        
+        // Sync English lists
+        if (enDirtyLists.length > 0) {
+          const enSyncPromises = enDirtyLists.map(list =>
+            updateWordlist(list.id, {
+              name: list.name,
+              words: list.words.map(w => w.word),
+              language: list.language
+            }, 'en')
+          );
+          await Promise.all(enSyncPromises);
+        }
+        
+        // Sync Spanish lists
+        if (esDirtyLists.length > 0) {
+          const esSyncPromises = esDirtyLists.map(list =>
+            updateWordlist(list.id, {
+              name: list.name,
+              words: list.words.map(w => w.word),
+              language: list.language
+            }, 'es')
+          );
+          await Promise.all(esSyncPromises);
+        }
 
         // Mark lists as clean after successful sync
-        setWordlists(prev =>
+        setAllWordlists(prev =>
           prev.map(list =>
             list._isDirty ? { ...list, _isDirty: false } : list
           )
@@ -117,18 +193,13 @@ export function WordlistProvider({ children }) {
 
     // Clean up interval on unmount
     return () => clearInterval(syncInterval);
-  }, [loadWordlists, currentLanguage]); 
-
-  // Load wordlists when language changes
-  useEffect(() => {
-    loadWordlists(true, currentLanguage);
-  }, [currentLanguage, loadWordlists]);
+  }, [loadWordlists]); 
 
   // Save wordlists before window unload
   useEffect(() => {
     const handleBeforeUnload = () => {
       // Sync any pending changes
-      const dirtyLists = wordlistsRef.current.filter(list => list._isDirty);
+      const dirtyLists = allWordlistsRef.current.filter(list => list._isDirty);
       if (dirtyLists.length > 0) {
         updateWordListsBeforeRefresh(dirtyLists);
       }
@@ -138,19 +209,19 @@ export function WordlistProvider({ children }) {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, []);
 
-  // Change the current language
+  // Change the current language - optimized to not refetch since we already have both
   const changeLanguage = useCallback((language) => {
     if (language === currentLanguage) return;
     
     // Sync any dirty lists before changing language
-    const dirtyLists = wordlistsRef.current.filter(list => list._isDirty);
+    const dirtyLists = allWordlistsRef.current.filter(list => list._isDirty);
     if (dirtyLists.length > 0) {
       const syncPromises = dirtyLists.map(list =>
         updateWordlist(list.id, {
           name: list.name,
           words: list.words.map(w => w.word),
-          language: list.language || currentLanguage
-        }, currentLanguage)
+          language: list.language
+        }, list.language) // Use the list's own language
       );
       
       Promise.all(syncPromises).then(() => {
@@ -170,7 +241,7 @@ export function WordlistProvider({ children }) {
 
     const normalizedText = normalizePhrase(text);
 
-    for (const list of wordlists) {
+    for (const list of allWordlists) {
       for (const w of list.words) {
         const normalizedExisting = normalizePhrase(w.word);
 
@@ -181,7 +252,7 @@ export function WordlistProvider({ children }) {
             word: w.word,
             listId: list.id,
             listName: list.name,
-            language: list.language || currentLanguage
+            language: list.language
           };
         }
 
@@ -192,7 +263,7 @@ export function WordlistProvider({ children }) {
             word: w.word,
             listId: list.id,
             listName: list.name,
-            language: list.language || currentLanguage
+            language: list.language
           };
         }
       }
@@ -200,7 +271,7 @@ export function WordlistProvider({ children }) {
 
     // No match found
     return null;
-  }, [wordlists, currentLanguage]);
+  }, [allWordlists]);
 
   // Add a word to a list
   const addWordToList = useCallback((word, listId) => {
@@ -216,7 +287,7 @@ export function WordlistProvider({ children }) {
     }
 
     // Find the target list
-    const targetList = wordlists.find(list => list.id === listId);
+    const targetList = allWordlists.find(list => list.id === listId);
     if (!targetList) {
       return { success: false, message: 'List not found' };
     }
@@ -231,7 +302,7 @@ export function WordlistProvider({ children }) {
       ]
     };
 
-    setWordlists(prev =>
+    setAllWordlists(prev =>
       prev.map(list => list.id === listId ? updatedList : list)
     );
 
@@ -239,7 +310,7 @@ export function WordlistProvider({ children }) {
       success: true,
       message: `Added "${word}" to list "${targetList.name}"`,
     };
-  }, [wordlists, findWordInLists]);
+  }, [allWordlists, findWordInLists]);
 
   // Move a word from one list to another
   const moveWordBetweenLists = useCallback((word, sourceListId, targetListId) => {
@@ -248,8 +319,8 @@ export function WordlistProvider({ children }) {
     }
 
     // Find the source and target lists
-    const sourceList = wordlists.find(list => list.id === sourceListId);
-    const targetList = wordlists.find(list => list.id === targetListId);
+    const sourceList = allWordlists.find(list => list.id === sourceListId);
+    const targetList = allWordlists.find(list => list.id === targetListId);
 
     if (!sourceList || !targetList) {
       return { success: false, message: 'One or more lists not found' };
@@ -280,7 +351,7 @@ export function WordlistProvider({ children }) {
       words: [...targetList.words, wordToMove]
     };
 
-    setWordlists(prev =>
+    setAllWordlists(prev =>
       prev.map(list => {
         if (list.id === sourceListId) return updatedSourceList;
         if (list.id === targetListId) return updatedTargetList;
@@ -292,7 +363,7 @@ export function WordlistProvider({ children }) {
       success: true,
       message: `Moved "${wordToMove.word}" from "${sourceList.name}" to "${targetList.name}"`,
     };
-  }, [wordlists]);
+  }, [allWordlists]);
 
   // Create a new list with a word
   const createNewListWithWord = useCallback(async (word, listName = null) => {
@@ -319,8 +390,13 @@ export function WordlistProvider({ children }) {
         throw new Error('Failed to create list');
       }
 
-      // Add the new list to our local state
-      setWordlists(prev => [...prev, result]);
+      // Add the new list to our local state with the in-memory flag
+      const newList = {
+        ...result,
+        _isDirty: false
+      };
+      
+      setAllWordlists(prev => [...prev, newList]);
 
       return {
         success: true,
@@ -336,7 +412,7 @@ export function WordlistProvider({ children }) {
     }
   }, [currentLanguage]);
 
-  // Force sync with backend
+  // Force sync with backend - now syncs all languages
   const syncWithBackend = useCallback(async () => {
     if (syncInProgress.current) {
       return { success: false, message: 'Sync already in progress' };
@@ -345,22 +421,43 @@ export function WordlistProvider({ children }) {
     syncInProgress.current = true;
 
     try {
-      // Sync any dirty lists first
-      const dirtyLists = wordlists.filter(list => list._isDirty);
-
+      // Sync all dirty lists first by language
+      const dirtyLists = allWordlistsRef.current.filter(list => list._isDirty);
+      
       if (dirtyLists.length > 0) {
-        const syncPromises = dirtyLists.map(list =>
-          updateWordlist(list.id, {
-            name: list.name,
-            words: list.words.map(w => w.word),
-            language: list.language || currentLanguage
-          }, currentLanguage)
-        );
-
-        await Promise.all(syncPromises);
+        // Group by language
+        const enDirtyLists = dirtyLists.filter(list => list.language === 'en');
+        const esDirtyLists = dirtyLists.filter(list => list.language === 'es');
+        
+        // Sync English lists
+        if (enDirtyLists.length > 0) {
+          const enSyncPromises = enDirtyLists.map(list =>
+            updateWordlist(list.id, {
+              name: list.name,
+              words: list.words.map(w => w.word),
+              language: 'en'
+            }, 'en')
+          );
+          await Promise.all(enSyncPromises);
+        }
+        
+        // Sync Spanish lists
+        if (esDirtyLists.length > 0) {
+          const esSyncPromises = esDirtyLists.map(list =>
+            updateWordlist(list.id, {
+              name: list.name,
+              words: list.words.map(w => w.word),
+              language: 'es'
+            }, 'es')
+          );
+          await Promise.all(esSyncPromises);
+        }
       }
 
-      // Reload from backend
+      // Reset the loaded languages to force a fresh fetch
+      loadedLanguages.current.clear();
+      
+      // Reload both languages from backend
       await loadWordlists(true);
 
       return { success: true, message: 'Synchronized with server' };
@@ -370,7 +467,7 @@ export function WordlistProvider({ children }) {
     } finally {
       syncInProgress.current = false;
     }
-  }, [wordlists, loadWordlists, currentLanguage]);
+  }, [loadWordlists]);
 
   // Remove a word from a list
   const removeWordFromList = useCallback((word, listId) => {
@@ -379,7 +476,7 @@ export function WordlistProvider({ children }) {
     }
 
     // Find the target list
-    const targetList = wordlists.find(list => list.id === listId);
+    const targetList = allWordlists.find(list => list.id === listId);
     if (!targetList) {
       return { success: false, message: 'List not found' };
     }
@@ -400,7 +497,7 @@ export function WordlistProvider({ children }) {
       words: targetList.words.filter((_, i) => i !== wordIndex)
     };
 
-    setWordlists(prev =>
+    setAllWordlists(prev =>
       prev.map(list => list.id === listId ? updatedList : list)
     );
 
@@ -408,11 +505,12 @@ export function WordlistProvider({ children }) {
       success: true,
       message: `Removed "${word}" from list "${targetList.name}"`,
     };
-  }, [wordlists]);
+  }, [allWordlists]);
 
   // context value:
   const value = {
-    wordlists,
+    wordlists, // This is filtered for current language
+    allWordlists, // Provide access to all wordlists if needed
     loading,
     error,
     currentLanguage,

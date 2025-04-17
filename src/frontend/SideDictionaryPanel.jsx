@@ -27,7 +27,7 @@ const SideDictionaryPanel = ({ word, onClose }) => {
     setShowConjugations(false);
 
     // Use language from context and include conjugations for Spanish
-    getWordDefinition(word, currentLanguage, currentLanguage === "es")
+    getWordDefinition(word, currentLanguage)
       .then((data) => {
         setDefinition(data);
         setLoading(false);
