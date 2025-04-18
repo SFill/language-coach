@@ -44,11 +44,19 @@ class Pronunciation(BaseModel):
     has_video: Optional[bool] = None
 
 
+class ConjugationFormTranslation(BaseModel):
+    word: str
+    pronoun: str
+
 # Conjugation models
+
+
 class ConjugationForm(BaseModel):
     """A conjugation form for a specific pronoun."""
     forms: List[str]
-    translation: str
+    pronoun: str
+    audio_query_string: str
+    translations: list[ConjugationFormTranslation]
 
 
 class TenseConjugations(BaseModel):
@@ -69,7 +77,7 @@ class VerbConjugations(BaseModel):
     is_reflexive: bool
     past_participle: Optional[Participle] = None
     gerund: Optional[Participle] = None
-    tenses: Dict[str, Dict[str, ConjugationForm]] = {}
+    tenses: Dict[str, list[ConjugationForm]] = {}
     examples: List[Example] = []
 
 
@@ -90,6 +98,8 @@ class SpanishWordRequest(BaseModel):
     include_conjugations: bool = False
 
 # Database model for caching Spanish dictionary data
+
+
 class SpanishDictionary(SQLModel, table=True):
     """Model for cached Spanish dictionary entries."""
     __tablename__ = 'spanish_dictionary'

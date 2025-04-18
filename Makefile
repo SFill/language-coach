@@ -4,3 +4,8 @@ run_in_container:
 build:
 	docker build -t language_coach .
 
+run_frontend:
+	npx vite --host 0.0.0.0
+
+run_backend:
+	fastapi dev --host 0.0.0.0 src/backend/main.py

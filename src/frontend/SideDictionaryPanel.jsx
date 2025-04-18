@@ -13,6 +13,8 @@ const SideDictionaryPanel = ({ word, onClose }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showConjugations, setShowConjugations] = useState(false);
+  const [activeTab, setActiveTab] = useState('definition');
+  const [activeTense, setActiveTense] = useState('presentIndicative');
 
   useEffect(() => {
     if (!word) {
@@ -25,9 +27,10 @@ const SideDictionaryPanel = ({ word, onClose }) => {
     setError(null);
     setDefinition(null);
     setShowConjugations(false);
+    setActiveTab('definition');
 
     // Use language from context and include conjugations for Spanish
-    getWordDefinition(word, currentLanguage)
+    getWordDefinition(word, currentLanguage, currentLanguage === "es")
       .then((data) => {
         setDefinition(data);
         setLoading(false);
@@ -59,8 +62,12 @@ const SideDictionaryPanel = ({ word, onClose }) => {
     }
   };
 
-  const toggleConjugations = () => {
-    setShowConjugations(!showConjugations);
+  const toggleTab = (tabName) => {
+    setActiveTab(tabName);
+  };
+
+  const handleTenseClick = (tense) => {
+    setActiveTense(tense);
   };
 
   if (!word) return null;
@@ -72,6 +79,34 @@ const SideDictionaryPanel = ({ word, onClose }) => {
 
   // Check if conjugations are available (Spanish only)
   const hasConjugations = currentLanguage === "es" && !!definition?.conjugations;
+
+  // List of available tenses for the navigation
+  const tenseLabels = {
+    presentIndicative: "Present",
+    preteritIndicative: "Preterite",
+    imperfectIndicative: "Imperfect",
+    conditionalIndicative: "Conditional",
+    futureIndicative: "Future",
+    presentSubjunctive: "Present Subjunctive",
+    imperfectSubjunctive: "Imperfect Subjunctive",
+    futureSubjunctive: "Future Subjunctive",
+    imperative: "Imperative",
+    negativeImperative: "Negative Imperative",
+    presentContinuous: "Present Continuous",
+    preteritContinuous: "Preterite Continuous",
+    imperfectContinuous: "Imperfect Continuous",
+    conditionalContinuous: "Conditional Continuous",
+    futureContinuous: "Future Continuous",
+    presentPerfect: "Present Perfect",
+    preteritPerfect: "Preterite Perfect",
+    pastPerfect: "Past Perfect",
+    conditionalPerfect: "Conditional Perfect",
+    futurePerfect: "Future Perfect",
+    presentPerfectSubjunctive: "Present Perfect Subjunctive",
+    pastPerfectSubjunctive: "Past Perfect Subjunctive",
+    futurePerfectSubjunctive: "Future Perfect Subjunctive",
+    informalFuture: "Informal Future"
+  };
 
   return (
     <div className={styles.panel}>
@@ -87,13 +122,30 @@ const SideDictionaryPanel = ({ word, onClose }) => {
         </div>
       </div>
 
+      {hasConjugations && (
+        <div className={styles.tabs}>
+          <button 
+            className={`${styles.tabButton} ${activeTab === 'definition' ? styles.activeTab : ''}`}
+            onClick={() => toggleTab('definition')}
+          >
+            Definition
+          </button>
+          <button 
+            className={`${styles.tabButton} ${activeTab === 'conjugation' ? styles.activeTab : ''}`}
+            onClick={() => toggleTab('conjugation')}
+          >
+            Conjugation
+          </button>
+        </div>
+      )}
+
       <div className={styles.content}>
         {loading && <p>Loading definition...</p>}
         {error && (
           <p className={styles.errorText}>Error fetching definition: {error}</p>
         )}
         
-        {definition && (
+        {definition && activeTab === 'definition' && (
           <>
             {/* Audio button */}
             {hasAudio && (
@@ -109,9 +161,11 @@ const SideDictionaryPanel = ({ word, onClose }) => {
               </p>
             )}
 
-            {/* Word definitions */}
+            {/* Word matches and definitions */}
             {definition.entries && definition.entries.map((entry, entryIndex) => (
               <div key={entryIndex} className={styles.wordEntry}>
+                {/* one of possible matches */}
+                <h3>{entry.word}</h3>
                 {/* POS Groups */}
                 {entry.pos_groups && entry.pos_groups.map((posGroup, posIndex) => (
                   <div key={posIndex} className={styles.meaning}>
@@ -172,60 +226,78 @@ const SideDictionaryPanel = ({ word, onClose }) => {
                 ))}
               </div>
             ))}
+          </>
+        )}
 
-            {/* Conjugations (Spanish only) */}
-            {hasConjugations && (
-              <div className={styles.conjugationsSection}>
-                <button 
-                  className={styles.toggleConjugationsButton}
-                  onClick={toggleConjugations}
-                >
-                  {showConjugations ? "Hide" : "Show"} Conjugations
-                </button>
+        {/* Conjugation Tab Content */}
+        {definition && activeTab === 'conjugation' && hasConjugations && (
+          <div className={styles.conjugationContent}>
+            <div className={styles.conjugationHeader}>
+              <h3>{definition.conjugations.infinitive}</h3>
+              <p className={styles.infinitiveTranslation}>{definition.conjugations.translation}</p>
+            </div>
+
+            {/* Past Participle & Gerund */}
+            {(definition.conjugations.past_participle || definition.conjugations.gerund) && (
+              <div className={styles.participleSection}>
+                {definition.conjugations.past_participle && definition.conjugations.past_participle.spanish && (
+                  <p>
+                    <strong>Past Participle:</strong> {definition.conjugations.past_participle.spanish}
+                    {definition.conjugations.past_participle.english && ` - ${definition.conjugations.past_participle.english}`}
+                  </p>
+                )}
                 
-                {showConjugations && (
-                  <div className={styles.conjugations}>
-                    <h3>Conjugations</h3>
-                    <p>
-                      <strong>Infinitive:</strong> {definition.conjugations.infinitive} - {definition.conjugations.translation}
-                    </p>
-                    
-                    {/* Past Participle */}
-                    {definition.conjugations.past_participle && (
-                      <p>
-                        <strong>Past Participle:</strong> {definition.conjugations.past_participle.spanish} - {definition.conjugations.past_participle.english}
-                      </p>
-                    )}
-                    
-                    {/* Gerund */}
-                    {definition.conjugations.gerund && (
-                      <p>
-                        <strong>Gerund:</strong> {definition.conjugations.gerund.spanish} - {definition.conjugations.gerund.english}
-                      </p>
-                    )}
-                    
-                    {/* Tenses */}
-                    {Object.entries(definition.conjugations.tenses).map(([tenseName, tenseData], tenseIndex) => (
-                      <div key={tenseIndex} className={styles.tense}>
-                        <h4>{tenseName}</h4>
-                        <table className={styles.conjugationTable}>
-                          <tbody>
-                            {Object.entries(tenseData).map(([pronoun, conjugation], pronounIndex) => (
-                              <tr key={pronounIndex}>
-                                <td className={styles.pronoun}>{pronoun}</td>
-                                <td className={styles.forms}>{conjugation.forms.join(', ')}</td>
-                                <td className={styles.translationCell}>{conjugation.translation}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    ))}
-                  </div>
+                {definition.conjugations.gerund && definition.conjugations.gerund.spanish && (
+                  <p>
+                    <strong>Gerund:</strong> {definition.conjugations.gerund.spanish}
+                    {definition.conjugations.gerund.english && ` - ${definition.conjugations.gerund.english}`}
+                  </p>
                 )}
               </div>
             )}
-          </>
+
+            {/* Tense Navigation */}
+            <div className={styles.tenseNavigation}>
+              <select 
+                className={styles.tenseSelector}
+                value={activeTense}
+                onChange={(e) => handleTenseClick(e.target.value)}
+              >
+                {Object.keys(definition.conjugations.tenses).map(tense => (
+                  <option key={tense} value={tense}>
+                    {tenseLabels[tense] || tense}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Current Tense Conjugation Table */}
+            {definition.conjugations.tenses[activeTense] && (
+              <div className={styles.conjugationTable}>
+                <h4>{tenseLabels[activeTense] || activeTense}</h4>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Pronoun</th>
+                      <th>Form</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {definition.conjugations.tenses[activeTense].map((item, idx) => (
+                      <tr key={idx}>
+                        <td className={styles.pronoun}>{item.pronoun}</td>
+                        <td className={styles.forms}>
+                          {item.forms && item.forms.length > 0 
+                            ? item.forms.join(', ') 
+                            : '-'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

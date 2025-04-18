@@ -7,7 +7,7 @@ from ..services.dict_spanish_service import get_spanish_word_definition
 
 
 def get_word_definition(word: str, language: str = "en", session: Session = None,
-                        include_conjugations: bool = False) -> Dict:
+                        include_conjugations: bool = False, override_cache: bool = False) -> Dict:
     """
     Get a word definition in the specified language.
 
@@ -24,7 +24,7 @@ def get_word_definition(word: str, language: str = "en", session: Session = None
         if language.lower() == "en":
             return get_english_definition(word, session)
         elif language.lower() == "es":
-            return get_spanish_word_definition(word, include_conjugations, session)
+            return get_spanish_word_definition(word, include_conjugations, session, override_cache)
         else:
             raise HTTPException(status_code=400, detail=f"Unsupported language: {language}")
     except Exception as e:
