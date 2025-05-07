@@ -397,6 +397,7 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
                 session.commit()
 
         # Fetch conjugation data if this is a verb and conjugations are requested
+        conjugations = None
         if include_conjugations and is_verb(entries):
             # Check if we already have conjugation data in cache
             if dictionary_entry and dictionary_entry.conjugation_data:
@@ -413,10 +414,9 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
                     session.commit()
 
             # Parse conjugation data if available
-            conjugations = None
             if include_conjugations and conjugation_data:
                 conjugations = parse_conjugation_data(conjugation_data)
-
+                
         # Parse audio data
         spanish_audio, english_audio = parse_audio_info(audio_data)
 
