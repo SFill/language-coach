@@ -44,7 +44,6 @@ const TextEditor = ({
       onBlur={onBlur}
       placeholder="Type your message... (Ctrl+B for bold, Ctrl+I for italic)"
       className="vs-code-textarea"
-      spellCheck="false" // Disable spell check for better performance
     />
   );
 };
