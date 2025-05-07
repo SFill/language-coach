@@ -90,6 +90,14 @@ class SpanishWordDefinition(BaseModel):
     spanish_audio: Optional[AudioInfo] = None
     english_audio: Optional[AudioInfo] = None
 
+    @classmethod
+    def init_empty(cls, word):
+        return cls(
+            word=word,
+            entries=[]
+        )
+
+
 
 # API request/response models
 class SpanishWordRequest(BaseModel):
@@ -106,6 +114,6 @@ class SpanishDictionary(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     word: str = Field(index=True)
-    word_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    word_data: list = Field(default_factory=list, sa_column=Column(JSON))
     audio_data: dict = Field(default_factory=dict, sa_column=Column(JSON))
     conjugation_data: Optional[dict] = Field(default=None, sa_column=Column(JSON))

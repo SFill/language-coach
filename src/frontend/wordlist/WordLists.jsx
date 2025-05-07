@@ -45,14 +45,14 @@ function WordLists() {
     let audioUrl = null;
     
     // Determine audio URL based on language and definition structure
-    if (currentLanguage === "en" && wordItem.definition?.audio?.audio_url) {
-      audioUrl = wordItem.definition.audio.audio_url;
+    if (currentLanguage === "en" && wordItem?.audio?.audio_url) {
+      audioUrl = wordItem.audio.audio_url;
     } else if (currentLanguage === "es") {
       // Prefer Spanish audio if available, fall back to English
-      if (wordItem.definition?.spanish_audio?.audio_url) {
-        audioUrl = wordItem.definition.spanish_audio.audio_url;
-      } else if (wordItem.definition?.english_audio?.audio_url) {
-        audioUrl = wordItem.definition.english_audio.audio_url;
+      if (wordItem?.spanish_audio?.audio_url) {
+        audioUrl = wordItem.spanish_audio.audio_url;
+      } else if (wordItem?.english_audio?.audio_url) {
+        audioUrl = wordItem.english_audio.audio_url;
       }
     }
     
@@ -81,7 +81,7 @@ function WordLists() {
 
   // Helper function to render definitions based on the unified structure
   const renderDefinitionContent = (wordItem) => {
-    const def = wordItem.definition;
+    const def = wordItem;
     if (!def) return <p>No definition available.</p>;
     
     // Check for the new unified structure (entries with pos_groups)
@@ -199,8 +199,8 @@ function WordLists() {
                       <h3 className={styles.wordTitle}>{wordItem.word}</h3>
                       
                       {/* Audio button based on unified dictionary structure */}
-                      {(currentLanguage === "en" && wordItem.definition?.audio?.audio_url) || 
-                       (currentLanguage === "es" && (wordItem.definition?.spanish_audio?.audio_url || wordItem.definition?.english_audio?.audio_url)) ? (
+                      {(currentLanguage === "en" && wordItem?.audio?.audio_url) || 
+                       (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
                         <button
                           onClick={(e) => playSound(e, wordItem)}
                           className={styles.audioButton}

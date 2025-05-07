@@ -1,3 +1,4 @@
+import logging.config
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,3 +41,7 @@ def on_startup():
 if not os.getenv('BACKEND_ENV', None) == 'dev':
     # Mount the static files (built assets are in /app/dist)
     app.mount("/", StaticFiles(directory="/app/dist", html=True), name="static")
+
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(levelname)-8s] %(name)s: %(message)s",)

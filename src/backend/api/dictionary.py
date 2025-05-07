@@ -31,7 +31,8 @@ def get_word_definition_endpoint(
     Returns:
         Dictionary with word definition
     """
-    return get_word_definition(word, language, session, include_conjugations)
+    def_ =  get_word_definition([word], language, session, include_conjugations)
+    return def_[0] if len(def_) > 0 else {}
 
 
 @router.get('/coach/index/words/{word}')

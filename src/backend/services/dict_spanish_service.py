@@ -1,3 +1,4 @@
+import logging
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -264,7 +265,7 @@ def collect_verb_examples(word_data: List[Dict[str, Any]]) -> List[Example]:
     return all_examples
 
 
-def parse_conjugation_data(raw_data: Dict[str, Any], verb_examples: List[Example]) -> Optional[VerbConjugations]:
+def parse_conjugation_data(raw_data: Dict[str, Any]) -> Optional[VerbConjugations]:
     """Parse raw conjugation data into VerbConjugations model."""
     if not raw_data:
         return None
@@ -297,8 +298,8 @@ def parse_conjugation_data(raw_data: Dict[str, Any], verb_examples: List[Example
                 conjugations.append(ConjugationForm(
                     forms=conj_data["conjugationForms"] or [],
                     pronoun=conj_data["pronoun"],
-                    audio_query_string=conj_data.get("audioQueryString",""), # rare cases
-                    translations=conj_data.get("translationForms",[]), # rare cases
+                    audio_query_string=conj_data.get("audioQueryString", ""),  # rare cases
+                    translations=conj_data.get("translationForms", []),  # rare cases
                 ))
             tenses[tense_name] = conjugations
 
@@ -309,24 +310,24 @@ def parse_conjugation_data(raw_data: Dict[str, Any], verb_examples: List[Example
             past_participle=past_participle,
             gerund=gerund,
             tenses=tenses,
-            examples=verb_examples
+            examples=[]
         )
     except Exception as e:
         print(f"Error parsing conjugation data: {e}")
         return None
 
 
-def is_verb(word_data: List[Dict[str, Any]]) -> bool:
+def is_verb(entries: List[SpanishWordEntry]) -> bool:
     """Check if the word is a verb based on its part of speech."""
-    for entry in word_data:
-        for pos_group in entry.get('posGroups', []):
-            pos_name = pos_group.get('pos', {}).get('nameEn', '').lower()
+    for entry in entries:
+        for pos_group in entry.pos_groups:
+            pos_name = pos_group.pos.lower()
             if 'verb' in pos_name:
                 return True
     return False
 
 
-def get_spanish_word_definition(word: str, include_conjugations: bool = False, session: Session = None, override_cache: bool = False) -> dict:
+def get_spanish_word_definition(words: list[str], include_conjugations: bool = False, session: Session = None, override_cache: bool = False, read_only: bool = False) -> list[dict]:
     """
     Get a Spanish word definition from cache or the SpanishDict API.
 
@@ -336,84 +337,97 @@ def get_spanish_word_definition(word: str, include_conjugations: bool = False, s
         session: Database session for caching
 
     Returns:
-        Dictionary with word information to match WordDefinitionResponse format
+        List of dictionaries with word information to match WordDefinitionResponse format
     """
+    # override_cache = True
     # Check cache if session is provided
     if not override_cache and session:
-        dictionary_entry = session.exec(
-            select(SpanishDictionary).where(SpanishDictionary.word == word)
-        ).first()
+        dictionary_from_db = session.exec(
+            select(SpanishDictionary).where(SpanishDictionary.word.in_(words))
+        ).fetchall()
+        dictionary_entries_map = {
+            item.word: item for item in dictionary_from_db
+        }
     else:
-        dictionary_entry = None
+        dictionary_entries_map = {}
 
-    if dictionary_entry:
-        word_data = dictionary_entry.word_data
-        audio_data = dictionary_entry.audio_data
-        conjugation_data = dictionary_entry.conjugation_data
-    else:
-        dictionary_entry = None
-        word_data = None
-        audio_data = None
-        conjugation_data = None
-
-    # If not in cache or no session provided, fetch word data from API
-    if not word_data or not audio_data:
-        client = SpanishDictClient()
-        word_data, audio_data = client.get_word_data(word)
-
-        # Cache the data if session is provided
-        if session and word_data:
-            if dictionary_entry:
-                # Update existing entry
-                dictionary_entry.word_data = word_data
-                dictionary_entry.audio_data = audio_data
-            else:
-                # Create new entry
-                dictionary_entry = SpanishDictionary(
-                    word=word,
-                    word_data=word_data,
-                    audio_data=audio_data
+    result = []
+    logging.debug(f"map:{dictionary_entries_map}")
+    for word in words:
+        dictionary_entry = dictionary_entries_map.get(word)
+        logging.debug(f"word:{word}")
+        if dictionary_entry:
+            entries = [SpanishWordEntry(**entry) for entry in dictionary_entry.word_data]
+            audio_data = dictionary_entry.audio_data
+            conjugation_data = dictionary_entry.conjugation_data
+            logging.debug("found a word")
+        else:
+            entries = None
+            audio_data = None
+            conjugation_data = None
+            if read_only:
+                result.append(
+                    SpanishWordDefinition.init_empty(word=word).model_dump()
                 )
-            session.add(dictionary_entry)
-            session.commit()
+                logging.debug("not found a word, continue")
+                continue
 
-    # Fetch conjugation data if this is a verb and conjugations are requested
-    if include_conjugations and is_verb(word_data):
-        # Check if we already have conjugation data in cache
-        if not conjugation_data and dictionary_entry:
+        # If not in cache or no session provided, fetch word data from API
+        if not entries:
             client = SpanishDictClient()
-            conjugation_data = client.get_conjugations(word)
+            word_data, audio_data = client.get_word_data(word)
 
-            # Update cache with conjugation data
-            if session and conjugation_data:
-                dictionary_entry.conjugation_data = conjugation_data
+            # Parse the data into our Pydantic models
+            entries = parse_spanish_word_data(word_data)
+
+            # Cache the data if session is provided
+            if session and entries:
+                if dictionary_entry:
+                    # Update existing entry
+                    dictionary_entry.word_data = entries
+                    dictionary_entry.audio_data = audio_data
+                else:
+                    # Create new entry
+                    dictionary_entry = SpanishDictionary(
+                        word=word,
+                        word_data=[_.model_dump() for _ in entries],
+                        audio_data=audio_data
+                    )
                 session.add(dictionary_entry)
                 session.commit()
-        # If no cache or not in cache, fetch from API
-        elif not conjugation_data:
-            client = SpanishDictClient()
-            conjugation_data = client.get_conjugations(word)
 
-    # Parse the data into our Pydantic models
-    entries = parse_spanish_word_data(word_data)
+        # Fetch conjugation data if this is a verb and conjugations are requested
+        if include_conjugations and is_verb(entries):
+            # Check if we already have conjugation data in cache
+            if dictionary_entry and dictionary_entry.conjugation_data:
+                conjugation_data = dictionary_entry.conjugation_data
+            # If no cache or not in cache, fetch from API
+            else:
+                client = SpanishDictClient()
+                conjugation_data = client.get_conjugations(word)
 
-    # Parse audio data
-    spanish_audio, english_audio = parse_audio_info(audio_data)
+                # Update cache with conjugation data
+                if session and conjugation_data:
+                    dictionary_entry.conjugation_data = conjugation_data
+                    session.add(dictionary_entry)
+                    session.commit()
 
-    # Parse conjugation data if available
-    conjugations = None
-    if include_conjugations and conjugation_data:
-        verb_examples = collect_verb_examples(word_data)
-        conjugations = parse_conjugation_data(conjugation_data, verb_examples)
+            # Parse conjugation data if available
+            conjugations = None
+            if include_conjugations and conjugation_data:
+                conjugations = parse_conjugation_data(conjugation_data)
 
-    # Create the SpanishWordDefinition object
-    spanish_def = SpanishWordDefinition(
-        word=word,
-        entries=entries,
-        conjugations=conjugations,
-        spanish_audio=spanish_audio,
-        english_audio=english_audio
-    )
+        # Parse audio data
+        spanish_audio, english_audio = parse_audio_info(audio_data)
 
-    # Return as dictionary to match WordDefinitionResponse format
-    return spanish_def.dict()
+        # Create the SpanishWordDefinition object
+        spanish_def = SpanishWordDefinition(
+            word=word,
+            entries=entries,
+            conjugations=conjugations,
+            spanish_audio=spanish_audio,
+            english_audio=english_audio,
+        ).model_dump()
+        result.append(spanish_def)
+        # add as dictionary to match WordDefinitionResponse format
+    return result

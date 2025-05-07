@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Annotated, List, Optional
 from sqlmodel import Session, select
@@ -5,7 +6,7 @@ from sqlmodel import Session, select
 from ..database import get_session
 from ..models.wordlist import (
     Wordlist, WordlistCreate, WordlistUpdate,
-    WordlistResponse, WordDefinitionResponse, Language
+    WordlistResponse, Language
 )
 from ..services.unified_dictionary_service import get_word_definition
 
@@ -28,11 +29,9 @@ def list_wordlists_endpoint(
     ).all()
 
     results = []
+    # TODO fix n+1 query
     for wl in wordlists:
-        definitions = []
-        for word in wl.words:
-            word_def = get_word_definition(word, language, session)
-            definitions.append(WordDefinitionResponse(word=word, definition=word_def))
+        definitions = get_word_definition(wl.words, language, session,read_only=True)
         results.append(WordlistResponse(
             id=wl.id,
             name=wl.name,
@@ -65,10 +64,7 @@ def create_wordlist_endpoint(
     session.commit()
     session.refresh(new_wordlist)
 
-    definitions = []
-    for word in new_wordlist.words:
-        word_def = get_word_definition(word, list_language, session)
-        definitions.append(WordDefinitionResponse(word=word, definition=word_def))
+    definitions = get_word_definition(new_wordlist.words, language, session)
 
     return WordlistResponse(
         id=new_wordlist.id,
@@ -93,10 +89,7 @@ def get_wordlist_endpoint(
     # Use provided language override or the wordlist's language
     lookup_language = language or wl.language
 
-    definitions = []
-    for word in wl.words:
-        word_def = get_word_definition(word, lookup_language, session, include_conjugations)
-        definitions.append(WordDefinitionResponse(word=word, definition=word_def))
+    definitions = get_word_definition(wl.words, lookup_language, session, include_conjugations, read_only=True)
 
     return WordlistResponse(
         id=wl.id,
@@ -120,7 +113,7 @@ def update_wordlist_endpoint(
     wl = session.get(Wordlist, pk)
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
-
+    logging.info(wl)
     if wordlist.name is not None:
         wl.name = wordlist.name
     if wordlist.words is not None:
@@ -138,10 +131,7 @@ def update_wordlist_endpoint(
     # Use provided language override or the wordlist's language for definitions
     lookup_language = language or wl.language
 
-    definitions = []
-    for word in wl.words:
-        word_def = get_word_definition(word, lookup_language, session, include_conjugations)
-        definitions.append(WordDefinitionResponse(word=word, definition=word_def))
+    definitions = get_word_definition(wl.words, lookup_language, session, include_conjugations)
 
     return WordlistResponse(
         id=wl.id,

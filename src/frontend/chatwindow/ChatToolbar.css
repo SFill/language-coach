@@ -50,6 +50,7 @@
 .list-dropdown {
     position: absolute;
     overflow: visible;
+    overflow-y: auto;
     top: 100%;
     left: 0;
     right: 0;

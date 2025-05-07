@@ -1,10 +1,12 @@
+import logging
 import requests
 from sqlmodel import Session, select
 from ..models.wordlist import (
-    Dictionary, EnglishWordDefinition, EnglishWordEntry, 
+    Dictionary, EnglishWordDefinition, EnglishWordEntry,
     EnglishDialect, EnglishPosGroup, EnglishSense, EnglishTranslation,
     Example, AudioInfo
 )
+
 
 class DictionaryApiClient:
     """Client for the Free Dictionary API."""
@@ -37,7 +39,7 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
     audio_url = None
     dialect = EnglishDialect.us
     audio_text = word
-    
+
     for phon in entry.get("phonetics", []):
         audio = phon.get("audio")
         if audio:
@@ -59,7 +61,7 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
     pos_groups = []
     for meaning in entry.get("meanings", []):
         part_of_speech = meaning.get("partOfSpeech", "")
-        
+
         # Process senses (definitions)
         senses = []
         for d in meaning.get("definitions", []):
@@ -71,12 +73,12 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
                     source_text=d.get("example", ""),
                     target_text=d.get("example", "")
                 ))
-            
+
             # Create a translation (definition in English terminology)
             definition_translation = EnglishTranslation(
                 examples=examples,
             )
-            
+
             # Create a sense with this translation
             senses.append(EnglishSense(
                 context_en=d.get("definition", ""),  # Context is definition in API
@@ -84,14 +86,14 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
                 synonyms=d.get("synonyms", []),
                 antonyms=d.get("antonyms", [])
             ))
-        
+
         # Create a POS group with these senses
         pos_groups.append(EnglishPosGroup(
             pos=part_of_speech,
             senses=senses
         ))
 
-    # Create a single entry 
+    # Create a single entry
     entries = [
         EnglishWordEntry(
             word=word,
@@ -107,33 +109,48 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
     )
 
 
-def get_word_definition(word: str, session: Session) -> dict:
+def get_english_word_definition(words: list[str], session: Session, read_only: bool = False) -> list[dict]:
     """
     Get a word definition from cache or the dictionary API.
     Returns the definition as a dictionary to match SpanishWordDefinition response format.
     """
-    dictionary_entry = session.exec(select(Dictionary).where(Dictionary.word == word)).first()
-    
-    if dictionary_entry is None:
-        try:
-            api_data = DictionaryApiClient.define(word)
-            english_def = parse_english_word_definition(api_data, word)
-        except Exception as e:
-            english_def = EnglishWordDefinition(
-                word=word, 
-                entries=[], 
-                audio=None,
-                dialect=EnglishDialect.us
-            )
-            
-        # Store as dictionary for flexibility
-        # TODO uncomment
-        dictionary_entry = Dictionary(word=word, word_meta=english_def.dict())
-        session.add(dictionary_entry)
-        session.commit()
-        session.refresh(dictionary_entry)
-        
-        return english_def.dict()
+    # Check cache if session is provided
+    if session:
+        dictionary_from_db = session.exec(
+            select(Dictionary).where(Dictionary.word.in_(words))
+        ).fetchall()
+        dictionary_entries_map = {
+            item.word: item for item in dictionary_from_db
+        }
     else:
-        # Return the stored dictionary directly
-        return dictionary_entry.word_meta
+        dictionary_entries_map = {}
+
+    result = []
+    for word in words:
+        dictionary_entry = dictionary_entries_map.get(word)
+
+        if dictionary_entry is None:
+            if read_only:
+                result.append(EnglishWordDefinition.init_empty(
+                    word=word,
+                ).model_dump())
+                continue
+            try:
+                api_data = DictionaryApiClient.define(word)
+                english_def = parse_english_word_definition(api_data, word)
+            except Exception as e:
+                english_def = EnglishWordDefinition.init_empty(
+                    word=word,
+                )
+
+            # Store as dictionary for flexibility
+            dictionary_entry = Dictionary(word=word, word_meta=english_def.model_dump())
+            session.add(dictionary_entry)
+            session.commit()
+            session.refresh(dictionary_entry)
+
+            result.append(english_def.model_dump())
+        else:
+            # Return the stored dictionary directly
+            result.append(dictionary_entry.word_meta)
+    return result

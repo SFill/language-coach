@@ -5,7 +5,7 @@ from .wordlist import (
     Wordlist, Dictionary, EnglishDialect, 
     EnglishTranslation, EnglishSense, EnglishPosGroup,
     EnglishWordDefinition, WordlistCreate, 
-    WordlistUpdate, WordDefinitionResponse, WordlistResponse,
+    WordlistUpdate, WordlistResponse,
     TranslateTextRequest, Example, AudioInfo, EnglishWordEntry
 )
 from .dict_spanish import (
