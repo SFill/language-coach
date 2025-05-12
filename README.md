@@ -15,6 +15,7 @@ Language Coach helps users improve their language skills by working with foreign
 - **Containerization**: Docker
 - **Authentication**: None
 - **AI Integration**: OpenAI API (ChatGPT for now, Whisper planned)
+- **Environments**: local, dev, prod
 
 ---
 
