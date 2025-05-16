@@ -1,16 +1,20 @@
 # Import all models for easy access
+from .dict_english import Dictionary, EnglishDialect
 from .chat import Chat, Message, ChatListResponse
 from .sentence import ReverseIndex, Sentence
 from .wordlist import (
-    Wordlist, Dictionary, EnglishDialect, 
-    EnglishTranslation, EnglishSense, EnglishPosGroup,
-    EnglishWordDefinition, WordlistCreate, 
+    Wordlist, WordlistCreate, 
     WordlistUpdate, WordlistResponse,
-    TranslateTextRequest, Example, AudioInfo, EnglishWordEntry
+    TranslateTextRequest, 
 )
+
+from .dict_english import *
+
+from .shared import Example, AudioInfo
+
 from .dict_spanish import (
     SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
     Participle, ConjugationForm, Example as SpanishExample,
-    Translation, Sense, PosGroup, Pronunciation,
+    Translation, Sense, PosGroup,
     SpanishWordRequest
 )

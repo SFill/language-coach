@@ -12,9 +12,9 @@ from ..models.dict_spanish import SpanishDictionary
 from ..models.dict_spanish import (
     SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
     Participle, ConjugationForm, Translation,
-    Sense, PosGroup, Pronunciation
+    Sense, PosGroup
 )
-from ..models.wordlist import Example, AudioInfo
+from ..models.shared import Definition, Example, AudioInfo
 
 
 class SpanishDictClient:
@@ -327,7 +327,7 @@ def is_verb(entries: List[SpanishWordEntry]) -> bool:
     return False
 
 
-def get_spanish_word_definition(words: list[str], include_conjugations: bool = False, session: Session = None, override_cache: bool = False, read_only: bool = False) -> list[dict]:
+def get_spanish_word_definition(words: list[str], include_conjugations: bool = False, session: Session = None, override_cache: bool = False, read_only: bool = False) -> list[Definition]:
     """
     Get a Spanish word definition from cache or the SpanishDict API.
 
@@ -427,7 +427,7 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
             conjugations=conjugations,
             spanish_audio=spanish_audio,
             english_audio=english_audio,
-        ).model_dump()
+        )
         result.append(spanish_def)
         # add as dictionary to match WordDefinitionResponse format
     return result

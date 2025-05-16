@@ -2,7 +2,9 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
 
 from sqlmodel import JSON, Column, Field, SQLModel
-from ..models.wordlist import Example, AudioInfo
+
+from .shared import Example, Definition, AudioInfo
+
 
 
 class Translation(BaseModel):
@@ -34,14 +36,6 @@ class SpanishWordEntry(BaseModel):
     word: str
     pos_groups: List[PosGroup] = []
 
-
-# Pronunciation models
-class Pronunciation(BaseModel):
-    """Pronunciation information for a word."""
-    id: Optional[int] = None
-    ipa: Optional[str] = None  # International Phonetic Alphabet
-    region: Optional[str] = None  # LATAM, SPAIN, etc.
-    has_video: Optional[bool] = None
 
 
 class ConjugationFormTranslation(BaseModel):
@@ -82,7 +76,7 @@ class VerbConjugations(BaseModel):
 
 
 # Combined word definition model
-class SpanishWordDefinition(BaseModel):
+class SpanishWordDefinition(Definition):
     """Definition for a Spanish word."""
     word: str
     entries: List[SpanishWordEntry]
@@ -97,6 +91,15 @@ class SpanishWordDefinition(BaseModel):
             entries=[]
         )
 
+    def get_examples(self):
+        examples = []
+        for entry in self.entries:
+            for g in entry.pos_groups:
+                for s in g.senses:
+                    for t in s.translations:
+                        for e in t.examples:
+                            examples.append(e)
+        return examples
 
 
 # API request/response models

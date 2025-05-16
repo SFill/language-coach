@@ -19,7 +19,7 @@ def get_word_definition_endpoint(
     session: SessionDep,
     language: str = Query("en", description="Language code (en or es)"),
     include_conjugations: bool = Query(False, description="Include verb conjugations (Spanish only)")
-) -> Dict:
+):
     """
     Get the definition of a word in the specified language.
     

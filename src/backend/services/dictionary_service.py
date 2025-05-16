@@ -1,11 +1,15 @@
 import logging
 import requests
 from sqlmodel import Session, select
-from ..models.wordlist import (
-    Dictionary, EnglishWordDefinition, EnglishWordEntry,
-    EnglishDialect, EnglishPosGroup, EnglishSense, EnglishTranslation,
+
+from ..models.dict_english import Dictionary, EnglishDialect
+
+from ..models.dict_english import (
+    EnglishWordDefinition, EnglishWordEntry,
+    EnglishPosGroup, EnglishSense, EnglishTranslation,
     Example, AudioInfo
 )
+from ..models.shared import Definition
 
 
 class DictionaryApiClient:
@@ -109,7 +113,7 @@ def parse_english_word_definition(api_data: list, word: str) -> EnglishWordDefin
     )
 
 
-def get_english_word_definition(words: list[str], session: Session, read_only: bool = False) -> list[dict]:
+def get_english_word_definition(words: list[str], session: Session, read_only: bool = False) -> list[Definition]:
     """
     Get a word definition from cache or the dictionary API.
     Returns the definition as a dictionary to match SpanishWordDefinition response format.
@@ -149,8 +153,8 @@ def get_english_word_definition(words: list[str], session: Session, read_only: b
             session.commit()
             session.refresh(dictionary_entry)
 
-            result.append(english_def.model_dump())
+            result.append(english_def)
         else:
             # Return the stored dictionary directly
-            result.append(dictionary_entry.word_meta)
+            result.append(EnglishWordDefinition.model_validate(dictionary_entry.word_meta))
     return result
