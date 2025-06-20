@@ -31,3 +31,5 @@ data/
 
 .env
 database.db
+
+downloader/gutenberg_data/**
