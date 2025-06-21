@@ -58,3 +58,74 @@ Language Coach helps users improve their language skills by working with foreign
 - RAG-style features to scan lessons/notes for insights
 - Backend: optimize API responses to exclude large/unnecessary fields
 - Optimize wordlist performance for better speed
+
+
+### Project structure:
+
+
+```
+language-coach/
+├── backend/
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── chat.py             # Chat endpoints
+│   │   ├── dictionary.py       # Dictionary lookup endpoints
+│   │   ├── translation.py      # Translation endpoints
+│   │   └── wordlist.py         # Wordlist management endpoints
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── chat.py             # Chat data models
+│   │   ├── dict_english.py     # English dictionary models
+│   │   ├── dict_spanish.py     # Spanish dictionary models
+│   │   ├── sentence.py         # Sentence retrieval models
+│   │   └── wordlist.py         # Wordlist data models
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── chat_service.py     # Chat service with GPT integration
+│   │   ├── dict_spanish_service.py  # Spanish dictionary service
+│   │   ├── dictionary_service.py    # English dictionary service
+│   │   ├── sentence_service.py      # Example sentence finder
+│   │   ├── translation_service.py   # Translation service
+│   │   └── unified_dictionary_service.py  # Combined dictionary interface
+│   ├── __init__.py
+│   ├── constants.py            # System prompts and constants
+│   ├── database.py             # Database connection setup
+│   └── main.py                 # FastAPI main application
+├── downloader/                 # Gutenberg books downloader module
+│   ├── __init__.py
+│   ├── db_integration.py       # Import books to database
+│   ├── db_models.py            # Database models for corpus
+│   ├── gdex.py                 # Good Dictionary Examples scoring
+│   ├── gutenberg_downloader.py # Downloads books from Gutenberg
+│   ├── requirements.txt        # Downloader dependencies
+│   └── sentence_retriever.py   # Sentence search and retrieval
+├── frontend/
+│   ├── assets/
+│   │   └── react.svg
+│   ├── chatwindow/             # Chat interface components
+│   │   ├── components/         # Reusable chat components
+│   │   ├── ChatMessage.jsx     # Chat message component
+│   │   ├── ChatToolbar.jsx     # Selection toolbar component
+│   │   ├── ChatWindow.jsx      # Main chat window component
+│   │   └── ChatWindowPage.jsx  # Chat page container
+│   ├── MessageInput/           # Advanced text input component
+│   │   ├── hooks/              # Custom hooks for input behavior
+│   │   ├── index.jsx           # Main component export
+│   │   ├── SelectionToolbar.jsx # Text selection toolbar
+│   │   └── TextEditor.jsx      # Core text editor component
+│   ├── wordlist/               # Wordlist management components
+│   │   ├── ReverseContext.jsx  # Word context examples
+│   │   ├── WordListPage.jsx    # Wordlist page container
+│   │   ├── WordLists.jsx       # List of word collections
+│   │   ├── WordlistContext.jsx # State management for wordlists
+│   │   └── utils.js            # Wordlist helper functions
+│   ├── hooks/                  # App-wide custom hooks
+│   ├── App.jsx                 # Main React app component
+│   ├── api.js                  # API client functions
+│   ├── main.jsx                # React entry point
+│   └── SideDictionaryPanel.jsx # Dictionary lookup panel
+├── docker-compose.yml          # Docker setup for deployment
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
+
+```
