@@ -203,7 +203,6 @@ class SentenceRetriever:
         phrase: str, 
         language: str, 
         top_n: int = 5,
-        use_gdex: bool = True
     ) -> List[Dict[str, Any]]:
         """
         Get the best example sentences for a phrase.
@@ -212,7 +211,6 @@ class SentenceRetriever:
             phrase: The word or phrase to search for
             language: ISO language code (e.g., 'en', 'es')
             top_n: Number of top examples to return
-            use_gdex: Whether to use GDEX scoring (True) or legacy scoring (False)
             
         Returns:
             List of dictionaries with sentence examples and metadata
@@ -240,16 +238,14 @@ class SentenceRetriever:
             else:
                 matching_phrases &= phrase_indices  # Intersection
         
-        # If no exact matches (containing all tokens), try partial matches
-        if not matching_phrases and query_tokens:
-            # Use the most discriminative token (appears in fewer sentences)
-            token_counts = [(token, len(token_to_phrases.get(token, []))) for token in query_tokens]
-            if token_counts:
-                best_token, _ = min(token_counts, key=lambda x: x[1] if x[1] > 0 else float('inf'))
-                matching_phrases = set(token_to_phrases.get(best_token, []))
+        # we don't need partial matches as we look for complete examples
+        if not matching_phrases:
+            return []
         
         # Get the GDEX scorer for this language
         gdex_scorer = self.gdex_scorers.get(language)
+        if not gdex_scorer:
+            raise ValueError(f"no scorer for {language}")
         
         # Prepare results
         results = []
@@ -258,13 +254,14 @@ class SentenceRetriever:
             phrase_id = index_data['phrase_ids'][idx]
             tokens = index_data['tokenized_texts'][idx]
             
-            if use_gdex and gdex_scorer:
-                # Use GDEX scoring
-                scores = gdex_scorer.score_sentence(text, phrase, tokens)
-                combined_score = scores['total']
-                
-                # Add detailed scores for debugging
-                detailed_scores = {f"gdex_{k}": v for k, v in scores.items() if k != 'total'}
+            # Use GDEX scoring
+            scores = gdex_scorer.score_sentence(text, phrase, tokens)
+            combined_score = scores['total']
+            if combined_score < 0.8:
+                continue 
+            
+            # Add detailed scores for debugging
+            detailed_scores = {f"gdex_{k}": v for k, v in scores.items() if k != 'total'}
            
             # Get metadata
             metadata = index_data['metadata'].get(phrase_id, {})

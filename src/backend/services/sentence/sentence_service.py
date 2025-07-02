@@ -86,7 +86,6 @@ def search_for_sentences(
             phrase=word,
             language=language,
             top_n=top_n,
-            use_gdex=True
         )
         
         # Format the results

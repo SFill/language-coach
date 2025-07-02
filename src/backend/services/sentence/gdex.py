@@ -216,7 +216,8 @@ class GdexScorer:
     
     def _score_target_position(self, sentence: str, target_phrase: str) -> float:
         """
-        Score sentence based on the position of the target phrase.
+        Score sentence based on the position and proximity of target phrase tokens.
+        Scores higher when all tokens appear in correct order with minimal gaps.
         
         Args:
             sentence: The full sentence
@@ -226,39 +227,111 @@ class GdexScorer:
             Score from 0.0 to 1.0
         """
         sentence_lower = sentence.lower()
+        target_tokens = target_phrase.lower().split()
         
-        # Check if target phrase is in the sentence
-        if target_phrase not in sentence_lower:
-            # Target phrase not found exactly, try to find individual words
-            found = False
-            for word in target_phrase.split():
-                if word in sentence_lower:
-                    found = True
+        # Handle single word case
+        if len(target_tokens) == 1:
+            target_word = target_tokens[0]
+            if target_word not in sentence_lower:
+                return 0.0
+            
+            # Find position and score based on sentence position
+            start_idx = sentence_lower.find(target_word)
+            position_ratio = start_idx / len(sentence_lower)
+            
+            # Prefer words in the middle (around 0.3-0.7 of the way through)
+            if 0.3 <= position_ratio <= 0.7:
+                return 1.0
+            elif position_ratio < 0.3:
+                return 0.5 + (position_ratio / 0.3) * 0.5
+            else:
+                return 0.5 + ((1.0 - position_ratio) / 0.3) * 0.5
+        
+        # Multi-word phrase handling
+        # First, check for exact phrase match (highest score)
+        if target_phrase.lower() in sentence_lower:
+            start_idx = sentence_lower.find(target_phrase.lower())
+            position_ratio = start_idx / len(sentence_lower)
+            
+            # Exact match gets high score, with bonus for good position
+            if 0.2 <= position_ratio <= 0.8:
+                return 1.0
+            else:
+                return 0.9
+        
+        # If no exact match, look for tokens in order with minimal gaps
+        sentence_tokens = self._tokenize(sentence)
+        
+        # Find the first occurrence of each target token in the sentence
+        token_positions = []
+        for target_token in target_tokens:
+            found_position = None
+            for i, sent_token in enumerate(sentence_tokens):
+                if target_token == sent_token or target_token in sent_token:
+                    found_position = i
                     break
             
-            if not found:
-                return 0.0  # Target not found at all
+            if found_position is None:
+                # Token not found, return low score
+                return 0.1
             
-            # Found at least one word, but not the exact phrase
-            return 0.3
+            token_positions.append(found_position)
         
-        # Find position of target phrase
-        start_idx = sentence_lower.find(target_phrase)
+        # Check if tokens appear in correct order
+        if token_positions != sorted(token_positions):
+            # Tokens are not in order, penalize heavily
+            return 0.2
         
-        # Calculate position as a fraction of sentence length
-        position_ratio = start_idx / len(sentence_lower)
+        # Calculate gap between consecutive tokens
+        total_gap = 0
+        for i in range(len(token_positions) - 1):
+            gap = token_positions[i + 1] - token_positions[i] - 1
+            total_gap += gap
         
-        # Prefer phrases that appear in the middle (around 0.3-0.7 of the way through)
-        if 0.3 <= position_ratio <= 0.7:
-            return 1.0
-        
-        # Decrease score for phrases at the beginning or end
-        if position_ratio < 0.3:
-            # Beginning of sentence
-            return 0.5 + (position_ratio / 0.3) * 0.5
+        # Score based on total gap size
+        if total_gap == 0:
+            # All tokens are consecutive (perfect)
+            gap_score = 1.0
+        elif total_gap == 1:
+            # One word between tokens (very good)
+            gap_score = 0.9
+        elif total_gap <= 3:
+            # Few words between tokens (good)
+            gap_score = 0.8
+        elif total_gap <= 6:
+            # Some words between tokens (acceptable)
+            gap_score = 0.6
+        elif total_gap <= 10:
+            # Many words between tokens (poor)
+            gap_score = 0.4
         else:
-            # End of sentence
-            return 0.5 + ((1.0 - position_ratio) / 0.3) * 0.5
+            # Tokens are very far apart (very poor)
+            gap_score = 0.2
+        
+        # Consider position of the phrase in the sentence
+        phrase_start_pos = token_positions[0]
+        phrase_end_pos = token_positions[-1]
+        phrase_center = (phrase_start_pos + phrase_end_pos) / 2
+        
+        # Normalize position to 0-1 range
+        sentence_length = len(sentence_tokens)
+        if sentence_length > 1:
+            position_ratio = phrase_center / (sentence_length - 1)
+        else:
+            position_ratio = 0.5
+        
+        # Position score (prefer middle positions)
+        if 0.2 <= position_ratio <= 0.8:
+            position_score = 1.0
+        elif position_ratio < 0.2:
+            position_score = 0.7 + (position_ratio / 0.2) * 0.3
+        else:
+            position_score = 0.7 + ((1.0 - position_ratio) / 0.2) * 0.3
+        
+        # Combine gap score (70%) and position score (30%)
+        final_score = gap_score * 0.7 + position_score * 0.3
+        
+        return min(1.0, final_score)
     
     def _score_common_words(self, tokens: List[str]) -> float:
         """

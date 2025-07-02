@@ -10,38 +10,12 @@ Key Principles
 - Favor named exports for routes and utility functions.
 - Use the Receive an Object, Return an Object (RORO) pattern.
 - Respect the code files structure, place files and modules to suitable locations 
-- Consider to run code in different environments
+- Consider to run code in different environments 
 
 Python/FastAPI
 
 - Use def for pure functions and async def for asynchronous operations.
 - Use type hints for all function signatures. Prefer Pydantic models over raw dictionaries for input validation.
-- File structure:
-- 📦backend
- ┣ 📂api
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜chat.py
- ┃ ┣ 📜dictionary.py
- ┃ ┣ 📜translation.py
- ┃ ┗ 📜wordlist.py
- ┣ 📂models
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜chat.py
- ┃ ┣ 📜dict_spanish.py
- ┃ ┣ 📜sentence.py
- ┃ ┗ 📜wordlist.py
- ┣ 📂services
- ┃ ┣ 📜__init__.py
- ┃ ┣ 📜chat_service.py
- ┃ ┣ 📜dict_spanish_service.py
- ┃ ┣ 📜dictionary_service.py
- ┃ ┣ 📜sentence_service.py
- ┃ ┣ 📜translation_service.py
- ┃ ┗ 📜unified_dictionary_service.py
- ┣ 📜__init__.py
- ┣ 📜constants.py
- ┣ 📜database.py
- ┗ 📜main.py
 - Avoid unnecessary curly braces in conditional statements.
 - For single-line statements in conditionals, omit curly braces.
 - Use concise, one-line syntax for simple conditional statements (e.g., if condition: do_something()).
