@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 # Constants
-INDEX_DIR = Path("downloader/gutenberg_data/indexes")
+INDEX_DIR = Path("data/gutenberg_data/indexes")
 MAX_SENTENCE_TOKENS = 30  # Maximum sentence length in tokens
 IDEAL_TOKEN_RANGE = (5, 25)  # Ideal range for sentence length
 

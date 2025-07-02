@@ -17,7 +17,7 @@ import spacy
 from sqlmodel import SQLModel, Session, create_engine, select
 
 # Import database models
-from .db_models import Text, Phrase, Word
+from ..services.sentence.db_models import Text, Phrase, Word
 
 
 # Configure logging
@@ -30,8 +30,8 @@ logger = logging.getLogger(__name__)
 
 # Constants
 DEFAULT_DB_PATH = "language_coach.db"
-DEFAULT_PROCESSED_BOOKS_DIR = Path("downloader/gutenberg_data/processed")
-INDEX_DIR = Path("downloader/gutenberg_data/indexes")
+DEFAULT_PROCESSED_BOOKS_DIR = Path("data/gutenberg_data/processed")
+INDEX_DIR = Path("data/gutenberg_data/indexes")
 
 
 def create_db_engine(db_path: str):
@@ -187,7 +187,7 @@ def build_bm25_index(db_path: str) -> None:
     Args:
         db_path: Path to the SQLite database file
     """
-    from .sentence_retriever import SentenceRetriever
+    from ..services.sentence.sentence_retriever import SentenceRetriever
     
     # Create directory for indexes if it doesn't exist
     INDEX_DIR.mkdir(parents=True, exist_ok=True)

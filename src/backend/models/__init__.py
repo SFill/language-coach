@@ -1,7 +1,6 @@
 # Import all models for easy access
 from .dict_english import Dictionary, EnglishDialect
 from .chat import Chat, Message, ChatListResponse
-from .sentence import ReverseIndex, Sentence
 from .wordlist import (
     Wordlist, WordlistCreate, 
     WordlistUpdate, WordlistResponse,

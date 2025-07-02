@@ -4,7 +4,7 @@ from sqlmodel import SQLModel, Field, Relationship
 
 class Text(SQLModel, table=True):
     """Model for Gutenberg text entries."""
-    __tablename__ = "texts"
+    __tablename__ = "reverse_index_texts"
     
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
@@ -18,7 +18,7 @@ class Text(SQLModel, table=True):
 
 class Phrase(SQLModel, table=True):
     """Model for phrases (sentences) from texts."""
-    __tablename__ = "phrases"
+    __tablename__ = "reverse_index_phrases"
     
     id: Optional[int] = Field(default=None, primary_key=True)
     text: str
@@ -32,7 +32,7 @@ class Phrase(SQLModel, table=True):
 
 class Word(SQLModel, table=True):
     """Model for words with POS tagging."""
-    __tablename__ = "words"
+    __tablename__ = "reverse_index_words"
     
     id: Optional[int] = Field(default=None, primary_key=True)
     text: str

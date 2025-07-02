@@ -9,6 +9,7 @@ from .api.chat import router as chat_router
 from .api.translation import router as translation_router
 from .api.dictionary import router as dictionary_router
 from .api.wordlist import router as wordlist_router
+from .api import sentence_router
 
 # Create FastAPI application
 app = FastAPI()
@@ -29,6 +30,7 @@ app.include_router(chat_router)
 app.include_router(translation_router)
 app.include_router(dictionary_router)
 app.include_router(wordlist_router)
+app.include_router(sentence_router)
 
 
 @app.on_event("startup")

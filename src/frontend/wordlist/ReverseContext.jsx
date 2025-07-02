@@ -1,153 +1,168 @@
 import React, { useState } from 'react';
+import { fetchSentenceExamples } from '../api';
+import styles from './ReverseContext.module.css';
 
 function ReverseContext() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sentences, setSentences] = useState([]);
-  const [selectedWordInfo, setSelectedWordInfo] = useState(null);
-
-  // A small helper to convert the Hepple POS tag into something more descriptive
-  // (this is optional — you can adjust as desired)
-  const heppleToHuman = (msd) => {
-    switch (msd) {
-      case 'NN':
-        return 'Noun (singular)';
-      case 'NNS':
-        return 'Noun (plural)';
-      case 'NNP':
-        return 'Proper noun';
-      case 'JJ':
-        return 'Adjective';
-      case 'VB':
-        return 'Verb (base form)';
-      case 'VBG':
-        return 'Verb (gerund)';
-      case 'RB':
-        return 'Adverb';
-      case 'CC':
-        return 'Coordinating conjunction';
-      case 'DT':
-        return 'Determiner';
-      case 'IN':
-        return 'Preposition';
-      case 'PRP$':
-        return 'Possessive pronoun';
-      case 'CD':
-        return 'Cardinal number';
-      default:
-        return msd; // fallback to raw tag
-    }
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [language, setLanguage] = useState('en');
+  const [proficiency, setProficiency] = useState('intermediate');
 
   // Fetch sentences matching `searchTerm`
   const handleSearch = async () => {
     if (!searchTerm.trim()) return;
-    setSelectedWordInfo(null);
+    
+    setIsLoading(true);
+    setError(null);
+    setSentences([]);
+    
     try {
-      const resp = await fetch(`http://localhost:8000/api/coach/index/words/${searchTerm.trim()}`);
-      if (!resp.ok) {
-        // E.g. 404 "word not found", etc.
-        alert('No sentences found or error fetching data');
-        return;
-      }
-      const data = await resp.json();
-      // data is an array of { id, sentence, meta: [...] }
+      const data = await fetchSentenceExamples(
+        searchTerm.trim(),
+        language,
+        5,
+        proficiency
+      );
+      
       setSentences(data);
+      
+      if (data.length === 0) {
+        setError(`No sentences found containing "${searchTerm}"`);
+      }
     } catch (err) {
       console.error('Error fetching sentences:', err);
-      alert('Error fetching sentences');
+      setError('Network error or server is unavailable');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Handle clicking a token. We'll show the meta info in a little “details” area.
-  const handleTokenClick = (tokenMeta) => {
-    if (!tokenMeta) return;
-    setSelectedWordInfo(tokenMeta);
+  // Handle key press in search input
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  // Highlight the search term in the sentence
+  const highlightSearchTerm = (sentence, term) => {
+    if (!term.trim()) return sentence;
+    
+    // Simple case-insensitive split with regex
+    const parts = sentence.split(new RegExp(`(${term})`, 'gi'));
+    
+    return parts.map((part, i) => 
+      part.toLowerCase() === term.toLowerCase() 
+        ? <mark key={i}>{part}</mark> 
+        : part
+    );
   };
 
   return (
-    <div style={{ marginTop: '2rem' }}>
-      <h2>Reverse Context</h2>
+    <div className={styles.container}>
+      <h2>Example Sentence Search</h2>
+      
+      {/* Options for language and proficiency */}
+      <div className={styles.searchOptions}>
+        <div className={styles.optionGroup}>
+          <label htmlFor="language-select">Language:</label>
+          <select 
+            id="language-select"
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+          >
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+          </select>
+        </div>
+        
+        <div className={styles.optionGroup}>
+          <label htmlFor="proficiency-select">Level:</label>
+          <select 
+            id="proficiency-select"
+            value={proficiency}
+            onChange={(e) => setProficiency(e.target.value)}
+          >
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+        </div>
+      </div>
+      
       {/* Search input + button */}
-      <div style={{ display: 'flex', marginBottom: '1rem' }}>
+      <div className={styles.searchBar}>
         <input
           type="text"
           value={searchTerm}
-          placeholder="Enter a word to search"
+          placeholder="Enter a word or phrase to search"
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ flex: 1, marginRight: '0.5rem', padding: '0.5rem' }}
+          onKeyPress={handleKeyPress}
+          className={styles.searchInput}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button 
+          onClick={handleSearch}
+          disabled={isLoading || !searchTerm.trim()}
+          className={styles.searchButton}
+        >
+          {isLoading ? 'Searching...' : 'Search'}
+        </button>
       </div>
+
+      {/* Error message */}
+      {error && (
+        <div className={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+
+      {/* Loading indicator */}
+      {isLoading && (
+        <div className={styles.loadingIndicator}>
+          Searching for examples...
+        </div>
+      )}
 
       {/* Display results */}
-      <div>
-        {sentences.map((item) => {
-          // Split the sentence into array of tokens by whitespace
-          const tokens = item.sentence.split(/\s+/);
+      {sentences.length > 0 && (
+        <div className={styles.resultsContainer}>
+          <h3>Example Sentences</h3>
           
-          return (
-            <div key={item.id} style={{ marginBottom: '1.5rem' }}>
-              <p>
-                <strong>Sentence ID:</strong> {item.id}
-              </p>
-              {/* Build clickable tokens. 
-                  Assume item.meta.length === tokens.length (approx). 
-                  If not, handle carefully. 
-               */}
-              <div style={{ lineHeight: '1.5' }}>
-                {tokens.map((word, idx) => {
-                  const wordMeta = item.meta[idx]; // match by index
-                  return (
-                    <span
-                      key={idx}
-                      style={{
-                        cursor: 'pointer',
-                        backgroundColor: '#f8f8f8',
-                        borderRadius: '4px',
-                        padding: '0 3px',
-                        marginRight: '3px',
-                      }}
-                      onClick={() => handleTokenClick(wordMeta)}
-                    >
-                      {word}
-                    </span>
-                  );
-                })}
+          {sentences.map((item, index) => (
+            <div key={index} className={styles.sentenceCard}>
+              <div className={styles.sentenceText}>
+                {highlightSearchTerm(item.sentence, searchTerm)}
+              </div>
+              
+              <div className={styles.sentenceMeta}>
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Source:</span>
+                  <span className={styles.metaValue}>{item.title || 'Unknown'}</span>
+                </div>
+                
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Category:</span>
+                  <span className={styles.metaValue}>{item.category || 'Uncategorized'}</span>
+                </div>
+                
+                <div className={styles.metaItem}>
+                  <span className={styles.metaLabel}>Quality Score:</span>
+                  <span className={styles.metaValue}>
+                    {(item.score * 100).toFixed(0)}%
+                  </span>
+                </div>
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      {/* If user clicked on a token, show details */}
-      {selectedWordInfo && (
-        <div
-          style={{
-            marginTop: '1rem',
-            padding: '1rem',
-            border: '1px solid #ddd',
-            borderRadius: '4px',
-            backgroundColor: '#fafafa',
-          }}
-        >
-          <h4>Word Details</h4>
-          <p>
-            <strong>Base form:</strong> {selectedWordInfo.base}
-          </p>
-          {selectedWordInfo.affix && (
-            <p>
-              <strong>Affix:</strong> {selectedWordInfo.affix}
-            </p>
-          )}
-          <p>
-            <strong>Part of Speech (Hepple):</strong> {selectedWordInfo.msd}
-          </p>
-          <p>
-            <strong>Human-readable:</strong> {heppleToHuman(selectedWordInfo.msd)}
-          </p>
-          <p>
-            <strong>Sentence start/end indices:</strong> {selectedWordInfo.s_l} - {selectedWordInfo.s_r}
-          </p>
+          ))}
+        </div>
+      )}
+      
+      {/* No results message */}
+      {!isLoading && sentences.length === 0 && searchTerm && !error && (
+        <div className={styles.noResults}>
+          No example sentences found for "{searchTerm}".
         </div>
       )}
     </div>

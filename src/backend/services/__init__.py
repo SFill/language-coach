@@ -7,4 +7,4 @@ from .translation_service import translate_text
 from .dictionary_service import get_english_word_definition as get_english_word_definition
 from .dict_spanish_service import get_spanish_word_definition
 from .unified_dictionary_service import get_word_definition
-from .sentence_service import search_for_sentences
+from .sentence.sentence_service import search_for_sentences

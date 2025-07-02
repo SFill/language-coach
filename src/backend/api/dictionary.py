@@ -4,7 +4,7 @@ from sqlmodel import Session
 
 from ..database import get_session
 from ..services.unified_dictionary_service import get_word_definition
-from ..services.sentence_service import search_for_sentences
+from ..services.sentence.sentence_service import search_for_sentences
 
 # Create router
 router = APIRouter(prefix="/api", tags=["dictionary"])
@@ -33,9 +33,3 @@ def get_word_definition_endpoint(
     """
     def_ =  get_word_definition([word], language, session, include_conjugations)
     return def_[0] if len(def_) > 0 else {}
-
-
-@router.get('/coach/index/words/{word}')
-def search_for_sentences_endpoint(session: SessionDep, word: str):
-    """Search for sentences containing a specific word."""
-    return search_for_sentences(session, word)

@@ -6,20 +6,17 @@ This script downloads books from Project Gutenberg by category using the Gutende
 parses the text, and performs POS tagging using spaCy.
 """
 
-import os
 import json
 import re
 import asyncio
 import logging
-from typing import Dict, List, Optional, Set, Tuple, Union, Any
+from typing import Dict, List, Optional, Any
 from pathlib import Path
-from dataclasses import dataclass
 from urllib.parse import quote
 
 import aiohttp
 import aiofiles
 import spacy
-from spacy.tokens import Doc
 from pydantic import BaseModel, Field
 
 
@@ -88,7 +85,7 @@ CATEGORIES = {
 LANGUAGES = ["en", "es"]
 
 # Output directories
-OUTPUT_DIR = Path("downloader/gutenberg_data")
+OUTPUT_DIR = Path("data/gutenberg_data")
 RAW_BOOKS_DIR = OUTPUT_DIR / "raw"
 PROCESSED_BOOKS_DIR = OUTPUT_DIR / "processed"
 
@@ -130,7 +127,8 @@ async def search_books_by_category(
             
         # URL encode the search term
         encoded_term = quote(term)
-        search_url = f"{GUTENDEX_API_URL}?topic={encoded_term}&languages={language}&sort=popular"
+        search_url = f"{GUTENDEX_API_URL}?topic={encoded_term}&languages={language}&sort=popul
+        ar"
         
         try:
             async with session.get(search_url) as response:

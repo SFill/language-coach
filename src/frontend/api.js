@@ -170,3 +170,25 @@ export const updateWordListsBeforeRefresh = (dirtyLists) => {
 
   console.log(`Synced ${dirtyLists.length} lists on page unload`);
 };
+
+
+// Get example sentences for a word
+export const fetchSentenceExamples = async (word, language = "en", topN = 5, proficiency = "intermediate") => {
+  try {
+    const params = {
+      language,
+      top_n: topN,
+      proficiency
+    };
+
+    const response = await api.get(`coach/index/words/${encodeURIComponent(word)}`, { params });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching sentence examples:', error);
+    if (error.response && error.response.status === 404) {
+      // Special handling for 404 (no sentences found)
+      return [];
+    }
+    throw error; // Re-throw for component-level handling
+  }
+};
