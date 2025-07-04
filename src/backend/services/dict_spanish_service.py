@@ -352,7 +352,7 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
         dictionary_entries_map = {}
 
     result = []
-    logging.debug(f"map:{dictionary_entries_map}")
+    logging.info(f"map:{dictionary_entries_map}")
     for word in words:
         dictionary_entry = dictionary_entries_map.get(word)
         logging.debug(f"word:{word}")
@@ -367,7 +367,7 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
             conjugation_data = None
             if read_only:
                 result.append(
-                    SpanishWordDefinition.init_empty(word=word).model_dump()
+                    SpanishWordDefinition.init_empty(word=word)
                 )
                 logging.debug("not found a word, continue")
                 continue
