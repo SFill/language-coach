@@ -114,15 +114,11 @@ def update_wordlist_endpoint(
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
     logging.info(wl)
-    if wordlist.name is not None:
-        wl.name = wordlist.name
-    if wordlist.words is not None:
-        wl.words = wordlist.words
-    if wordlist.language is not None:
-        # Validate language if it's being updated
-        if wordlist.language not in [e.value for e in Language]:
-            raise HTTPException(status_code=400, detail=f"Unsupported language: {wordlist.language}")
-        wl.language = wordlist.language
+    wl.name = wordlist.name
+    wl.words = wordlist.words
+    if wordlist.language not in [e.value for e in Language]:
+        raise HTTPException(status_code=400, detail=f"Unsupported language: {wordlist.language}")
+    wl.language = wordlist.language
 
     session.add(wl)
     session.commit()

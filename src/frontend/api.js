@@ -153,7 +153,8 @@ export const updateWordListsBeforeRefresh = (dirtyLists) => {
   dirtyLists.forEach(list => {
     const updateData = {
       name: list.name,
-      words: list.words.map(w => w.word)
+      words: list.words.map(w => w.word),
+      language: list.language,
     };
 
     // Prepare the data as JSON

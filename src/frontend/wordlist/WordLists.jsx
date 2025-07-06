@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useWordlist } from "./WordlistContext";
 import styles from "./WordLists.module.css";
 
@@ -17,26 +17,108 @@ function WordLists() {
     loading, 
     error, 
     removeWordFromList, 
-    currentLanguage 
+    updateWordInList,
+    currentLanguage
   } = useWordlist();
   
-  const [expandedState, setExpandedState] = useState({});
+  const [flippedCards, setFlippedCards] = useState(new Set()); // Set of flipped card IDs
+  const [editingWord, setEditingWord] = useState(null); // { listId, wordIndex, originalWord, newWord }
+  const [isEditing, setIsEditing] = useState(false)
+  const editInputRef = useRef(null);
 
-  // For each word list, store the currently expanded card (if any)
-  // Format: { [listId]: { rowIndex, cardIndex, wordItem } }
-  const handleCardClick = (listId, rowIndex, cardIndex, wordItem) => {
-    setExpandedState((prev) => {
-      // If the same card is clicked again, collapse it.
-      if (
-        prev[listId] &&
-        prev[listId].rowIndex === rowIndex &&
-        prev[listId].cardIndex === cardIndex
-      ) {
-        return { ...prev, [listId]: null };
+  // Focus the edit input when editing starts
+  useEffect(() => {
+    if (isEditing && editInputRef.current) {
+      editInputRef.current.focus();
+      editInputRef.current.select();
+      console.log(isEditing)
+    }
+  }, [isEditing]);
+
+  // Handle card flip when clicking on card (but not on word or buttons)
+  const handleCardClick = (e, listId, wordIndex) => {
+    // Don't flip if we're editing or clicking on buttons/word
+    if (editingWord || e.target.closest(`.${styles.cardActions}`) || e.target.closest(`.${styles.wordTitle}`) || e.target.closest(`.${styles.wordEditInput}`)) {
+      return;
+    }
+
+    const cardId = `${listId}-${wordIndex}`;
+    
+    setFlippedCards(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(cardId)) {
+        newSet.delete(cardId); // Flip back to front
+      } else {
+        newSet.add(cardId); // Flip to back
       }
-      // Otherwise, expand this card.
-      return { ...prev, [listId]: { rowIndex, cardIndex, wordItem } };
+      return newSet;
     });
+  };
+
+  const handleWordClick = (e, listId, wordItem, wordIndex) => {
+    e.stopPropagation();
+    if (editingWord){
+      handleEditSave()
+    }; // Don't start editing if already editing
+    
+    setEditingWord({
+      listId,
+      wordIndex,
+      originalWord: wordItem.word,
+      newWord: wordItem.word
+    });
+    setIsEditing(true)
+  };
+
+  const handleEditChange = (e) => {
+    setEditingWord(prev => ({
+      ...prev,
+      newWord: e.target.value
+    }));
+  };
+
+  const handleEditKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleEditSave();
+    } else if (e.key === 'Escape') {
+      handleEditCancel();
+    }
+  };
+
+  const handleEditBlur = () => {
+    handleEditSave();
+  };
+
+  const handleEditCancel = () => {
+    setIsEditing(false);
+    setEditingWord(null);
+  };
+
+  const handleEditSave = () => {
+    if (!editingWord) return;
+
+    const { listId, wordIndex, originalWord, newWord } = editingWord;
+    const trimmedNewWord = newWord.trim();
+
+    // If word hasn't changed or is empty, just cancel
+    if (!trimmedNewWord || trimmedNewWord === originalWord) {
+      setEditingWord(null);
+      setIsEditing(false);
+      return;
+    }
+
+    // Use the context method to update the word by index
+    const result = updateWordInList(wordIndex, trimmedNewWord, listId);
+    
+    if (!result.success) {
+      // Handle error - you could show a toast or alert here
+      console.error('Failed to update word:', result.message);
+      // For now, just keep editing mode active on error
+      return;
+    }
+
+    setEditingWord(null);
+    setIsEditing(false);
   };
 
   const playSound = (e, wordItem) => {
@@ -63,19 +145,24 @@ function WordLists() {
   };
 
   const handleDeleteWord = (e, listId, word) => {
-    e.stopPropagation(); // Prevent card expansion when clicking delete
+    e.stopPropagation(); // Prevent card flip when clicking delete
 
     // Call the removeWordFromList function from context
     const result = removeWordFromList(word, listId);
 
-    // If the deleted word was expanded, collapse it
+    // If the deleted word was flipped, remove it from flipped set
     if (result && result.success) {
-      setExpandedState((prev) => {
-        if (prev[listId] && prev[listId].wordItem.word === word) {
-          return { ...prev, [listId]: null };
-        }
-        return prev;
+      const cardId = `${listId}-${word}`;
+      setFlippedCards(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(cardId);
+        return newSet;
       });
+    }
+
+    // If the deleted word was being edited, cancel editing
+    if (editingWord && editingWord.originalWord === word && editingWord.listId === listId) {
+      setEditingWord(null);
     }
   };
 
@@ -147,13 +234,19 @@ function WordLists() {
               ))}
             </div>
           ))}
-          
         </>
       );
     }
-
     
     return <p>No detailed definition available.</p>;
+  };
+
+  const isWordBeingEdited = (listId, wordIndex) => {
+    return editingWord && editingWord.listId === listId && editingWord.wordIndex === wordIndex;
+  };
+
+  const isCardFlipped = (cardId) => {
+    return flippedCards.has(cardId);
   };
 
   if (loading) return <p>Loading word lists...</p>;
@@ -185,55 +278,94 @@ function WordLists() {
               )}
             </h2>
             {rows.map((row, rowIndex) => (
-              <React.Fragment key={rowIndex}>
-                {/* Render the row of cards as a grid */}
-                <div className={styles.cardRow}>
-                  {row.map((wordItem, cardIndex) => (
+              <div key={rowIndex} className={styles.cardRow}>
+                {row.map((wordItem, cardIndex) => {
+                  const wordIndex = rowIndex * 3 + cardIndex
+                  const cardId = `${list.id}-${wordIndex}`;
+                  const isFlipped = isCardFlipped(cardId);
+                  
+                  return (
                     <div
-                      key={wordItem.word}
-                      onClick={() =>
-                        handleCardClick(list.id, rowIndex, cardIndex, wordItem)
-                      }
-                      className={styles.wordCard}
+                      // key={wordItem.word}
+                      onClick={(e) => handleCardClick(e, list.id,  wordIndex)}
+                      className={`${styles.wordCard} ${isFlipped ? styles.flipped : ''}`}
                     >
-                      <h3 className={styles.wordTitle}>{wordItem.word}</h3>
-                      
-                      {/* Audio button based on unified dictionary structure */}
-                      {(currentLanguage === "en" && wordItem?.audio?.audio_url) || 
-                       (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
-                        <button
-                          onClick={(e) => playSound(e, wordItem)}
-                          className={styles.audioButton}
-                        >
-                          Play Sound
-                        </button>
-                      ) : null}
+                      <div className={styles.cardInner}>
+                        {/* Front Face */}
+                        <div className={styles.cardFront}>
+                          <div className={styles.cardContent}>
+                            {/* Editable word title */}
+                            <div className={styles.wordTitleContainer}>
+                              {isWordBeingEdited(list.id, rowIndex * 3 + cardIndex) ? (
+                                <input
+                                  ref={editInputRef}
+                                  type="text"
+                                  value={editingWord.newWord}
+                                  onChange={handleEditChange}
+                                  onKeyDown={handleEditKeyDown}
+                                  onBlur={handleEditBlur}
+                                  className={styles.wordEditInput}
+                                />
+                              ) : (
+                                <h3 
+                                  className={styles.wordTitle}
+                                  onClick={(e) => handleWordClick(e, list.id, wordItem, wordIndex)}
+                                  title="Click to edit"
+                                >
+                                  {wordItem.word}
+                                </h3>
+                              )}
+                            </div>
 
-                      {/* Delete button */}
-                      <button
-                        onClick={(e) => handleDeleteWord(e, list.id, wordItem.word)}
-                        className={styles.deleteButton}
-                        title="Delete word"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Insert a definition row below this row if a card in this row is expanded */}
-                {expandedState[list.id] &&
-                  expandedState[list.id].rowIndex === rowIndex && (
-                    <div className={styles.expandedDefinition}>
-                      <div className={styles.definitionContent}>
-                        <h4 className={styles.definitionTitle}>
-                          {currentLanguage === "en" ? "Definition" : "Translation"} for {expandedState[list.id].wordItem.word}
-                        </h4>
-                        {renderDefinitionContent(expandedState[list.id].wordItem)}
+                            {/* Card actions */}
+                            <div className={styles.cardActions}>
+                              {/* Audio button based on unified dictionary structure */}
+                              {(currentLanguage === "en" && wordItem?.audio?.audio_url) || 
+                               (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
+                                <button
+                                  onClick={(e) => playSound(e, wordItem)}
+                                  className={styles.audioButton}
+                                  title="Play pronunciation"
+                                >
+                                  🔊
+                                </button>
+                              ) : null}
+
+                              {/* Delete button */}
+                              <button
+                                onClick={(e) => handleDeleteWord(e, list.id, wordItem.word)}
+                                className={styles.deleteButton}
+                                title="Delete word"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Back Face */}
+                        <div className={styles.cardBack}>
+                          <div className={styles.cardContent}>
+                            <div className={styles.definitionContainer}>
+                              <h4 className={styles.backTitle}>
+                                {currentLanguage === "en" ? "Definition" : "Translation"}
+                              </h4>
+                              <div className={styles.definitionContent}>
+                                {renderDefinitionContent(wordItem)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  )}
-              </React.Fragment>
+                  );
+                })}
+                
+                {/* Fill empty spaces in the row to maintain grid alignment */}
+                {row.length < 3 && Array.from({ length: 3 - row.length }, (_, i) => (
+                  <div key={`empty-${i}`} className={styles.emptyCard}></div>
+                ))}
+              </div>
             ))}
           </div>
         );

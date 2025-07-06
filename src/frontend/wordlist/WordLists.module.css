@@ -31,71 +31,289 @@
 .cardRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 
 .wordCard {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 1rem;
+  /* Square aspect ratio */
+  aspect-ratio: 1;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
   cursor: pointer;
-  text-align: center;
   position: relative;
-  transition: box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  background: transparent;
+  perspective: 1000px;
+  overflow: visible;
 }
 
 .wordCard:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.wordCard:hover .cardFront {
+  border-color: #4a90e2;
+}
+
+.wordCard:hover .cardBack {
+  border-color: #1976d2;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.wordCard.flipped .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFront, .cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: inherit;
+  overflow: hidden;
+}
+
+.cardFront {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.cardBack {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%);
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-inline: 1rem;
+  position: relative;
+}
+
+.definitionContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.backTitle {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1976d2;
+  text-align: center;
+  border-bottom: 1px solid rgba(25, 118, 210, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.definitionContent {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  text-align: left;
+  padding-right: 0.25rem;
+}
+
+/* Custom scrollbar for definition content */
+.definitionContent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.definitionContent::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+.definitionContent::-webkit-scrollbar-thumb {
+  background: rgba(74, 144, 226, 0.4);
+  border-radius: 2px;
+}
+
+.definitionContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 144, 226, 0.6);
+}
+
+.definitionContent .definitionEntry {
+  margin-bottom: 0.5rem;
+}
+
+.definitionContent .posGroup {
+  margin-bottom: 0.5rem;
+}
+
+.definitionContent .partOfSpeech {
+  margin: 0.25rem 0;
+  font-size: 0.7rem;
+  color: #666;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.definitionContent .sense {
+  margin-bottom: 0.4rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid #4a90e2;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.definitionContent .definition {
+  margin: 0.2rem 0;
+  line-height: 1.3;
+}
+
+.definitionContent .definitionNumber {
+  font-weight: bold;
+  margin-right: 0.2rem;
+  color: #4a90e2;
+  font-size: 0.7rem;
+}
+
+.definitionContent .translation {
+  margin: 0.25rem 0;
+}
+
+.definitionContent .translationText {
+  margin: 0.2rem 0;
+  line-height: 1.3;
+}
+
+.wordTitleContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .wordTitle {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.2rem;
+  margin: 0;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  
+  /* Handle very long words */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.wordTitle:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+  color: #4a90e2;
+}
+
+.wordEditInput {
+  width: 100%;
+  background: #fff;
+  border: 2px solid #4a90e2;
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2c3e50;
+  text-align: center;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding: 0.5rem 0;
 }
 
 .audioButton {
-  margin-top: 0.5rem;
-  padding: 0.3rem 0.8rem;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.audioButton:hover {
-  background-color: #e0e0e0;
-}
-
-.deleteButton {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
-  color: #f44336;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.audioButton:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: scale(1.1);
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e57373;
+  font-size: 1.4rem;
   font-weight: bold;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  line-height: 1;
 }
 
 .deleteButton:hover {
   background-color: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  transform: scale(1.1);
+}
+
+.emptyCard {
+  /* Invisible placeholder to maintain grid alignment */
+  visibility: hidden;
 }
 
 .expandedDefinition {
+  grid-column: 1 / -1; /* Span all columns */
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-  max-height: 500px;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  max-height: 600px;
   opacity: 1;
-  padding: 1rem;
-  border: 1px solid #eee;
+  padding: 1.5rem;
+  border: 2px solid #e3f2fd;
   margin: 0 0 1.5rem 0;
-  background-color: #f9f9f9;
-  border-radius: 4px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .definitionContent {
@@ -105,8 +323,10 @@
 .definitionTitle {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #eee;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1976d2;
+  border-bottom: 2px solid #e3f2fd;
   padding-bottom: 0.5rem;
 }
 
@@ -121,23 +341,30 @@
 .partOfSpeech {
   margin: 0.5rem 0;
   font-size: 1rem;
-  color: #444;
+  color: #666;
   font-style: italic;
+  font-weight: 500;
 }
 
 .sense {
   margin-bottom: 0.8rem;
-  padding-left: 0.5rem;
-  border-left: 3px solid #ddd;
+  padding-left: 1rem;
+  border-left: 3px solid #4a90e2;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 0 8px 8px 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .definition {
   margin: 0.3rem 0;
+  line-height: 1.5;
 }
 
 .definitionNumber {
   font-weight: bold;
   margin-right: 0.3rem;
+  color: #4a90e2;
 }
 
 .translation {
@@ -146,23 +373,26 @@
 
 .translationText {
   margin: 0.3rem 0;
+  line-height: 1.5;
 }
 
 .examples {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   margin-left: 1rem;
 }
 
 .example {
   margin: 0.5rem 0;
-  padding: 0.5rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  border-left: 3px solid #81c784;
 }
 
 .sourceText {
   font-style: italic;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  color: #2e7d32;
 }
 
 .targetText {
@@ -174,6 +404,9 @@
 .antonyms {
   margin: 0.5rem 0;
   font-size: 0.9rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
 }
 
 /* Conjugation styles */
@@ -191,6 +424,9 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .conjugationTable tr {
@@ -204,11 +440,12 @@
 .pronoun {
   font-weight: bold;
   width: 30%;
-  padding: 0.3rem;
+  padding: 0.5rem;
+  background-color: rgba(74, 144, 226, 0.1);
 }
 
 .forms {
-  padding: 0.3rem;
+  padding: 0.5rem;
 }
 
 .definitionDetail {
@@ -223,45 +460,75 @@
 @media (max-width: 768px) {
   .cardRow {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .wordCard {
+    aspect-ratio: 1;
+  }
+  
+  .cardContent {
+    padding-inline: 1rem;
+  }
+  
+  .wordTitle {
+    font-size: clamp(0.8rem, 3vw, 1rem);
   }
 }
 
 @media (max-width: 480px) {
   .cardRow {
     grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .wordCard {
+    aspect-ratio: 1.2; /* Slightly less square on very small screens */
+  }
+  
+  .expandedDefinition {
+    padding: 1rem;
   }
 }
-
 
 .listName {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
 }
 
 .dirtyIndicator {
   font-size: 0.8rem;
-  color: #777;
+  color: #ff9800;
   margin-left: 0.5rem;
   font-weight: normal;
+  background-color: rgba(255, 152, 0, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 152, 0, 0.3);
 }
 
 .languageBadge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #2196f3;
+  background: linear-gradient(135deg, #4a90e2 0%, #2196f3 100%);
   color: white;
   font-size: 0.7rem;
   font-weight: bold;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
   margin-left: 0.5rem;
+  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.3);
 }
 
 .languageInfo {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: #666;
   font-style: italic;
   text-align: center;
+  font-size: 1.1rem;
 }

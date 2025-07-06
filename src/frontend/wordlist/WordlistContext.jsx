@@ -312,6 +312,33 @@ export function WordlistProvider({ children }) {
     };
   }, [allWordlists, findWordInLists]);
 
+  // Update a word in a list (preserving definition data)
+  const updateWordInList = useCallback((wordIndex, newWord, listId) => {
+
+    const targetList = allWordlists.find(list => list.id === listId);
+    // Update the word while preserving all other data
+    const updatedWords = [...targetList.words];
+    updatedWords[wordIndex] = {
+      ...updatedWords[wordIndex],
+      word: newWord.trim()
+    };
+
+    const updatedList = {
+      ...targetList,
+      _isDirty: true,
+      words: updatedWords
+    };
+
+    setAllWordlists(prev =>
+      prev.map(list => list.id === listId ? updatedList : list)
+    );
+
+    return {
+      success: true,
+      message: `Updated word with "${wordIndex}" to "${newWord}" in list "${targetList.name}"`,
+    };
+  }, [allWordlists, findWordInLists]);
+
   // Move a word from one list to another
   const moveWordBetweenLists = useCallback((word, sourceListId, targetListId) => {
     if (!word.trim() || sourceListId === targetListId) {
@@ -518,6 +545,7 @@ export function WordlistProvider({ children }) {
     refreshWordlists: loadWordlists,
     findWordInLists,
     addWordToList,
+    updateWordInList, // New method for updating words
     moveWordBetweenLists,
     createNewListWithWord,
     syncWithBackend,

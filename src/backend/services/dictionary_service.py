@@ -137,7 +137,7 @@ def get_english_word_definition(words: list[str], session: Session, read_only: b
             if read_only:
                 result.append(EnglishWordDefinition.init_empty(
                     word=word,
-                ).model_dump())
+                ))
                 continue
             try:
                 api_data = DictionaryApiClient.define(word)

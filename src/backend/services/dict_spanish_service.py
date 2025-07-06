@@ -352,7 +352,7 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
         dictionary_entries_map = {}
 
     result = []
-    logging.info(f"map:{dictionary_entries_map}")
+    logging.debug(f"map:{dictionary_entries_map}")
     for word in words:
         dictionary_entry = dictionary_entries_map.get(word)
         logging.debug(f"word:{word}")

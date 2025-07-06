@@ -37,9 +37,9 @@ class WordlistCreate(BaseModel):
 
 class WordlistUpdate(BaseModel):
     """Model for updating a wordlist."""
-    name: Optional[str] = None
-    words: Optional[List[Definition]] = None
-    language: Optional[str] = None  # Allow updating the language
+    name: str
+    words: List[str]
+    language: str  # Allow updating the language
 
 
 class TranslateTextRequest(BaseModel):
