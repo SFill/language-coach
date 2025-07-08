@@ -154,7 +154,12 @@ export function WordlistProvider({ children }) {
           const enSyncPromises = enDirtyLists.map(list =>
             updateWordlist(list.id, {
               name: list.name,
-              words: list.words.map(w => w.word),
+              words: list.words.map(w => ({
+                word: w.word,
+                word_translation: w.word_translation || null,
+                example_phrase: w.example_phrase || null,
+                example_phrase_translation: w.example_phrase_translation || null
+              })),
               language: list.language
             }, 'en')
           );
@@ -166,7 +171,12 @@ export function WordlistProvider({ children }) {
           const esSyncPromises = esDirtyLists.map(list =>
             updateWordlist(list.id, {
               name: list.name,
-              words: list.words.map(w => w.word),
+              words: list.words.map(w => ({
+                word: w.word,
+                word_translation: w.word_translation || null,
+                example_phrase: w.example_phrase || null,
+                example_phrase_translation: w.example_phrase_translation || null
+              })),
               language: list.language
             }, 'es')
           );
@@ -219,7 +229,12 @@ export function WordlistProvider({ children }) {
       const syncPromises = dirtyLists.map(list =>
         updateWordlist(list.id, {
           name: list.name,
-          words: list.words.map(w => w.word),
+          words: list.words.map(w => ({
+            word: w.word,
+            word_translation: w.word_translation || null,
+            example_phrase: w.example_phrase || null,
+            example_phrase_translation: w.example_phrase_translation || null
+          })),
           language: list.language
         }, list.language) // Use the list's own language
       );
@@ -298,7 +313,12 @@ export function WordlistProvider({ children }) {
       _isDirty: true,
       words: [
         ...targetList.words,
-        { word: word.trim(), definition: 'Added from chat window' }
+        { 
+          word: word.trim(),
+          word_translation: null,
+          example_phrase: null,
+          example_phrase_translation: null
+        }
       ]
     };
 
@@ -409,7 +429,12 @@ export function WordlistProvider({ children }) {
       // Create the list in the backend - we need to do this immediately since we need an ID
       const result = await createWordlist({
         name: newListName,
-        words: [word.trim()],
+        words: [{
+          word: word.trim(),
+          word_translation: null,
+          example_phrase: null,
+          example_phrase_translation: null
+        }],
         language: currentLanguage // Include language when creating new list
       }, currentLanguage);
 
@@ -461,7 +486,12 @@ export function WordlistProvider({ children }) {
           const enSyncPromises = enDirtyLists.map(list =>
             updateWordlist(list.id, {
               name: list.name,
-              words: list.words.map(w => w.word),
+              words: list.words.map(w => ({
+                word: w.word,
+                word_translation: w.word_translation || null,
+                example_phrase: w.example_phrase || null,
+                example_phrase_translation: w.example_phrase_translation || null
+              })),
               language: 'en'
             }, 'en')
           );
@@ -473,7 +503,12 @@ export function WordlistProvider({ children }) {
           const esSyncPromises = esDirtyLists.map(list =>
             updateWordlist(list.id, {
               name: list.name,
-              words: list.words.map(w => w.word),
+              words: list.words.map(w => ({
+                word: w.word,
+                word_translation: w.word_translation || null,
+                example_phrase: w.example_phrase || null,
+                example_phrase_translation: w.example_phrase_translation || null
+              })),
               language: 'es'
             }, 'es')
           );

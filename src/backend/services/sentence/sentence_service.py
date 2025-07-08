@@ -15,12 +15,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-CURRENT_PATH = Path('.').absolute()
-
-# Determine database path from environment or use default
-DB_PATH = os.environ.get("SENTENCE_DB_PATH", CURRENT_PATH / "database.db")
-
-
 # Create a singleton instance of SentenceRetriever
 _sentence_retriever: Optional[SentenceRetriever] = None
 
@@ -37,17 +31,9 @@ def get_sentence_retriever(proficiency: str = "intermediate") -> SentenceRetriev
     global _sentence_retriever
     
     if _sentence_retriever is None:
-        # Check if database exists
-        if not Path(DB_PATH).exists():
-            logger.error(f"Database file not found: {DB_PATH}, current path is {CURRENT_PATH}")
-            raise HTTPException(
-                status_code=500, 
-                detail="Sentence database not found. Please check your configuration."
-            )
-        
         # Initialize the retriever
         try:
-            _sentence_retriever = SentenceRetriever(DB_PATH, user_proficiency=proficiency)
+            _sentence_retriever = SentenceRetriever(user_proficiency=proficiency)
         except Exception as e:
             logger.error(f"Error initializing SentenceRetriever: {str(e)}")
             raise HTTPException(
@@ -58,7 +44,6 @@ def get_sentence_retriever(proficiency: str = "intermediate") -> SentenceRetriev
     return _sentence_retriever
 
 def search_for_sentences(
-    session: Session, 
     word: str, 
     language: str = "en", 
     top_n: int = 5,
@@ -80,6 +65,7 @@ def search_for_sentences(
     try:
         # Get or initialize the sentence retriever
         retriever = get_sentence_retriever(proficiency)
+        # retriever.build_sentence_index(language)
         
         # Get the best examples
         examples = retriever.get_best_examples(
@@ -105,7 +91,7 @@ def search_for_sentences(
         return formatted_results
         
     except Exception as e:
-        logger.error(f"Error searching for sentences: {str(e)}")
+        logger.exception(f"Error searching for sentences:")
         raise HTTPException(
             status_code=500, 
             detail=f"Error searching for sentences: {str(e)}"

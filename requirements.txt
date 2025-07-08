@@ -1,0 +1,12 @@
+fastapi[standard] 
+uvicorn
+sqlmodel
+python-dotenv
+pydantic
+openai
+requests
+
+
+# PostgreSQL dependencies for Language Coach
+psycopg2-binary>=2.9.0
+asyncpg>=0.29.0  # For async support if needed

@@ -23,7 +23,7 @@ class Phrase(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     text: str
     language: str  # Added for query optimization
-    text_id: int = Field(foreign_key="texts.id")
+    text_id: int = Field(foreign_key="reverse_index_texts.id")
     
     # Remove relationship to fix circular dependency issue
     # text: Text = Relationship(back_populates="phrases")
@@ -42,8 +42,8 @@ class Word(SQLModel, table=True):
     is_stop: bool = False
     is_punct: bool = False
     ent_type: str = ""
-    phrase_id: int = Field(foreign_key="phrases.id")
-    text_id: int = Field(foreign_key="texts.id")
+    phrase_id: int = Field(foreign_key="reverse_index_phrases.id")
+    text_id: int = Field(foreign_key="reverse_index_texts.id")
     
     # Remove relationships to simplify
     # phrase: Phrase = Relationship(back_populates="words")

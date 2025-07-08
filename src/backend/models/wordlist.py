@@ -10,11 +10,19 @@ class Language(str, Enum):
     spanish = 'es'
 
 
+class WordInList(BaseModel):
+    """Model for individual words in a wordlist."""
+    word: str
+    word_translation: Optional[str] = None
+    example_phrase: Optional[str] = None
+    example_phrase_translation: Optional[str] = None
+
+
 class Wordlist(SQLModel, table=True):
     """Model for word lists."""
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field()
-    words: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    words: list[WordInList] = Field(default_factory=list, sa_column=Column(JSON))
     language: str = Field(default="en")  # Default to English if not specified
 
 
@@ -25,20 +33,20 @@ class WordlistResponse(BaseModel):
     id: int
     name: str
     language: str = "en"  # Include language in response
-    words: List[SerializeAsAny[Definition]]
+    words: List[WordInList]
 
 
 class WordlistCreate(BaseModel):
     """Model for creating a new wordlist."""
     name: str
-    words: List[str]
+    words: List[WordInList]
     language: Optional[str] = "en"  # Make language optional with default
 
 
 class WordlistUpdate(BaseModel):
     """Model for updating a wordlist."""
     name: str
-    words: List[str]
+    words: List[WordInList]
     language: str  # Allow updating the language
 
 

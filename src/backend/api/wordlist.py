@@ -6,15 +6,55 @@ from sqlmodel import Session, select
 from ..database import get_session
 from ..models.wordlist import (
     Wordlist, WordlistCreate, WordlistUpdate,
-    WordlistResponse, Language
+    WordlistResponse, Language, WordInList
 )
-from ..services.unified_dictionary_service import get_word_definition
+from ..services.phrase_service import get_phrase_with_example_and_translation
 
 # Create router
 router = APIRouter(prefix="/api/wordlist", tags=["wordlist"])
 
 # Type alias for session dependency
 SessionDep = Annotated[Session, Depends(get_session)]
+
+
+def convert_words_to_word_in_list(
+    words: List[str], 
+    language: str, 
+    session: Session,
+    use_gpt_translation: bool = False
+) -> List[WordInList]:
+    """Convert simple word strings to WordInList objects with translations and examples."""
+    word_in_list_objects = []
+    
+    for word in words:
+        try:
+            # Get word with translation and example
+            word_data = get_phrase_with_example_and_translation(
+                phrase=word,
+                language=language,
+                target_language="en",
+                proficiency="intermediate",
+                session=session,
+                use_gpt_translation=use_gpt_translation
+            )
+            
+            word_in_list_objects.append(WordInList(
+                word=word_data["word"],
+                word_translation=word_data["word_translation"],
+                example_phrase=word_data["example_phrase"],
+                example_phrase_translation=word_data["example_phrase_translation"]
+            ))
+        except Exception as e:
+            logging.error(f"Error processing word '{word}': {str(e)}")
+            # Fallback to basic word object
+            word_in_list_objects.append(WordInList(
+                word=word,
+                word_translation=word,
+                example_phrase=word,
+                example_phrase_translation=word
+            ))
+    
+    return word_in_list_objects
 
 
 @router.get('/', response_model=list[WordlistResponse])
@@ -29,14 +69,12 @@ def list_wordlists_endpoint(
     ).all()
 
     results = []
-    # TODO fix n+1 query
     for wl in wordlists:
-        definitions = get_word_definition(wl.words, language, session,read_only=True)
         results.append(WordlistResponse(
             id=wl.id,
             name=wl.name,
             language=wl.language,
-            words=definitions
+            words=wl.words
         ))
     return results
 
@@ -45,7 +83,8 @@ def list_wordlists_endpoint(
 def create_wordlist_endpoint(
     wordlist: WordlistCreate,
     session: SessionDep,
-    language: str = Query("en", description="Language code (en or es)")
+    language: str = Query("en", description="Language code (en or es)"),
+    use_gpt_translation: bool = Query(False, description="Use GPT for translation instead of Google Translate")
 ):
     """Create a new wordlist."""
     # Use the language from the request body if provided, otherwise use the query parameter
@@ -55,22 +94,43 @@ def create_wordlist_endpoint(
     if list_language not in [e.value for e in Language]:
         raise HTTPException(status_code=400, detail=f"Unsupported language: {list_language}")
 
+    # Fill missing information for words
+    processed_words = []
+    for word in wordlist.words:
+        if not word.word_translation or not word.example_phrase or not word.example_phrase_translation:
+            # Fill missing information
+            word_data = get_phrase_with_example_and_translation(
+                phrase=word.word,
+                language=list_language,
+                target_language="en",
+                proficiency="intermediate",
+                session=session,
+                use_gpt_translation=use_gpt_translation
+            )
+            processed_word = WordInList(
+                word=word.word,
+                word_translation=word.word_translation or word_data["word_translation"],
+                example_phrase=word.example_phrase or word_data["example_phrase"],
+                example_phrase_translation=word.example_phrase_translation or word_data["example_phrase_translation"]
+            )
+        else:
+            processed_word = word
+        processed_words.append(processed_word.model_dump())
+
     new_wordlist = Wordlist(
         name=wordlist.name,
-        words=wordlist.words,
+        words=processed_words,
         language=list_language
     )
     session.add(new_wordlist)
     session.commit()
     session.refresh(new_wordlist)
 
-    definitions = get_word_definition(new_wordlist.words, language, session)
-
     return WordlistResponse(
         id=new_wordlist.id,
         name=new_wordlist.name,
         language=new_wordlist.language,
-        words=definitions
+        words=new_wordlist.words
     )
 
 
@@ -86,16 +146,11 @@ def get_wordlist_endpoint(
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
 
-    # Use provided language override or the wordlist's language
-    lookup_language = language or wl.language
-
-    definitions = get_word_definition(wl.words, lookup_language, session, include_conjugations, read_only=True)
-
     return WordlistResponse(
         id=wl.id,
         name=wl.name,
         language=wl.language,
-        words=definitions
+        words=wl.words
     )
 
 
@@ -106,16 +161,40 @@ def update_wordlist_endpoint(
     pk: int,
     wordlist: WordlistUpdate,
     session: SessionDep,
-    language: str = Query(None, description="Language override (en or es)"),
-    include_conjugations: bool = Query(False, description="Include verb conjugations (Spanish only)")
+    use_gpt_translation: bool = Query(False, description="Use GPT for translation instead of Google Translate")
 ):
     """Update a wordlist."""
     wl = session.get(Wordlist, pk)
     if not wl:
         raise HTTPException(status_code=404, detail="Wordlist not found")
     logging.info(wl)
+    
+    # Fill missing information for words
+    processed_words = []
+    for word in wordlist.words:
+        if not word.word_translation or not word.example_phrase or not word.example_phrase_translation:
+            # Fill missing information
+            word_data = get_phrase_with_example_and_translation(
+                phrase=word.word,
+                language=wordlist.language,
+                target_language="en",
+                proficiency="intermediate",
+                session=session,
+                use_gpt_translation=use_gpt_translation
+            )
+            processed_word = WordInList(
+                word=word.word,
+                word_translation=word.word_translation or word_data["word_translation"],
+                example_phrase=word.example_phrase or word_data["example_phrase"],
+                example_phrase_translation=word.example_phrase_translation or word_data["example_phrase_translation"]
+            ).model_dump()
+            
+        else:
+            processed_word = word.model_dump()
+        processed_words.append(processed_word)
+    
     wl.name = wordlist.name
-    wl.words = wordlist.words
+    wl.words = processed_words
     if wordlist.language not in [e.value for e in Language]:
         raise HTTPException(status_code=400, detail=f"Unsupported language: {wordlist.language}")
     wl.language = wordlist.language
@@ -124,16 +203,11 @@ def update_wordlist_endpoint(
     session.commit()
     session.refresh(wl)
 
-    # Use provided language override or the wordlist's language for definitions
-    lookup_language = language or wl.language
-
-    definitions = get_word_definition(wl.words, lookup_language, session, include_conjugations)
-
     return WordlistResponse(
         id=wl.id,
         name=wl.name,
         language=wl.language,
-        words=definitions
+        words=wl.words
     )
 
 

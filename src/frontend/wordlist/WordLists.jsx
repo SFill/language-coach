@@ -166,80 +166,6 @@ function WordLists() {
     }
   };
 
-  // Helper function to render definitions based on the unified structure
-  const renderDefinitionContent = (wordItem) => {
-    const def = wordItem;
-    if (!def) return <p>No definition available.</p>;
-    
-    // Check for the new unified structure (entries with pos_groups)
-    if (def.entries && Array.isArray(def.entries)) {
-      return (
-        <>
-          {def.entries.map((entry, entryIndex) => (
-            <div key={entryIndex} className={styles.definitionEntry}>
-              {/* POS Groups */}
-              {entry.pos_groups && entry.pos_groups.map((posGroup, posIndex) => (
-                <div key={posIndex} className={styles.posGroup}>
-                  <h5 className={styles.partOfSpeech}>{posGroup.pos}</h5>
-                  
-                  {/* Senses */}
-                  {posGroup.senses && posGroup.senses.map((sense, senseIndex) => (
-                    <div key={senseIndex} className={styles.sense}>
-                      {/* Context/Definition */}
-                      {currentLanguage === "en" && sense.context_en && (
-                        <p className={styles.definition}>
-                          <span className={styles.definitionNumber}>{senseIndex + 1}.</span> {sense.context_en}
-                        </p>
-                      )}
-                      
-                      {/* Translations (Spanish) */}
-                      {currentLanguage === "es" && sense.translations && sense.translations.map((translation, transIndex) => (
-                        <div key={transIndex} className={styles.translation}>
-                          {translation.translation && (
-                            <p className={styles.translationText}>
-                              <span className={styles.definitionNumber}>{senseIndex + 1}.{transIndex + 1}</span> {translation.translation}
-                            </p>
-                          )}
-                          
-                          {/* Examples */}
-                          {translation.examples && translation.examples.length > 0 && (
-                            <div className={styles.examples}>
-                              {translation.examples.map((example, exIndex) => (
-                                <div key={exIndex} className={styles.example}>
-                                  <p className={styles.sourceText}>{example.source_text}</p>
-                                  {example.source_text !== example.target_text && (
-                                    <p className={styles.targetText}>{example.target_text}</p>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                      
-                      {/* Synonyms and Antonyms */}
-                      {sense.synonyms && sense.synonyms.length > 0 && (
-                        <p className={styles.synonyms}>
-                          <strong>Synonyms:</strong> {sense.synonyms.join(", ")}
-                        </p>
-                      )}
-                      {sense.antonyms && sense.antonyms.length > 0 && (
-                        <p className={styles.antonyms}>
-                          <strong>Antonyms:</strong> {sense.antonyms.join(", ")}
-                        </p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          ))}
-        </>
-      );
-    }
-    
-    return <p>No detailed definition available.</p>;
-  };
 
   const isWordBeingEdited = (listId, wordIndex) => {
     return editingWord && editingWord.listId === listId && editingWord.wordIndex === wordIndex;
@@ -247,6 +173,44 @@ function WordLists() {
 
   const isCardFlipped = (cardId) => {
     return flippedCards.has(cardId);
+  };
+
+  // Export wordlist to markdown format
+  const exportToMarkdown = (list) => {
+    let markdown = `# ${list.name}\n\n`;
+    
+    if (list.words && list.words.length > 0) {
+      list.words.forEach((wordItem, index) => {
+        markdown += `## ${index + 1}. ${wordItem.word}\n\n`;
+        
+        // Add word translation if available
+        if (wordItem.word_translation) {
+          markdown += `**Translation:** ${wordItem.word_translation}\n\n`;
+        }
+        
+        // Add example phrase if available
+        if (wordItem.example_phrase) {
+          markdown += `**Example:** ${wordItem.example_phrase}\n\n`;
+        }
+        
+        // Add example phrase translation if available
+        if (wordItem.example_phrase_translation) {
+          markdown += `**Example Translation:** ${wordItem.example_phrase_translation}\n\n`;
+        }
+        
+        markdown += `---\n\n`;
+      });
+    } else {
+      markdown += `No words in this list.\n\n`;
+    }
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(markdown).then(() => {
+      console.log('Markdown copied to clipboard');
+      // You could show a toast notification here
+    }).catch(err => {
+      console.error('Failed to copy to clipboard:', err);
+    });
   };
 
   if (loading) return <p>Loading word lists...</p>;
@@ -264,19 +228,31 @@ function WordLists() {
         const rows = chunkArray(list.words || [], 3);
         return (
           <div key={list.id} className={styles.wordlist}>
-            <h2 className={styles.listName}>
-              {list.name}
-              {list._isDirty && (
-                <span className={styles.dirtyIndicator}>
-                  (unsaved changes)
-                </span>
-              )}
-              {list.language && list.language !== currentLanguage && (
-                <span className={styles.languageBadge}>
-                  {list.language.toUpperCase()}
-                </span>
-              )}
-            </h2>
+            <div className={styles.listHeader}>
+              <h2 className={styles.listName}>
+                {list.name}
+                {list._isDirty && (
+                  <span className={styles.dirtyIndicator}>
+                    (unsaved changes)
+                  </span>
+                )}
+                {list.language && list.language !== currentLanguage && (
+                  <span className={styles.languageBadge}>
+                    {list.language.toUpperCase()}
+                  </span>
+                )}
+              </h2>
+              <button 
+                className={styles.exportButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  exportToMarkdown(list);
+                }}
+                title="Export to Markdown (copy to clipboard)"
+              >
+                📋 Export MD
+              </button>
+            </div>
             {rows.map((row, rowIndex) => (
               <div key={rowIndex} className={styles.cardRow}>
                 {row.map((wordItem, cardIndex) => {
@@ -317,6 +293,13 @@ function WordLists() {
                               )}
                             </div>
 
+                            {/* Example phrase */}
+                            {wordItem.example_phrase && (
+                              <div className={styles.examplePhrase}>
+                                <p>{wordItem.example_phrase}</p>
+                              </div>
+                            )}
+
                             {/* Card actions */}
                             <div className={styles.cardActions}>
                               {/* Audio button based on unified dictionary structure */}
@@ -346,14 +329,21 @@ function WordLists() {
                         {/* Back Face */}
                         <div className={styles.cardBack}>
                           <div className={styles.cardContent}>
-                            <div className={styles.definitionContainer}>
-                              <h4 className={styles.backTitle}>
-                                {currentLanguage === "en" ? "Definition" : "Translation"}
-                              </h4>
-                              <div className={styles.definitionContent}>
-                                {renderDefinitionContent(wordItem)}
+                            {/* Word translation */}
+                            {wordItem.word_translation && (
+                              <div className={styles.translationSection}>
+                                <h4 className={styles.sectionTitle}>Translation</h4>
+                                <p className={styles.wordTranslation}>{wordItem.word_translation}</p>
                               </div>
-                            </div>
+                            )}
+
+                            {/* Example phrase translation */}
+                            {wordItem.example_phrase_translation && (
+                              <div className={styles.translationSection}>
+                                <h4 className={styles.sectionTitle}>Example Translation</h4>
+                                <p className={styles.exampleTranslation}>{wordItem.example_phrase_translation}</p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>

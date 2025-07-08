@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 # Constants
-DEFAULT_DB_PATH = "language_coach.db"
+DEFAULT_DB_PATH = "database.db"
 DEFAULT_PROCESSED_BOOKS_DIR = Path("data/gutenberg_data/processed")
 INDEX_DIR = Path("data/gutenberg_data/indexes")
 
@@ -172,17 +172,17 @@ def import_all_books(db_path: str, processed_books_dir: Path) -> None:
         
         logger.info(f"Import complete. Successfully imported {successful_imports} out of {total_books} books.")
         
-        # After importing books, build the BM25 index
-        logger.info("Building BM25 index after import...")
-        build_bm25_index(db_path)
+        # After importing books, build the gdex index
+        logger.info("Building gdex index after import...")
+        build_gdex_index(db_path)
         
     except Exception as e:
         logger.error(f"Error during book import: {str(e)}")
 
 
-def build_bm25_index(db_path: str) -> None:
+def build_gdex_index(db_path: str) -> None:
     """
-    Build BM25 index for all languages after importing books.
+    Build gdex index for all languages after importing books.
     
     Args:
         db_path: Path to the SQLite database file
@@ -204,19 +204,12 @@ def build_bm25_index(db_path: str) -> None:
             else:
                 nlp = spacy.load("es_core_news_sm", disable=["parser", "ner"])
                 
-            # Build the index
-            logger.info(f"Building BM25 index for language: {language}")
-            index_data = retriever.build_sentence_index(language)
-            
-            # Save the index to file
-            index_path = INDEX_DIR / f"bm25_index_{language}.pkl"
-            with open(index_path, 'wb') as f:
-                pickle.dump(index_data, f)
-                
-            logger.info(f"Saved BM25 index for {language} to {index_path}")
+            # Build the index and save
+            logger.info(f"Building Gdex index for language: {language}")
+            retriever.build_sentence_index(language)
             
         except Exception as e:
-            logger.error(f"Error building BM25 index for {language}: {str(e)}")
+            logger.error(f"Error building Gdex index for {language}: {str(e)}")
 
 
 def main():

@@ -18,12 +18,9 @@ FROM python:3.11-slim
 WORKDIR /app
 
 
-# Optionally copy environment variables and database if needed
-# COPY src/backend/.env /app/src/backend/.env
-# COPY database.db /app/database.db
-
 # Install Python dependencies (adjust if you have a requirements.txt)
-RUN pip install fastapi[standard] uvicorn sqlmodel python-dotenv pydantic openai requests
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the backend code and any additional necessary files
 COPY src/backend/ /app/src/backend/

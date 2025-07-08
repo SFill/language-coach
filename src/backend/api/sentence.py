@@ -29,7 +29,6 @@ async def get_sentences_for_word(
     """
     try:
         sentences = search_for_sentences(
-            session=session,
             word=word,
             language=language,
             top_n=top_n,

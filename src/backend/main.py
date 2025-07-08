@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from backend.services.sentence.sentence_service import get_sentence_retriever
+
 from .database import create_db_and_tables
 from .api.chat import router as chat_router
 from .api.translation import router as translation_router
@@ -37,6 +39,8 @@ app.include_router(sentence_router)
 def on_startup():
     """Initialize database on application startup."""
     create_db_and_tables()
+    sentence_retriever = get_sentence_retriever()
+    sentence_retriever.load_existing_indexes()
 
 
 # Mount static files in production mode
