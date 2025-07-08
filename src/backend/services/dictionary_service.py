@@ -2,14 +2,14 @@ import logging
 import requests
 from sqlmodel import Session, select
 
-from ..models.dict_english import Dictionary, EnglishDialect
+from backend.models.dict_english import Dictionary, EnglishDialect
 
-from ..models.dict_english import (
+from backend.models.dict_english import (
     EnglishWordDefinition, EnglishWordEntry,
     EnglishPosGroup, EnglishSense, EnglishTranslation,
     Example, AudioInfo
 )
-from ..models.shared import Definition
+from backend.models.shared import Definition
 
 
 class DictionaryApiClient:

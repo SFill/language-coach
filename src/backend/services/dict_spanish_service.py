@@ -7,14 +7,14 @@ from typing import Dict, List, Optional, Any, Tuple
 from sqlmodel import Session, select
 from fastapi import HTTPException
 
-from ..models.dict_spanish import SpanishDictionary
+from backend.models.dict_spanish import SpanishDictionary
 
-from ..models.dict_spanish import (
+from backend.models.dict_spanish import (
     SpanishWordEntry, SpanishWordDefinition, VerbConjugations,
     Participle, ConjugationForm, Translation,
     Sense, PosGroup
 )
-from ..models.shared import Definition, Example, AudioInfo
+from backend.models.shared import Definition, Example, AudioInfo
 
 
 class SpanishDictClient:
@@ -22,7 +22,7 @@ class SpanishDictClient:
     A client for parsing and extracting information from SpanishDict.com
     """
 
-    # [... Client implementation unchanged ...]
+    # [backend.. Client implementation unchanged backend..]
     BASE_URL = "https://www.spanishdict.com"
     HEADERS = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",

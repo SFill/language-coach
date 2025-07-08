@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, Query
 from typing import Annotated
 from sqlmodel import Session
 
-from ..database import get_session
-from ..models.chat import Chat, ChatListResponse, Message
-from ..services.chat_service import (
+from backend.database import get_session
+from backend.models.chat import Chat, ChatListResponse, Message
+from backend.services.chat_service import (
     create_chat, get_chat_list, get_chat,
     delete_chat, send_message
 )

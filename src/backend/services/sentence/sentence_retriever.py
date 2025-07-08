@@ -14,7 +14,7 @@ from sqlmodel import Session, select, func
 
 from .db_models import Text, Phrase
 from .gdex import GdexScorer
-from ...database import engine
+from backend.database import engine
 
 
 # Configure logging
@@ -33,6 +33,8 @@ IDEAL_TOKEN_RANGE = (5, 25)  # Ideal range for sentence length
 # Regex for quick tokenization
 # This handles common punctuation and whitespace without needing spaCy
 TOKEN_PATTERN = re.compile(r'[a-zA-Z0-9]+|[^\w\s]')
+
+import os
 
 
 def quick_tokenize(text: str) -> List[str]:
@@ -72,6 +74,7 @@ class SentenceRetriever:
 
         # Try to load existing indexes
         self.index_data = {}
+        self.index_paths = {}
 
     def load_existing_indexes(self):
         languages_max_id = []
@@ -92,6 +95,21 @@ class SentenceRetriever:
             else:
                 logger.info(f"Building index for {language} at {index_path}")
                 self.build_sentence_index(language, index_path)
+            self.index_paths[language] = index_path
+
+    def save_indexes(self):
+        for lang, index_path in self.index_paths.items():
+            max_id = max(self.index_data[lang]['phrase_id2idx'].keys())
+            new_index_path = INDEX_DIR / f"sentence_index_{lang}_{max_id}.pkl"
+            logger.info(f"Save sentence index for {lang} from {new_index_path}")
+
+            if new_index_path != index_path:
+                with open(new_index_path, 'wb') as f:
+                    pickle.dump(self.index_data[lang], f)
+                if index_path.exists():
+                    os.remove(index_path)
+                    logger.info(f"Removed old sentence index for {lang} from {index_path}")
+
 
     def build_sentence_index(self, language: str, index_path: Path) -> Dict:
         """
@@ -152,7 +170,7 @@ class SentenceRetriever:
 
                         # Add to inverted index
                         for token in set(tokens):  # Use set to avoid duplicates
-                            token_to_phrases[token].add(len(phrase_ids) - 1)  # Store the index in our lists
+                            token_to_phrases[token].add(phrase_id)  # Store the index in our lists
 
             logger.info(f"After filtering for length, keeping {len(texts)} phrases")
 
@@ -185,7 +203,7 @@ class SentenceRetriever:
 
             # Prepare and return the data
             index_data = {
-                'phrase_ids': phrase_ids,
+                'phrase_id2idx': {phrase_id : idx for idx, phrase_id in enumerate(phrase_ids)},
                 'texts': texts,
                 'tokenized_texts': tokenized_texts,
                 'token_to_phrases': dict(token_to_phrases),  # Convert to regular dict for pickling
@@ -193,7 +211,6 @@ class SentenceRetriever:
             }
 
             # Save the index to file
-
             with open(index_path, 'wb') as f:
                 pickle.dump(index_data, f)
 
@@ -207,7 +224,7 @@ class SentenceRetriever:
     def add_phrase_to_index(self, text: Text, phrase: Phrase,  language: str):
         index_data = self.index_data[language]
 
-        index_data['phrase_ids'].append(phrase.id)
+        index_data['phrase_id2idx'][phrase.id] = len(index_data['phrase_id2idx'])
         index_data['texts'].append(phrase.text)
 
         tokens = quick_tokenize(phrase.text)
@@ -216,7 +233,10 @@ class SentenceRetriever:
 
         # Add to inverted index
         for token in set(tokens):  # Use set to avoid duplicates
-            index_data['token_to_phrases'][token].add(len(index_data['phrase_ids']) - 1)  # Store the index in our lists
+            if index_data['token_to_phrases'].get(token):
+                index_data['token_to_phrases'][token].add(phrase.id) 
+            else:
+                index_data['token_to_phrases'][token] = {phrase.id}
 
         # Get additional metadata for these phrases
         # Process metadata in batches to avoid memory issues
@@ -277,16 +297,16 @@ class SentenceRetriever:
 
         # Prepare results
         results = []
-        for idx in matching_phrases:
+        for phrase_id in matching_phrases:
+            idx =  index_data['phrase_id2idx'][phrase_id]
             text = index_data['texts'][idx]
-            phrase_id = index_data['phrase_ids'][idx]
             tokens = index_data['tokenized_texts'][idx]
 
             # Use GDEX scoring
             scores = gdex_scorer.score_sentence(text, phrase, tokens)
             combined_score = scores['total']
-            # TODO return
-            if combined_score < 0.8:
+
+            if combined_score < 0.7:
                 continue
 
             # Add detailed scores for debugging

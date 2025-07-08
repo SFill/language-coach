@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from ..models.wordlist import TranslateTextRequest
-from ..services.translation_service import translate_text
+from backend.models.wordlist import TranslateTextRequest
+from backend.services.translation_service import translate_text
 
 # Create router
 router = APIRouter(prefix="/api", tags=["translation"])

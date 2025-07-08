@@ -22,7 +22,7 @@ import json
 sys.path.append(str(Path(__file__).parent.parent))
 
 from sqlmodel import create_engine, Session, select, text
-from ..services.phrase_service import get_phrase_with_example_and_translation
+from backend.services.phrase_service import get_phrase_with_example_and_translation
 
 # Configure logging
 logging.basicConfig(

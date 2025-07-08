@@ -1,7 +1,7 @@
 import re
 import logging
 import requests
-from ..models.wordlist import TranslateTextRequest
+from backend.models.wordlist import TranslateTextRequest
 
 class GoogleTranslateHelper:
     """Helper class for Google Translate API."""

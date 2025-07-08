@@ -10,7 +10,7 @@ import logging
 from typing import List, Dict, Any, Optional, Tuple
 from sqlmodel import Session, select
 import spacy
-from ..services.sentence.db_models import Text, Phrase, Word
+from backend.services.sentence.db_models import Text, Phrase, Word
 
 logger = logging.getLogger(__name__)
 

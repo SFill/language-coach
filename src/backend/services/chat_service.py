@@ -3,8 +3,8 @@ from sqlmodel import Session, select, update, delete
 from fastapi import HTTPException
 from openai import OpenAI
 
-from ..models.chat import Chat, ChatListResponse, Message
-from ..constants import SYSTEM_PROMPT
+from backend.models.chat import Chat, ChatListResponse, Message
+from backend.constants import SYSTEM_PROMPT
 
 # Initialize OpenAI client
 client = OpenAI(

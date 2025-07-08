@@ -3,12 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Annotated, List, Optional
 from sqlmodel import Session, select
 
-from ..database import get_session
-from ..models.wordlist import (
+from backend.database import get_session
+from backend.models.wordlist import (
     Wordlist, WordlistCreate, WordlistUpdate,
     WordlistResponse, Language, WordInList
 )
-from ..services.phrase_service import get_phrase_with_example_and_translation
+from backend.services.phrase_service import get_phrase_with_example_and_translation
 
 # Create router
 router = APIRouter(prefix="/api/wordlist", tags=["wordlist"])

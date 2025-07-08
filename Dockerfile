@@ -33,5 +33,5 @@ COPY --from=frontend-builder /app/dist /app/dist
 EXPOSE 80
 
 # Command to run your FastAPI application. Ensure your main.py mounts the static files.
-# CMD ["uvicorn", "src.backend.main:app", "--host", "0.0.0.0", "--port", "80"]
+# CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "80"]
 CMD ["fastapi", "dev", "--host", "0.0.0.0" ,"src/backend/main.py",  "--port", "80"]

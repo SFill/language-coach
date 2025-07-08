@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, Query
 from typing import Annotated, Dict
 from sqlmodel import Session
 
-from ..database import get_session
-from ..services.unified_dictionary_service import get_word_definition
-from ..services.sentence.sentence_service import search_for_sentences
+from backend.database import get_session
+from backend.services.unified_dictionary_service import get_word_definition
+from backend.services.sentence.sentence_service import search_for_sentences
 
 # Create router
 router = APIRouter(prefix="/api", tags=["dictionary"])

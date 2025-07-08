@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlmodel import Session
 from typing import List, Dict, Any
 
-from ..database import get_session
-from ..services.sentence.sentence_service import search_for_sentences
+from backend.database import get_session
+from backend.services.sentence.sentence_service import search_for_sentences
 
 router = APIRouter(prefix="/api/coach/index", tags=["index"])
 

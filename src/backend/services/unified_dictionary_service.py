@@ -3,10 +3,10 @@ from sqlmodel import Session
 from typing import Dict, Optional
 from fastapi import HTTPException
 
-from ..models.shared import Definition
+from backend.models.shared import Definition
 
-from ..services.dictionary_service import get_english_word_definition as get_english_definition
-from ..services.dict_spanish_service import get_spanish_word_definition
+from backend.services.dictionary_service import get_english_word_definition as get_english_definition
+from backend.services.dict_spanish_service import get_spanish_word_definition
 
 
 def get_word_definition(words: list[str],

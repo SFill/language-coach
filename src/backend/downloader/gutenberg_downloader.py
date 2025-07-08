@@ -350,7 +350,7 @@ async def process_book_with_spacy(
         
         # If the text is too large, process it in chunks
         if len(cleaned_content) > MAX_CHUNK_SIZE:
-            logger.info(f"Text is large ({len(cleaned_content)} chars). Processing in chunks...")
+            logger.info(f"Text is large ({len(cleaned_content)} chars). Processing in chunksbackend..")
             
             # Split the text into smaller chunks at paragraph boundaries
             chunks = []
@@ -554,7 +554,7 @@ async def main():
                     )
                 await asyncio.gather(*tasks)
     # Process all downloaded books
-    logger.info("Processing downloaded books with spaCy...")
+    logger.info("Processing downloaded books with spaCybackend..")
     
     for category_dir in RAW_BOOKS_DIR.iterdir():
         if category_dir.is_dir():

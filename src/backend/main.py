@@ -43,6 +43,12 @@ def on_startup():
     sentence_retriever.load_existing_indexes()
 
 
+@app.on_event("shutdown")
+def shutdown_event():
+    sentence_retriever = get_sentence_retriever()
+    sentence_retriever.save_indexes()
+
+
 # Mount static files in production mode
 if not os.getenv('BACKEND_ENV', None) == 'dev':
     # Mount the static files (built assets are in /app/dist)

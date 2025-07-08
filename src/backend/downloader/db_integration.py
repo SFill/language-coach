@@ -17,7 +17,7 @@ import spacy
 from sqlmodel import SQLModel, Session, create_engine, select
 
 # Import database models
-from ..services.sentence.db_models import Text, Phrase, Word
+from backend.services.sentence.db_models import Text, Phrase, Word
 
 
 # Configure logging
@@ -173,7 +173,7 @@ def import_all_books(db_path: str, processed_books_dir: Path) -> None:
         logger.info(f"Import complete. Successfully imported {successful_imports} out of {total_books} books.")
         
         # After importing books, build the gdex index
-        logger.info("Building gdex index after import...")
+        logger.info("Building gdex index after importbackend..")
         build_gdex_index(db_path)
         
     except Exception as e:
@@ -187,7 +187,7 @@ def build_gdex_index(db_path: str) -> None:
     Args:
         db_path: Path to the SQLite database file
     """
-    from ..services.sentence.sentence_retriever import SentenceRetriever
+    from backend.services.sentence.sentence_retriever import SentenceRetriever
     
     # Create directory for indexes if it doesn't exist
     INDEX_DIR.mkdir(parents=True, exist_ok=True)
