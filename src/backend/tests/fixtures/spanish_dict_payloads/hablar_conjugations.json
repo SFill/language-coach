@@ -1,0 +1,2243 @@
+{
+  "infinitive": "hablar",
+  "translation": "speak",
+  "is_reflexive": 2,
+  "tenses": {
+    "presentIndicative": [
+      {
+        "conjugationForms": [
+          "hablo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablo&key=4cbe72bc7893d5d454c8893b1c9c60c1",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablas&key=e9c422618d365aeaeaafc32fc0270cb5",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habla"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habla&key=ca00f6b79e968c314c88505febd4de12",
+        "translationForms": [
+          {
+            "word": "speaks",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablamos&key=23435be59a200ab9d8af6ca38ca09738",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habláis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habl%C3%A1is&key=ce3898a74eca1b178e2e627a555ee6fa&region=spain",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablan"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablan&key=506334aa98ae203c8baf6aef238640b0",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habl%C3%A1s&key=db432ed0334a61ba74732ab8f055c36a&region=latam",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritIndicative": [
+      {
+        "conjugationForms": [
+          "hablé"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habl%C3%A9&key=139ac95123e8535cc54de04e372d2855",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaste"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablaste&key=25734f063069042f4a041616fdbbba1f",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habló"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habl%C3%B3&key=51d69bee6372cfc0d4e0d6d8a4774f9b",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablamos&key=23435be59a200ab9d8af6ca38ca09738",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablasteis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablasteis&key=07ac168d037f3c3fd1ab9eb739312fa9&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaron"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablaron&key=27c43ca963c34cdd53ab1a022fc2d966",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaste"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablaste&key=25734f063069042f4a041616fdbbba1f&region=latam",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectIndicative": [
+      {
+        "conjugationForms": [
+          "hablaba"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablaba&key=cabefb82508b558641ac8587caa17a33",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablabas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablabas&key=2558322e8b2545b7472731042c6e6a30",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaba"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hablaba&key=cabefb82508b558641ac8587caa17a33",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablábamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habl%C3%A1bamos&key=095ccd014a8058a049d69d7d1d3f4fbf",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablabais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablabais&key=5c1d9e021df8d4445421ec2c304f1152&region=spain",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaban"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablaban&key=dc1adf2253fb7d82e5f9574a95b422bf",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablabas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablabas&key=2558322e8b2545b7472731042c6e6a30&region=latam",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalIndicative": [
+      {
+        "conjugationForms": [
+          "hablaría"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADa&key=5735093c36962ba1bd6984717054145b",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADas&key=1bb30c1f7a81256dbda2699391aad4ef",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaría"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADa&key=5735093c36962ba1bd6984717054145b",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADamos&key=be4fb519c93d361c496c783396391bd6",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADais&key=cc47208a23f9126c16406cd14be4246b&region=spain",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADan&key=6af3432aa96eb388052a13299ef89a70",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablar%C3%ADas&key=1bb30c1f7a81256dbda2699391aad4ef&region=latam",
+        "translationForms": [
+          {
+            "word": "would speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureIndicative": [
+      {
+        "conjugationForms": [
+          "hablaré"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablar%C3%A9&key=e8dca1082e48c35af95d90344065cf61",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarás"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablar%C3%A1s&key=4dad54dd40ead20483cbe74fad4a793e",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablará"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hablar%C3%A1&key=988a0fcd7355e94673b30fca92317a16",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablaremos&key=8a60eb40ca6d2190cf3357f69ae5e2c5",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablar%C3%A9is&key=9e67fe8dbf7fcb4360bb57147008a517&region=spain",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarán"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablar%C3%A1n&key=615ea0da9e421234e6b297337603fe0d",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablar%C3%A1s&key=4dad54dd40ead20483cbe74fad4a793e&region=latam",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentSubjunctive": [
+      {
+        "conjugationForms": [
+          "hable"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hable&key=47ee48a2be158c17c118c776e35b2c89",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hables"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hables&key=b96fa041ae8e4afd6418822cd5bc41e5",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hable"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hable&key=47ee48a2be158c17c118c776e35b2c89",
+        "translationForms": [
+          {
+            "word": "speaks",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablemos&key=abe66cfa1e95fe428788a2a45deb8119",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habléis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habl%C3%A9is&key=b7586c2206f3adfe8dd0670e6356a07d&region=spain",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablen&key=417f6ef6cc288201b61817b1a774e9b4",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hables"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hables&key=b96fa041ae8e4afd6418822cd5bc41e5&region=latam",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hablara",
+          "hablase"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablara%2Chablase&key=4426b46c1204863a9fe33b04c9c2d1b9",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaras",
+          "hablases"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablaras%2Chablases&key=91c04ca64300a8e2a5ecf8ba752db237",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablara",
+          "hablase"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hablara%2Chablase&key=4426b46c1204863a9fe33b04c9c2d1b9",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habláramos",
+          "hablásemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habl%C3%A1ramos%2Chabl%C3%A1semos&key=24b4e98951692e00d5db783027391178",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablarais",
+          "hablaseis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablarais%2Chablaseis&key=c39702384e8a90aa78ff840b4ef59a7f&region=spain",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaran",
+          "hablasen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablaran%2Chablasen&key=317df677a854a461adf64be8756d5872",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaras",
+          "hablases"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablaras%2Chablases&key=91c04ca64300a8e2a5ecf8ba752db237&region=latam",
+        "translationForms": [
+          {
+            "word": "spoke",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureSubjunctive": [
+      {
+        "conjugationForms": [
+          "hablare"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hablare&key=8d5a18579cd1b285ba70e7322cb4c21a",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablares"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hablares&key=1bfeae1f2df478469c412f10f7b84095",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablare"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hablare&key=8d5a18579cd1b285ba70e7322cb4c21a",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habláremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habl%C3%A1remos&key=40b1eade852e7be616b8b4dca243a04e",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablareis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablareis&key=304cf56e6a3299f130447f95760ac761&region=spain",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablaren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hablaren&key=1b5314e0efa7dba55585b723667f1463",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablares"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hablares&key=1bfeae1f2df478469c412f10f7b84095&region=latam",
+        "translationForms": [
+          {
+            "word": "will speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "habla"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habla&key=ca00f6b79e968c314c88505febd4de12",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hable"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=hable&key=47ee48a2be158c17c118c776e35b2c89",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hablemos&key=abe66cfa1e95fe428788a2a45deb8119",
+        "translationForms": [
+          {
+            "word": "let's speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablad"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hablad&key=bd37a3e96bdd0c5a26ade7ecdb16419b&region=spain",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablen"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=hablen&key=417f6ef6cc288201b61817b1a774e9b4",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hablá"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habl%C3%A1&key=23f00d5b0a7df209d450f6296da79e9b&region=latam",
+        "translationForms": [
+          {
+            "word": "speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "negativeImperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "no hables"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=no-hables&key=5dbe1ec2fb4c1c3c8d016aa2ec89acf8",
+        "translationForms": [
+          {
+            "word": "don't speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no hable"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=no-hable&key=4fa0fef06bbfcadbb91e22839f90fa24",
+        "translationForms": [
+          {
+            "word": "don't speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no hablemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=no-hablemos&key=0179d935b3782ce440d3f7c9a5a00eb2",
+        "translationForms": [
+          {
+            "word": "let's not speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no habléis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=no-habl%C3%A9is&key=581977d128630e79a981bee297a2509d&region=spain",
+        "translationForms": [
+          {
+            "word": "don't speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no hablen"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=no-hablen&key=56fc5ffb199f591fe7cbd0f34ef7257e",
+        "translationForms": [
+          {
+            "word": "don't speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no hables"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=no-hables&key=5dbe1ec2fb4c1c3c8d016aa2ec89acf8&region=latam",
+        "translationForms": [
+          {
+            "word": "don't speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentContinuous": [
+      {
+        "conjugationForms": [
+          "estoy hablando"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estoy-hablando&key=8b7ecbc04dcf54294307a12af24a7eed",
+        "translationForms": [
+          {
+            "word": "am speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás hablando"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-hablando&key=54a20c9b8adfdbe6628af5eb6878bbe9",
+        "translationForms": [
+          {
+            "word": "are speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "está hablando"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=est%C3%A1-hablando&key=aa8ad122c6d4583d48992099a0a77888",
+        "translationForms": [
+          {
+            "word": "is speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estamos hablando"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estamos-hablando&key=49746e48713176684f7625b065d41e6b",
+        "translationForms": [
+          {
+            "word": "are speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estáis hablando"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1is-hablando&key=3b19bae4e6d254e4d22fefd9cbb511a2&region=spain",
+        "translationForms": [
+          {
+            "word": "are speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "están hablando"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=est%C3%A1n-hablando&key=ec7412e6f32a7e557c64bb6423bc69c2",
+        "translationForms": [
+          {
+            "word": "are speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás hablando"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-hablando&key=54a20c9b8adfdbe6628af5eb6878bbe9&region=latam",
+        "translationForms": [
+          {
+            "word": "are speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritContinuous": [
+      {
+        "conjugationForms": [
+          "estuve hablando"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estuve-hablando&key=5745f10ac363a03832d0fc74e4517f20",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste hablando"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estuviste-hablando&key=6aab3eec1eac64ececdbb086bb3e8612",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvo hablando"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estuvo-hablando&key=b864c55a2a12fbb7caa208e4ba168629",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvimos hablando"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estuvimos-hablando&key=b746493a66bec6cfaf4922cdeeb29f1a",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvisteis hablando"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estuvisteis-hablando&key=97b167a3473789a22048c3b4d21e0127&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvieron hablando"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estuvieron-hablando&key=6b388d0c16c0f068c2e014aad5432cf3",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste hablando"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estuviste-hablando&key=6aab3eec1eac64ececdbb086bb3e8612&region=latam",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectContinuous": [
+      {
+        "conjugationForms": [
+          "estaba hablando"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estaba-hablando&key=a819c0378c53ba5ca641be0bf66e2d94",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas hablando"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estabas-hablando&key=a3ce67c850944a12246c607ea6454f95",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaba hablando"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estaba-hablando&key=a819c0378c53ba5ca641be0bf66e2d94",
+        "translationForms": [
+          {
+            "word": "was speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estábamos hablando"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1bamos-hablando&key=dbd7090195e82037f68ec13a557038a8",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabais hablando"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estabais-hablando&key=d4a2de9c22d21377ebd4fb7506d1ced3&region=spain",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaban hablando"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estaban-hablando&key=bac06e784e8b11ebecc71ef02d36c02c",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas hablando"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estabas-hablando&key=a3ce67c850944a12246c607ea6454f95&region=latam",
+        "translationForms": [
+          {
+            "word": "were speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalContinuous": [
+      {
+        "conjugationForms": [
+          "estaría hablando"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-hablando&key=d9802c0f3d7c589059f067983dd19c42",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías hablando"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-hablando&key=b46edd5eacb1868be6fa9bbbdc4701ff",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaría hablando"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-hablando&key=d9802c0f3d7c589059f067983dd19c42",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríamos hablando"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADamos-hablando&key=612f5d1144a1836e367145d4475d6f47",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríais hablando"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADais-hablando&key=6720c599e3eabd38f6ea876a9c1f2c23&region=spain",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarían hablando"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADan-hablando&key=0421c513a35363b9bd2b1d24e2fb5ee3",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías hablando"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-hablando&key=b46edd5eacb1868be6fa9bbbdc4701ff&region=latam",
+        "translationForms": [
+          {
+            "word": "would be speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureContinuous": [
+      {
+        "conjugationForms": [
+          "estaré hablando"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%A9-hablando&key=f5f9a62e860fd2d6b8d23d716a68eda0",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás hablando"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-hablando&key=4a25ec393cafcb28fed60e9543c01e34",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estará hablando"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1-hablando&key=f206b682b9dd55532fca7c041e88ff32",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaremos hablando"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estaremos-hablando&key=e191ed8c872c3ba4afa499b992b49c40",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaréis hablando"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%A9is-hablando&key=e9093246381aa1608bf706c5c9caff92&region=spain",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarán hablando"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1n-hablando&key=80ae87f6c36d1eca19e8b6662d760a6d",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás hablando"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-hablando&key=4a25ec393cafcb28fed60e9543c01e34&region=latam",
+        "translationForms": [
+          {
+            "word": "will be speaking",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfect": [
+      {
+        "conjugationForms": [
+          "he hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=he-hablado&key=ec968683910c7d49b2b3de7c4d43977f",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=has-hablado&key=c9ea87cebf8d5a9f84f357881759fdff",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "ha hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ha-hablado&key=37fb243f791cced4e2650f8a2852e362",
+        "translationForms": [
+          {
+            "word": "has spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hemos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hemos-hablado&key=d070a01779c30e00f60f5c5864678634",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habéis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%A9is-hablado&key=8637acfb4935e50e7f3a91d624a170b0&region=spain",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "han hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=han-hablado&key=5f53b64ff01822c6aeff001dde563913",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=has-hablado&key=c9ea87cebf8d5a9f84f357881759fdff&region=latam",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritPerfect": [
+      {
+        "conjugationForms": [
+          "hube hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hube-hablado&key=33171a8cb199c06f1b9e8f5eaa5a1200",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubiste-hablado&key=dc9a4ec8e85309b2d3ee74d2d7b149b6",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubo hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubo-hablado&key=ba6d6007ea2c88c26d63ee372a78e707",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubimos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubimos-hablado&key=66db2d34c59a86846c0d068b92dc9b2c",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubisteis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubisteis-hablado&key=029b8f881cc60dbaf61a594ac27cf9b9&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieron hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieron-hablado&key=558033e3f8fc8e8bbba6f896d0457e2d",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubiste-hablado&key=dc9a4ec8e85309b2d3ee74d2d7b149b6&region=latam",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfect": [
+      {
+        "conjugationForms": [
+          "había hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-hablado&key=2b5bfd3f1f4cd53aa3ca3e239bd6da74",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-hablado&key=6cfa067fc2ab9677989e5d1b3b15c0af",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "había hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-hablado&key=2b5bfd3f1f4cd53aa3ca3e239bd6da74",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíamos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADamos-hablado&key=2695785579d04b8ce5107db219605d41",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíais hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADais-hablado&key=3d2dc3bf13360069aa69db7a29c18c43&region=spain",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habían hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADan-hablado&key=13e04e7c16945b733a59118584eaa95e",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-hablado&key=6cfa067fc2ab9677989e5d1b3b15c0af&region=latam",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalPerfect": [
+      {
+        "conjugationForms": [
+          "habría hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-hablado&key=1625645f5fb21f6949c6428016d30ac9",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-hablado&key=b96f57c03a3b9e0e4829c52992befd37",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habría hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-hablado&key=1625645f5fb21f6949c6428016d30ac9",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríamos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADamos-hablado&key=743ef87f4861897e849e3e79d53ac50a",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríais hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADais-hablado&key=ae91f31a769d3156b74a1045ff99f037&region=spain",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrían hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADan-hablado&key=8733baee6421589ea042a761d6fffe26",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-hablado&key=b96f57c03a3b9e0e4829c52992befd37&region=latam",
+        "translationForms": [
+          {
+            "word": "would have spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfect": [
+      {
+        "conjugationForms": [
+          "habré hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%A9-hablado&key=ce141dc7ad857bf3e5afc8a16ace5756",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-hablado&key=b418ac7f1d97dfdac3522695773448be",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrá hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1-hablado&key=6515e66c7255b0c7ba1f41a569d3620c",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habremos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habremos-hablado&key=ffba5b0e0997894028ece915f9452647",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habréis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%A9is-hablado&key=7264164bcea8717cf687a2ae44b2d139&region=spain",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrán hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1n-hablado&key=235b29ee5f67d61eb8deb03980e1cce3",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-hablado&key=b418ac7f1d97dfdac3522695773448be&region=latam",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "haya hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=haya-hablado&key=4de223e69d9ad98578ea437dadb91b17",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hayas-hablado&key=9be40ac72e45f7294710a3df3fb2fa62",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "haya hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=haya-hablado&key=4de223e69d9ad98578ea437dadb91b17",
+        "translationForms": [
+          {
+            "word": "has spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayamos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hayamos-hablado&key=05d994487135ba4ca2e6b2ddc8e778bd",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayáis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hay%C3%A1is-hablado&key=70cc0e3a26b3dd80d9adbf03daa00e3d&region=spain",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayan hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hayan-hablado&key=9b9eb13a82367c1aa07379b501856f98",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hayas-hablado&key=9be40ac72e45f7294710a3df3fb2fa62&region=latam",
+        "translationForms": [
+          {
+            "word": "have spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiera hablado",
+          "hubiese hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiera-hablado%2Chubiese-hablado&key=a49a4e70592031b2d484110b3503161d",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras hablado",
+          "hubieses hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieras-hablado%2Chubieses-hablado&key=d01a3d601991b5ed1c32bb115b80e6df",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiera hablado",
+          "hubiese hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiera-hablado%2Chubiese-hablado&key=a49a4e70592031b2d484110b3503161d",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéramos hablado",
+          "hubiésemos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9ramos-hablado%2Chubi%C3%A9semos-hablado&key=8d861906fbfd5372b34235dd8fe3f393",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubierais hablado",
+          "hubieseis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubierais-hablado%2Chubieseis-hablado&key=46141cbfad1e9c1514119aac2aacce10&region=spain",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieran hablado",
+          "hubiesen hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieran-hablado%2Chubiesen-hablado&key=abdb9fe57138ab1a7fa4572d8ecf5aec",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras hablado",
+          "hubieses hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieras-hablado%2Chubieses-hablado&key=d01a3d601991b5ed1c32bb115b80e6df&region=latam",
+        "translationForms": [
+          {
+            "word": "had spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiere hablado"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiere-hablado&key=b6487aa781ed3e8a0e74409e9243a02b",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres hablado"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieres-hablado&key=62a1c469a427437d9a482118be9ab4f7",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiere hablado"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiere-hablado&key=b6487aa781ed3e8a0e74409e9243a02b",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéremos hablado"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9remos-hablado&key=053acf7e98ed6d0bcc4ac0cff3cac1a0",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiereis hablado"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubiereis-hablado&key=97b79d9d981764c99dd626103528af4b&region=spain",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieren hablado"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieren-hablado&key=48119905176cd4ab8289df11c07f82d5",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres hablado"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieres-hablado&key=62a1c469a427437d9a482118be9ab4f7&region=latam",
+        "translationForms": [
+          {
+            "word": "will have spoken",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "informalFuture": [
+      {
+        "conjugationForms": [
+          "voy a hablar"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=voy-a-hablar&key=908eb93b8137c225ed985eccf83c6900",
+        "translationForms": [
+          {
+            "word": "am going to speak",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a hablar"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vas-a-hablar&key=9e10f11999da94d936972ae126eebe82",
+        "translationForms": [
+          {
+            "word": "are going to speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "va a hablar"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=va-a-hablar&key=cac39628e431b9eadbb04e7a30c0fc2d",
+        "translationForms": [
+          {
+            "word": "is going to speak",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vamos a hablar"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vamos-a-hablar&key=c63c429e7fd72e8c4b791965bf7ce727",
+        "translationForms": [
+          {
+            "word": "are going to speak",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vais a hablar"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vais-a-hablar&key=d1a1f562aa7eaae290ff202152efc8a8&region=spain",
+        "translationForms": [
+          {
+            "word": "are going to speak",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "van a hablar"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=van-a-hablar&key=dde69bb18001bb3ae25c79274f4f2c0e",
+        "translationForms": [
+          {
+            "word": "are going to speak",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a hablar"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vas-a-hablar&key=9e10f11999da94d936972ae126eebe82&region=latam",
+        "translationForms": [
+          {
+            "word": "are going to speak",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ]
+  },
+  "past_participle": {
+    "spanish": "",
+    "english": ""
+  },
+  "gerund": {
+    "spanish": "",
+    "english": ""
+  }
+}

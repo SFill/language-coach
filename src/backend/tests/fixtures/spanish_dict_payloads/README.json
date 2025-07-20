@@ -1,0 +1,24 @@
+{
+  "description": "Real Spanish dictionary payloads from SpanishDict.com",
+  "source": "https://www.spanishdict.com",
+  "words_fetched": [
+    "hola",
+    "casa",
+    "correr",
+    "ser",
+    "bueno",
+    "agua",
+    "hablar",
+    "comer",
+    "vivir",
+    "perro",
+    "grande",
+    "rápido"
+  ],
+  "files_pattern": {
+    "word_data": "{word}_word_data.json",
+    "audio_data": "{word}_audio_data.json",
+    "conjugations": "{word}_conjugations.json (verbs only)"
+  },
+  "usage": "Use these files as fixtures in tests by loading the JSON data"
+}

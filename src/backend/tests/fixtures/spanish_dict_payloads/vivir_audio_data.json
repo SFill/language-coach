@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "vivir",
+    "textToPronounce": "vivir",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=vivir&key=be8f7236baa9bed61a9889e813b69679",
+    "pronunciations": [
+      {
+        "id": 76,
+        "ipa": "bi*ˈβiɾ",
+        "abc": "vi*ˈvir",
+        "spa": "bee*ˈbeer",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13893,
+        "ipa": "bi*ˈβiɾ",
+        "abc": "vi*ˈvir",
+        "spa": "bee*ˈbeer",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "to live",
+    "textToPronounce": "live",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=live&key=8bcf59f3f9ee43c0fa4bebaf2be4832e",
+    "pronunciations": [
+      {
+        "id": 5288,
+        "ipa": "lɪv",
+        "abc": "live",
+        "spa": "lihv",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "live"
+      },
+      {
+        "id": 5289,
+        "ipa": "lɪv",
+        "abc": "live",
+        "spa": "lihv",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "live"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

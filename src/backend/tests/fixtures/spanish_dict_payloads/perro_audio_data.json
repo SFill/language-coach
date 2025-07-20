@@ -1,0 +1,93 @@
+{
+  "headword": {
+    "displayText": "perro",
+    "textToPronounce": "perro",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=perro&key=4884d46a13be28ddff5d294afb8d6ad8",
+    "pronunciations": [
+      {
+        "id": 2936,
+        "ipa": "ˈpe*ro",
+        "abc": "ˈpe*rro",
+        "spa": "ˈpeh*rroh",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 2937,
+        "ipa": "ˈpe*ro",
+        "abc": "ˈpe*rro",
+        "spa": "ˈpeh*rroh",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "dog",
+    "textToPronounce": "dog",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=dog&key=0814ce8c75465b5a6ecfaa371c1df80b",
+    "pronunciations": [
+      {
+        "id": 241,
+        "ipa": "dɒg",
+        "abc": "dog",
+        "spa": "dag",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "dog"
+      },
+      {
+        "id": 242,
+        "ipa": "dɑg",
+        "abc": "dog",
+        "spa": "dag",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "dog"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": {
+    "displayText": "difficult",
+    "textToPronounce": "difficult",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=difficult&key=3e41683f800b0f5df13a811dcf3bd01d",
+    "pronunciations": [
+      {
+        "id": 387,
+        "ipa": "ˈdɪ*fɪ*kəlt",
+        "abc": "ˈdi*ffi*cult",
+        "spa": "ˈdih*fih*kuhlt",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "difficult"
+      },
+      {
+        "id": 388,
+        "ipa": "ˈdɪ*fɪ*kəlt",
+        "abc": "ˈdi*ffi*cult",
+        "spa": "ˈdih*fih*kuhlt",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "difficult"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef2"
+  }
+}

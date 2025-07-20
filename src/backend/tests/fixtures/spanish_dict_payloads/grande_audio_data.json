@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "grande",
+    "textToPronounce": "grande",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=grande&key=d13cdfa2bab62ae7f902726e94389340",
+    "pronunciations": [
+      {
+        "id": 1870,
+        "ipa": "ˈgɾan*de",
+        "abc": "ˈgran*de",
+        "spa": "ˈgrahn*deh",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 1871,
+        "ipa": "ˈgɾan*de",
+        "abc": "ˈgran*de",
+        "spa": "ˈgrahn*deh",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "big",
+    "textToPronounce": "big",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=big&key=90633d8dd586a3e6751dbfeefb334e08",
+    "pronunciations": [
+      {
+        "id": 635,
+        "ipa": "bɪg",
+        "abc": "big",
+        "spa": "bihg",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "big"
+      },
+      {
+        "id": 636,
+        "ipa": "bɪg",
+        "abc": "big",
+        "spa": "bihg",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "big"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

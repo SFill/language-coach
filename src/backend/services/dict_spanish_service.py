@@ -340,6 +340,8 @@ def get_spanish_word_definition(words: list[str], include_conjugations: bool = F
         List of dictionaries with word information to match WordDefinitionResponse format
     """
     # override_cache = True
+    # normalizing to be not case sensitive
+    words = [_.lower() for _ in words]
     # Check cache if session is provided
     if not override_cache and session:
         dictionary_from_db = session.exec(

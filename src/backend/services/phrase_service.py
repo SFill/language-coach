@@ -77,6 +77,7 @@ def get_phrase_with_example_and_translation(
                     "phrase_translation": generated["phrase_translation"],
                     "example_translation": generated["example_translation"]
                 }
+
             
             # Save the generated sentence to database if session is provided
             if session:
@@ -110,13 +111,20 @@ def get_phrase_with_example_and_translation(
     
     # Translate both phrase and example sentence if we don't have translations yet
     if not translations:
-        if use_gpt_translation:
-            translations = translate_phrase_and_example_with_gpt(
-                phrase, example_sentence, target_language
-            )
-        else:
-            translations = translate_phrase_and_example_with_google(
-                phrase, example_sentence, target_language
+        try:
+            if use_gpt_translation:
+                translations = translate_phrase_and_example_with_gpt(
+                    phrase, example_sentence, target_language
+                )
+            else:
+                translations = translate_phrase_and_example_with_google(
+                    phrase, example_sentence, target_language
+                )
+        except Exception as e:
+            logger.exception('error getting translation')
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to translate: {str(e)}"
             )
     
     return {
@@ -143,49 +151,44 @@ def translate_phrase_and_example_with_google(
         Dictionary with phrase_translation and example_translation
     """
     
-    try:
-        # Format with context tags for better translation
-        formatted_text = f"<phrase>{phrase}</phrase> <phrase_example>{example_sentence}</phrase_example>"
-        helper = GoogleTranslateHelper()
-        translation = helper.translate(formatted_text, target_language)
+    # Format with context tags for better translation
+    formatted_text = f"<phrase>{phrase}</phrase> <phrase_example>{example_sentence}</phrase_example>"
+    helper = GoogleTranslateHelper()
+    translation = helper.translate(formatted_text, target_language)
+    
+    # Parse the translation to extract phrase and example translations
+    phrase_translation = ""
+    example_translation = ""
+    
+    # Simple parsing - look for the tags in the translation
+    if "<phrase>" in translation and "</phrase>" in translation:
+        start = translation.find("<phrase>") + 8
+        end = translation.find("</phrase>")
+        phrase_translation = translation[start:end].strip()
+    
+    if "<phrase_example>" in translation and "</phrase_example>" in translation:
+        start = translation.find("<phrase_example>") + 16
+        end = translation.find("</phrase_example>")
+        example_translation = translation[start:end].strip()
+    
+    # Fallback if parsing fails
+    if not phrase_translation or not example_translation:
+        # Split by space and try to separate
+        parts = translation.replace("<phrase>", "").replace("</phrase>", "").replace("<phrase_example>", "").replace("</phrase_example>", "").strip().split()
+        if len(parts) >= 2:
+            # Rough heuristic: assume first part is phrase translation
+            phrase_translation = parts[0]
+            example_translation = " ".join(parts[1:])
+        else:
+            phrase_translation = translation
+            example_translation = translation
+    
+    return {
+        "phrase_translation": phrase_translation,
+        "example_translation": example_translation
+    }
+    
         
-        # Parse the translation to extract phrase and example translations
-        phrase_translation = ""
-        example_translation = ""
-        
-        # Simple parsing - look for the tags in the translation
-        if "<phrase>" in translation and "</phrase>" in translation:
-            start = translation.find("<phrase>") + 8
-            end = translation.find("</phrase>")
-            phrase_translation = translation[start:end].strip()
-        
-        if "<phrase_example>" in translation and "</phrase_example>" in translation:
-            start = translation.find("<phrase_example>") + 16
-            end = translation.find("</phrase_example>")
-            example_translation = translation[start:end].strip()
-        
-        # Fallback if parsing fails
-        if not phrase_translation or not example_translation:
-            # Split by space and try to separate
-            parts = translation.replace("<phrase>", "").replace("</phrase>", "").replace("<phrase_example>", "").replace("</phrase_example>", "").strip().split()
-            if len(parts) >= 2:
-                # Rough heuristic: assume first part is phrase translation
-                phrase_translation = parts[0]
-                example_translation = " ".join(parts[1:])
-            else:
-                phrase_translation = translation
-                example_translation = translation
-        
-        return {
-            "phrase_translation": phrase_translation,
-            "example_translation": example_translation
-        }
-        
-    except Exception as e:
-        logger.error(f"Error translating with Google: {str(e)}")
-        # Fallback to GPT if Google fails
-        logger.info("Falling back to GPT translation")
-        return translate_phrase_and_example_with_gpt(phrase, example_sentence, target_language)
 
 def translate_phrase_and_example_with_gpt(
     phrase: str, 
@@ -206,54 +209,48 @@ def translate_phrase_and_example_with_gpt(
     
     prompt = f"""Translate the following to {target_language}:
 
-<phrase>{phrase}</phrase>
-<phrase_example>{example_sentence}</phrase_example>
+    <phrase>{phrase}</phrase>
+    <phrase_example>{example_sentence}</phrase_example>
 
-Provide your translation in the same format:
-<phrase>[phrase translation]</phrase>
-<phrase_example>[example translation]</phrase_example>"""
+    Provide your translation in the same format:
+    <phrase>[phrase translation]</phrase>
+    <phrase_example>[example translation]</phrase_example>
+    """
     
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are a professional translator. Provide accurate, natural translations maintaining the XML format."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.1,
-            max_tokens=200
-        )
-        
-        content = response.choices[0].message.content.strip()
-        
-        # Parse the response
-        phrase_translation = ""
-        example_translation = ""
-        
-        if "<phrase>" in content and "</phrase>" in content:
-            start = content.find("<phrase>") + 8
-            end = content.find("</phrase>")
-            phrase_translation = content[start:end].strip()
-        
-        if "<phrase_example>" in content and "</phrase_example>" in content:
-            start = content.find("<phrase_example>") + 16
-            end = content.find("</phrase_example>")
-            example_translation = content[start:end].strip()
-        
-        if not phrase_translation or not example_translation:
-            raise ValueError("Failed to parse translations from GPT response")
-        
-        return {
-            "phrase_translation": phrase_translation,
-            "example_translation": example_translation
-        }
-        
-    except Exception as e:
-        logger.error(f"Error translating with GPT: {str(e)}")
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to translate: {str(e)}"
-        )
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": "You are a professional translator. Provide accurate, natural translations maintaining the XML format."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.1,
+        max_tokens=200
+    )
+    
+    content = response.choices[0].message.content.strip()
+    
+    # Parse the response
+    phrase_translation = ""
+    example_translation = ""
+    
+    if "<phrase>" in content and "</phrase>" in content:
+        start = content.find("<phrase>") + 8
+        end = content.find("</phrase>")
+        phrase_translation = content[start:end].strip()
+    
+    if "<phrase_example>" in content and "</phrase_example>" in content:
+        start = content.find("<phrase_example>") + 16
+        end = content.find("</phrase_example>")
+        example_translation = content[start:end].strip()
+    
+    if not phrase_translation or not example_translation:
+        raise ValueError("Failed to parse translations from GPT response")
+    
+    return {
+        "phrase_translation": phrase_translation,
+        "example_translation": example_translation
+    }
+
 
 def generate_example_sentence_with_gpt(
     phrase: str,
@@ -338,7 +335,7 @@ def generate_example_sentence_with_gpt(
         }
         
     except Exception as e:
-        logger.error(f"Error generating sentence with GPT: {str(e)}")
+        logger.exception(f"Error generating sentence with GPT:")
         raise HTTPException(
             status_code=500,
             detail=f"Failed to generate example sentence: {str(e)}"

@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "rápido",
+    "textToPronounce": "rápido",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=r%C3%A1pido&key=0370647467988f19560fe9d4291632a1",
+    "pronunciations": [
+      {
+        "id": 3218,
+        "ipa": "ˈra*pi*ðo",
+        "abc": "ˈrá*pi*do",
+        "spa": "ˈrrah*pee*doh",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 3219,
+        "ipa": "ˈra*pi*ðo",
+        "abc": "ˈrá*pi*do",
+        "spa": "ˈrrah*pee*doh",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "fast",
+    "textToPronounce": "fast",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=fast&key=5f9757dc6e6ca15e7b72bc36f6c9d5aa",
+    "pronunciations": [
+      {
+        "id": 771,
+        "ipa": "fæst",
+        "abc": "fast",
+        "spa": "fahst",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "fast"
+      },
+      {
+        "id": 772,
+        "ipa": "fɑst",
+        "abc": "fast",
+        "spa": "fast",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "fast"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

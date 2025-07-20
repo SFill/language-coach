@@ -1,0 +1,664 @@
+[
+  {
+    "subheadword": "bueno",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "adj",
+          "abbrEs": "adj",
+          "nameEn": "adjective",
+          "nameEs": "adjetivo",
+          "sharedPosNameEn": "adjective"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "beneficial",
+            "contextEs": "beneficioso",
+            "gender": null,
+            "id": 1074,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The Mediterranean diet is very good for your health.",
+                    "textEs": "La dieta mediterránea es muy buena para la salud."
+                  }
+                ],
+                "gender": null,
+                "id": 1387,
+                "imagePath": "/dictionary-images/original/3f8a769b-2b02-4d8d-ba53-c31464c4ee45.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "good"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 1,
+            "context": "beneficial",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "good",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/3f8a769b-2b02-4d8d-ba53-c31464c4ee45.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "good"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La dieta mediterránea es muy buena para la salud.",
+                    "The Mediterranean diet is very good for your health."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "useful",
+            "contextEs": "útil",
+            "gender": null,
+            "id": 1075,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "This tool is good for putting up a painting.",
+                    "textEs": "Esta herramienta es buena para montar cuadros."
+                  }
+                ],
+                "gender": null,
+                "id": 1388,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "good"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 2,
+            "context": "useful",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "good",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "good"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Esta herramienta es buena para montar cuadros.",
+                    "This tool is good for putting up a painting."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "of good quality",
+            "contextEs": "de buena calidad",
+            "gender": null,
+            "id": 1076,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I want to invest in a few good furniture pieces.",
+                    "textEs": "Quiero invertir en muebles buenos."
+                  }
+                ],
+                "gender": null,
+                "id": 1389,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "good"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 3,
+            "context": "of good quality",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "good",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "good"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Quiero invertir en muebles buenos.",
+                    "I want to invest in a few good furniture pieces."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "virtuous",
+            "contextEs": "virtuoso",
+            "gender": null,
+            "id": 1077,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "A good man gave his life in the service of this community last night.",
+                    "textEs": "Un buen hombre dio su vida por la comunidad anoche."
+                  }
+                ],
+                "gender": null,
+                "id": 1390,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "good"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 4,
+            "context": "virtuous",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "good",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "good"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Un buen hombre dio su vida por la comunidad anoche.",
+                    "A good man gave his life in the service of this community last night."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "delicious",
+            "contextEs": "delicioso",
+            "gender": null,
+            "id": 1078,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The apple pie was very good.",
+                    "textEs": "La tarta de manzana estaba muy buena."
+                  }
+                ],
+                "gender": null,
+                "id": 1391,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "good"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 5,
+            "context": "delicious",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "good",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "good"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La tarta de manzana estaba muy buena.",
+                    "The apple pie was very good."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "attractive",
+            "contextEs": "atractivo",
+            "gender": null,
+            "id": 1079,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "colloquial",
+                "contextEs": "coloquial",
+                "examples": [
+                  {
+                    "textEn": "That actor is really hot.",
+                    "textEs": "Ese actor está bien bueno."
+                  }
+                ],
+                "gender": null,
+                "id": 1392,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "hot"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 6,
+            "context": "attractive",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "hot",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "hot"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "colloquial",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ese actor está bien bueno.",
+                    "That actor is really hot."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "adjective",
+          "tooltip": {
+            "def": "An adjective is a word that describes a noun (e.g., the big dog).",
+            "href": "https://www.spanishdict.com/guide/descriptive-adjectives-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "interj",
+          "abbrEs": "interj",
+          "nameEn": "interjection",
+          "nameEs": "interjección",
+          "sharedPosNameEn": "interjection"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "used to express agreement",
+            "contextEs": "usado para expresar acuerdo",
+            "gender": null,
+            "id": 2702,
+            "partOfSpeech": {
+              "abbrEn": "interj",
+              "abbrEs": "interj",
+              "nameEn": "interjection",
+              "nameEs": "interjección"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I think it'd be better to go to the French restaurant. - Ok, let's go.",
+                    "textEs": "Creo que sería mejor ir al restaurante francés. - Bueno, vayamos."
+                  }
+                ],
+                "gender": null,
+                "id": 3588,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "ok"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 7,
+            "context": "used to express agreement",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "ok",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "ok"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Creo que sería mejor ir al restaurante francés. - Bueno, vayamos.",
+                    "I think it'd be better to go to the French restaurant. - Ok, let's go."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "used to introduce a statement or question",
+            "contextEs": "usado para introducir un enunciado o una pregunta",
+            "gender": null,
+            "id": 1085,
+            "partOfSpeech": {
+              "abbrEn": "interj",
+              "abbrEs": "interj",
+              "nameEn": "interjection",
+              "nameEs": "interjección"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "So, are we going to order pizza or not?",
+                    "textEs": "Bueno, ¿vamos a pedir pizza o no?"
+                  }
+                ],
+                "gender": null,
+                "id": 1401,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "so"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Would you like a cup of coffee? - Well, ok.",
+                    "textEs": "¿Quieres una taza de café? - Bueno, vale."
+                  }
+                ],
+                "gender": null,
+                "id": 3189,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "well"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 8,
+            "context": "used to introduce a statement or question",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "so",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "so"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Bueno, ¿vamos a pedir pizza o no?",
+                    "So, are we going to order pizza or not?"
+                  ]
+                ]
+              },
+              {
+                "translation": "well",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "well"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Quieres una taza de café? - Bueno, vale.",
+                    "Would you like a cup of coffee? - Well, ok."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "used when answering the phone",
+            "contextEs": "usado al responder al teléfono",
+            "gender": null,
+            "id": 1087,
+            "partOfSpeech": {
+              "abbrEn": "interj",
+              "abbrEs": "interj",
+              "nameEn": "interjection",
+              "nameEs": "interjección"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Hello? Yes, this is he.",
+                    "textEs": "¿Bueno? Sí, él habla."
+                  }
+                ],
+                "gender": null,
+                "id": 1403,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "hello"
+              }
+            ],
+            "subheadword": "bueno",
+            "idx": 9,
+            "context": "used when answering the phone",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "hello",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "hello"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Bueno? Sí, él habla.",
+                    "Hello? Yes, this is he."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "interjection",
+          "tooltip": {
+            "def": "An interjection is a short utterance that expresses emotion, hesitation, or protest (e.g., Wow!).",
+            "href": "https://www.spanishdict.com/guide/spanish-exclamatory-words-and-expressions"
+          }
+        }
+      }
+    ]
+  }
+]

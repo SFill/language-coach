@@ -1,0 +1,2694 @@
+{
+  "infinitive": "ser",
+  "translation": "be",
+  "is_reflexive": 1,
+  "tenses": {
+    "presentIndicative": [
+      {
+        "conjugationForms": [
+          "soy"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=soy&key=8dd71b2b80becf1f67953e23cef6df43",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "am",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 2,
+            "endIdx": 3,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "eres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=eres&key=32df10eebdf937fcb38a369fa8b5f836",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "es"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=es&key=a814c76a163494ecf13a0e043bda2d22",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "is",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "somos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=somos&key=3e5b4b84a3b7aaa40280690295689d9b",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sois"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=sois&key=c136e3c5448a77a4f8f2ea78d69441e4&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "son"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=son&key=eda4a85e88c3d15eda7efb67f7405e30",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sos"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=sos&key=f75a986c2a2f1afb5b0cf0907fb7e5d7&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "preteritIndicative": [
+      {
+        "conjugationForms": [
+          "fui"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=fui&key=3b7114ad93274e24021a07c5ce025005",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 3,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuiste"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=fuiste&key=0d8e7e1d069545110ce83b898051617e",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fue"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=fue&key=1ae93ba50466b898cf7ec07acc3b9736",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 3,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuimos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=fuimos&key=bb2ae8c0f67934727c8ebbfa4ee98ced",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuisteis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=fuisteis&key=b450dcc865738a948a90596db80a4b74&region=spain&name=maria22k",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueron"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=fueron&key=7aec8efdfb7ef57231a54ca1ac541446",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuiste"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=fuiste&key=0d8e7e1d069545110ce83b898051617e&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "imperfectIndicative": [
+      {
+        "conjugationForms": [
+          "era"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=era&key=32e9f81ba5bad978d2bcdd72ab69b1c0",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "eras"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=eras&key=fb7d5489cc41003c8dbe26e94650764e",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "era"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=era&key=32e9f81ba5bad978d2bcdd72ab69b1c0",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "éramos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=%C3%A9ramos&key=7922fb6f940375e26f9523c7e10381df",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "erais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=erais&key=af77f478fe5b42fee4733ff6996aae00&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "eran"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=eran&key=f861aa1dd4d405970e4e93d2cd8bad1c",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "eras"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=eras&key=fb7d5489cc41003c8dbe26e94650764e&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "conditionalIndicative": [
+      {
+        "conjugationForms": [
+          "sería"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=ser%C3%ADa&key=b15c449a77670e274ecd1a8de320934c",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=ser%C3%ADas&key=bb0f8e37ec3f239d941e8c7485aae61d",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sería"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ser%C3%ADa&key=b15c449a77670e274ecd1a8de320934c",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=ser%C3%ADamos&key=e183e7eb66c8ef4b90e5ed38453c6efe",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=ser%C3%ADais&key=771d58b2ff745263490e6aa88fe2de68&region=spain",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=ser%C3%ADan&key=19af6f05c302381b457ae071e15621bd",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=ser%C3%ADas&key=bb0f8e37ec3f239d941e8c7485aae61d&region=latam",
+        "translationForms": [
+          {
+            "word": "would be",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureIndicative": [
+      {
+        "conjugationForms": [
+          "seré"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=ser%C3%A9&key=7e66e23a98878ce98ee9fb41d3b0834f",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serás"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=ser%C3%A1s&key=d59ef57c94998b15315a8bf22ee9e3e5",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "será"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ser%C3%A1&key=9f0ee8e4f52b131cc48fa39a21e86d72",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=seremos&key=061a271155167e7cf3b875c1a4cd3b6f",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=ser%C3%A9is&key=5a95ed63c0d9f797b18996628f634d94&region=spain",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serán"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=ser%C3%A1n&key=fe41ec22e7ca1be719d7296115819ba1",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "serás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=ser%C3%A1s&key=d59ef57c94998b15315a8bf22ee9e3e5&region=latam",
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentSubjunctive": [
+      {
+        "conjugationForms": [
+          "sea"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=sea&key=d578db232f9d6b09977099e8787d6a7b",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "am",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=seas&key=428c155461be6ac24a5a3cf166853cde",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sea"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=sea&key=d578db232f9d6b09977099e8787d6a7b",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "is",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=seamos&key=7b0bd8292c0819365c3ab9ef2d2257cb",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seáis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=se%C3%A1is&key=1bc209497f75459529bf4c1d7939d6bb&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sean"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=sean&key=104631c75bc805ef1660ad73191e8903",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=seas&key=428c155461be6ac24a5a3cf166853cde&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "are",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "imperfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "fuera",
+          "fuese"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=fuera%2Cfuese&key=23bc0d5e347a5d818948d7cf4af5d4d8",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueras",
+          "fueses"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=fueras%2Cfueses&key=f8dd50d78d93d4ba34b92be952a92760",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuera",
+          "fuese"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=fuera%2Cfuese&key=23bc0d5e347a5d818948d7cf4af5d4d8",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "was",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuéramos",
+          "fuésemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=fu%C3%A9ramos%2Cfu%C3%A9semos&key=28757a09642f38a59df442b0288011f8",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuerais",
+          "fueseis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=fuerais%2Cfueseis&key=5fea7f10b50a2627a1ac997b36135797&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueran",
+          "fuesen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=fueran%2Cfuesen&key=7ba9dd01252fdec868dcf4f942d8734c",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueras",
+          "fueses"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=fueras%2Cfueses&key=f8dd50d78d93d4ba34b92be952a92760&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "were",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          },
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "futureSubjunctive": [
+      {
+        "conjugationForms": [
+          "fuere"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=fuere&key=f5cdfe2a4b5c3102ab4591259be58ab9",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "I"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=fueres&key=082b5fcaefa09c72835656aa8cb95dff",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuere"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=fuere&key=f5cdfe2a4b5c3102ab4591259be58ab9",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuéremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=fu%C3%A9remos&key=2a19bd506bb00c995a8766713903fd25",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fuereis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=fuereis&key=5039a8ec053f30cbde09408548353de4&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=fueren&key=7068989317e47b55f0281921b9f16bd8",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "fueres"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=fueres&key=082b5fcaefa09c72835656aa8cb95dff&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "will be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 0,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "imperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "sé"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=s%C3%A9&key=1abaf2b31c50d4aae9332f1783fc62ff",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sea"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=sea&key=d578db232f9d6b09977099e8787d6a7b",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "be",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "seamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=seamos&key=7b0bd8292c0819365c3ab9ef2d2257cb",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "let's be",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sed"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=sed&key=ffca273d0f4920f32dbd14ea6402c3c7&region=spain",
+        "translationForms": [
+          {
+            "word": "be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sean"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=sean&key=104631c75bc805ef1660ad73191e8903",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "be",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 1,
+            "endIdx": 2,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "sé"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=s%C3%A9&key=1abaf2b31c50d4aae9332f1783fc62ff&region=latam",
+        "translationForms": [
+          {
+            "word": "be",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "negativeImperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "no seas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=no-seas&key=6f8d313e60f89baf00c3b85396cf4754",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "don't be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no sea"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=no-sea&key=1283366f3c9e172b0a568dacf57042f6",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "don't be",
+            "pronoun": "he/she"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no seamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=no-seamos&key=fdddb920484edbaf5c2a5dcd88a43799",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "let's not be",
+            "pronoun": "we"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no seáis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=no-se%C3%A1is&key=d3f17de8ba2a65f8199c2616b60cee46&region=spain",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "don't be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no sean"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=no-sean&key=8971f680e1bf73d44b048b6b63fa5b5a",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "don't be",
+            "pronoun": "they"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no seas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=no-seas&key=6f8d313e60f89baf00c3b85396cf4754&region=latam",
+        "isIrregular": true,
+        "translationForms": [
+          {
+            "word": "don't be",
+            "pronoun": "you"
+          }
+        ],
+        "conjugationFormIrregularities": [
+          {
+            "startIdx": 4,
+            "endIdx": 5,
+            "onlyDiffersByConsecutiveMissingExtraLettersInExpectedConjugation": false
+          }
+        ]
+      }
+    ],
+    "presentContinuous": [
+      {
+        "conjugationForms": [
+          "estoy siendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estoy-siendo&key=6b9dcf281d0db801d33b34a149eeea8d",
+        "translationForms": [
+          {
+            "word": "am being",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás siendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-siendo&key=3ddc8ef632f10c3a027bec548c04be3e",
+        "translationForms": [
+          {
+            "word": "are being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "está siendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=est%C3%A1-siendo&key=0adaf7bdbfd99cd47d7ad22c3f36e1cf",
+        "translationForms": [
+          {
+            "word": "is being",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estamos siendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estamos-siendo&key=0393782be66404a568ac4f852fe5dbe6",
+        "translationForms": [
+          {
+            "word": "are being",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estáis siendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1is-siendo&key=2b160ba3069aa28813c50ab7953ec9fe&region=spain",
+        "translationForms": [
+          {
+            "word": "are being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "están siendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=est%C3%A1n-siendo&key=52edac7e2222935911f412727dd506c9",
+        "translationForms": [
+          {
+            "word": "are being",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás siendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-siendo&key=3ddc8ef632f10c3a027bec548c04be3e&region=latam",
+        "translationForms": [
+          {
+            "word": "are being",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritContinuous": [
+      {
+        "conjugationForms": [
+          "estuve siendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estuve-siendo&key=e75ac6b8b060d16449beba2d04894bab",
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste siendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estuviste-siendo&key=c91366e306f18dbbfc0160787623f4eb",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvo siendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estuvo-siendo&key=92fe511a58c99a2f59b448366b8925e3",
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvimos siendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estuvimos-siendo&key=951bd84750d4ac2ae7fff8b0e3f6c22a",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvisteis siendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estuvisteis-siendo&key=3703f46bef362dca610bbabfbfbac62f&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvieron siendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estuvieron-siendo&key=590f8c655a1fdfbebf7a8476c9b83dec",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste siendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estuviste-siendo&key=c91366e306f18dbbfc0160787623f4eb&region=latam",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectContinuous": [
+      {
+        "conjugationForms": [
+          "estaba siendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estaba-siendo&key=9950a397545e24f778854f41e566a3d1",
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas siendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estabas-siendo&key=11012b561898e57ce5c72d8a978e3b99",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaba siendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estaba-siendo&key=9950a397545e24f778854f41e566a3d1",
+        "translationForms": [
+          {
+            "word": "was being",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estábamos siendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1bamos-siendo&key=8b83b5d534590043ff730b5eb322ac17",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabais siendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estabais-siendo&key=972305ec93a8644dc809d8df89ecf58a&region=spain",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaban siendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estaban-siendo&key=81cb1c8ccc1ebcfd7113217ba18b5d94",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas siendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estabas-siendo&key=11012b561898e57ce5c72d8a978e3b99&region=latam",
+        "translationForms": [
+          {
+            "word": "were being",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalContinuous": [
+      {
+        "conjugationForms": [
+          "estaría siendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-siendo&key=7c4a99d2e019432a2a7449a5e9153cbf",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías siendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-siendo&key=45a6f7ccc1789eb99fdfb981cdecd7da",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaría siendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-siendo&key=7c4a99d2e019432a2a7449a5e9153cbf",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríamos siendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADamos-siendo&key=dacc5eb3cdc79471db6cf71be92d33b0",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríais siendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADais-siendo&key=89a2b0a2a9cd10ba18fe0b6f7ea4364c&region=spain",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarían siendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADan-siendo&key=d4de31884bd61cc014bb957416517603",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías siendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-siendo&key=45a6f7ccc1789eb99fdfb981cdecd7da&region=latam",
+        "translationForms": [
+          {
+            "word": "would be being",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureContinuous": [
+      {
+        "conjugationForms": [
+          "estaré siendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%A9-siendo&key=4a8df1f260de3a6ed4c26ee720fd3048",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás siendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-siendo&key=563470c8ffc918ef267bb1b7432a0cbf",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estará siendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1-siendo&key=13480495d7a73798d1d83fbbec90b682",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaremos siendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estaremos-siendo&key=a40bbbc52f187c8198e01cd13156f961",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaréis siendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%A9is-siendo&key=6b6857a420214306c4f32a4c1962e0da&region=spain",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarán siendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1n-siendo&key=bd97a7007d3809badb3a518a0ee70be1",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás siendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-siendo&key=563470c8ffc918ef267bb1b7432a0cbf&region=latam",
+        "translationForms": [
+          {
+            "word": "will be being",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfect": [
+      {
+        "conjugationForms": [
+          "he sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=he-sido&key=0559ff2f6fba160530ed20673682759c",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=has-sido&key=6e537be80a0eb3fc6784c67cc1258d37",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "ha sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ha-sido&key=4d1b9327175bd6ca13cb267d8ac42f0f",
+        "translationForms": [
+          {
+            "word": "has been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hemos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hemos-sido&key=6defcd96e0908f9763855c6a97d67a7d",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habéis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%A9is-sido&key=1c3155878ad426aed00a7e9ce20f4ea6&region=spain",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "han sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=han-sido&key=a0d7e49604514694ee0321fc730810bb",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=has-sido&key=6e537be80a0eb3fc6784c67cc1258d37&region=latam",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritPerfect": [
+      {
+        "conjugationForms": [
+          "hube sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hube-sido&key=751042c0b286f5d932df58ea2361329a",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubiste-sido&key=65973a37bcf008e1a4f95f4c03ff4c6d",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubo sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubo-sido&key=5f6145dcadd1b6f7bd5a5618115817cb",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubimos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubimos-sido&key=a37c60cf1bdb59910ede0241a6ec2977",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubisteis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubisteis-sido&key=d63feaa999c86ab5e06dea3e9c223ab9&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieron sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieron-sido&key=fb68a9f6167b318d8601bae0524db3d1",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubiste-sido&key=65973a37bcf008e1a4f95f4c03ff4c6d&region=latam",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfect": [
+      {
+        "conjugationForms": [
+          "había sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-sido&key=a7c06c92016bd9596fcd5ed6256cebae",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-sido&key=1b58467e6b41b6cec7ce048a79ea7d38",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "había sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-sido&key=a7c06c92016bd9596fcd5ed6256cebae",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíamos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADamos-sido&key=4d595b2dc9e702c57daa1f4c4b2bfc8c",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíais sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADais-sido&key=ec5498481bade72ef97b3fb092bb13b5&region=spain",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habían sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADan-sido&key=3b165f6f2d38055029302ae18f957e2f",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-sido&key=1b58467e6b41b6cec7ce048a79ea7d38&region=latam",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalPerfect": [
+      {
+        "conjugationForms": [
+          "habría sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-sido&key=f939ed4a247bb8dae1fdb71add7685c6",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-sido&key=f452efd64a9320fc1e38c13a052527ad",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habría sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-sido&key=f939ed4a247bb8dae1fdb71add7685c6",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríamos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADamos-sido&key=7c5c3be99195713217386d4011936037",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríais sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADais-sido&key=517696b6ff266cc9bfb7e55925b35675&region=spain",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrían sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADan-sido&key=3c0a0a04ec505fb284854b19dfcafa85",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-sido&key=f452efd64a9320fc1e38c13a052527ad&region=latam",
+        "translationForms": [
+          {
+            "word": "would have been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfect": [
+      {
+        "conjugationForms": [
+          "habré sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%A9-sido&key=ee6a1ccfbbf2d38122e5e6b39082648e",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-sido&key=181b9ab4f3d1fbe03f37b19ae5fdb8b1",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrá sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1-sido&key=1625009426778f719cf8db6ffab75d65",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habremos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habremos-sido&key=51bff5efb7ed1e8323c501917d9e48d7",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habréis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%A9is-sido&key=ca5ec917db8a8b35c8f003a7fbf6415f&region=spain",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrán sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1n-sido&key=1c5d0e1ce631b8fc653a11204baabbb5",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-sido&key=181b9ab4f3d1fbe03f37b19ae5fdb8b1&region=latam",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "haya sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=haya-sido&key=1667b2623ee02c0160ba4d491f65d3f3",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hayas-sido&key=9ce166198ce584e4ccaa5598f34bf42f",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "haya sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=haya-sido&key=1667b2623ee02c0160ba4d491f65d3f3",
+        "translationForms": [
+          {
+            "word": "has been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayamos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hayamos-sido&key=bd9af562ea71658a38d7b9d3b4318912",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayáis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hay%C3%A1is-sido&key=eb93c30f546e58a0ff3b55ec393ff578&region=spain",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayan sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hayan-sido&key=6cdf41656e0c817edb0d407854529a38",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hayas-sido&key=9ce166198ce584e4ccaa5598f34bf42f&region=latam",
+        "translationForms": [
+          {
+            "word": "have been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiera sido",
+          "hubiese sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiera-sido%2Chubiese-sido&key=9f6e09c1c81a385b14010c3b53b513d4",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras sido",
+          "hubieses sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieras-sido%2Chubieses-sido&key=8d3ed8ceca45aef391c94b76df008502",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiera sido",
+          "hubiese sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiera-sido%2Chubiese-sido&key=9f6e09c1c81a385b14010c3b53b513d4",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéramos sido",
+          "hubiésemos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9ramos-sido%2Chubi%C3%A9semos-sido&key=91db449a0c601ca9fcccd4b0a8962e52",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubierais sido",
+          "hubieseis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubierais-sido%2Chubieseis-sido&key=9f0adf9774b54b071b41846040a26442&region=spain",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieran sido",
+          "hubiesen sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieran-sido%2Chubiesen-sido&key=c412ce5097147dc4d07253ae6e62993b",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras sido",
+          "hubieses sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieras-sido%2Chubieses-sido&key=8d3ed8ceca45aef391c94b76df008502&region=latam",
+        "translationForms": [
+          {
+            "word": "had been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiere sido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiere-sido&key=1c3d568eeb2a9538b0b29a373276dbf7",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres sido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieres-sido&key=f7be77ae46ebe622f87997faba36c6d1",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiere sido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiere-sido&key=1c3d568eeb2a9538b0b29a373276dbf7",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéremos sido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9remos-sido&key=28f9940f24d1e2d8f1df78f793f9169b",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiereis sido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubiereis-sido&key=82a85bc5cbbae57e6b0c2582c5b6635e&region=spain",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieren sido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieren-sido&key=fc0db49674f8304cbe749229eb572bfa",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres sido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieres-sido&key=f7be77ae46ebe622f87997faba36c6d1&region=latam",
+        "translationForms": [
+          {
+            "word": "will have been",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "informalFuture": [
+      {
+        "conjugationForms": [
+          "voy a ser"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=voy-a-ser&key=be6d1b28618a6c638b19a5be99b8011a",
+        "translationForms": [
+          {
+            "word": "am going to be",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a ser"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vas-a-ser&key=5dc0def9451582ac1c69546bde9a290c",
+        "translationForms": [
+          {
+            "word": "are going to be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "va a ser"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=va-a-ser&key=b8b819b6953a36bbd0bb9b63c6c970f5",
+        "translationForms": [
+          {
+            "word": "is going to be",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vamos a ser"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vamos-a-ser&key=88e34829ee2c2143af49061d9ff747ff",
+        "translationForms": [
+          {
+            "word": "are going to be",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vais a ser"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vais-a-ser&key=7c0a1b7160299ae0ea7dbf2afd00fa05&region=spain",
+        "translationForms": [
+          {
+            "word": "are going to be",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "van a ser"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=van-a-ser&key=3495957aa2e3bd5e7ab55adaa17dbe35",
+        "translationForms": [
+          {
+            "word": "are going to be",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a ser"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vas-a-ser&key=5dc0def9451582ac1c69546bde9a290c&region=latam",
+        "translationForms": [
+          {
+            "word": "are going to be",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ]
+  },
+  "past_participle": {
+    "spanish": "",
+    "english": ""
+  },
+  "gerund": {
+    "spanish": "",
+    "english": ""
+  }
+}

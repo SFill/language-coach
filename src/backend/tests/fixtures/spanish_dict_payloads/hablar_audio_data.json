@@ -1,0 +1,93 @@
+{
+  "headword": {
+    "displayText": "hablar",
+    "textToPronounce": "hablar",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=hablar&key=12eafa53368124eeab77299666fd6cdc",
+    "pronunciations": [
+      {
+        "id": 38,
+        "ipa": "a*ˈβlaɾ",
+        "abc": "ha*ˈblar",
+        "spa": "ah*ˈblahr",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13808,
+        "ipa": "a*ˈβlaɾ",
+        "abc": "ha*ˈblar",
+        "spa": "ah*ˈblahr",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "to speak",
+    "textToPronounce": "speak",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=speak&key=4ce5cdd560cdc13376a6a0cbd78a413d",
+    "pronunciations": [
+      {
+        "id": 78075,
+        "ipa": "spik",
+        "abc": "speak",
+        "spa": "spik",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "speak"
+      },
+      {
+        "id": 78076,
+        "ipa": "spik",
+        "abc": "speak",
+        "spa": "spik",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "speak"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": {
+    "displayText": "to talk",
+    "textToPronounce": "talk",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=talk&key=81d393727bfbc3e69c92ec0cb1872238",
+    "pronunciations": [
+      {
+        "id": 6560,
+        "ipa": "tɑk",
+        "abc": "talk",
+        "spa": "tak",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "talk"
+      },
+      {
+        "id": 6561,
+        "ipa": "tɔk",
+        "abc": "talk",
+        "spa": "tawk",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "talk"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef2"
+  }
+}

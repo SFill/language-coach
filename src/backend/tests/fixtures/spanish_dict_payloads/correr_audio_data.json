@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "correr",
+    "textToPronounce": "correr",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=correr&key=2c6f138375ad40748f47f368c25d2351",
+    "pronunciations": [
+      {
+        "id": 107,
+        "ipa": "ko*ˈreɾ",
+        "abc": "co*ˈrrer",
+        "spa": "koh*ˈrrehr",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13764,
+        "ipa": "ko*ˈreɾ",
+        "abc": "co*ˈrrer",
+        "spa": "koh*ˈrrehr",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "to run",
+    "textToPronounce": "run",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=run&key=c04845fc55bc012b081204df6bce152e",
+    "pronunciations": [
+      {
+        "id": 248,
+        "ipa": "ɹən",
+        "abc": "run",
+        "spa": "ruhn",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "run"
+      },
+      {
+        "id": 4392,
+        "ipa": "ɹən",
+        "abc": "run",
+        "spa": "ruhn",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "run"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

@@ -1,0 +1,931 @@
+[
+  {
+    "subheadword": "hablar",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vi",
+          "abbrEs": "vi",
+          "nameEn": "intransitive verb",
+          "nameEs": "verbo intransitivo",
+          "sharedPosNameEn": "intransitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to articulate words",
+            "contextEs": "articular palabras",
+            "gender": null,
+            "id": 733,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Babies start speaking at around 18 months.",
+                    "textEs": "Los bebés comienzan a hablar a los 18 meses."
+                  }
+                ],
+                "gender": null,
+                "id": 1004,
+                "imagePath": "/dictionary-images/original/to%20speak.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I can hear someone talking, but I don't know where's it coming from.",
+                    "textEs": "Escucho a alguien hablando, pero no sé de dónde viene."
+                  }
+                ],
+                "gender": null,
+                "id": 43643,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to talk"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 1,
+            "context": "to articulate words",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to speak",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/to%20speak.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Los bebés comienzan a hablar a los 18 meses.",
+                    "Babies start speaking at around 18 months."
+                  ]
+                ]
+              },
+              {
+                "translation": "to talk",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to talk"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Escucho a alguien hablando, pero no sé de dónde viene.",
+                    "I can hear someone talking, but I don't know where's it coming from."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to converse",
+            "contextEs": "conversar",
+            "gender": null,
+            "id": 734,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Do you need someone to talk to?",
+                    "textEs": "¿Necesitas a alguien con quien hablar?"
+                  }
+                ],
+                "gender": null,
+                "id": 1005,
+                "imagePath": "/dictionary-images/original/961bed30-1aca-4046-b505-cb2bc31d079e.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to talk"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Can we speak in private?",
+                    "textEs": "¿Podemos hablar en privado?"
+                  }
+                ],
+                "gender": null,
+                "id": 43644,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 2,
+            "context": "to converse",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to talk",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/961bed30-1aca-4046-b505-cb2bc31d079e.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to talk"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Necesitas a alguien con quien hablar?",
+                    "Do you need someone to talk to?"
+                  ]
+                ]
+              },
+              {
+                "translation": "to speak",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Podemos hablar en privado?",
+                    "Can we speak in private?"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to have a conversation",
+            "contextEs": "conversar",
+            "gender": null,
+            "id": 738,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "That's all people speak about.",
+                    "textEs": "No se habla de otra cosa."
+                  }
+                ],
+                "gender": null,
+                "id": 1009,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 3,
+            "context": "to have a conversation",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to speak",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "No se habla de otra cosa.",
+                    "That's all people speak about."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to give a speech",
+            "contextEs": "dar un discurso",
+            "gender": null,
+            "id": 3734,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He spoke at length about the reforms the government had proposed.",
+                    "textEs": "Habló un buen rato de las reformas que había propuesto el gobierno."
+                  }
+                ],
+                "gender": null,
+                "id": 5107,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 4,
+            "context": "to give a speech",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to speak",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Habló un buen rato de las reformas que había propuesto el gobierno.",
+                    "He spoke at length about the reforms the government had proposed."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to speak on the phone",
+            "contextEs": "llamar por teléfono",
+            "gender": null,
+            "id": 26715,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Good afternoon, may I speak with Mrs. Martinez? - Who is calling?",
+                    "textEs": "Buenas tardes, ¿se encuentra la Sra. Martínez? - ¿Quién habla?"
+                  }
+                ],
+                "gender": null,
+                "id": 43646,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to call"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 5,
+            "context": "to speak on the phone",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to call",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to call"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Buenas tardes, ¿se encuentra la Sra. Martínez? - ¿Quién habla?",
+                    "Good afternoon, may I speak with Mrs. Martinez? - Who is calling?"
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "intransitive verb",
+          "tooltip": {
+            "def": "An intransitive verb is one that does not require a direct object (e.g., The man sneezed.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vtr",
+          "abbrEs": "vtr",
+          "nameEn": "transitive verb",
+          "nameEs": "verbo transitivo",
+          "sharedPosNameEn": "transitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to be able to communicate in",
+            "contextEs": "poder comunicarse en",
+            "gender": null,
+            "id": 735,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I speak five languages and can read ten.",
+                    "textEs": "Hablo cinco idiomas y leo diez."
+                  }
+                ],
+                "gender": null,
+                "id": 1006,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 6,
+            "context": "to be able to communicate in",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to speak",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Hablo cinco idiomas y leo diez.",
+                    "I speak five languages and can read ten."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to deal with",
+            "contextEs": "tratar",
+            "gender": null,
+            "id": 26717,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "You need to discuss that directly with the principal.",
+                    "textEs": "Eso tienes que hablarlo directamente con el director."
+                  }
+                ],
+                "gender": null,
+                "id": 43648,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to discuss"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "You really don't have anything to say to me?",
+                    "textEs": "¿Verdaderamente no tienes nada de qué hablarme?"
+                  }
+                ],
+                "gender": null,
+                "id": 43649,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to say"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 7,
+            "context": "to deal with",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to discuss",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to discuss"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Eso tienes que hablarlo directamente con el director.",
+                    "You need to discuss that directly with the principal."
+                  ]
+                ]
+              },
+              {
+                "translation": "to say",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to say"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Verdaderamente no tienes nada de qué hablarme?",
+                    "You really don't have anything to say to me?"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to call",
+            "contextEs": "llamar",
+            "gender": null,
+            "id": 26716,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Arg",
+                "abbrEs": "Arg",
+                "nameEn": "Argentina",
+                "nameEs": "Argentina"
+              },
+              {
+                "abbrEn": "ElSal",
+                "abbrEs": "ElSal",
+                "nameEn": "El Salvador",
+                "nameEs": "El Salvador"
+              },
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Now that you have her number, are you going to phone her?",
+                    "textEs": "Ahora que tienes su número, ¿le vas a hablar?"
+                  }
+                ],
+                "gender": null,
+                "id": 43647,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to phone"
+              }
+            ],
+            "subheadword": "hablar",
+            "idx": 8,
+            "context": "to call",
+            "regionsDisplay": [
+              {
+                "name": "Argentina",
+                "tooltip": {
+                  "def": "Regionalism used in Argentina"
+                }
+              },
+              {
+                "name": "El Salvador",
+                "tooltip": {
+                  "def": "Regionalism used in El Salvador"
+                }
+              },
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to phone",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to phone"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ahora que tienes su número, ¿le vas a hablar?",
+                    "Now that you have her number, are you going to phone her?"
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "transitive verb",
+          "tooltip": {
+            "def": "A transitive verb is a verb that requires a direct object (e.g., I bought a book.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "subheadword": "hablarse",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vrecip",
+          "abbrEs": "vrecip",
+          "nameEn": "reciprocal verb",
+          "nameEs": "verbo recíproco",
+          "sharedPosNameEn": "reciprocal verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to have a conversation; often used with \"con\"",
+            "contextEs": "conversar; usado frecuentemente con \"con\"",
+            "gender": null,
+            "id": 737,
+            "partOfSpeech": {
+              "abbrEn": "vrecip",
+              "abbrEs": "vrecip",
+              "nameEn": "reciprocal verb",
+              "nameEs": "verbo recíproco"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "They speak to each other rudely.",
+                    "textEs": "Se hablan de mala manera."
+                  }
+                ],
+                "gender": null,
+                "id": 1008,
+                "imagePath": "/dictionary-images/original/4746fb7c-05a6-4819-aebb-f7a95c0c4581.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak to each other"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "They should talk to each other more often to avoid this type of issue coming up.",
+                    "textEs": "Deberían hablarse con más frecuencia para que no surja este tipo de problema."
+                  }
+                ],
+                "gender": null,
+                "id": 262155,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to talk to each other"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Don't you speak to your neighbor anymore?",
+                    "textEs": "¿Ya no te hablas con la vecina?"
+                  }
+                ],
+                "gender": null,
+                "id": 262101,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to speak to"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The couple's parents don't talk to each other.",
+                    "textEs": "Los padres de los novios no se hablan."
+                  }
+                ],
+                "gender": null,
+                "id": 262156,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to talk to"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The cousins aren't on speaking terms after the fight over the inheritance.",
+                    "textEs": "Los primos no se hablan después de la pelea sobre la herencia."
+                  }
+                ],
+                "gender": null,
+                "id": 43645,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be on speaking terms"
+              }
+            ],
+            "subheadword": "hablarse",
+            "idx": 9,
+            "context": "to have a conversation; often used with \"con\"",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to speak to each other",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/4746fb7c-05a6-4819-aebb-f7a95c0c4581.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak to each other"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Se hablan de mala manera.",
+                    "They speak to each other rudely."
+                  ]
+                ]
+              },
+              {
+                "translation": "to talk to each other",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to talk to each other"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Deberían hablarse con más frecuencia para que no surja este tipo de problema.",
+                    "They should talk to each other more often to avoid this type of issue coming up."
+                  ]
+                ]
+              },
+              {
+                "translation": "to speak to",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to speak to"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Ya no te hablas con la vecina?",
+                    "Don't you speak to your neighbor anymore?"
+                  ]
+                ]
+              },
+              {
+                "translation": "to talk to",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to talk to"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "d",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Los padres de los novios no se hablan.",
+                    "The couple's parents don't talk to each other."
+                  ]
+                ]
+              },
+              {
+                "translation": "to be on speaking terms",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be on speaking terms"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "e",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Los primos no se hablan después de la pelea sobre la herencia.",
+                    "The cousins aren't on speaking terms after the fight over the inheritance."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "reciprocal verb",
+          "tooltip": {
+            "def": "A reciprocal verb is a verb that indicates that two or more subjects perform an action on each other (e.g., Ellos se abrazan.).",
+            "href": "https://www.spanishdict.com/guide/reciprocal-verbs-and-reciprocal-pronouns"
+          }
+        }
+      }
+    ]
+  }
+]

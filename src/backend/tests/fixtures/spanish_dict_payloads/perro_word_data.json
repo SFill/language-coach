@@ -1,0 +1,728 @@
+[
+  {
+    "subheadword": "el perro, la perra, perro",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "CH"
+        },
+        "senses": [
+          {
+            "contextEn": "animal",
+            "contextEs": "animal",
+            "gender": "CH",
+            "id": 2311,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I walk the dog three times a day.",
+                    "textEs": "Saco al perro tres veces al día."
+                  }
+                ],
+                "gender": null,
+                "id": 3069,
+                "imagePath": "/dictionary-images/original/dog.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "dog"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 1,
+            "context": "animal",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "dog",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/dog.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "dog"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Saco al perro tres veces al día.",
+                    "I walk the dog three times a day."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine or feminine noun",
+          "tooltip": {
+            "def": "This means that the noun can be masculine or feminine, depending on the gender of the noun it refers to (e.g., el doctor, la doctora).",
+            "href": "https://www.spanishdict.com/guide/professions-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "M"
+        },
+        "senses": [
+          {
+            "contextEn": "unpleasant person",
+            "contextEs": "persona desagradable",
+            "gender": "M",
+            "id": 2312,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [
+              {
+                "abbrEn": "pej",
+                "abbrEs": "pey",
+                "nameEn": "pejorative",
+                "nameEs": "peyorativo"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "masculine",
+                "contextEs": "masculino",
+                "examples": [
+                  {
+                    "textEn": "All of her ex-boyfriends were total pigs.",
+                    "textEs": "Todos sus exnovios eran perros de verdad."
+                  }
+                ],
+                "gender": null,
+                "id": 3071,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "pig"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 2,
+            "context": "unpleasant person",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [
+              {
+                "name": "pejorative",
+                "tooltip": {
+                  "def": "An offensive word or phrase used to degrade a person or group of people based on race, gender, sexual preference, etc. (e.g., redneck)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "pig",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "pig"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "masculine",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Todos sus exnovios eran perros de verdad.",
+                    "All of her ex-boyfriends were total pigs."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "promiscuous man",
+            "contextEs": "hombre promiscuo",
+            "gender": "M",
+            "id": 150080,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "CentAm",
+                "abbrEs": "CentAm",
+                "nameEn": "Central America",
+                "nameEs": "Centroamérica"
+              },
+              {
+                "abbrEn": "Col",
+                "abbrEs": "Col",
+                "nameEn": "Colombia",
+                "nameEs": "Colombia"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "pej",
+                "abbrEs": "pey",
+                "nameEn": "pejorative",
+                "nameEs": "peyorativo"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He's a womanizer. He's not looking for a relationship.",
+                    "textEs": "Es un perro. No busca una relación."
+                  }
+                ],
+                "gender": null,
+                "id": 246052,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "womanizer"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "That player slept with five of my friends.",
+                    "textEs": "Ese perro se acostó con cinco de mis amigas."
+                  }
+                ],
+                "gender": null,
+                "id": 246053,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [
+                  {
+                    "abbrEn": "sla",
+                    "abbrEs": "jer",
+                    "nameEn": "slang",
+                    "nameEs": "jerga"
+                  }
+                ],
+                "translation": "player"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 3,
+            "context": "promiscuous man",
+            "regionsDisplay": [
+              {
+                "name": "Central America",
+                "tooltip": {
+                  "def": "Regionalism used in Central America: Guatemala, El Salvador, Honduras, Nicaragua, Costa Rica, and Panama"
+                }
+              },
+              {
+                "name": "Colombia",
+                "tooltip": {
+                  "def": "Regionalism used in Colombia"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "pejorative",
+                "tooltip": {
+                  "def": "An offensive word or phrase used to degrade a person or group of people based on race, gender, sexual preference, etc. (e.g., redneck)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "womanizer",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "womanizer"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Es un perro. No busca una relación.",
+                    "He's a womanizer. He's not looking for a relationship."
+                  ]
+                ]
+              },
+              {
+                "translation": "player",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "player"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [
+                  {
+                    "name": "slang",
+                    "tooltip": {
+                      "def": "A very informal word or phrase used by a particular group or community as a substitute for standard language (e.g., joint, john)."
+                    }
+                  }
+                ],
+                "examplesDisplay": [
+                  [
+                    "Ese perro se acostó con cinco de mis amigas.",
+                    "That player slept with five of my friends."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine noun",
+          "tooltip": {
+            "def": "A masculine noun is used with masculine articles and adjectives (e.g., el hombre guapo, el sol amarillo).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "adj",
+          "abbrEs": "adj",
+          "nameEn": "adjective",
+          "nameEs": "adjetivo",
+          "sharedPosNameEn": "adjective"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "very bad",
+            "contextEs": "muy malo",
+            "gender": null,
+            "id": 83869,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He's had a lousy life, but that doesn't mean he can take it out on everyone else.",
+                    "textEs": "Ha tenido una vida perra, pero no por eso se puede desquitar con todo el mundo."
+                  }
+                ],
+                "gender": null,
+                "id": 138380,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "lousy"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 4,
+            "context": "very bad",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "lousy",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "lousy"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ha tenido una vida perra, pero no por eso se puede desquitar con todo el mundo.",
+                    "He's had a lousy life, but that doesn't mean he can take it out on everyone else."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "hard",
+            "contextEs": "difícil",
+            "gender": null,
+            "id": 31453,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The exam was super difficult. Nobody was able to pass it.",
+                    "textEs": "Estuvo súper perro el examen. Nadie lo pudo pasar."
+                  }
+                ],
+                "gender": null,
+                "id": 52308,
+                "imagePath": "/dictionary-images/original/ad883248-ab0d-4da0-86be-8477a2d6bc89.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "difficult"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 5,
+            "context": "hard",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "difficult",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/ad883248-ab0d-4da0-86be-8477a2d6bc89.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "difficult"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Estuvo súper perro el examen. Nadie lo pudo pasar.",
+                    "The exam was super difficult. Nobody was able to pass it."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "astute",
+            "contextEs": "astuto",
+            "gender": null,
+            "id": 31454,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "That lady is so cunning. She always gets what she wants.",
+                    "textEs": "Esa señora es bien perra. Siempre se sale con la suya."
+                  }
+                ],
+                "gender": null,
+                "id": 52309,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "cunning"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 6,
+            "context": "astute",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "cunning",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "cunning"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Esa señora es bien perra. Siempre se sale con la suya.",
+                    "That lady is so cunning. She always gets what she wants."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "awful",
+            "contextEs": "mala onda",
+            "gender": null,
+            "id": 31455,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Ricardo's coworker is a piece of garbage; she always calls him out in front of their boss.",
+                    "textEs": "La compañera de Ricardo es bien perra; siempre lo pone en evidencia frente a la jefa."
+                  },
+                  {
+                    "textEn": "Those lowlife cops asked us for a bribe.",
+                    "textEs": "Esos policías perros nos pidieron una mordida."
+                  }
+                ],
+                "gender": null,
+                "id": 52310,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [
+                  {
+                    "abbrEn": "vul",
+                    "abbrEs": "vul",
+                    "nameEn": "vulgar",
+                    "nameEs": "vulgar"
+                  }
+                ],
+                "translation": "lowlife"
+              }
+            ],
+            "subheadword": "perro",
+            "idx": 7,
+            "context": "awful",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "lowlife",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "lowlife"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [
+                  {
+                    "name": "vulgar",
+                    "tooltip": {
+                      "def": "A word or phrase that is crude, indecent, and generally rejected by society."
+                    }
+                  }
+                ],
+                "examplesDisplay": [
+                  [
+                    "La compañera de Ricardo es bien perra; siempre lo pone en evidencia frente a la jefa.",
+                    "Ricardo's coworker is a piece of garbage; she always calls him out in front of their boss."
+                  ],
+                  [
+                    "Esos policías perros nos pidieron una mordida.",
+                    "Those lowlife cops asked us for a bribe."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "adjective",
+          "tooltip": {
+            "def": "An adjective is a word that describes a noun (e.g., the big dog).",
+            "href": "https://www.spanishdict.com/guide/descriptive-adjectives-in-spanish"
+          }
+        }
+      }
+    ]
+  }
+]

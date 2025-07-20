@@ -9,3 +9,7 @@ run_frontend:
 
 run_backend:
 	fastapi dev --host 0.0.0.0 src/backend/main.py
+
+
+run_claude_dashboard:
+	uvx sniffly init

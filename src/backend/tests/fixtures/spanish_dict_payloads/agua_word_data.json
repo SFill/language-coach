@@ -1,0 +1,550 @@
+[
+  {
+    "subheadword": "el agua",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "FX"
+        },
+        "senses": [
+          {
+            "contextEn": "element",
+            "contextEs": "elemento",
+            "gender": "FX",
+            "id": 7275,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The painter mixed water and red paint to create a salmon shade.",
+                    "textEs": "El pintor mezcló agua y pintura roja para crear un tono salmón."
+                  }
+                ],
+                "gender": null,
+                "id": 10567,
+                "imagePath": "/dictionary-images/original/ee9f4484-2446-4314-8f7c-0f0420d6f6fc.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "water"
+              }
+            ],
+            "subheadword": "agua",
+            "idx": 1,
+            "context": "element",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "water",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/ee9f4484-2446-4314-8f7c-0f0420d6f6fc.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "water"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El pintor mezcló agua y pintura roja para crear un tono salmón.",
+                    "The painter mixed water and red paint to create a salmon shade."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "beverage",
+            "contextEs": "bebida",
+            "gender": "FX",
+            "id": 7276,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "My mom made us some tamarind juice.",
+                    "textEs": "Mi mamá nos preparó agua de tamarindo."
+                  }
+                ],
+                "gender": null,
+                "id": 10568,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "juice"
+              }
+            ],
+            "subheadword": "agua",
+            "idx": 2,
+            "context": "beverage",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "juice",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "juice"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Mi mamá nos preparó agua de tamarindo.",
+                    "My mom made us some tamarind juice."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "beverage",
+            "contextEs": "bebida",
+            "gender": "FX",
+            "id": 8823,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "LatAm",
+                "abbrEs": "LatAm",
+                "nameEn": "Latin America",
+                "nameEs": "Latinoamérica"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The rose tea infusion I made you will make you feel better.",
+                    "textEs": "Te va a caer bien el agua de rosas que te preparé."
+                  }
+                ],
+                "gender": null,
+                "id": 12958,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "tea infusion"
+              }
+            ],
+            "subheadword": "agua",
+            "idx": 3,
+            "context": "beverage",
+            "regionsDisplay": [
+              {
+                "name": "Latin America",
+                "tooltip": {
+                  "def": "Regionalism used in Latin America: all the countries in South America, Central America, and the Caribbean. Does not include Spain."
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "tea infusion",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "tea infusion"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Te va a caer bien el agua de rosas que te preparé.",
+                    "The rose tea infusion I made you will make you feel better."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "beverage",
+            "contextEs": "bebida",
+            "gender": "FX",
+            "id": 8824,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "SoAm",
+                "abbrEs": "SurAm",
+                "nameEn": "South America",
+                "nameEs": "Suramérica"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Let's go to the store for some diet sodas.",
+                    "textEs": "Vamos a la tienda por unas aguas light."
+                  }
+                ],
+                "gender": null,
+                "id": 12959,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "soda"
+              }
+            ],
+            "subheadword": "agua",
+            "idx": 4,
+            "context": "beverage",
+            "regionsDisplay": [
+              {
+                "name": "South America",
+                "tooltip": {
+                  "def": "Regionalism used in South America: Argentina, Bolivia, Chile, Colombia, Ecuador, Paraguay, Peru, Uruguay, and Venezuela"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "soda",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "soda"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Vamos a la tienda por unas aguas light.",
+                    "Let's go to the store for some diet sodas."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "feminine noun",
+          "tooltip": {
+            "def": "A feminine noun is almost always used with feminine articles and adjectives (e.g., la mujer bonita, la luna llena).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "subheadword": "aguas",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "interj",
+          "abbrEs": "interj",
+          "nameEn": "interjection",
+          "nameEs": "interjección",
+          "sharedPosNameEn": "interjection"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "caution",
+            "contextEs": "cuidado",
+            "gender": null,
+            "id": 12099,
+            "partOfSpeech": {
+              "abbrEn": "interj",
+              "abbrEs": "interj",
+              "nameEn": "interjection",
+              "nameEs": "interjección"
+            },
+            "regions": [
+              {
+                "abbrEn": "Guat",
+                "abbrEs": "Guat",
+                "nameEn": "Guatemala",
+                "nameEs": "Guatemala"
+              },
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Watch out! There's a scorpion right next to your foot.",
+                    "textEs": "¡Aguas! Hay un alacrán justo al lado de tu pie."
+                  }
+                ],
+                "gender": null,
+                "id": 18277,
+                "imagePath": "/dictionary-images/original/f9a30c8f-5cd5-4d0f-a40b-b7a51cf9a55c.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "watch out"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Be careful with this plate; it's very hot.",
+                    "textEs": "Aguas con este plato; está muy caliente."
+                  }
+                ],
+                "gender": null,
+                "id": 51273,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "be careful"
+              }
+            ],
+            "subheadword": "aguas",
+            "idx": 5,
+            "context": "caution",
+            "regionsDisplay": [
+              {
+                "name": "Guatemala",
+                "tooltip": {
+                  "def": "Regionalism used in Guatemala"
+                }
+              },
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "watch out",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/f9a30c8f-5cd5-4d0f-a40b-b7a51cf9a55c.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "watch out"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¡Aguas! Hay un alacrán justo al lado de tu pie.",
+                    "Watch out! There's a scorpion right next to your foot."
+                  ]
+                ]
+              },
+              {
+                "translation": "be careful",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "be careful"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Aguas con este plato; está muy caliente.",
+                    "Be careful with this plate; it's very hot."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "interjection",
+          "tooltip": {
+            "def": "An interjection is a short utterance that expresses emotion, hesitation, or protest (e.g., Wow!).",
+            "href": "https://www.spanishdict.com/guide/spanish-exclamatory-words-and-expressions"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "plural n",
+          "abbrEs": "s plural",
+          "nameEn": "plural noun consistent",
+          "nameEs": "sustantivo plural constante",
+          "sharedPosNameEn": "plural noun consistent"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "sea, river, or lake",
+            "contextEs": "mar, río o lago",
+            "gender": "F",
+            "id": 80691,
+            "partOfSpeech": {
+              "abbrEn": "plural n",
+              "abbrEs": "s plural",
+              "nameEn": "plural noun consistent",
+              "nameEs": "sustantivo plural constante"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The waters of Lake Minnetonka are purifying.",
+                    "textEs": "Las aguas del lago Minnetonka son purificantes."
+                  }
+                ],
+                "gender": null,
+                "id": 133242,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "waters"
+              }
+            ],
+            "subheadword": "aguas",
+            "idx": 6,
+            "context": "sea, river, or lake",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "waters",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "waters"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Las aguas del lago Minnetonka son purificantes.",
+                    "The waters of Lake Minnetonka are purifying."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "plural noun",
+          "tooltip": {
+            "def": "A plural noun indicates that there is more than one person, place, thing, or idea.",
+            "href": null
+          }
+        }
+      }
+    ]
+  }
+]

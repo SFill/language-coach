@@ -1,0 +1,2243 @@
+{
+  "infinitive": "vivir",
+  "translation": "live",
+  "is_reflexive": 1,
+  "tenses": {
+    "presentIndicative": [
+      {
+        "conjugationForms": [
+          "vivo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=vivo&key=a06514cc9c7dce419d4317cac244b226",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vives"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vives&key=a548db2bf6105dc377f1714de6fb1c2d",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vive"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=vive&key=859425003b5ec7d593c968af13053771",
+        "translationForms": [
+          {
+            "word": "lives",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivimos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivimos&key=d0286d47908b6cf861a50b635ead695d",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivís"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=viv%C3%ADs&key=0aba57af082c213b64447a62678d6213&region=spain",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viven"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=viven&key=ce7bf5d85e1bdde2ed766515f333a227",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivís"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=viv%C3%ADs&key=0aba57af082c213b64447a62678d6213&region=latam",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritIndicative": [
+      {
+        "conjugationForms": [
+          "viví"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=viv%C3%AD&key=8853dac729c6593f91bd9cee49387ebf",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviste"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=viviste&key=0efca63cedae04826465c9bddbba2be1",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivió"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=vivi%C3%B3&key=223fd501c71dd4002ed0e6b8c910cd9b",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivimos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivimos&key=d0286d47908b6cf861a50b635ead695d",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivisteis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vivisteis&key=7ff0812823f3a2c29392bbbb57a3a233&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieron"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivieron&key=a34d6695ae08a0e1b6503c7656faa003",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviste"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=viviste&key=0efca63cedae04826465c9bddbba2be1&region=latam",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectIndicative": [
+      {
+        "conjugationForms": [
+          "vivía"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=viv%C3%ADa&key=9293261ef56bfbb9d6a852684d9215d9",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=viv%C3%ADas&key=f325556c832b6f83965690866d2948a1",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivía"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=viv%C3%ADa&key=9293261ef56bfbb9d6a852684d9215d9",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivíamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=viv%C3%ADamos&key=79d606ba983d62eebb2090726df22226",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivíais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=viv%C3%ADais&key=36a20eb5e3bf3dec280e5c5f860ef551&region=spain",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=viv%C3%ADan&key=9016aa361563d998475308a4b8aeb45e",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=viv%C3%ADas&key=f325556c832b6f83965690866d2948a1&region=latam",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalIndicative": [
+      {
+        "conjugationForms": [
+          "viviría"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADa&key=1d90ffd31e83cd115f2362ef6d44ee86",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADas&key=9a92580a6cebe46e1d86a6bb11ceb1bd",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviría"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADa&key=1d90ffd31e83cd115f2362ef6d44ee86",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADamos&key=0d33b3507a81cf4857baf1a1228d517b",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADais&key=db220a81daf7ead686aec52117fdd1fd&region=spain",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADan&key=2c5d51eab81823f72cb5f42634face85",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vivir%C3%ADas&key=9a92580a6cebe46e1d86a6bb11ceb1bd&region=latam",
+        "translationForms": [
+          {
+            "word": "would live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureIndicative": [
+      {
+        "conjugationForms": [
+          "viviré"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=vivir%C3%A9&key=7f5416448c08ffe7e8ad5aa17365d012",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirás"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vivir%C3%A1s&key=4b520f818b51cc9595256cad324fc2a6",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirá"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=vivir%C3%A1&key=68c12f861c1fa4f23124b28b67481e13",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=viviremos&key=7719f53a5bd19fafc2aa03eaa6710442",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vivir%C3%A9is&key=ddb4eb4a07118ebfa778f16b44bb0ae0&region=spain",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirán"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivir%C3%A1n&key=002c246a2d6ff6c999ed6e1450a1791f",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivirás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vivir%C3%A1s&key=4b520f818b51cc9595256cad324fc2a6&region=latam",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentSubjunctive": [
+      {
+        "conjugationForms": [
+          "viva"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=viva&key=a223f67904107bb5b80f004e9f2701c9",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vivas&key=d9937a65cf5e54fb36e8290dce26bdbe",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viva"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=viva&key=a223f67904107bb5b80f004e9f2701c9",
+        "translationForms": [
+          {
+            "word": "lives",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivamos&key=d66c00a2c9b8edf2e0de4b264a121bc4",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viváis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=viv%C3%A1is&key=d4e6155e1899626bcf05650d3a0142c5&region=spain",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivan"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivan&key=dfcdf25226db80f90467921ad10de2f8",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vivas&key=d9937a65cf5e54fb36e8290dce26bdbe&region=latam",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "viviera",
+          "viviese"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=viviera%2Cviviese&key=24e11cbfb3880f2f267d5c85f61f4481",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieras",
+          "vivieses"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vivieras%2Cvivieses&key=3c9a9cbb3922b3b3ace9139658cd2c35",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviera",
+          "viviese"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=viviera%2Cviviese&key=24e11cbfb3880f2f267d5c85f61f4481",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviéramos",
+          "viviésemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivi%C3%A9ramos%2Cvivi%C3%A9semos&key=78cba823d581ec389010d6e7aa66743e",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivierais",
+          "vivieseis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vivierais%2Cvivieseis&key=3885910637dd95793888d12aa258ca0f&region=spain",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieran",
+          "viviesen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivieran%2Cviviesen&key=1e99eb092fb485fe7fc2ad6d282c76b6",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieras",
+          "vivieses"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vivieras%2Cvivieses&key=3c9a9cbb3922b3b3ace9139658cd2c35&region=latam",
+        "translationForms": [
+          {
+            "word": "lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureSubjunctive": [
+      {
+        "conjugationForms": [
+          "viviere"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=viviere&key=903db78d77bf2d13a598f8142ee83062",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vivieres&key=48e87117e766289f16acbee62100404a",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviere"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=viviere&key=903db78d77bf2d13a598f8142ee83062",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviéremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivi%C3%A9remos&key=bcaf6a7d37520a5fc6501244548fa388",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viviereis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=viviereis&key=66ba2a5108025b224bc1b5a951cfcbbf&region=spain",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=vivieren&key=f7506265e1f0ac7414be4aec1dc738c7",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivieres"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vivieres&key=48e87117e766289f16acbee62100404a&region=latam",
+        "translationForms": [
+          {
+            "word": "will live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "vive"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vive&key=859425003b5ec7d593c968af13053771",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viva"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=viva&key=a223f67904107bb5b80f004e9f2701c9",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vivamos&key=d66c00a2c9b8edf2e0de4b264a121bc4",
+        "translationForms": [
+          {
+            "word": "let's live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivid"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vivid&key=07b692cbcbcc5d239e389cdfadff0093&region=spain",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vivan"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=vivan&key=dfcdf25226db80f90467921ad10de2f8",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "viví"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=viv%C3%AD&key=8853dac729c6593f91bd9cee49387ebf&region=latam",
+        "translationForms": [
+          {
+            "word": "live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "negativeImperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "no vivas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=no-vivas&key=18a81bdae84576665a25182d3def6693",
+        "translationForms": [
+          {
+            "word": "don't live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no viva"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=no-viva&key=15c1f1d86e4aa0a7c0e9ddfad7729624",
+        "translationForms": [
+          {
+            "word": "don't live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no vivamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=no-vivamos&key=e9aca8b35362a78723cee7fa85fd6bff",
+        "translationForms": [
+          {
+            "word": "let's not live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no viváis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=no-viv%C3%A1is&key=f0e62fa9ac92473507fdbb472f1004c4&region=spain",
+        "translationForms": [
+          {
+            "word": "don't live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no vivan"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=no-vivan&key=9ad756a6c3e361aadd2a64739e29d2a8",
+        "translationForms": [
+          {
+            "word": "don't live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no vivas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=no-vivas&key=18a81bdae84576665a25182d3def6693&region=latam",
+        "translationForms": [
+          {
+            "word": "don't live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentContinuous": [
+      {
+        "conjugationForms": [
+          "estoy viviendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estoy-viviendo&key=79f3641de32bc6b9e83085de4e91fe65",
+        "translationForms": [
+          {
+            "word": "am living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás viviendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-viviendo&key=18996eea56dd366d2bcfd1f5dbd0e7f3",
+        "translationForms": [
+          {
+            "word": "are living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "está viviendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=est%C3%A1-viviendo&key=6b13bf82d05a039ffcec7ee4a094a287",
+        "translationForms": [
+          {
+            "word": "is living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estamos viviendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estamos-viviendo&key=84937a72fc5b99f2e6dd79e924e867e2",
+        "translationForms": [
+          {
+            "word": "are living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estáis viviendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1is-viviendo&key=bd28e964975a1e6c83c1c1c7c3b1e051&region=spain",
+        "translationForms": [
+          {
+            "word": "are living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "están viviendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=est%C3%A1n-viviendo&key=207535ba64b5d1f500d52c07e4ea0764",
+        "translationForms": [
+          {
+            "word": "are living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás viviendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-viviendo&key=18996eea56dd366d2bcfd1f5dbd0e7f3&region=latam",
+        "translationForms": [
+          {
+            "word": "are living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritContinuous": [
+      {
+        "conjugationForms": [
+          "estuve viviendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estuve-viviendo&key=a83d3764bbcdff8b1ed52c9112ed32be",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste viviendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estuviste-viviendo&key=e5e76c7526d5159c7201696d14f2ed6a",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvo viviendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estuvo-viviendo&key=c99b5ab6800de84c342802d559fff3cf",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvimos viviendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estuvimos-viviendo&key=3ac3e3dd2d86f82dcd762f786a30c73e",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvisteis viviendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estuvisteis-viviendo&key=e832c230750db96cd6aeb17e27273860&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvieron viviendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estuvieron-viviendo&key=199ace0bf6f1cd8c5925dc5e60c57c04",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste viviendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estuviste-viviendo&key=e5e76c7526d5159c7201696d14f2ed6a&region=latam",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectContinuous": [
+      {
+        "conjugationForms": [
+          "estaba viviendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estaba-viviendo&key=929c1ca402f25aad5bbe433ddbfa0a71",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas viviendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estabas-viviendo&key=75ad82baa9d2a5ca77be840c1c0e4a54",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaba viviendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estaba-viviendo&key=929c1ca402f25aad5bbe433ddbfa0a71",
+        "translationForms": [
+          {
+            "word": "was living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estábamos viviendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1bamos-viviendo&key=dffe4dfd4883b5bdd430ccf93557e9b0",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabais viviendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estabais-viviendo&key=229277b03df77bc34fdab86c3cf7a128&region=spain",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaban viviendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estaban-viviendo&key=e781f8549bdbdea3a11e62f44a49597b",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas viviendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estabas-viviendo&key=75ad82baa9d2a5ca77be840c1c0e4a54&region=latam",
+        "translationForms": [
+          {
+            "word": "were living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalContinuous": [
+      {
+        "conjugationForms": [
+          "estaría viviendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-viviendo&key=5e9f6039841378a7374368c2f03b8242",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías viviendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-viviendo&key=d40e43130ff03220ad57b616cea52a08",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaría viviendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-viviendo&key=5e9f6039841378a7374368c2f03b8242",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríamos viviendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADamos-viviendo&key=1a3777d342a378cf42c2305612d11e06",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríais viviendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADais-viviendo&key=aa844accca66976a891bcda4ad73ab93&region=spain",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarían viviendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADan-viviendo&key=23d038fb29e67c8b76f4991c788c6232",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías viviendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-viviendo&key=d40e43130ff03220ad57b616cea52a08&region=latam",
+        "translationForms": [
+          {
+            "word": "would be living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureContinuous": [
+      {
+        "conjugationForms": [
+          "estaré viviendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%A9-viviendo&key=c211ef8fbc4cf8ed1f573a5ab4f10f97",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás viviendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-viviendo&key=7c562fe2ef82b06aa0122abc8afdef6d",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estará viviendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1-viviendo&key=55c3d3ea28972a336ae0f0538486d894",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaremos viviendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estaremos-viviendo&key=fb26ca07db77563c8f01bc6c70763ada",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaréis viviendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%A9is-viviendo&key=96eb6b536cc72be140707af6300a802d&region=spain",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarán viviendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1n-viviendo&key=26bf45fbcc2cd7457b61f7b7e749716b",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás viviendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-viviendo&key=7c562fe2ef82b06aa0122abc8afdef6d&region=latam",
+        "translationForms": [
+          {
+            "word": "will be living",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfect": [
+      {
+        "conjugationForms": [
+          "he vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=he-vivido&key=5535c3c89f97e1c828833a30078c2add",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=has-vivido&key=241730c886d6933be232aed306f01790",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "ha vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ha-vivido&key=ea2ccdf30fa1ad197ea9740b5e79f5d1",
+        "translationForms": [
+          {
+            "word": "has lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hemos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hemos-vivido&key=3c8ffac166cf51f2032236d988f2b235",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habéis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%A9is-vivido&key=738137b1ce9727197f421f3ef1e67a29&region=spain",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "han vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=han-vivido&key=95d7506598676380f4cd117bbf377ac1",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=has-vivido&key=241730c886d6933be232aed306f01790&region=latam",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritPerfect": [
+      {
+        "conjugationForms": [
+          "hube vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hube-vivido&key=663e4c86a7945fceb6b18cd2192b4f1c",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubiste-vivido&key=d450f327063e7ec5b7a193a7dab3fd1c",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubo vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubo-vivido&key=62b03e95d1f7a82f0ef177996499a870",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubimos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubimos-vivido&key=58535d8c698ecc036cfe79e6f2d3d8f3",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubisteis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubisteis-vivido&key=add839d715fbf8b6f3fbb67be4ba64f5&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieron vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieron-vivido&key=10476f9c5eb8446243d0f84eef1575f8",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubiste-vivido&key=d450f327063e7ec5b7a193a7dab3fd1c&region=latam",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfect": [
+      {
+        "conjugationForms": [
+          "había vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-vivido&key=2abb52b158e2c70de0be51d73042ee8b",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-vivido&key=5855c06c40d2820f86a5e65fe77b8f10",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "había vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-vivido&key=2abb52b158e2c70de0be51d73042ee8b",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíamos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADamos-vivido&key=23a3a02708b66a2a42a3f6d326cb0424",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíais vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADais-vivido&key=fabbc3be17cb0ef0853eea7b4c1cd689&region=spain",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habían vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADan-vivido&key=9419c57b8402c15d6fd3c3d9dbc449c0",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-vivido&key=5855c06c40d2820f86a5e65fe77b8f10&region=latam",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalPerfect": [
+      {
+        "conjugationForms": [
+          "habría vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-vivido&key=179e89e066b927ec905aabcf9956a91d",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-vivido&key=6ea3b38c467fabe7750fef3fba4fa749",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habría vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-vivido&key=179e89e066b927ec905aabcf9956a91d",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríamos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADamos-vivido&key=0832ac1f879f2455711ad59daa05d1b5",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríais vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADais-vivido&key=2543750f38b24f6fd7aee793bbc630f3&region=spain",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrían vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADan-vivido&key=633b9fd4567e44948182acf94c4d3c4b",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-vivido&key=6ea3b38c467fabe7750fef3fba4fa749&region=latam",
+        "translationForms": [
+          {
+            "word": "would have lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfect": [
+      {
+        "conjugationForms": [
+          "habré vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%A9-vivido&key=b113e7e86d3e8a358c7a1583d59ff684",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-vivido&key=ddef66182fb3561adf55a82377cae773",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrá vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1-vivido&key=950242ba77715313ecf916f74bad17ae",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habremos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habremos-vivido&key=744c7e5ab28ea137856f2f9041501670",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habréis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%A9is-vivido&key=d9bbd8281d0ea805251d6336f08a3edb&region=spain",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrán vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1n-vivido&key=903213f1d5639b1db1057a8ba83ed29d",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-vivido&key=ddef66182fb3561adf55a82377cae773&region=latam",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "haya vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=haya-vivido&key=775af5df37b13cd4ba1a0bd950f9c34c",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hayas-vivido&key=0a8148aa986889a6e855d567fc1c33d0",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "haya vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=haya-vivido&key=775af5df37b13cd4ba1a0bd950f9c34c",
+        "translationForms": [
+          {
+            "word": "has lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayamos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hayamos-vivido&key=5c05d688c356bbcf882f63f95886a6b6",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayáis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hay%C3%A1is-vivido&key=69b41a30d5f7b5284abbc404d655a1b1&region=spain",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayan vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hayan-vivido&key=ac653131e5df23bb920afe5462c3132f",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hayas-vivido&key=0a8148aa986889a6e855d567fc1c33d0&region=latam",
+        "translationForms": [
+          {
+            "word": "have lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiera vivido",
+          "hubiese vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiera-vivido%2Chubiese-vivido&key=84db6bd3efeefe913a0446ff86ab08e4",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras vivido",
+          "hubieses vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieras-vivido%2Chubieses-vivido&key=6db5f94b1b7e4642da5c3538f0a262d3",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiera vivido",
+          "hubiese vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiera-vivido%2Chubiese-vivido&key=84db6bd3efeefe913a0446ff86ab08e4",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéramos vivido",
+          "hubiésemos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9ramos-vivido%2Chubi%C3%A9semos-vivido&key=a7684914630847b4662e77ad6c951d81",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubierais vivido",
+          "hubieseis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubierais-vivido%2Chubieseis-vivido&key=4d5a148a7e81e8017eed2186064c1897&region=spain",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieran vivido",
+          "hubiesen vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieran-vivido%2Chubiesen-vivido&key=3abc08d3a339c143b60f8e76dcffc1fa",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras vivido",
+          "hubieses vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieras-vivido%2Chubieses-vivido&key=6db5f94b1b7e4642da5c3538f0a262d3&region=latam",
+        "translationForms": [
+          {
+            "word": "had lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiere vivido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiere-vivido&key=8be59e7112caa07b2c9c9fab671cb71b",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres vivido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieres-vivido&key=9a841fedb53f93a44f6bca01dc3f2baa",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiere vivido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiere-vivido&key=8be59e7112caa07b2c9c9fab671cb71b",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéremos vivido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9remos-vivido&key=c34d05ad248c45a47830c5622a75c81f",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiereis vivido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubiereis-vivido&key=e60bea5ea354feb8e71776b35968c090&region=spain",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieren vivido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieren-vivido&key=f533d7c2a727830494e8a45a4aad51ae",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres vivido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieres-vivido&key=9a841fedb53f93a44f6bca01dc3f2baa&region=latam",
+        "translationForms": [
+          {
+            "word": "will have lived",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "informalFuture": [
+      {
+        "conjugationForms": [
+          "voy a vivir"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=voy-a-vivir&key=b32a14f87bad3d8b7f2b8089a06bf9eb",
+        "translationForms": [
+          {
+            "word": "am going to live",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a vivir"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vas-a-vivir&key=768c560acff576ba811fa9c14d5d8961",
+        "translationForms": [
+          {
+            "word": "are going to live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "va a vivir"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=va-a-vivir&key=d1e644687d982cfcf662fec018f83ce7",
+        "translationForms": [
+          {
+            "word": "is going to live",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vamos a vivir"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vamos-a-vivir&key=8976ce6ad448bb97bef00745982b6be7",
+        "translationForms": [
+          {
+            "word": "are going to live",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vais a vivir"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vais-a-vivir&key=753316cde428dd10ca16316c3fa0d2e3&region=spain",
+        "translationForms": [
+          {
+            "word": "are going to live",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "van a vivir"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=van-a-vivir&key=c10cae6972123aa116c6f7f3e61f962f",
+        "translationForms": [
+          {
+            "word": "are going to live",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a vivir"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vas-a-vivir&key=768c560acff576ba811fa9c14d5d8961&region=latam",
+        "translationForms": [
+          {
+            "word": "are going to live",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ]
+  },
+  "past_participle": {
+    "spanish": "",
+    "english": ""
+  },
+  "gerund": {
+    "spanish": "",
+    "english": ""
+  }
+}

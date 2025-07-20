@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "bueno",
+    "textToPronounce": "bueno",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=bueno&key=c383870c6417d2754609f0461e515b3a",
+    "pronunciations": [
+      {
+        "id": 90,
+        "ipa": "ˈbwe*no",
+        "abc": "ˈbue*no",
+        "spa": "ˈbweh*noh",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13707,
+        "ipa": "ˈbwe*no",
+        "abc": "ˈbue*no",
+        "spa": "ˈbweh*noh",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "good",
+    "textToPronounce": "good",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=good&key=2b0510c06dbeebf08032d5eb4543a54c",
+    "pronunciations": [
+      {
+        "id": 44,
+        "ipa": "gʊd",
+        "abc": "good",
+        "spa": "good",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "good"
+      },
+      {
+        "id": 4348,
+        "ipa": "gʊd",
+        "abc": "good",
+        "spa": "good",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "good"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

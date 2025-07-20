@@ -1,0 +1,336 @@
+[
+  {
+    "subheadword": "la casa",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "F"
+        },
+        "senses": [
+          {
+            "contextEn": "dwelling",
+            "contextEs": "vivienda",
+            "gender": "F",
+            "id": 2025,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "We live in a house with a big garden.",
+                    "textEs": "Vivimos en una casa con un gran jardín."
+                  }
+                ],
+                "gender": null,
+                "id": 2673,
+                "imagePath": "/dictionary-images/original/1ccc644c-898c-49b1-be9b-01eee0375a72.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "house"
+              }
+            ],
+            "subheadword": "casa",
+            "idx": 1,
+            "context": "dwelling",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "house",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/1ccc644c-898c-49b1-be9b-01eee0375a72.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "house"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Vivimos en una casa con un gran jardín.",
+                    "We live in a house with a big garden."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "household",
+            "contextEs": "hogar",
+            "gender": "F",
+            "id": 2026,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "My home is where my family and friends are.",
+                    "textEs": "Mi casa es donde mi familia y mis amigos están."
+                  }
+                ],
+                "gender": null,
+                "id": 2674,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "home"
+              }
+            ],
+            "subheadword": "casa",
+            "idx": 2,
+            "context": "household",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "home",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "home"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Mi casa es donde mi familia y mis amigos están.",
+                    "My home is where my family and friends are."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "business",
+            "contextEs": "compañía",
+            "gender": "F",
+            "id": 2027,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The company covers the shipping costs.",
+                    "textEs": "La casa se hace cargo de los gastos de envío."
+                  }
+                ],
+                "gender": null,
+                "id": 2675,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "company"
+              }
+            ],
+            "subheadword": "casa",
+            "idx": 3,
+            "context": "business",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "company",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "company"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La casa se hace cargo de los gastos de envío.",
+                    "The company covers the shipping costs."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "royal lineage",
+            "contextEs": "linaje",
+            "gender": "F",
+            "id": 2252,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The Spanish Royal Family belongs to the house of Bourbon.",
+                    "textEs": "La familia real de España pertenece a la casa de los Borbones."
+                  }
+                ],
+                "gender": null,
+                "id": 2986,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "house"
+              }
+            ],
+            "subheadword": "casa",
+            "idx": 4,
+            "context": "royal lineage",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "house",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "house"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La familia real de España pertenece a la casa de los Borbones.",
+                    "The Spanish Royal Family belongs to the house of Bourbon."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "bar, restaurant",
+            "contextEs": "bar, restaurante",
+            "gender": "F",
+            "id": 2253,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The house wine is a good price and high quality.",
+                    "textEs": "El vino de la casa es de buen precio y alta calidad."
+                  }
+                ],
+                "gender": null,
+                "id": 2987,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "house"
+              }
+            ],
+            "subheadword": "casa",
+            "idx": 5,
+            "context": "bar, restaurant",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "house",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "house"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El vino de la casa es de buen precio y alta calidad.",
+                    "The house wine is a good price and high quality."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "feminine noun",
+          "tooltip": {
+            "def": "A feminine noun is almost always used with feminine articles and adjectives (e.g., la mujer bonita, la luna llena).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  }
+]

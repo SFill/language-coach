@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "agua",
+    "textToPronounce": "agua",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=agua&key=7baa2cff0443db1b09dbfb415468b6cc",
+    "pronunciations": [
+      {
+        "id": 301,
+        "ipa": "ˈa*ɣwa",
+        "abc": "ˈa*gua",
+        "spa": "ˈah*gwah",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13663,
+        "ipa": "ˈa*ɣwa",
+        "abc": "ˈa*gua",
+        "spa": "ˈah*gwah",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "water",
+    "textToPronounce": "water",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=water&key=fcef4abd7a1abe18487fd4f9c8b7dad7",
+    "pronunciations": [
+      {
+        "id": 9852,
+        "ipa": "ˈwɑ*ɾəɹ",
+        "abc": "ˈwa*ter",
+        "spa": "ˈwa*duhr",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "water"
+      },
+      {
+        "id": 9853,
+        "ipa": "ˈwɔ*tə",
+        "abc": "ˈwa*ter",
+        "spa": "ˈwaw*tuh",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "water"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

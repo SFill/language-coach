@@ -1,0 +1,2243 @@
+{
+  "infinitive": "comer",
+  "translation": "eat",
+  "is_reflexive": 2,
+  "tenses": {
+    "presentIndicative": [
+      {
+        "conjugationForms": [
+          "como"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=como&key=1a7b28bf72b129862a9be984dda0457c",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comes"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comes&key=38ae8533675d12a8b1832b3eaaa5bd4a",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "come"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=come&key=32ef4a1feeb1c25be06e978a48c0c32b",
+        "translationForms": [
+          {
+            "word": "eats",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comemos&key=491d88f758339cb7bc1305f4a8c21b47",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "coméis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=com%C3%A9is&key=cd30e31fa0014d5b9a69c631ded7de2f&region=spain",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comen&key=14e51f980f36ae48c32933b4e0e56cd1",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comés"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=com%C3%A9s&key=81b162553bf0ddf0763bdd82b392365d&region=latam",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritIndicative": [
+      {
+        "conjugationForms": [
+          "comí"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=com%C3%AD&key=1c5577e923ab8725dab3008a4b8ea64e",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiste"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comiste&key=f3609aec6040f228b28b7f9a93361aa2",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comió"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=comi%C3%B3&key=812e52de73967451e345275c9ada4ac8",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comimos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comimos&key=0b0dcf7ed69643bbbb5e2cf6a136f8ba",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comisteis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comisteis&key=f3d0de991a16360bb19d1544117eafe6&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieron"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comieron&key=4ec42a4c62f67ca2b9fc3fdb2c7725bb",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiste"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comiste&key=f3609aec6040f228b28b7f9a93361aa2&region=latam",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectIndicative": [
+      {
+        "conjugationForms": [
+          "comía"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=com%C3%ADa&key=9db50440393f0e74166adad9f0d5e076",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=com%C3%ADas&key=6878b3350a8d81f445860ea715ce955b",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comía"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=com%C3%ADa&key=9db50440393f0e74166adad9f0d5e076",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comíamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=com%C3%ADamos&key=5495bd4abbd32f90fbbc338a20ce436c",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comíais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=com%C3%ADais&key=9360025b08047b8f9b7c21e1667411ba&region=spain",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=com%C3%ADan&key=165c65a564c757ff7e7ee4dbe1fd9067",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=com%C3%ADas&key=6878b3350a8d81f445860ea715ce955b&region=latam",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalIndicative": [
+      {
+        "conjugationForms": [
+          "comería"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=comer%C3%ADa&key=2d67ac17331e0406e847f1c752afa216",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comer%C3%ADas&key=6500c5c020af1dde74ab84a66993634a",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comería"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=comer%C3%ADa&key=2d67ac17331e0406e847f1c752afa216",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comeríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comer%C3%ADamos&key=9465bc2cadc7f66ce3bd982dd6d7d7de",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comeríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comer%C3%ADais&key=7d687686ab7de9d880134ae463930820&region=spain",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comer%C3%ADan&key=0027f4ee44dd3583fb0bd5e09b13a994",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comer%C3%ADas&key=6500c5c020af1dde74ab84a66993634a&region=latam",
+        "translationForms": [
+          {
+            "word": "would eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureIndicative": [
+      {
+        "conjugationForms": [
+          "comeré"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=comer%C3%A9&key=c038ae46b799f82d41aad9d91fde82ea",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerás"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comer%C3%A1s&key=199c7ed94570a81122c489a59cd6830a",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerá"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=comer%C3%A1&key=b12e8a6d54fb9a058b954f7a6cd37701",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comeremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comeremos&key=23f60b4e8e33941f788ece2b2f0cec08",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comeréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comer%C3%A9is&key=501efd1a1a644e8f6128a7b6cc6bed62&region=spain",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerán"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comer%C3%A1n&key=abc2c10969b18ade09dff75c45b46398",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comerás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comer%C3%A1s&key=199c7ed94570a81122c489a59cd6830a&region=latam",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentSubjunctive": [
+      {
+        "conjugationForms": [
+          "coma"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=coma&key=499aa23735653c9c4508849cd9449c35",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comas&key=3393b6dfdc888832f3f4eb6030814e41",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "coma"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=coma&key=499aa23735653c9c4508849cd9449c35",
+        "translationForms": [
+          {
+            "word": "eats",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comamos&key=574e2d9569972c6c8d6da33f39fb4a59",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comáis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=com%C3%A1is&key=4f8808f1488e0f73c15e7a4b3e7c6539&region=spain",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "coman"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=coman&key=e105061bd36aa83a6c88acf8b4c8a4be",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comas&key=3393b6dfdc888832f3f4eb6030814e41&region=latam",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "comiera",
+          "comiese"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=comiera%2Ccomiese&key=657446cc2673f85ddb86924a46256c6f",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieras",
+          "comieses"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comieras%2Ccomieses&key=82071721a560041c1b37a46026e2a869",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiera",
+          "comiese"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=comiera%2Ccomiese&key=657446cc2673f85ddb86924a46256c6f",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiéramos",
+          "comiésemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comi%C3%A9ramos%2Ccomi%C3%A9semos&key=6b9ea0d6a998d384942ca1ed9feab2a1",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comierais",
+          "comieseis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comierais%2Ccomieseis&key=9e748d11d872213af590641e6b1b8dce&region=spain",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieran",
+          "comiesen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comieran%2Ccomiesen&key=571fd730e8e41e4ca59a7c3149864b02",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieras",
+          "comieses"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comieras%2Ccomieses&key=82071721a560041c1b37a46026e2a869&region=latam",
+        "translationForms": [
+          {
+            "word": "ate",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureSubjunctive": [
+      {
+        "conjugationForms": [
+          "comiere"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=comiere&key=e944468f8826897cf537d26af41ebdf1",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=comieres&key=83962b55b5eb1217b335c97c4fdfa91a",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiere"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=comiere&key=e944468f8826897cf537d26af41ebdf1",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiéremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comi%C3%A9remos&key=d62d19a118e09f5039c306d859f7f5b8",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comiereis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comiereis&key=48ad8b7f5949a69ef89b0138387c0935&region=spain",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=comieren&key=7d446ad07c84e66492dd36cd664c270d",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comieres"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=comieres&key=83962b55b5eb1217b335c97c4fdfa91a&region=latam",
+        "translationForms": [
+          {
+            "word": "will eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "come"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=come&key=32ef4a1feeb1c25be06e978a48c0c32b",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "coma"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=coma&key=499aa23735653c9c4508849cd9449c35",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=comamos&key=574e2d9569972c6c8d6da33f39fb4a59",
+        "translationForms": [
+          {
+            "word": "let's eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comed"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=comed&key=446cf26fb02c304b84af6fc0d25e21ee&region=spain",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "coman"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=coman&key=e105061bd36aa83a6c88acf8b4c8a4be",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "comé"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=com%C3%A9&key=120af81fa203d9aab9b7858be0dfbdd0&region=latam",
+        "translationForms": [
+          {
+            "word": "eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "negativeImperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "no comas"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=no-comas&key=59a66ce515b74657d66ce07edbf846fe",
+        "translationForms": [
+          {
+            "word": "don't eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no coma"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=no-coma&key=0bd80909b315e67c6658ebc0c8c6d834",
+        "translationForms": [
+          {
+            "word": "don't eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no comamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=no-comamos&key=66a14583c38c0c53d0f1d14e2b596186",
+        "translationForms": [
+          {
+            "word": "let's not eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no comáis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=no-com%C3%A1is&key=90577a3c882051c24b030b8dac8cefc8&region=spain",
+        "translationForms": [
+          {
+            "word": "don't eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no coman"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=no-coman&key=fad90a0fd485355934a3a9aa56958b5c",
+        "translationForms": [
+          {
+            "word": "don't eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no comas"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=no-comas&key=59a66ce515b74657d66ce07edbf846fe&region=latam",
+        "translationForms": [
+          {
+            "word": "don't eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentContinuous": [
+      {
+        "conjugationForms": [
+          "estoy comiendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estoy-comiendo&key=2d38533c3601171e99e62aa453ef53af",
+        "translationForms": [
+          {
+            "word": "am eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás comiendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-comiendo&key=acd2e6b93ce78a416fba27e4bf6708e3",
+        "translationForms": [
+          {
+            "word": "are eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "está comiendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=est%C3%A1-comiendo&key=3197675daab853eefaaa74f95b907dda",
+        "translationForms": [
+          {
+            "word": "is eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estamos comiendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estamos-comiendo&key=c6196b30c9f60063912003afaf46342f",
+        "translationForms": [
+          {
+            "word": "are eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estáis comiendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1is-comiendo&key=f38f0fd217079a18226a0326a914b4d0&region=spain",
+        "translationForms": [
+          {
+            "word": "are eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "están comiendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=est%C3%A1n-comiendo&key=3738ffc4f3cc41bc3c294868102e62e0",
+        "translationForms": [
+          {
+            "word": "are eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás comiendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-comiendo&key=acd2e6b93ce78a416fba27e4bf6708e3&region=latam",
+        "translationForms": [
+          {
+            "word": "are eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritContinuous": [
+      {
+        "conjugationForms": [
+          "estuve comiendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estuve-comiendo&key=872f3653f9264e3c45280945d514b0ed",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste comiendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estuviste-comiendo&key=538c6c861bdd03a21af598834a2d7ece",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvo comiendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estuvo-comiendo&key=b05943c298b9f7b39aa8bd913616b37e",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvimos comiendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estuvimos-comiendo&key=e081194f9010d2f1c8e2d808911021cc",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvisteis comiendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estuvisteis-comiendo&key=56fbaec13fcfa50580cef3827d125ab9&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvieron comiendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estuvieron-comiendo&key=a81529dd01d88414e35664d6ad5b8ca8",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste comiendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estuviste-comiendo&key=538c6c861bdd03a21af598834a2d7ece&region=latam",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectContinuous": [
+      {
+        "conjugationForms": [
+          "estaba comiendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estaba-comiendo&key=92f037cb58dbf91235a70433845333ea",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas comiendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estabas-comiendo&key=07e724c5236da0ec55ac0ce3b36c68ae",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaba comiendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estaba-comiendo&key=92f037cb58dbf91235a70433845333ea",
+        "translationForms": [
+          {
+            "word": "was eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estábamos comiendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1bamos-comiendo&key=54af899445281caec4f09120e596e19d",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabais comiendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estabais-comiendo&key=98eda36211766fff3fc2987775303620&region=spain",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaban comiendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estaban-comiendo&key=c9326d816bfbde9ae5c2c1995c301348",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas comiendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estabas-comiendo&key=07e724c5236da0ec55ac0ce3b36c68ae&region=latam",
+        "translationForms": [
+          {
+            "word": "were eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalContinuous": [
+      {
+        "conjugationForms": [
+          "estaría comiendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-comiendo&key=befc890454abe29e5d0cd1de2cab4e1f",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías comiendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-comiendo&key=0e880659d4d45da89952245fe11d38bf",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaría comiendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-comiendo&key=befc890454abe29e5d0cd1de2cab4e1f",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríamos comiendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADamos-comiendo&key=0e2275695ff505fbeaae764c50afb291",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríais comiendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADais-comiendo&key=5bbb49ac76761423cf7a4359b9ad0696&region=spain",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarían comiendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADan-comiendo&key=c42af447019f2f4e2ae4ff7a2ce40529",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías comiendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-comiendo&key=0e880659d4d45da89952245fe11d38bf&region=latam",
+        "translationForms": [
+          {
+            "word": "would be eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureContinuous": [
+      {
+        "conjugationForms": [
+          "estaré comiendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%A9-comiendo&key=0a4695244f462877327e1e56d7359136",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás comiendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-comiendo&key=e78026bc39e8a47e7502724d7a4b3e55",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estará comiendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1-comiendo&key=7de4c1f48e6becb3e23c3c6210d45c3a",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaremos comiendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estaremos-comiendo&key=b1cf10985d277191dfb19044b9e0ebd1",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaréis comiendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%A9is-comiendo&key=b967da41b88e372e4af42692e5a08403&region=spain",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarán comiendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1n-comiendo&key=510e6ac0a4d15109a9d998b34a1ffe77",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás comiendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-comiendo&key=e78026bc39e8a47e7502724d7a4b3e55&region=latam",
+        "translationForms": [
+          {
+            "word": "will be eating",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfect": [
+      {
+        "conjugationForms": [
+          "he comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=he-comido&key=e5bf86dfa7855f68eb2ae0ce384e24e2",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=has-comido&key=f74162d2ab04a8dba58553438087e267",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "ha comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ha-comido&key=8b52dc1fbb62bfd3e552f594ae1af571",
+        "translationForms": [
+          {
+            "word": "has eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hemos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hemos-comido&key=42b313b8a39e5655ed6de1d74819ee49",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habéis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%A9is-comido&key=650ca0e4bb312a632c1a8bba7efb26d6&region=spain",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "han comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=han-comido&key=09619a6a286eedbba6e3cc799da1c1df",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=has-comido&key=f74162d2ab04a8dba58553438087e267&region=latam",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritPerfect": [
+      {
+        "conjugationForms": [
+          "hube comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hube-comido&key=f5c7900a3adb110bd6155bb661b555ce",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubiste-comido&key=e4b553742ab673e68b1bd6d2758f1a5d",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubo comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubo-comido&key=c2949d11b4006fa468ea17fdfbc6e3cc",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubimos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubimos-comido&key=4f8193d7f12becb14252282cf25320ea",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubisteis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubisteis-comido&key=9b36457e70480e1bc4678c67d5c28e0c&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieron comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieron-comido&key=6c2c5cc6745533c8436df95b1d519672",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubiste-comido&key=e4b553742ab673e68b1bd6d2758f1a5d&region=latam",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfect": [
+      {
+        "conjugationForms": [
+          "había comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-comido&key=c3c71f72e67de074d48eabaad77a2ca9",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-comido&key=3bc86c6d0d48842d909f12f983e5a956",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "había comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-comido&key=c3c71f72e67de074d48eabaad77a2ca9",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíamos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADamos-comido&key=d07aa83787e21ba46df7d70a1cfef399",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíais comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADais-comido&key=ce6cbbce924f8ec6f8069846800fd2d9&region=spain",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habían comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADan-comido&key=ff8da77dc0819df8aaae0763f3f99192",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-comido&key=3bc86c6d0d48842d909f12f983e5a956&region=latam",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalPerfect": [
+      {
+        "conjugationForms": [
+          "habría comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-comido&key=2cbf7aa8cb8aed6874d70a39942b9247",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-comido&key=335b7321c4f424219f40e4e69fe2a5a7",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habría comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-comido&key=2cbf7aa8cb8aed6874d70a39942b9247",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríamos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADamos-comido&key=ccc0566756b13caa48dc04cc14ac3d6a",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríais comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADais-comido&key=d4a5d33f394806a8cae1ae8aefd2d7b2&region=spain",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrían comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADan-comido&key=6ff84e77ea91547944ee633f7c0c839b",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-comido&key=335b7321c4f424219f40e4e69fe2a5a7&region=latam",
+        "translationForms": [
+          {
+            "word": "would have eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfect": [
+      {
+        "conjugationForms": [
+          "habré comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%A9-comido&key=ed4e7ba22ad4367df8d8db2bb6385228",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-comido&key=fa1d8b4b18d7c7f9ee645aba2a93aa9a",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrá comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1-comido&key=bfdc77e5c36c5393b29ec2505e3f2a69",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habremos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habremos-comido&key=091cf50c77647949d18e890244ef189d",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habréis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%A9is-comido&key=353918d32453f78bb444a5349e8c4d71&region=spain",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrán comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1n-comido&key=86cc77184d3b7187815c7ced5ea27d63",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-comido&key=fa1d8b4b18d7c7f9ee645aba2a93aa9a&region=latam",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "haya comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=haya-comido&key=7f964019034ff7529c324a8a028bd2d0",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hayas-comido&key=5b778221796090eb7b888810d0996c11",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "haya comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=haya-comido&key=7f964019034ff7529c324a8a028bd2d0",
+        "translationForms": [
+          {
+            "word": "has eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayamos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hayamos-comido&key=fd48d48f90b73360c370c3ea911a47a3",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayáis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hay%C3%A1is-comido&key=0b186a0f35e32b594993b636e26379ea&region=spain",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayan comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hayan-comido&key=1f4b56c67d1f08d2751ad2e41584ad23",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hayas-comido&key=5b778221796090eb7b888810d0996c11&region=latam",
+        "translationForms": [
+          {
+            "word": "have eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiera comido",
+          "hubiese comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiera-comido%2Chubiese-comido&key=98af8fb24ba2e37f2b70df57054db1c4",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras comido",
+          "hubieses comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieras-comido%2Chubieses-comido&key=49a6d4ccbeeddf986399249537aded0d",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiera comido",
+          "hubiese comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiera-comido%2Chubiese-comido&key=98af8fb24ba2e37f2b70df57054db1c4",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéramos comido",
+          "hubiésemos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9ramos-comido%2Chubi%C3%A9semos-comido&key=61a89499252f149c681d16547b9b6403",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubierais comido",
+          "hubieseis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubierais-comido%2Chubieseis-comido&key=cc9a952ea15555bf0aecc4adba88f85a&region=spain",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieran comido",
+          "hubiesen comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieran-comido%2Chubiesen-comido&key=0aaa6cc8d5f630e545a98442349bc62a",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras comido",
+          "hubieses comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieras-comido%2Chubieses-comido&key=49a6d4ccbeeddf986399249537aded0d&region=latam",
+        "translationForms": [
+          {
+            "word": "had eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiere comido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiere-comido&key=deecdce20816fab15a9948d9b8b1fb4d",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres comido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieres-comido&key=8347349054a07bc0eff103f18a1de3c6",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiere comido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiere-comido&key=deecdce20816fab15a9948d9b8b1fb4d",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéremos comido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9remos-comido&key=70293587efc647411bd4ce6157fd428d",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiereis comido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubiereis-comido&key=ff019cad6c256526cb74cc7e4c90e4cb&region=spain",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieren comido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieren-comido&key=e4567a573da8685e61788b26028badd6",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres comido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieres-comido&key=8347349054a07bc0eff103f18a1de3c6&region=latam",
+        "translationForms": [
+          {
+            "word": "will have eaten",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "informalFuture": [
+      {
+        "conjugationForms": [
+          "voy a comer"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=voy-a-comer&key=2d54dc09bf6767458773f397bfd2a61e",
+        "translationForms": [
+          {
+            "word": "am going to eat",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a comer"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vas-a-comer&key=ba8a1836c9d16518507e1f2af82358be",
+        "translationForms": [
+          {
+            "word": "are going to eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "va a comer"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=va-a-comer&key=87b7b940dca0984cf7c6d372011064c8",
+        "translationForms": [
+          {
+            "word": "is going to eat",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vamos a comer"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vamos-a-comer&key=212541f84fbae507e3f1d8074ffb56ac",
+        "translationForms": [
+          {
+            "word": "are going to eat",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vais a comer"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vais-a-comer&key=6df8f136600f19d47eaaf3ec82588d98&region=spain",
+        "translationForms": [
+          {
+            "word": "are going to eat",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "van a comer"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=van-a-comer&key=ed223c92c681e442a92b125aea769564",
+        "translationForms": [
+          {
+            "word": "are going to eat",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a comer"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vas-a-comer&key=ba8a1836c9d16518507e1f2af82358be&region=latam",
+        "translationForms": [
+          {
+            "word": "are going to eat",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ]
+  },
+  "past_participle": {
+    "spanish": "",
+    "english": ""
+  },
+  "gerund": {
+    "spanish": "",
+    "english": ""
+  }
+}

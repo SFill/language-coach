@@ -1,0 +1,456 @@
+[
+  {
+    "subheadword": "rápido",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "adj",
+          "abbrEs": "adj",
+          "nameEn": "adjective",
+          "nameEs": "adjetivo",
+          "sharedPosNameEn": "adjective"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "rapid",
+            "contextEs": "veloz",
+            "gender": null,
+            "id": 133,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I want a fast car when I grow up!",
+                    "textEs": "¡Quiero un coche rápido cuando sea grande!"
+                  }
+                ],
+                "gender": null,
+                "id": 235,
+                "imagePath": "/dictionary-images/original/71812676-9953-4d1f-a679-7a73e1f11237.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "fast"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The process is quick and easy, so don't worry.",
+                    "textEs": "El proceso es rápido y sencillo, así que no te preocupes."
+                  }
+                ],
+                "gender": null,
+                "id": 8902,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "quick"
+              }
+            ],
+            "subheadword": "rápido",
+            "idx": 1,
+            "context": "rapid",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "fast",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/71812676-9953-4d1f-a679-7a73e1f11237.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "fast"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¡Quiero un coche rápido cuando sea grande!",
+                    "I want a fast car when I grow up!"
+                  ]
+                ]
+              },
+              {
+                "translation": "quick",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "quick"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El proceso es rápido y sencillo, así que no te preocupes.",
+                    "The process is quick and easy, so don't worry."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "adjective",
+          "tooltip": {
+            "def": "An adjective is a word that describes a noun (e.g., the big dog).",
+            "href": "https://www.spanishdict.com/guide/descriptive-adjectives-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "adv",
+          "abbrEs": "adv",
+          "nameEn": "adverb",
+          "nameEs": "adverbio",
+          "sharedPosNameEn": "adverb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "rapidly",
+            "contextEs": "rápidamente",
+            "gender": null,
+            "id": 6188,
+            "partOfSpeech": {
+              "abbrEn": "adv",
+              "abbrEs": "adv",
+              "nameEn": "adverb",
+              "nameEs": "adverbio"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Don't go so fast! You're scaring me!",
+                    "textEs": "¡No vayas tan rápido! ¡Me estás asustando!"
+                  }
+                ],
+                "gender": null,
+                "id": 8903,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "fast"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Most people respond quickly to this treatment.",
+                    "textEs": "La mayoría responde rápido a este tratamiento."
+                  }
+                ],
+                "gender": null,
+                "id": 8904,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "quickly"
+              }
+            ],
+            "subheadword": "rápido",
+            "idx": 2,
+            "context": "rapidly",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "fast",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "fast"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¡No vayas tan rápido! ¡Me estás asustando!",
+                    "Don't go so fast! You're scaring me!"
+                  ]
+                ]
+              },
+              {
+                "translation": "quickly",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "quickly"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La mayoría responde rápido a este tratamiento.",
+                    "Most people respond quickly to this treatment."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "adverb",
+          "tooltip": {
+            "def": "An adverb is a word that describes a verb, an adjective, or other adverbs (e.g., to run quickly, very tired).",
+            "href": "https://www.spanishdict.com/guide/spanish-adverbs"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "M"
+        },
+        "senses": [
+          {
+            "contextEn": "rail",
+            "contextEs": "ferroviario",
+            "gender": "M",
+            "id": 6189,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "When we went to Japan, we took the express train to Tokyo.",
+                    "textEs": "Cuando fuimos a Japón, tomamos el rápido a Tokio."
+                  }
+                ],
+                "gender": null,
+                "id": 8905,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "express train"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Plans for a fast train between Los Angeles and San Francisco are incomplete.",
+                    "textEs": "Los planes para tener un rápido entre Los Ángeles y San Francisco han quedado truncos."
+                  }
+                ],
+                "gender": null,
+                "id": 8906,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "fast train"
+              }
+            ],
+            "subheadword": "rápido",
+            "idx": 3,
+            "context": "rail",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "express train",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "express train"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Cuando fuimos a Japón, tomamos el rápido a Tokio.",
+                    "When we went to Japan, we took the express train to Tokyo."
+                  ]
+                ]
+              },
+              {
+                "translation": "fast train",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "fast train"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Los planes para tener un rápido entre Los Ángeles y San Francisco han quedado truncos.",
+                    "Plans for a fast train between Los Angeles and San Francisco are incomplete."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine noun",
+          "tooltip": {
+            "def": "A masculine noun is used with masculine articles and adjectives (e.g., el hombre guapo, el sol amarillo).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "subheadword": "los rápidos",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "plural n",
+          "abbrEs": "s plural",
+          "nameEn": "plural noun",
+          "nameEs": "sustantivo plural",
+          "sharedPosNameEn": "plural noun"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "river",
+            "contextEs": "río",
+            "gender": "M",
+            "id": 6191,
+            "partOfSpeech": {
+              "abbrEn": "plural n",
+              "abbrEs": "s plural",
+              "nameEn": "plural noun",
+              "nameEs": "sustantivo plural"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Going down the rapids of the Colorado River was very exciting.",
+                    "textEs": "Bajar por los rápidos del río Colorado fue muy emocionante."
+                  }
+                ],
+                "gender": null,
+                "id": 8908,
+                "imagePath": "/dictionary-images/original/df5d74fc-43da-425a-822d-59c0220c50a9.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "rapids"
+              }
+            ],
+            "subheadword": "rápidos",
+            "idx": 4,
+            "context": "river",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "rapids",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/df5d74fc-43da-425a-822d-59c0220c50a9.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "rapids"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Bajar por los rápidos del río Colorado fue muy emocionante.",
+                    "Going down the rapids of the Colorado River was very exciting."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "plural noun",
+          "tooltip": {
+            "def": "A plural noun indicates that there is more than one person, place, thing, or idea.",
+            "href": null
+          }
+        }
+      }
+    ]
+  }
+]

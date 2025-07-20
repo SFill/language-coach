@@ -1,0 +1,1297 @@
+[
+  {
+    "subheadword": "comer",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vtr",
+          "abbrEs": "vtr",
+          "nameEn": "transitive verb",
+          "nameEs": "verbo transitivo",
+          "sharedPosNameEn": "transitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to ingest food",
+            "contextEs": "ingerir comida",
+            "gender": null,
+            "id": 697,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I like to eat apples.",
+                    "textEs": "Me gusta comer manzanas."
+                  }
+                ],
+                "gender": null,
+                "id": 961,
+                "imagePath": "/dictionary-images/original/d90197c4-a0d3-4433-8b7b-e5423429b77d.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 1,
+            "context": "to ingest food",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/d90197c4-a0d3-4433-8b7b-e5423429b77d.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Me gusta comer manzanas.",
+                    "I like to eat apples."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to eat for lunch",
+            "contextEs": "almorzar",
+            "gender": null,
+            "id": 698,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              },
+              {
+                "abbrEn": "Spain",
+                "abbrEs": "Esp",
+                "nameEn": "Spain",
+                "nameEs": "España"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I feel like having a roast beef sandwich for lunch.",
+                    "textEs": "Tengo ganas de comer un sándwich de rosbif."
+                  }
+                ],
+                "gender": null,
+                "id": 962,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to have for lunch"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 2,
+            "context": "to eat for lunch",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              },
+              {
+                "name": "Spain",
+                "tooltip": {
+                  "def": "Regionalism used in Spain"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to have for lunch",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to have for lunch"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Tengo ganas de comer un sándwich de rosbif.",
+                    "I feel like having a roast beef sandwich for lunch."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to eat for dinner",
+            "contextEs": "cenar",
+            "gender": null,
+            "id": 2234,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "LatAm",
+                "abbrEs": "LatAm",
+                "nameEn": "Latin America",
+                "nameEs": "Latinoamérica"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "We're going to have spaghetti and meatballs for dinner.",
+                    "textEs": "Vamos a comer espagueti con albóndigas."
+                  }
+                ],
+                "gender": null,
+                "id": 2954,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to have for dinner"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 3,
+            "context": "to eat for dinner",
+            "regionsDisplay": [
+              {
+                "name": "Latin America",
+                "tooltip": {
+                  "def": "Regionalism used in Latin America: all the countries in South America, Central America, and the Caribbean. Does not include Spain."
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to have for dinner",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to have for dinner"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Vamos a comer espagueti con albóndigas.",
+                    "We're going to have spaghetti and meatballs for dinner."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to make disappear",
+            "contextEs": "hacer desaparecer",
+            "gender": null,
+            "id": 21888,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "That hat is too big for you. It hides your entire face!",
+                    "textEs": "Ese sombrero te queda demasiado grande. ¡Te come la cara entera!"
+                  }
+                ],
+                "gender": null,
+                "id": 35062,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to hide"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I feel like these sunglasses swallow up my face.",
+                    "textEs": "Siento que estas gafas de sol me comen la cara."
+                  }
+                ],
+                "gender": null,
+                "id": 35063,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to swallow up"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 4,
+            "context": "to make disappear",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to hide",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to hide"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ese sombrero te queda demasiado grande. ¡Te come la cara entera!",
+                    "That hat is too big for you. It hides your entire face!"
+                  ]
+                ]
+              },
+              {
+                "translation": "to swallow up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to swallow up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Siento que estas gafas de sol me comen la cara.",
+                    "I feel like these sunglasses swallow up my face."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to consume",
+            "contextEs": "consumir",
+            "gender": null,
+            "id": 21889,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The mortgage payment on my house eats up most of my paycheck.",
+                    "textEs": "El pago de la hipoteca de la casa me come la mayoría del sueldo."
+                  }
+                ],
+                "gender": null,
+                "id": 35064,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat up"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 5,
+            "context": "to consume",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El pago de la hipoteca de la casa me come la mayoría del sueldo.",
+                    "The mortgage payment on my house eats up most of my paycheck."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "chess",
+            "contextEs": "ajedrez",
+            "gender": null,
+            "id": 699,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "All my pawns were taken.",
+                    "textEs": "Me comieron todos los peones."
+                  }
+                ],
+                "gender": null,
+                "id": 964,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to take"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 6,
+            "context": "chess",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to take",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to take"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Me comieron todos los peones.",
+                    "All my pawns were taken."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "transitive verb",
+          "tooltip": {
+            "def": "A transitive verb is a verb that requires a direct object (e.g., I bought a book.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vi",
+          "abbrEs": "vi",
+          "nameEn": "intransitive verb",
+          "nameEs": "verbo intransitivo",
+          "sharedPosNameEn": "intransitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to ingest food",
+            "contextEs": "alimentarse",
+            "gender": null,
+            "id": 21890,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I don't feel like eating right now. I'm not hungry.",
+                    "textEs": "No quiero comer ahora mismo; no tengo hambre."
+                  }
+                ],
+                "gender": null,
+                "id": 35065,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 7,
+            "context": "to ingest food",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "No quiero comer ahora mismo; no tengo hambre.",
+                    "I don't feel like eating right now. I'm not hungry."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to eat lunch",
+            "contextEs": "almorzar",
+            "gender": null,
+            "id": 21891,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Mex",
+                "abbrEs": "Mex",
+                "nameEn": "Mexico",
+                "nameEs": "México"
+              },
+              {
+                "abbrEn": "Spain",
+                "abbrEs": "Esp",
+                "nameEn": "Spain",
+                "nameEs": "España"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "They had lunch quickly because they had a meeting at 1 pm.",
+                    "textEs": "Comieron rápido porque tenían una reunión a la 1 pm."
+                  }
+                ],
+                "gender": null,
+                "id": 35066,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to have lunch"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 8,
+            "context": "to eat lunch",
+            "regionsDisplay": [
+              {
+                "name": "Mexico",
+                "tooltip": {
+                  "def": "Regionalism used in Mexico"
+                }
+              },
+              {
+                "name": "Spain",
+                "tooltip": {
+                  "def": "Regionalism used in Spain"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to have lunch",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to have lunch"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Comieron rápido porque tenían una reunión a la 1 pm.",
+                    "They had lunch quickly because they had a meeting at 1 pm."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to have a meal in the evening",
+            "contextEs": "cenar",
+            "gender": null,
+            "id": 21892,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "LatAm",
+                "abbrEs": "LatAm",
+                "nameEn": "Latin America",
+                "nameEs": "Latinoamérica"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "We had dinner at a new Mexican restaurant.",
+                    "textEs": "Comimos en un restaurante mexicano nuevo."
+                  }
+                ],
+                "gender": null,
+                "id": 35067,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to have dinner"
+              }
+            ],
+            "subheadword": "comer",
+            "idx": 9,
+            "context": "to have a meal in the evening",
+            "regionsDisplay": [
+              {
+                "name": "Latin America",
+                "tooltip": {
+                  "def": "Regionalism used in Latin America: all the countries in South America, Central America, and the Caribbean. Does not include Spain."
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to have dinner",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to have dinner"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Comimos en un restaurante mexicano nuevo.",
+                    "We had dinner at a new Mexican restaurant."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "intransitive verb",
+          "tooltip": {
+            "def": "An intransitive verb is one that does not require a direct object (e.g., The man sneezed.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "subheadword": "comerse",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vpr",
+          "abbrEs": "vpr",
+          "nameEn": "pronominal verb",
+          "nameEs": "verbo pronominal",
+          "sharedPosNameEn": "pronominal verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to ingest food",
+            "contextEs": "alimentarse",
+            "gender": null,
+            "id": 21895,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "She ate the whole cake.",
+                    "textEs": "Ella se comió el pastel entero."
+                  }
+                ],
+                "gender": null,
+                "id": 35075,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 10,
+            "context": "to ingest food",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat",
+                "gender": null,
+                "isQuickTranslation": true,
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ella se comió el pastel entero.",
+                    "She ate the whole cake."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to wear away",
+            "contextEs": "corroer",
+            "gender": null,
+            "id": 701,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Rust eats away metal.",
+                    "textEs": "El óxido se come el metal."
+                  }
+                ],
+                "gender": null,
+                "id": 966,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat away"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The sun faded the paint on the car.",
+                    "textEs": "El sol se comió la pintura del carro."
+                  }
+                ],
+                "gender": null,
+                "id": 35071,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to fade"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Acid rain corrodes bronze statues.",
+                    "textEs": "La lluvia ácida se come las estatuas de bronce."
+                  }
+                ],
+                "gender": null,
+                "id": 35072,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to corrode"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 11,
+            "context": "to wear away",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat away",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat away"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El óxido se come el metal.",
+                    "Rust eats away metal."
+                  ]
+                ]
+              },
+              {
+                "translation": "to fade",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to fade"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El sol se comió la pintura del carro.",
+                    "The sun faded the paint on the car."
+                  ]
+                ]
+              },
+              {
+                "translation": "to corrode",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to corrode"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La lluvia ácida se come las estatuas de bronce.",
+                    "Acid rain corrodes bronze statues."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to use up",
+            "contextEs": "gastar",
+            "gender": null,
+            "id": 700,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Much of my pay is eaten up by taxes!",
+                    "textEs": "¡Los impuestos se me comen la mayor parte de mi sueldo!"
+                  }
+                ],
+                "gender": null,
+                "id": 965,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to eat up"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Ivan blew through his lottery winnings in a few months.",
+                    "textEs": "Iván se comió el premio que ganó en la lotería en pocos meses."
+                  }
+                ],
+                "gender": null,
+                "id": 2391,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to blow through"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 12,
+            "context": "to use up",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to eat up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to eat up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¡Los impuestos se me comen la mayor parte de mi sueldo!",
+                    "Much of my pay is eaten up by taxes!"
+                  ]
+                ]
+              },
+              {
+                "translation": "to blow through",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to blow through"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Iván se comió el premio que ganó en la lotería en pocos meses.",
+                    "Ivan blew through his lottery winnings in a few months."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to chew on",
+            "contextEs": "masticar",
+            "gender": null,
+            "id": 21896,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "They put an ointment on his nails so that he wouldn't bite them.",
+                    "textEs": "Le pusieron un ungüento para que no siguiera comiéndose las uñas."
+                  }
+                ],
+                "gender": null,
+                "id": 35076,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to bite"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 13,
+            "context": "to chew on",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to bite",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to bite"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Le pusieron un ungüento para que no siguiera comiéndose las uñas.",
+                    "They put an ointment on his nails so that he wouldn't bite them."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to omit",
+            "contextEs": "omitir",
+            "gender": null,
+            "id": 702,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "You missed all the punctuation.",
+                    "textEs": "Te comiste toda la puntuación."
+                  }
+                ],
+                "gender": null,
+                "id": 967,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to miss"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He swallowed his words when he was talking to his crush.",
+                    "textEs": "Se comió las palabras cuando estaba hablando con su enamorada."
+                  }
+                ],
+                "gender": null,
+                "id": 35073,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to swallow"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 14,
+            "context": "to omit",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to miss",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to miss"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Te comiste toda la puntuación.",
+                    "You missed all the punctuation."
+                  ]
+                ]
+              },
+              {
+                "translation": "to swallow",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to swallow"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Se comió las palabras cuando estaba hablando con su enamorada.",
+                    "He swallowed his words when he was talking to his crush."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to collide with",
+            "contextEs": "chocarse con",
+            "gender": null,
+            "id": 703,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He hit his head against the ceiling.",
+                    "textEs": "Se comió el techo con la cabeza."
+                  }
+                ],
+                "gender": null,
+                "id": 968,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to hit"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "We crashed into the garage door when we reversed.",
+                    "textEs": "Nos comimos la puerta del garaje cuando dimos marcha atrás."
+                  }
+                ],
+                "gender": null,
+                "id": 35074,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to crash into"
+              }
+            ],
+            "subheadword": "comerse",
+            "idx": 15,
+            "context": "to collide with",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to hit",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to hit"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Se comió el techo con la cabeza.",
+                    "He hit his head against the ceiling."
+                  ]
+                ]
+              },
+              {
+                "translation": "to crash into",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to crash into"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Nos comimos la puerta del garaje cuando dimos marcha atrás.",
+                    "We crashed into the garage door when we reversed."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "pronominal verb",
+          "tooltip": {
+            "def": "A pronominal verb always uses a reflexive pronoun. (e.g., Te ves cansado.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      }
+    ]
+  }
+]

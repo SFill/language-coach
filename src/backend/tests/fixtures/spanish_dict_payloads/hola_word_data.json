@@ -1,0 +1,140 @@
+[
+  {
+    "subheadword": "hola",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "interj",
+          "abbrEs": "interj",
+          "nameEn": "interjection",
+          "nameEs": "interjección",
+          "sharedPosNameEn": "interjection"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "",
+            "contextEs": "",
+            "gender": null,
+            "id": 163139,
+            "partOfSpeech": {
+              "abbrEn": "interj",
+              "abbrEs": "interj",
+              "nameEn": "interjection",
+              "nameEs": "interjección"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Hello, Meg! - Hello, how are you?",
+                    "textEs": "¡Hola, Meg! - Hola, ¿cómo estás?"
+                  }
+                ],
+                "gender": null,
+                "id": 264816,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "hello"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Hi! What's new?",
+                    "textEs": "¡Hola! ¿Qué hay de nuevo?"
+                  }
+                ],
+                "gender": null,
+                "id": 264817,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [
+                  {
+                    "abbrEn": "col",
+                    "abbrEs": "col",
+                    "nameEn": "colloquial",
+                    "nameEs": "coloquial"
+                  }
+                ],
+                "translation": "hi"
+              }
+            ],
+            "subheadword": "hola",
+            "idx": 1,
+            "context": "general",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "hello",
+                "gender": null,
+                "isQuickTranslation": true,
+                "translationsDisplay": {
+                  "texts": [
+                    "hello"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¡Hola, Meg! - Hola, ¿cómo estás?",
+                    "Hello, Meg! - Hello, how are you?"
+                  ]
+                ]
+              },
+              {
+                "translation": "hi",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "hi"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [
+                  {
+                    "name": "colloquial",
+                    "tooltip": {
+                      "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                    }
+                  }
+                ],
+                "examplesDisplay": [
+                  [
+                    "¡Hola! ¿Qué hay de nuevo?",
+                    "Hi! What's new?"
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "interjection",
+          "tooltip": {
+            "def": "An interjection is a short utterance that expresses emotion, hesitation, or protest (e.g., Wow!).",
+            "href": "https://www.spanishdict.com/guide/spanish-exclamatory-words-and-expressions"
+          }
+        }
+      }
+    ]
+  }
+]

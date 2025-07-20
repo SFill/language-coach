@@ -1,0 +1,2243 @@
+{
+  "infinitive": "correr",
+  "translation": "run",
+  "is_reflexive": 2,
+  "tenses": {
+    "presentIndicative": [
+      {
+        "conjugationForms": [
+          "corro"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corro&key=f2426ce7f58af98aa6df273ed938256a",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corres&key=94b3d9d4d2273dfa308815758ad9c4a2",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corre"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corre&key=399624857f6fee63163367078bb574c9",
+        "translationForms": [
+          {
+            "word": "runs",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corremos&key=c343151cc3a450fff1c8dec40bded3e2",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corr%C3%A9is&key=6af47e77dc69dab14565c42c8d4035ff&region=spain",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corren&key=226f3b3f50bb13630f77053e549330b8",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrés"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corr%C3%A9s&key=2426bcc554606f60bcb832940f7573c4&region=latam",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritIndicative": [
+      {
+        "conjugationForms": [
+          "corrí"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corr%C3%AD&key=0f902fe62c9c825c25854b11fdcba39a",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriste"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corriste&key=17e6a59d6e0599e88543fb4c7b6d6ddb",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrió"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corri%C3%B3&key=a3c07827ce4abc1298504d1f0343fa64",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrimos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corrimos&key=938d515ec02c7d17dab0f3b7ad81fe7d",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corristeis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corristeis&key=586dc75cffd74917f357fb507b17c106&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieron"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corrieron&key=b563f5f5f8e5b1305693562244ccb6a7",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriste"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corriste&key=17e6a59d6e0599e88543fb4c7b6d6ddb&region=latam",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectIndicative": [
+      {
+        "conjugationForms": [
+          "corría"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corr%C3%ADa&key=1563568bae2f8465ee8b0b6ed776d2e4",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corr%C3%ADas&key=d957e035ca3fd935ff4d5496f058a8a4",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corría"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corr%C3%ADa&key=1563568bae2f8465ee8b0b6ed776d2e4",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corr%C3%ADamos&key=138959b18c303428815db98d705b028f",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corr%C3%ADais&key=3387a1507c3c60aacd0faef62ce0dc54&region=spain",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corr%C3%ADan&key=dbf32871f2a7ccc520694c3cdd333215",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corr%C3%ADas&key=d957e035ca3fd935ff4d5496f058a8a4&region=latam",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalIndicative": [
+      {
+        "conjugationForms": [
+          "correría"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=correr%C3%ADa&key=58da742d3dd75c9091e7e2849458eea8",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrías"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=correr%C3%ADas&key=f04255da53eea9648e5ccdd3b88ef948",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correría"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=correr%C3%ADa&key=58da742d3dd75c9091e7e2849458eea8",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correríamos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=correr%C3%ADamos&key=b58a94ac19eb7d9c3d142c366df0ac19",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correríais"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=correr%C3%ADais&key=8a64870ab8c41d6a860fdb07c397870c&region=spain",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrían"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=correr%C3%ADan&key=522f10914521d54cd88360b2d5ec903e",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrías"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=correr%C3%ADas&key=f04255da53eea9648e5ccdd3b88ef948&region=latam",
+        "translationForms": [
+          {
+            "word": "would run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureIndicative": [
+      {
+        "conjugationForms": [
+          "correré"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=correr%C3%A9&key=a96bd123109e0c8e1afa7dad1d694a79",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrás"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=correr%C3%A1s&key=4cc7c56cff67a5cf3bb6bb58a35e2206",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrá"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=correr%C3%A1&key=1cfa6ac23dad76edf9f9177f190ca81e",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=correremos&key=24e090d1ec4c5c0af018ee24dae888e5",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correréis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=correr%C3%A9is&key=5c0cdc23b1319559b3f39f4f48a4b6eb&region=spain",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrán"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=correr%C3%A1n&key=5510e40e20658aed699c09ecaa5e2dd3",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "correrás"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=correr%C3%A1s&key=4cc7c56cff67a5cf3bb6bb58a35e2206&region=latam",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentSubjunctive": [
+      {
+        "conjugationForms": [
+          "corra"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corra&key=731666cfa4ebd7fcc6e85a4b1c69134e",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corras"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corras&key=83824bbb5710e61ed9213d64479cb162",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corra"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corra&key=731666cfa4ebd7fcc6e85a4b1c69134e",
+        "translationForms": [
+          {
+            "word": "runs",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corramos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corramos&key=8be6a17fa0ff1423dcfdf78d8bf7dbf1",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corráis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corr%C3%A1is&key=6ffb8185826ac7fd718b023e4599b140&region=spain",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corran"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corran&key=a17570734893f7670830d4b70c266ceb",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corras"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corras&key=83824bbb5710e61ed9213d64479cb162&region=latam",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "corriera",
+          "corriese"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corriera%2Ccorriese&key=3a3ebdda678318d3f06126080af0e25c",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieras",
+          "corrieses"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corrieras%2Ccorrieses&key=8157d72e0f8fc5eb5956763de9b16ae7",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriera",
+          "corriese"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corriera%2Ccorriese&key=3a3ebdda678318d3f06126080af0e25c",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriéramos",
+          "corriésemos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corri%C3%A9ramos%2Ccorri%C3%A9semos&key=cdee65628ba0fec4e47eb53fdb64cb0b",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrierais",
+          "corrieseis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corrierais%2Ccorrieseis&key=665799ab77baa12d0481f3f951a84bfb&region=spain",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieran",
+          "corriesen"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corrieran%2Ccorriesen&key=3cd3fa87a8e4892fadc33d98719eb034",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieras",
+          "corrieses"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corrieras%2Ccorrieses&key=8157d72e0f8fc5eb5956763de9b16ae7&region=latam",
+        "translationForms": [
+          {
+            "word": "ran",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureSubjunctive": [
+      {
+        "conjugationForms": [
+          "corriere"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=corriere&key=bfe50281568c726dc0bc09811e064b28",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieres"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corrieres&key=9ca5fd75ba0eea55338df5d9cb4e3dd0",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriere"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=corriere&key=bfe50281568c726dc0bc09811e064b28",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriéremos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corri%C3%A9remos&key=1d9c0f51d310f5d27511f80a0c421e28",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corriereis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corriereis&key=a36796a7611829c43a631f2d2b9d84fa&region=spain",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieren"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=corrieren&key=a8312f14b21ef705500bb43ab92644be",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corrieres"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corrieres&key=9ca5fd75ba0eea55338df5d9cb4e3dd0&region=latam",
+        "translationForms": [
+          {
+            "word": "will run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "corre"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=corre&key=399624857f6fee63163367078bb574c9",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corra"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=corra&key=731666cfa4ebd7fcc6e85a4b1c69134e",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corramos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=corramos&key=8be6a17fa0ff1423dcfdf78d8bf7dbf1",
+        "translationForms": [
+          {
+            "word": "let's run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corred"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=corred&key=f95910f9e420064ed573727190a4b64c&region=spain",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corran"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=corran&key=a17570734893f7670830d4b70c266ceb",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "corré"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=corr%C3%A9&key=3feef3b5014e90f8660aa1177aa4359e&region=latam",
+        "translationForms": [
+          {
+            "word": "run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "negativeImperative": [
+      {
+        "conjugationForms": null,
+        "pronoun": "yo"
+      },
+      {
+        "conjugationForms": [
+          "no corras"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=no-corras&key=683bd58bb0b12b3220cf351266c522a5",
+        "translationForms": [
+          {
+            "word": "don't run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no corra"
+        ],
+        "pronoun": "Ud.",
+        "audioQueryString": "?lang=es&text=no-corra&key=2b307e75d6aab4c1c4177233561f68ce",
+        "translationForms": [
+          {
+            "word": "don't run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no corramos"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=no-corramos&key=cf493434878e0ce1b3c549730b01f3c7",
+        "translationForms": [
+          {
+            "word": "let's not run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no corráis"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=no-corr%C3%A1is&key=44977864953caca71f8bb492d06b9649&region=spain",
+        "translationForms": [
+          {
+            "word": "don't run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no corran"
+        ],
+        "pronoun": "Uds.",
+        "audioQueryString": "?lang=es&text=no-corran&key=23f3098a6abfb99a89f9d802e672e94e",
+        "translationForms": [
+          {
+            "word": "don't run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "no corras"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=no-corras&key=683bd58bb0b12b3220cf351266c522a5&region=latam",
+        "translationForms": [
+          {
+            "word": "don't run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentContinuous": [
+      {
+        "conjugationForms": [
+          "estoy corriendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estoy-corriendo&key=0a80620f414de8aef92888c331a0863c",
+        "translationForms": [
+          {
+            "word": "am running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás corriendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-corriendo&key=911203e5523f4c8a4e53d05a6d7d0696",
+        "translationForms": [
+          {
+            "word": "are running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "está corriendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=est%C3%A1-corriendo&key=d6cb9dcb837e8ceac560b278d683e5b7",
+        "translationForms": [
+          {
+            "word": "is running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estamos corriendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estamos-corriendo&key=a925c53a3f0ecc6d55918cfec368cef0",
+        "translationForms": [
+          {
+            "word": "are running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estáis corriendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1is-corriendo&key=7a1b550d682501a4fb0217538a48506c&region=spain",
+        "translationForms": [
+          {
+            "word": "are running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "están corriendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=est%C3%A1n-corriendo&key=37e1f9999867220b4fd58477d347fae0",
+        "translationForms": [
+          {
+            "word": "are running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estás corriendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=est%C3%A1s-corriendo&key=911203e5523f4c8a4e53d05a6d7d0696&region=latam",
+        "translationForms": [
+          {
+            "word": "are running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritContinuous": [
+      {
+        "conjugationForms": [
+          "estuve corriendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estuve-corriendo&key=e5f7bccb1f85cb951b05f350b331034a",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste corriendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estuviste-corriendo&key=14e485dc34af743e78839ba6da24d093",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvo corriendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estuvo-corriendo&key=27b5c8065f98b318bd7b575de642411f",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvimos corriendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estuvimos-corriendo&key=e52a4790763d943ef42df54dfad53a6a",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvisteis corriendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estuvisteis-corriendo&key=65f819cfa105fe3fd9ff4f6cf4eb6bd5&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuvieron corriendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estuvieron-corriendo&key=36c34437282fe4360b9c1941c7cec6c6",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estuviste corriendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estuviste-corriendo&key=14e485dc34af743e78839ba6da24d093&region=latam",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "imperfectContinuous": [
+      {
+        "conjugationForms": [
+          "estaba corriendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estaba-corriendo&key=b3a344d78a092416bc25681b932494e6",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas corriendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estabas-corriendo&key=beef1bec7117dad33fcff432194e738b",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaba corriendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estaba-corriendo&key=b3a344d78a092416bc25681b932494e6",
+        "translationForms": [
+          {
+            "word": "was running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estábamos corriendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=est%C3%A1bamos-corriendo&key=15f94cb9a3787074b4e2de9ccca94645",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabais corriendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estabais-corriendo&key=97c681c26de455709ce89e70cf5d6d0f&region=spain",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaban corriendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estaban-corriendo&key=5f97f3e227062f9b0dc975aa28f2088a",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estabas corriendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estabas-corriendo&key=beef1bec7117dad33fcff432194e738b&region=latam",
+        "translationForms": [
+          {
+            "word": "were running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalContinuous": [
+      {
+        "conjugationForms": [
+          "estaría corriendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-corriendo&key=cd0b654a9f27eb2d15e03331b5c40e19",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías corriendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-corriendo&key=deecc4835c669a6e3666e00204503ff8",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaría corriendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADa-corriendo&key=cd0b654a9f27eb2d15e03331b5c40e19",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríamos corriendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADamos-corriendo&key=8a4f46a347597cb68b1e5136596abece",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaríais corriendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%ADais-corriendo&key=b743dd891eba293dca40045a2523c691&region=spain",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarían corriendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%ADan-corriendo&key=604e30737c57cc5c36ab66cda359a2ac",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarías corriendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%ADas-corriendo&key=deecc4835c669a6e3666e00204503ff8&region=latam",
+        "translationForms": [
+          {
+            "word": "would be running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futureContinuous": [
+      {
+        "conjugationForms": [
+          "estaré corriendo"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=estar%C3%A9-corriendo&key=82ce930b0049b0ad319336d93e8b8053",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás corriendo"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-corriendo&key=9020571675dbf5947b2e20c934f900b2",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estará corriendo"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1-corriendo&key=21e5c5aa04c75e2e698ffb45532c846a",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaremos corriendo"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=estaremos-corriendo&key=c221c6b832a0d77f11aaf2605c3d5465",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estaréis corriendo"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=estar%C3%A9is-corriendo&key=7617b70bb6d5fa3d3f2fcd767de5ea2f&region=spain",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarán corriendo"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=estar%C3%A1n-corriendo&key=e8093a2739219739c711ab02c558e271",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "estarás corriendo"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=estar%C3%A1s-corriendo&key=9020571675dbf5947b2e20c934f900b2&region=latam",
+        "translationForms": [
+          {
+            "word": "will be running",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfect": [
+      {
+        "conjugationForms": [
+          "he corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=he-corrido&key=0adb246cdabb89611f399f1f624f6f10",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=has-corrido&key=0970af17ff3e2c22b09d627108eb92bb",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "ha corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=ha-corrido&key=ded3f7db59a1cbe14c7b843c077a97df",
+        "translationForms": [
+          {
+            "word": "has run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hemos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hemos-corrido&key=0347a2dc880c82db382c262380026338",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habéis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%A9is-corrido&key=2e0956cc9dbef3c07dd51038a678fec9&region=spain",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "han corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=han-corrido&key=5afd43351a9d13c60b49724c3cd05dcf",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "has corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=has-corrido&key=0970af17ff3e2c22b09d627108eb92bb&region=latam",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "preteritPerfect": [
+      {
+        "conjugationForms": [
+          "hube corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hube-corrido&key=2dbd8e2e89118ebf8506a196b3824c2f",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubiste-corrido&key=3783fe35db650f97cd7733e94492a88d",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubo corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubo-corrido&key=cd0441a2fec66619840e6ad9cbe45549",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubimos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubimos-corrido&key=b6fee899bb2c91baea392cd7840d20bf",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubisteis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubisteis-corrido&key=a892d6b2f45196a9d6a662becce671a7&region=spain&name=maria22k",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieron corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieron-corrido&key=b66f5b40a695e98bf3f9ac009050c376",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiste corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubiste-corrido&key=3783fe35db650f97cd7733e94492a88d&region=latam",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfect": [
+      {
+        "conjugationForms": [
+          "había corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-corrido&key=ae443d092ba851c76892e2b438051a1d",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-corrido&key=30dd04e4ecc54a4c0603f27550beac63",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "había corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADa-corrido&key=ae443d092ba851c76892e2b438051a1d",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíamos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADamos-corrido&key=3bb7081c7e50f8a9215ec203d4b1077e",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habíais corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hab%C3%ADais-corrido&key=31f1547ab522eff483b679856396125c&region=spain",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habían corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hab%C3%ADan-corrido&key=7bceb91bafcc180aacd4977b1e081401",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habías corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hab%C3%ADas-corrido&key=30dd04e4ecc54a4c0603f27550beac63&region=latam",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "conditionalPerfect": [
+      {
+        "conjugationForms": [
+          "habría corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-corrido&key=ade80ffa70a2844a49d7ef1bfbaaf773",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-corrido&key=ac0cdbf66b8c0ae439431041bcd3d50a",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habría corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADa-corrido&key=ade80ffa70a2844a49d7ef1bfbaaf773",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríamos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADamos-corrido&key=79d3c03c2cab6aa3a9f4bb2bb015ed20",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habríais corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%ADais-corrido&key=a9917c4c6d07d931281a68195ed82be0&region=spain",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrían corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%ADan-corrido&key=f45bbeea0ee6569e73523a70a88bd6c9",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrías corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%ADas-corrido&key=ac0cdbf66b8c0ae439431041bcd3d50a&region=latam",
+        "translationForms": [
+          {
+            "word": "would have run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfect": [
+      {
+        "conjugationForms": [
+          "habré corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=habr%C3%A9-corrido&key=629cbf89b0541c0e5c6625dbfcffa466",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-corrido&key=8c6aa74f286c15b3ffa49f707255b18b",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrá corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1-corrido&key=fae2611ca39d6c3704720cce7a0c783c",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habremos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=habremos-corrido&key=e9562c978b3721b494f9f0f96aa850e7",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habréis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=habr%C3%A9is-corrido&key=0994f8f811cd7bdb6ca0afb212e5274f&region=spain",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrán corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=habr%C3%A1n-corrido&key=cc3510e4ab831a37430d4a0f4b42c443",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "habrás corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=habr%C3%A1s-corrido&key=8c6aa74f286c15b3ffa49f707255b18b&region=latam",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "presentPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "haya corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=haya-corrido&key=a6dd8508c2f5a2aebe7b38bd6f19bf58",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hayas-corrido&key=f1721c92f7ad9435e986b55a60307383",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "haya corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=haya-corrido&key=a6dd8508c2f5a2aebe7b38bd6f19bf58",
+        "translationForms": [
+          {
+            "word": "has run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayamos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hayamos-corrido&key=1f44e052c741846af9f5ccdad1bfe6ef",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayáis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hay%C3%A1is-corrido&key=b497918a0dd2be1b4fe7e14db171d1b8&region=spain",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayan corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hayan-corrido&key=deab4ae8828cd2007a9e633c6433ad94",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hayas corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hayas-corrido&key=f1721c92f7ad9435e986b55a60307383&region=latam",
+        "translationForms": [
+          {
+            "word": "have run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "pastPerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiera corrido",
+          "hubiese corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiera-corrido%2Chubiese-corrido&key=762913a62241c33ff85182bccec78b04",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras corrido",
+          "hubieses corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieras-corrido%2Chubieses-corrido&key=0ac9b4284a5b923170b6ab1457544b58",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiera corrido",
+          "hubiese corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiera-corrido%2Chubiese-corrido&key=762913a62241c33ff85182bccec78b04",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéramos corrido",
+          "hubiésemos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9ramos-corrido%2Chubi%C3%A9semos-corrido&key=a54cd781923d4507b4f72a3f52308cd9",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubierais corrido",
+          "hubieseis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubierais-corrido%2Chubieseis-corrido&key=1d5cf7b0a091ccd999487a3c3c78c346&region=spain",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieran corrido",
+          "hubiesen corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieran-corrido%2Chubiesen-corrido&key=37ea11bb9bf6d502abfbd5939952072d",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieras corrido",
+          "hubieses corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieras-corrido%2Chubieses-corrido&key=0ac9b4284a5b923170b6ab1457544b58&region=latam",
+        "translationForms": [
+          {
+            "word": "had run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "futurePerfectSubjunctive": [
+      {
+        "conjugationForms": [
+          "hubiere corrido"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=hubiere-corrido&key=e72ef72b4fef167cb873f0d61748dbda",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres corrido"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=hubieres-corrido&key=a16682aac5d1ccfad0b92c1730579107",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiere corrido"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=hubiere-corrido&key=e72ef72b4fef167cb873f0d61748dbda",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiéremos corrido"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=hubi%C3%A9remos-corrido&key=d328c94ed64e51323d897fb7257fdf57",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubiereis corrido"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=hubiereis-corrido&key=bd88417933826338171b5962fa1b59c0&region=spain",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieren corrido"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=hubieren-corrido&key=67654d47e2d8e9cfa22d4b4112308154",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "hubieres corrido"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=hubieres-corrido&key=a16682aac5d1ccfad0b92c1730579107&region=latam",
+        "translationForms": [
+          {
+            "word": "will have run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ],
+    "informalFuture": [
+      {
+        "conjugationForms": [
+          "voy a correr"
+        ],
+        "pronoun": "yo",
+        "audioQueryString": "?lang=es&text=voy-a-correr&key=0e7a05bd04e0b4ed5a5cd7dee79b5bbf",
+        "translationForms": [
+          {
+            "word": "am going to run",
+            "pronoun": "I"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a correr"
+        ],
+        "pronoun": "tú",
+        "audioQueryString": "?lang=es&text=vas-a-correr&key=3f58ca6484ff2d215c27374634af13ce",
+        "translationForms": [
+          {
+            "word": "are going to run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "va a correr"
+        ],
+        "pronoun": "él/ella/Ud.",
+        "audioQueryString": "?lang=es&text=va-a-correr&key=df4be9c917fd397148867f9692948b0e",
+        "translationForms": [
+          {
+            "word": "is going to run",
+            "pronoun": "he/she"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vamos a correr"
+        ],
+        "pronoun": "nosotros",
+        "audioQueryString": "?lang=es&text=vamos-a-correr&key=00796df25e9c9fa59602167e1c2ad7c4",
+        "translationForms": [
+          {
+            "word": "are going to run",
+            "pronoun": "we"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vais a correr"
+        ],
+        "pronoun": "vosotros",
+        "audioQueryString": "?lang=es&text=vais-a-correr&key=6edc324b96d1993a3b510cd0964ddcc8&region=spain",
+        "translationForms": [
+          {
+            "word": "are going to run",
+            "pronoun": "you"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "van a correr"
+        ],
+        "pronoun": "ellos/ellas/Uds.",
+        "audioQueryString": "?lang=es&text=van-a-correr&key=8c41908cfdb75a8ef1c5f78e092bff16",
+        "translationForms": [
+          {
+            "word": "are going to run",
+            "pronoun": "they"
+          }
+        ]
+      },
+      {
+        "conjugationForms": [
+          "vas a correr"
+        ],
+        "pronoun": "vos",
+        "audioQueryString": "?lang=es&text=vas-a-correr&key=3f58ca6484ff2d215c27374634af13ce&region=latam",
+        "translationForms": [
+          {
+            "word": "are going to run",
+            "pronoun": "you"
+          }
+        ]
+      }
+    ]
+  },
+  "past_participle": {
+    "spanish": "",
+    "english": ""
+  },
+  "gerund": {
+    "spanish": "",
+    "english": ""
+  }
+}

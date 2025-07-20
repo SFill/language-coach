@@ -1,0 +1,1365 @@
+[
+  {
+    "subheadword": "correr",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vtr",
+          "abbrEs": "vtr",
+          "nameEn": "transitive verb",
+          "nameEs": "verbo transitivo",
+          "sharedPosNameEn": "transitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to move fast",
+            "contextEs": "moverse deprisa",
+            "gender": null,
+            "id": 1030,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I run 12 kilometers every day.",
+                    "textEs": "Corro 12 kilómetros cada día."
+                  },
+                  {
+                    "textEn": "I'm running the marathon this year.",
+                    "textEs": "Este año voy a correr la maratón."
+                  }
+                ],
+                "gender": null,
+                "id": 1339,
+                "imagePath": "/dictionary-images/original/f5610e40-93c5-4c07-b37c-2443b64520de.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 1,
+            "context": "to move fast",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to run",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/f5610e40-93c5-4c07-b37c-2443b64520de.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to run"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Corro 12 kilómetros cada día.",
+                    "I run 12 kilometers every day."
+                  ],
+                  [
+                    "Este año voy a correr la maratón.",
+                    "I'm running the marathon this year."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to change position of",
+            "contextEs": "cambiar posición de",
+            "gender": null,
+            "id": 1035,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I had to move the table to have more space.",
+                    "textEs": "Tuve que correr la mesa para tener más espacio."
+                  }
+                ],
+                "gender": null,
+                "id": 1344,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to move"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 2,
+            "context": "to change position of",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to move",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to move"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Tuve que correr la mesa para tener más espacio.",
+                    "I had to move the table to have more space."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to risk",
+            "contextEs": "arriesgarse",
+            "gender": null,
+            "id": 1036,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Don't run unnecessary risks. Put yourself in the hands of a professional.",
+                    "textEs": "No corras riesgos innecesarios; ponte en manos de un profesional."
+                  }
+                ],
+                "gender": null,
+                "id": 1345,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 3,
+            "context": "to risk",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to run",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to run"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "No corras riesgos innecesarios; ponte en manos de un profesional.",
+                    "Don't run unnecessary risks. Put yourself in the hands of a professional."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to get rid of",
+            "contextEs": "echar a",
+            "gender": null,
+            "id": 1037,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "LatAm",
+                "abbrEs": "LatAm",
+                "nameEn": "Latin America",
+                "nameEs": "Latinoamérica"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "They ran the thief out of the house.",
+                    "textEs": "Corrieron al ladrón de la casa."
+                  }
+                ],
+                "gender": null,
+                "id": 1346,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run out"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 4,
+            "context": "to get rid of",
+            "regionsDisplay": [
+              {
+                "name": "Latin America",
+                "tooltip": {
+                  "def": "Regionalism used in Latin America: all the countries in South America, Central America, and the Caribbean. Does not include Spain."
+                }
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to run out",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to run out"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Corrieron al ladrón de la casa.",
+                    "They ran the thief out of the house."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "transitive verb",
+          "tooltip": {
+            "def": "A transitive verb is a verb that requires a direct object (e.g., I bought a book.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vi",
+          "abbrEs": "vi",
+          "nameEn": "intransitive verb",
+          "nameEs": "verbo intransitivo",
+          "sharedPosNameEn": "intransitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to hasten",
+            "contextEs": "darse prisa",
+            "gender": null,
+            "id": 139224,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Hurry, turn the heat down. The stew is going to burn.",
+                    "textEs": "Corre, baja el fuego. Se va a quemar el estofado."
+                  }
+                ],
+                "gender": null,
+                "id": 228548,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to hurry"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "We'll have to hurry up if we don't want to be late for the movie.",
+                    "textEs": "Tendremos que correr si no queremos llegar tarde al cine."
+                  }
+                ],
+                "gender": null,
+                "id": 228549,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to hurry up"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I spent the whole day running around after the kids.",
+                    "textEs": "Me pasé el día corriendo detrás de los niños."
+                  }
+                ],
+                "gender": null,
+                "id": 262009,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run around"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 5,
+            "context": "to hasten",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to hurry",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to hurry"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Corre, baja el fuego. Se va a quemar el estofado.",
+                    "Hurry, turn the heat down. The stew is going to burn."
+                  ]
+                ]
+              },
+              {
+                "translation": "to hurry up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to hurry up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Tendremos que correr si no queremos llegar tarde al cine.",
+                    "We'll have to hurry up if we don't want to be late for the movie."
+                  ]
+                ]
+              },
+              {
+                "translation": "to run around",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to run around"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Me pasé el día corriendo detrás de los niños.",
+                    "I spent the whole day running around after the kids."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to flow",
+            "contextEs": "fluir",
+            "gender": null,
+            "id": 1032,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The river runs from north to south.",
+                    "textEs": "El río corre de norte a sur."
+                  }
+                ],
+                "gender": null,
+                "id": 1341,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 6,
+            "context": "to flow",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to run",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to run"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El río corre de norte a sur.",
+                    "The river runs from north to south."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to spread",
+            "contextEs": "extenderse",
+            "gender": null,
+            "id": 1033,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The gossip went around the village.",
+                    "textEs": "El chisme corrió por el pueblo."
+                  }
+                ],
+                "gender": null,
+                "id": 1342,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to go around"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 7,
+            "context": "to spread",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to go around",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to go around"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El chisme corrió por el pueblo.",
+                    "The gossip went around the village."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to pass",
+            "contextEs": "pasar",
+            "gender": null,
+            "id": 1034,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The hours went by like minutes.",
+                    "textEs": "Las horas corrieron como minutos."
+                  }
+                ],
+                "gender": null,
+                "id": 1343,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to go by"
+              }
+            ],
+            "subheadword": "correr",
+            "idx": 8,
+            "context": "to pass",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to go by",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to go by"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Las horas corrieron como minutos.",
+                    "The hours went by like minutes."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "intransitive verb",
+          "tooltip": {
+            "def": "An intransitive verb is one that does not require a direct object (e.g., The man sneezed.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "subheadword": "correrse",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vpr",
+          "abbrEs": "vpr",
+          "nameEn": "pronominal verb",
+          "nameEs": "verbo pronominal",
+          "sharedPosNameEn": "pronominal verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to change position",
+            "contextEs": "desplazarse",
+            "gender": null,
+            "id": 106952,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "During the earthquake, the table moved and hit the wall hard.",
+                    "textEs": "Durante el terremoto, se corrió la mesa y golpeó contra la pared con fuerza."
+                  }
+                ],
+                "gender": null,
+                "id": 173964,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to move"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "A huge wave made the ship roll, and its load shifted first to one side and then to the other.",
+                    "textEs": "Una ola enorme hizo balancearse al barco, y la carga se corrió primero hacia un lado y luego hacia el otro."
+                  }
+                ],
+                "gender": null,
+                "id": 173963,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to shift"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Can you move over that way a little?",
+                    "textEs": "¿Puedes correrte un poco hacia allá?"
+                  }
+                ],
+                "gender": null,
+                "id": 262011,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to move over"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "If we move up, those ladies standing over there will be able to sit down.",
+                    "textEs": "Si nos corremos, podrán sentarse esas señoras que están allí de pie."
+                  }
+                ],
+                "gender": null,
+                "id": 173967,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to move up"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Shift over that way a bit, please. I barely have any room.",
+                    "textEs": "Córrete un poco hacia allá, por favor. Apenas tengo espacio."
+                  }
+                ],
+                "gender": null,
+                "id": 173966,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to shift over"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Tell Esteban to shift up so that Ines can sit down.",
+                    "textEs": "Dile a Esteban que se corra para que pueda sentarse Inés."
+                  }
+                ],
+                "gender": null,
+                "id": 173965,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to shift up"
+              },
+              {
+                "contextEn": "car",
+                "contextEs": "coche",
+                "examples": [
+                  {
+                    "textEn": "The car pulled over to one side to let the truck through.",
+                    "textEs": "El carro se corrió hacia un lado para dejar pasar al camión."
+                  }
+                ],
+                "gender": null,
+                "id": 173968,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to pull over"
+              }
+            ],
+            "subheadword": "correrse",
+            "idx": 9,
+            "context": "to change position",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to move",
+                "gender": null,
+                "isQuickTranslation": true,
+                "translationsDisplay": {
+                  "texts": [
+                    "to move"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Durante el terremoto, se corrió la mesa y golpeó contra la pared con fuerza.",
+                    "During the earthquake, the table moved and hit the wall hard."
+                  ]
+                ]
+              },
+              {
+                "translation": "to shift",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to shift"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Una ola enorme hizo balancearse al barco, y la carga se corrió primero hacia un lado y luego hacia el otro.",
+                    "A huge wave made the ship roll, and its load shifted first to one side and then to the other."
+                  ]
+                ]
+              },
+              {
+                "translation": "to move over",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to move over"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Puedes correrte un poco hacia allá?",
+                    "Can you move over that way a little?"
+                  ]
+                ]
+              },
+              {
+                "translation": "to move up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to move up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "d",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Si nos corremos, podrán sentarse esas señoras que están allí de pie.",
+                    "If we move up, those ladies standing over there will be able to sit down."
+                  ]
+                ]
+              },
+              {
+                "translation": "to shift over",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to shift over"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "e",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Córrete un poco hacia allá, por favor. Apenas tengo espacio.",
+                    "Shift over that way a bit, please. I barely have any room."
+                  ]
+                ]
+              },
+              {
+                "translation": "to shift up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to shift up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "f",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Dile a Esteban que se corra para que pueda sentarse Inés.",
+                    "Tell Esteban to shift up so that Ines can sit down."
+                  ]
+                ]
+              },
+              {
+                "translation": "to pull over",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to pull over"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "g",
+                "context": "car",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El carro se corrió hacia un lado para dejar pasar al camión.",
+                    "The car pulled over to one side to let the truck through."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to smudge",
+            "contextEs": "esparcirse",
+            "gender": null,
+            "id": 1038,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "When it rains, my makeup runs.",
+                    "textEs": "Cuando llueve se me corre el maquillaje."
+                  }
+                ],
+                "gender": null,
+                "id": 1347,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to run"
+              }
+            ],
+            "subheadword": "correrse",
+            "idx": 10,
+            "context": "to smudge",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to run",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to run"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Cuando llueve se me corre el maquillaje.",
+                    "When it rains, my makeup runs."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to develop a run",
+            "contextEs": "hacerse una carrera en",
+            "gender": null,
+            "id": 106951,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "There's nothing more annoying than getting a run in my stockings.",
+                    "textEs": "No hay nada que me fastidie más que se me corran las medias."
+                  }
+                ],
+                "gender": null,
+                "id": 173970,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [
+                  {
+                    "abbrEn": "US",
+                    "abbrEs": "EEUU",
+                    "nameEn": "United States",
+                    "nameEs": "Estados Unidos"
+                  }
+                ],
+                "registerLabels": [],
+                "translation": "to get a run"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Did you know you have a ladder in your tights?",
+                    "textEs": "¿Te diste cuenta de que se te corrieron las medias?"
+                  }
+                ],
+                "gender": null,
+                "id": 173969,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [
+                  {
+                    "abbrEn": "UK",
+                    "abbrEs": "RU",
+                    "nameEn": "United Kingdom",
+                    "nameEs": "Reino Unido"
+                  }
+                ],
+                "registerLabels": [],
+                "translation": "to get a ladder"
+              }
+            ],
+            "subheadword": "correrse",
+            "idx": 11,
+            "context": "to develop a run",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to get a run",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to get a run"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [
+                  {
+                    "name": "United States",
+                    "tooltip": {
+                      "def": "Regionalism used in the United States"
+                    }
+                  }
+                ],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "No hay nada que me fastidie más que se me corran las medias.",
+                    "There's nothing more annoying than getting a run in my stockings."
+                  ]
+                ]
+              },
+              {
+                "translation": "to get a ladder",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to get a ladder"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [
+                  {
+                    "name": "United Kingdom",
+                    "tooltip": {
+                      "def": "Regionalism used in the United Kingdom"
+                    }
+                  }
+                ],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Te diste cuenta de que se te corrieron las medias?",
+                    "Did you know you have a ladder in your tights?"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to have an orgasm",
+            "contextEs": "tener un orgasmo",
+            "gender": null,
+            "id": 1039,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [
+              {
+                "abbrEn": "Spain",
+                "abbrEs": "Esp",
+                "nameEn": "Spain",
+                "nameEs": "España"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Some people take longer than others to come.",
+                    "textEs": "Algunas personas tardan más que otras en correrse."
+                  }
+                ],
+                "gender": null,
+                "id": 1348,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [
+                  {
+                    "abbrEn": "col",
+                    "abbrEs": "col",
+                    "nameEn": "colloquial",
+                    "nameEs": "coloquial"
+                  }
+                ],
+                "translation": "to come"
+              }
+            ],
+            "subheadword": "correrse",
+            "idx": 12,
+            "context": "to have an orgasm",
+            "regionsDisplay": [
+              {
+                "name": "Spain",
+                "tooltip": {
+                  "def": "Regionalism used in Spain"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "to come",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to come"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [
+                  {
+                    "name": "colloquial",
+                    "tooltip": {
+                      "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                    }
+                  }
+                ],
+                "examplesDisplay": [
+                  [
+                    "Algunas personas tardan más que otras en correrse.",
+                    "Some people take longer than others to come."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to leave furtively",
+            "contextEs": "escabullirse",
+            "gender": null,
+            "id": 106954,
+            "partOfSpeech": {
+              "abbrEn": "vpr",
+              "abbrEs": "vpr",
+              "nameEn": "pronominal verb",
+              "nameEs": "verbo pronominal"
+            },
+            "regions": [
+              {
+                "abbrEn": "Bol",
+                "abbrEs": "Bol",
+                "nameEn": "Bolivia",
+                "nameEs": "Bolivia"
+              },
+              {
+                "abbrEn": "Chile",
+                "abbrEs": "Chile",
+                "nameEn": "Chile",
+                "nameEs": "Chile"
+              },
+              {
+                "abbrEn": "Nic",
+                "abbrEs": "Nic",
+                "nameEn": "Nicaragua",
+                "nameEs": "Nicaragua"
+              },
+              {
+                "abbrEn": "Peru",
+                "abbrEs": "Perú",
+                "nameEn": "Peru",
+                "nameEs": "Perú"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He tried to slip away without tidying up his room, but his mother saw him.",
+                    "textEs": "Intentó correrse sin ordenar su cuarto, pero su madre lo vio."
+                  }
+                ],
+                "gender": null,
+                "id": 173972,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to slip away"
+              }
+            ],
+            "subheadword": "correrse",
+            "idx": 13,
+            "context": "to leave furtively",
+            "regionsDisplay": [
+              {
+                "name": "Bolivia",
+                "tooltip": {
+                  "def": "Regionalism used in Bolivia"
+                }
+              },
+              {
+                "name": "Chile",
+                "tooltip": {
+                  "def": "Regionalism used in Chile"
+                }
+              },
+              {
+                "name": "Nicaragua",
+                "tooltip": {
+                  "def": "Regionalism used in Nicaragua"
+                }
+              },
+              {
+                "name": "Peru",
+                "tooltip": {
+                  "def": "Regionalism used in Peru"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "to slip away",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to slip away"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Intentó correrse sin ordenar su cuarto, pero su madre lo vio.",
+                    "He tried to slip away without tidying up his room, but his mother saw him."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "pronominal verb",
+          "tooltip": {
+            "def": "A pronominal verb always uses a reflexive pronoun. (e.g., Te ves cansado.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      }
+    ]
+  }
+]

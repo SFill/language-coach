@@ -1,0 +1,376 @@
+[
+  {
+    "subheadword": "vivir",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vi",
+          "abbrEs": "vi",
+          "nameEn": "intransitive verb",
+          "nameEs": "verbo intransitivo",
+          "sharedPosNameEn": "intransitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to be alive",
+            "contextEs": "estar vivo",
+            "gender": null,
+            "id": 763,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Nothing lives on Mars.",
+                    "textEs": "En Marte, no vive nada."
+                  }
+                ],
+                "gender": null,
+                "id": 1039,
+                "imagePath": "/dictionary-images/original/d27d36a3-0da1-470a-a148-6cf6c3c345f5.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to live"
+              }
+            ],
+            "subheadword": "vivir",
+            "idx": 1,
+            "context": "to be alive",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to live",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/d27d36a3-0da1-470a-a148-6cf6c3c345f5.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to live"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "En Marte, no vive nada.",
+                    "Nothing lives on Mars."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to dwell",
+            "contextEs": "habitar",
+            "gender": null,
+            "id": 764,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I still live at my parent's house.",
+                    "textEs": "Todavía vivo en casa de mis padres."
+                  }
+                ],
+                "gender": null,
+                "id": 1040,
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to live"
+              }
+            ],
+            "subheadword": "vivir",
+            "idx": 2,
+            "context": "to dwell",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to live",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to live"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Todavía vivo en casa de mis padres.",
+                    "I still live at my parent's house."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to subsist",
+            "contextEs": "subsistir",
+            "gender": null,
+            "id": 765,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The people here live off hunting.",
+                    "textEs": "La gente de aquí vive de la caza."
+                  }
+                ],
+                "gender": null,
+                "id": 1041,
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to live"
+              }
+            ],
+            "subheadword": "vivir",
+            "idx": 3,
+            "context": "to subsist",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to live",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to live"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La gente de aquí vive de la caza.",
+                    "The people here live off hunting."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "intransitive verb",
+          "tooltip": {
+            "def": "An intransitive verb is one that does not require a direct object (e.g., The man sneezed.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vtr",
+          "abbrEs": "vtr",
+          "nameEn": "transitive verb",
+          "nameEs": "verbo transitivo",
+          "sharedPosNameEn": "transitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "to experience",
+            "contextEs": "experimentar",
+            "gender": null,
+            "id": 766,
+            "partOfSpeech": {
+              "abbrEn": "vtr",
+              "abbrEs": "vtr",
+              "nameEn": "transitive verb",
+              "nameEs": "verbo transitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Our country has lived through tragedy in the past.",
+                    "textEs": "Nuestro país vivió momentos trágicos en el pasado."
+                  }
+                ],
+                "gender": null,
+                "id": 1042,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to live through"
+              }
+            ],
+            "subheadword": "vivir",
+            "idx": 4,
+            "context": "to experience",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to live through",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to live through"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Nuestro país vivió momentos trágicos en el pasado.",
+                    "Our country has lived through tragedy in the past."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "transitive verb",
+          "tooltip": {
+            "def": "A transitive verb is a verb that requires a direct object (e.g., I bought a book.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "M"
+        },
+        "senses": [
+          {
+            "contextEn": "way of life",
+            "contextEs": "forma de vida",
+            "gender": "M",
+            "id": 767,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He is not rich but he has a good lifestyle.",
+                    "textEs": "No es rico, pero tiene un buen vivir."
+                  }
+                ],
+                "gender": null,
+                "id": 1043,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "lifestyle"
+              }
+            ],
+            "subheadword": "vivir",
+            "idx": 5,
+            "context": "way of life",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "lifestyle",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "lifestyle"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "No es rico, pero tiene un buen vivir.",
+                    "He is not rich but he has a good lifestyle."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine noun",
+          "tooltip": {
+            "def": "A masculine noun is used with masculine articles and adjectives (e.g., el hombre guapo, el sol amarillo).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  }
+]

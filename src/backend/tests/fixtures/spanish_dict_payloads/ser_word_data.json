@@ -1,0 +1,859 @@
+[
+  {
+    "subheadword": "ser",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "vcop",
+          "abbrEs": "vcop",
+          "nameEn": "copular verb",
+          "nameEs": "verbo copulativo",
+          "sharedPosNameEn": "copular verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "used to talk about characteristics",
+            "contextEs": "usado para hablar de atributos",
+            "gender": null,
+            "id": 528,
+            "partOfSpeech": {
+              "abbrEn": "vcop",
+              "abbrEs": "vcop",
+              "nameEn": "copular verb",
+              "nameEs": "verbo copulativo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "He's tall and blond.",
+                    "textEs": "Es alto y rubio."
+                  },
+                  {
+                    "textEn": "My grandma is a teacher.",
+                    "textEs": "Mi abuela es profesora."
+                  }
+                ],
+                "gender": null,
+                "id": 776,
+                "imagePath": "/dictionary-images/original/e25159cb-4d90-409a-81b4-96d12ba231d8.jpg",
+                "isOppositeLanguageHeadword": true,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 1,
+            "context": "used to talk about characteristics",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/e25159cb-4d90-409a-81b4-96d12ba231d8.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Es alto y rubio.",
+                    "He's tall and blond."
+                  ],
+                  [
+                    "Mi abuela es profesora.",
+                    "My grandma is a teacher."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "copular verb",
+          "tooltip": {
+            "def": "A copular verb links the subject of a clause to the predicate (e.g., My brother is tall).",
+            "href": "https://www.spanishdict.com/guide/spanish-copular-verbs"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vi",
+          "abbrEs": "vi",
+          "nameEn": "intransitive verb",
+          "nameEs": "verbo intransitivo",
+          "sharedPosNameEn": "intransitive verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "used to indicate origin",
+            "contextEs": "usado para indicar origen",
+            "gender": null,
+            "id": 530,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I'm from New York.",
+                    "textEs": "Soy de Nueva York."
+                  }
+                ],
+                "gender": null,
+                "id": 778,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 2,
+            "context": "used to indicate origin",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Soy de Nueva York.",
+                    "I'm from New York."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to serve as",
+            "contextEs": "servir de",
+            "gender": null,
+            "id": 529,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Pencils are for writing, not for throwing.",
+                    "textEs": "El lápiz es para escribir, no para lanzar."
+                  }
+                ],
+                "gender": null,
+                "id": 777,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 3,
+            "context": "to serve as",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El lápiz es para escribir, no para lanzar.",
+                    "Pencils are for writing, not for throwing."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "used to talk about prices",
+            "contextEs": "usado para hablar de precios",
+            "gender": null,
+            "id": 531,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "How much does it come to? - It's ten dollars.",
+                    "textEs": "¿Cuánto es el total? - Son diez dólares."
+                  }
+                ],
+                "gender": null,
+                "id": 779,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 4,
+            "context": "used to talk about prices",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "¿Cuánto es el total? - Son diez dólares.",
+                    "How much does it come to? - It's ten dollars."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to be composed of",
+            "contextEs": "estar hecho de",
+            "gender": null,
+            "id": 6743,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "My grandma's antique dresser is made of oak.",
+                    "textEs": "El casillero antiguo de mi abuela es de roble."
+                  }
+                ],
+                "gender": null,
+                "id": 9763,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be made of"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 5,
+            "context": "to be composed of",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be made of",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be made of"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El casillero antiguo de mi abuela es de roble.",
+                    "My grandma's antique dresser is made of oak."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "used to indicate possession",
+            "contextEs": "usado para indicar posesión",
+            "gender": null,
+            "id": 532,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "This watch is my mother's.",
+                    "textEs": "Este reloj es de mi madre."
+                  }
+                ],
+                "gender": null,
+                "id": 780,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 6,
+            "context": "used to indicate possession",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Este reloj es de mi madre.",
+                    "This watch is my mother's."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to take place",
+            "contextEs": "ocurrir",
+            "gender": null,
+            "id": 533,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The party will be at my place.",
+                    "textEs": "La fiesta será en mi casa."
+                  }
+                ],
+                "gender": null,
+                "id": 781,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 7,
+            "context": "to take place",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La fiesta será en mi casa.",
+                    "The party will be at my place."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "to be associated with; used with \"de\"",
+            "contextEs": "asociarse con; usado con \"de\"",
+            "gender": null,
+            "id": 6686,
+            "partOfSpeech": {
+              "abbrEn": "vi",
+              "abbrEs": "vi",
+              "nameEn": "intransitive verb",
+              "nameEs": "verbo intransitivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I root for the best team in the world: FC Barcelona.",
+                    "textEs": "Yo soy del mejor equipo del mundo: FC Barcelona."
+                  }
+                ],
+                "gender": null,
+                "id": 9694,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to root for"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 8,
+            "context": "to be associated with; used with \"de\"",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to root for",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to root for"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Yo soy del mejor equipo del mundo: FC Barcelona.",
+                    "I root for the best team in the world: FC Barcelona."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "intransitive verb",
+          "tooltip": {
+            "def": "An intransitive verb is one that does not require a direct object (e.g., The man sneezed.).",
+            "href": "https://www.spanishdict.com/guide/spanish-verb-types"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vimp",
+          "abbrEs": "vimp",
+          "nameEn": "impersonal verb",
+          "nameEs": "verbo impersonal",
+          "sharedPosNameEn": "impersonal verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "used to express time",
+            "contextEs": "usado para expresar tiempo",
+            "gender": null,
+            "id": 534,
+            "partOfSpeech": {
+              "abbrEn": "vimp",
+              "abbrEs": "vimp",
+              "nameEn": "impersonal verb",
+              "nameEs": "verbo impersonal"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "It is seven in the morning.",
+                    "textEs": "Son las siete de la mañana."
+                  },
+                  {
+                    "textEn": "It was night when they arrived.",
+                    "textEs": "Era de noche cuando llegaron."
+                  }
+                ],
+                "gender": null,
+                "id": 782,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 9,
+            "context": "used to express time",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Son las siete de la mañana.",
+                    "It is seven in the morning."
+                  ],
+                  [
+                    "Era de noche cuando llegaron.",
+                    "It was night when they arrived."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "impersonal verb",
+          "tooltip": {
+            "def": "An impersonal verb is a verb with no apparent subject (e.g., Llueve en España.).",
+            "href": "https://www.spanishdict.com/guide/impersonal-se-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "vaux",
+          "abbrEs": "vaux",
+          "nameEn": "auxiliary verb",
+          "nameEs": "verbo auxiliar",
+          "sharedPosNameEn": "auxiliary verb"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "with the passive voice",
+            "contextEs": "con la voz pasiva",
+            "gender": null,
+            "id": 535,
+            "partOfSpeech": {
+              "abbrEn": "vaux",
+              "abbrEs": "vaux",
+              "nameEn": "auxiliary verb",
+              "nameEs": "verbo auxiliar"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The building was built by a team of architects.",
+                    "textEs": "El edificio fue diseñado por un equipo de arquitectos."
+                  }
+                ],
+                "gender": null,
+                "id": 783,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "to be"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 10,
+            "context": "with the passive voice",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "to be",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "to be"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "El edificio fue diseñado por un equipo de arquitectos.",
+                    "The building was built by a team of architects."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "auxiliary verb",
+          "tooltip": {
+            "def": "An auxiliary verb, or helper verb, is a conjugated verb that comes before a main verb and determines the main verb's tense, mood, or aspect (e.g., I have gone.).",
+            "href": "https://www.spanishdict.com/guide/verbal-periphrasis-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "M"
+        },
+        "senses": [
+          {
+            "contextEn": "entity",
+            "contextEs": "ente",
+            "gender": "M",
+            "id": 536,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "There's a living being in the lake, but I don't know what it is.",
+                    "textEs": "Hay un ser vivo en el lago, pero no sé qué es."
+                  }
+                ],
+                "gender": null,
+                "id": 784,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "being"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 11,
+            "context": "entity",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "being",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "being"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Hay un ser vivo en el lago, pero no sé qué es.",
+                    "There's a living being in the lake, but I don't know what it is."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "human",
+            "contextEs": "humano",
+            "gender": "M",
+            "id": 6687,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Her dad is a very nice person.",
+                    "textEs": "Su papá es un ser muy agradable."
+                  }
+                ],
+                "gender": null,
+                "id": 9695,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "person"
+              }
+            ],
+            "subheadword": "ser",
+            "idx": 12,
+            "context": "human",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "person",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "person"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Su papá es un ser muy agradable.",
+                    "Her dad is a very nice person."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine noun",
+          "tooltip": {
+            "def": "A masculine noun is used with masculine articles and adjectives (e.g., el hombre guapo, el sol amarillo).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  }
+]

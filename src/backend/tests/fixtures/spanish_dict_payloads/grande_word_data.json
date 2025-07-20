@@ -1,0 +1,1003 @@
+[
+  {
+    "subheadword": "grande",
+    "posGroups": [
+      {
+        "pos": {
+          "abbrEn": "adj",
+          "abbrEs": "adj",
+          "nameEn": "adjective",
+          "nameEs": "adjetivo",
+          "sharedPosNameEn": "adjective"
+        },
+        "entryLang": "es",
+        "gender": null,
+        "senses": [
+          {
+            "contextEn": "size",
+            "contextEs": "tamaño",
+            "gender": null,
+            "id": 8311,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I come from a big family with many siblings and cousins.",
+                    "textEs": "Vengo de una familia grande con muchos hermanos y primos."
+                  }
+                ],
+                "gender": null,
+                "id": 12151,
+                "imagePath": "/dictionary-images/original/big.jpg",
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": true,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "big"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I asked for a large soda.",
+                    "textEs": "Pedí un refresco grande."
+                  }
+                ],
+                "gender": null,
+                "id": 12152,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "large"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "That shirt is too big for you. Why don't you try on a smaller size?",
+                    "textEs": "Esa camisa te queda grande. ¿Por qué no te pruebas un número más pequeño?"
+                  }
+                ],
+                "gender": null,
+                "id": 41110,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "too big"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 1,
+            "context": "size",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "big",
+                "gender": null,
+                "isQuickTranslation": true,
+                "imagePath": "/dictionary-images/original/big.jpg",
+                "translationsDisplay": {
+                  "texts": [
+                    "big"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Vengo de una familia grande con muchos hermanos y primos.",
+                    "I come from a big family with many siblings and cousins."
+                  ]
+                ]
+              },
+              {
+                "translation": "large",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "large"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Pedí un refresco grande.",
+                    "I asked for a large soda."
+                  ]
+                ]
+              },
+              {
+                "translation": "too big",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "too big"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Esa camisa te queda grande. ¿Por qué no te pruebas un número más pequeño?",
+                    "That shirt is too big for you. Why don't you try on a smaller size?"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "height",
+            "contextEs": "altura",
+            "gender": null,
+            "id": 8312,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Juana is really tall. How old is she?",
+                    "textEs": "Juana está muy grande. ¿Cuántos años tiene?"
+                  }
+                ],
+                "gender": null,
+                "id": 12153,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "tall"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 2,
+            "context": "height",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "tall",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "tall"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Juana está muy grande. ¿Cuántos años tiene?",
+                    "Juana is really tall. How old is she?"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "age",
+            "contextEs": "edad",
+            "gender": null,
+            "id": 8313,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "My grandma is old now and can't hear well.",
+                    "textEs": "Mi abuela ya está grande y no oye bien."
+                  }
+                ],
+                "gender": null,
+                "id": 12154,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "old"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The new English teacher is an older woman.",
+                    "textEs": "La nueva profesora de inglés es una mujer grande."
+                  }
+                ],
+                "gender": null,
+                "id": 41533,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "older"
+              },
+              {
+                "contextEn": "especially when spoken to a child",
+                "contextEs": "especialmente cuando va dirigido a un niño",
+                "examples": [
+                  {
+                    "textEn": "You're big now, Anita. You can tie your shoes yourself.",
+                    "textEs": "Ya eres grande, Anita. Te puedes atar los zapatos tú solita."
+                  }
+                ],
+                "gender": null,
+                "id": 41530,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "big"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 3,
+            "context": "age",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "old",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "old"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Mi abuela ya está grande y no oye bien.",
+                    "My grandma is old now and can't hear well."
+                  ]
+                ]
+              },
+              {
+                "translation": "older",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "older"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La nueva profesora de inglés es una mujer grande.",
+                    "The new English teacher is an older woman."
+                  ]
+                ]
+              },
+              {
+                "translation": "big",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "big"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "c",
+                "context": "especially when spoken to a child",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Ya eres grande, Anita. Te puedes atar los zapatos tú solita.",
+                    "You're big now, Anita. You can tie your shoes yourself."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "quantity",
+            "contextEs": "cantidad",
+            "gender": null,
+            "id": 25394,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "A large number of people gathered in the streets to celebrate.",
+                    "textEs": "Un gran número de personas se reunió en las calles para festejar."
+                  }
+                ],
+                "gender": null,
+                "id": 41112,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "large"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 4,
+            "context": "quantity",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "large",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "large"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Un gran número de personas se reunió en las calles para festejar.",
+                    "A large number of people gathered in the streets to celebrate."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "importance",
+            "contextEs": "importancia",
+            "gender": null,
+            "id": 8314,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "It's a matter of great importance for the nation.",
+                    "textEs": "Es un asunto de gran importancia para la nación."
+                  }
+                ],
+                "gender": null,
+                "id": 12155,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "great"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The leaders of the world are meeting today to discuss the big questions associated with climate change.",
+                    "textEs": "Los líderes del mundo se juntan hoy para discutir las grandes preguntas del cambio climático."
+                  }
+                ],
+                "gender": null,
+                "id": 41531,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "big"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 5,
+            "context": "importance",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "great",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "great"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Es un asunto de gran importancia para la nación.",
+                    "It's a matter of great importance for the nation."
+                  ]
+                ]
+              },
+              {
+                "translation": "big",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "big"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Los líderes del mundo se juntan hoy para discutir las grandes preguntas del cambio climático.",
+                    "The leaders of the world are meeting today to discuss the big questions associated with climate change."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "intensity",
+            "contextEs": "intensidad",
+            "gender": null,
+            "id": 8315,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I felt great happiness when my dog had puppies.",
+                    "textEs": "Sentí una gran alegría cuando mi perra tuvo cachorritos."
+                  }
+                ],
+                "gender": null,
+                "id": 12156,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "great"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "The actress left the theater at high speed without greeting her fans.",
+                    "textEs": "La actriz salió a gran velocidad del teatro sin saludar a los admiradores."
+                  }
+                ],
+                "gender": null,
+                "id": 41532,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "high"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 6,
+            "context": "intensity",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "great",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "great"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Sentí una gran alegría cuando mi perra tuvo cachorritos.",
+                    "I felt great happiness when my dog had puppies."
+                  ]
+                ]
+              },
+              {
+                "translation": "high",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "high"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La actriz salió a gran velocidad del teatro sin saludar a los admiradores.",
+                    "The actress left the theater at high speed without greeting her fans."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "fantastic",
+            "contextEs": "fantástico",
+            "gender": null,
+            "id": 25399,
+            "partOfSpeech": {
+              "abbrEn": "adj",
+              "abbrEs": "adj",
+              "nameEn": "adjective",
+              "nameEs": "adjetivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "Spain",
+                "abbrEs": "Esp",
+                "nameEn": "Spain",
+                "nameEs": "España"
+              }
+            ],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "I won a tablet in a raffle. -That's great!",
+                    "textEs": "Me gané una tablet en un sorteo. -¡Qué grande!"
+                  }
+                ],
+                "gender": null,
+                "id": 41118,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "great"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 7,
+            "context": "fantastic",
+            "regionsDisplay": [
+              {
+                "name": "Spain",
+                "tooltip": {
+                  "def": "Regionalism used in Spain"
+                }
+              }
+            ],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "great",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "great"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Me gané una tablet en un sorteo. -¡Qué grande!",
+                    "I won a tablet in a raffle. -That's great!"
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "adjective",
+          "tooltip": {
+            "def": "An adjective is a word that describes a noun (e.g., the big dog).",
+            "href": "https://www.spanishdict.com/guide/descriptive-adjectives-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "CO"
+        },
+        "senses": [
+          {
+            "contextEn": "adult",
+            "contextEs": "adulto",
+            "gender": "CO",
+            "id": 8317,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [
+              {
+                "abbrEn": "col",
+                "abbrEs": "col",
+                "nameEn": "colloquial",
+                "nameEs": "coloquial"
+              }
+            ],
+            "translations": [
+              {
+                "contextEn": "colloquial",
+                "contextEs": "coloquial",
+                "examples": [
+                  {
+                    "textEn": "There's a table for the grown-ups and another one for the children.",
+                    "textEs": "Hay una mesa para los grandes y otra para los niños."
+                  }
+                ],
+                "gender": null,
+                "id": 12158,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "grown-up"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 8,
+            "context": "adult",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [
+              {
+                "name": "colloquial",
+                "tooltip": {
+                  "def": "A word or phrase that is commonly used in conversational speech (e.g., skinny, grandma)."
+                }
+              }
+            ],
+            "translationsDisplay": [
+              {
+                "translation": "grown-up",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "grown-up"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "colloquial",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Hay una mesa para los grandes y otra para los niños.",
+                    "There's a table for the grown-ups and another one for the children."
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "contextEn": "important person or institution",
+            "contextEs": "persona o institución importante",
+            "gender": "CO",
+            "id": 25405,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Nadal is one of the biggest names in world tennis.",
+                    "textEs": "Nadal es uno de los más grandes del tenis mundial."
+                  }
+                ],
+                "gender": null,
+                "id": 41127,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "big name"
+              },
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Petrini's company is one of the major players in the textile industry.",
+                    "textEs": "La empresa de Petrini es una de las grandes del sector textil."
+                  }
+                ],
+                "gender": null,
+                "id": 41128,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "major player"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 9,
+            "context": "important person or institution",
+            "regionsDisplay": [],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "big name",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "big name"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Nadal es uno de los más grandes del tenis mundial.",
+                    "Nadal is one of the biggest names in world tennis."
+                  ]
+                ]
+              },
+              {
+                "translation": "major player",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "major player"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "b",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "La empresa de Petrini es una de las grandes del sector textil.",
+                    "Petrini's company is one of the major players in the textile industry."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "masculine or feminine noun",
+          "tooltip": {
+            "def": "This means that the noun can be masculine or feminine, depending on the gender of the noun it refers to (e.g., el doctor, la doctora).",
+            "href": "https://www.spanishdict.com/guide/professions-in-spanish"
+          }
+        }
+      },
+      {
+        "pos": {
+          "abbrEn": "n",
+          "abbrEs": "s",
+          "nameEn": "noun",
+          "nameEs": "sustantivo",
+          "sharedPosNameEn": "noun"
+        },
+        "entryLang": "es",
+        "gender": {
+          "gender": "F"
+        },
+        "senses": [
+          {
+            "contextEn": "lottery",
+            "contextEs": "lotería",
+            "gender": "F",
+            "id": 25404,
+            "partOfSpeech": {
+              "abbrEn": "n",
+              "abbrEs": "s",
+              "nameEn": "noun",
+              "nameEs": "sustantivo"
+            },
+            "regions": [
+              {
+                "abbrEn": "RP",
+                "abbrEs": "RP",
+                "nameEn": "River Plate",
+                "nameEs": "Río de la Plata"
+              }
+            ],
+            "registerLabels": [],
+            "translations": [
+              {
+                "contextEn": "",
+                "contextEs": "",
+                "examples": [
+                  {
+                    "textEn": "Gómez won the jackpot and moved to Punta del Este.",
+                    "textEs": "Gómez se sacó la grande y se fue a vivir a Punta del Este."
+                  }
+                ],
+                "gender": null,
+                "id": 41126,
+                "isOppositeLanguageHeadword": false,
+                "isQuickTranslation": false,
+                "regions": [],
+                "registerLabels": [],
+                "translation": "jackpot"
+              }
+            ],
+            "subheadword": "grande",
+            "idx": 10,
+            "context": "lottery",
+            "regionsDisplay": [
+              {
+                "name": "River Plate",
+                "tooltip": null
+              }
+            ],
+            "registerLabelsDisplay": [],
+            "translationsDisplay": [
+              {
+                "translation": "jackpot",
+                "gender": null,
+                "isQuickTranslation": false,
+                "translationsDisplay": {
+                  "texts": [
+                    "jackpot"
+                  ],
+                  "tooltips": []
+                },
+                "letters": "a",
+                "context": "",
+                "regionsDisplay": [],
+                "registerLabelsDisplay": [],
+                "examplesDisplay": [
+                  [
+                    "Gómez se sacó la grande y se fue a vivir a Punta del Este.",
+                    "Gómez won the jackpot and moved to Punta del Este."
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "posDisplay": {
+          "name": "feminine noun",
+          "tooltip": {
+            "def": "A feminine noun is almost always used with feminine articles and adjectives (e.g., la mujer bonita, la luna llena).",
+            "href": "https://www.spanishdict.com/guide/masculine-and-feminine-nouns"
+          }
+        }
+      }
+    ]
+  }
+]

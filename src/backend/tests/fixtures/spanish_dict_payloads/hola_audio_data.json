@@ -1,0 +1,42 @@
+{
+  "headword": {
+    "displayText": "hola",
+    "textToPronounce": "hola",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=hola&key=88abe2a502c89913854d2198520e340d",
+    "pronunciations": [],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "hello",
+    "textToPronounce": "hello",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=hello&key=88a16ad80f84c2917c83b31c641824c0",
+    "pronunciations": [
+      {
+        "id": 26,
+        "ipa": "hɛ*ˈloʊ",
+        "abc": "he*ˈllo",
+        "spa": "heh*ˈlo",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "hello"
+      },
+      {
+        "id": 27,
+        "ipa": "hɛ*ˈləʊ",
+        "abc": "he*ˈllo",
+        "spa": "heh*ˈlow",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "hello"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

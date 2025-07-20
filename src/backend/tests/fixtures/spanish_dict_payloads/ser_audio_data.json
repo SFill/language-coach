@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "ser",
+    "textToPronounce": "ser",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=ser&key=ed7d88e8a81152eebdcf945360cf0e26",
+    "pronunciations": [
+      {
+        "id": 6,
+        "ipa": "seɾ",
+        "abc": "ser",
+        "spa": "sehr",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13863,
+        "ipa": "seɾ",
+        "abc": "ser",
+        "spa": "sehr",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "to be",
+    "textToPronounce": "be",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=be&key=cdf660f1c4cd1d92eab330a2699e05d9",
+    "pronunciations": [
+      {
+        "id": 1,
+        "ipa": "bi",
+        "abc": "be",
+        "spa": "bi",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "be"
+      },
+      {
+        "id": 4320,
+        "ipa": "bi",
+        "abc": "be",
+        "spa": "bi",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "be"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

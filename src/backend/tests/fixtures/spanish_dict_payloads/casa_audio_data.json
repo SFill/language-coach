@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "casa",
+    "textToPronounce": "casa",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=casa&key=5921feb313a4679eeaaa76f3c902f5d1",
+    "pronunciations": [
+      {
+        "id": 788,
+        "ipa": "ˈka*sa",
+        "abc": "ˈca*sa",
+        "spa": "ˈkah*sah",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 789,
+        "ipa": "ˈka*sa",
+        "abc": "ˈca*sa",
+        "spa": "ˈkah*sah",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "house",
+    "textToPronounce": "house",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=house&key=81de11f03edcaea1d53ab63e809c29ee",
+    "pronunciations": [
+      {
+        "id": 875,
+        "ipa": "haʊs",
+        "abc": "house",
+        "spa": "haus",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "house"
+      },
+      {
+        "id": 876,
+        "ipa": "haʊs",
+        "abc": "house",
+        "spa": "haus",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "house"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}

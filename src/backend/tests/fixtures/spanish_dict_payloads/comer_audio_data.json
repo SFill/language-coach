@@ -1,0 +1,63 @@
+{
+  "headword": {
+    "displayText": "comer",
+    "textToPronounce": "comer",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=es&text=comer&key=1fbc935155b5c0e2d3b4ac311e4270d7",
+    "pronunciations": [
+      {
+        "id": 34,
+        "ipa": "ko*ˈmeɾ",
+        "abc": "co*ˈmer",
+        "spa": "koh*ˈmehr",
+        "region": "LATAM",
+        "hasVideo": 1,
+        "speakerId": 3,
+        "version": 51
+      },
+      {
+        "id": 13771,
+        "ipa": "ko*ˈmeɾ",
+        "abc": "co*ˈmer",
+        "spa": "koh*ˈmehr",
+        "region": "SPAIN",
+        "hasVideo": 1,
+        "speakerId": 7,
+        "version": 50
+      }
+    ],
+    "wordLang": "es",
+    "type": "headword"
+  },
+  "quickdef1": {
+    "displayText": "to eat",
+    "textToPronounce": "eat",
+    "audioUrl": "https://audio-cdn.sdcdns.com/audio?lang=en&text=eat&key=d67eda997cf11791c6b802dc26356aad",
+    "pronunciations": [
+      {
+        "id": 78,
+        "ipa": "it",
+        "abc": "eat",
+        "spa": "it",
+        "region": "US",
+        "hasVideo": 1,
+        "speakerId": 5,
+        "version": 51,
+        "source": "eat"
+      },
+      {
+        "id": 4337,
+        "ipa": "it",
+        "abc": "eat",
+        "spa": "it",
+        "region": "UK",
+        "hasVideo": 1,
+        "speakerId": 8,
+        "version": 50,
+        "source": "eat"
+      }
+    ],
+    "wordLang": "en",
+    "type": "quickdef1"
+  },
+  "quickdef2": null
+}
