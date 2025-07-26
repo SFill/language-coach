@@ -181,24 +181,26 @@ function WordLists() {
     
     if (list.words && list.words.length > 0) {
       list.words.forEach((wordItem, index) => {
-        markdown += `## ${index + 1}. ${wordItem.word}\n\n`;
-        
-        // Add word translation if available
-        if (wordItem.word_translation) {
-          markdown += `**Translation:** ${wordItem.word_translation}\n\n`;
-        }
-        
+        markdown += `${wordItem.word},`;
+
         // Add example phrase if available
         if (wordItem.example_phrase) {
-          markdown += `**Example:** ${wordItem.example_phrase}\n\n`;
+          markdown += ` ${wordItem.example_phrase}`;
         }
         
+        markdown += " :: "
+
+        // Add word translation if available
+        if (wordItem.word_translation) {
+          markdown += `${wordItem.word_translation},`;
+        }
+
         // Add example phrase translation if available
         if (wordItem.example_phrase_translation) {
-          markdown += `**Example Translation:** ${wordItem.example_phrase_translation}\n\n`;
+          markdown += ` ${wordItem.example_phrase_translation}`;
         }
         
-        markdown += `---\n\n`;
+        markdown += `\n`;
       });
     } else {
       markdown += `No words in this list.\n\n`;

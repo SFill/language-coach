@@ -67,6 +67,7 @@ const MessageInput = ({ onSend }) => {
     handleSelect,
     handleTranslate,
     clearSelection,
+    translateSelection,
     displayText,
     preferredLanguage,
     isTranslating
@@ -74,7 +75,9 @@ const MessageInput = ({ onSend }) => {
     input, 
     updateCaretInfo, 
     savedLanguage, 
-    (newLanguage) => setSavedLanguage(newLanguage)
+    (newLanguage) => setSavedLanguage(newLanguage),
+    setInput,
+    textareaRef,
   );
 
   // Handle sending messages
@@ -106,7 +109,8 @@ const MessageInput = ({ onSend }) => {
     updateCaretAndScroll,
     clearSelection,
     handleSendMessage,
-    { undo, redo, beforeFormatting, handleTextChange } // Pass undo/redo functions
+    { undo, redo, beforeFormatting, handleTextChange }, // Pass undo/redo functions
+    translateSelection // Pass translate selection function
   );
 
   // Handle mouse events
@@ -121,10 +125,17 @@ const MessageInput = ({ onSend }) => {
     const newValue = e.target.value;
     const textarea = textareaRef.current;
     
-    if (!textarea) return;
+    console.log(`📝 [handleChange] Text changed from ${input.length} to ${newValue.length} chars`);
+    console.log(`📝 [handleChange] Change type: ${newValue.length > input.length ? 'INSERT' : newValue.length < input.length ? 'DELETE' : 'REPLACE'}`);
+    
+    if (!textarea) {
+      console.log(`❌ [handleChange] No textarea ref`);
+      return;
+    }
     
     // Update the input state
     setInput(newValue);
+    console.log(`✅ [handleChange] Input state updated`);
     
     // Track this change in history
     handleTextChange(
@@ -136,9 +147,10 @@ const MessageInput = ({ onSend }) => {
     // When text changes, we need to update caret position and scrolling
     // Use requestAnimationFrame to ensure DOM is updated first
     requestAnimationFrame(() => {
+      console.log(`🎬 [handleChange] Calling updateCaretAndScroll(true) in requestAnimationFrame`);
       updateCaretAndScroll(true);
     });
-  }, [setInput, updateCaretAndScroll, handleTextChange]);
+  }, [setInput, updateCaretAndScroll, handleTextChange, input.length]);
 
   // Improved wheel handler with debouncing
   const handleWheel = useCallback((e) => {

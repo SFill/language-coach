@@ -62,12 +62,19 @@ const useCaretTracking = (textareaRef, text) => {
    * @returns {Object} The updated caret position information
    */
   const updateCaretInfo = useCallback((forceUpdate = false) => {
-    if (!textareaRef.current) return null;
+    console.log(`🔍 [useCaretTracking] updateCaretInfo called with forceUpdate=${forceUpdate}`);
+    
+    if (!textareaRef.current) {
+      console.log(`❌ [useCaretTracking] No textarea ref, returning null`);
+      return null;
+    }
 
     // Get cursor position and calculate logical line/column
     const cursorPosition = textareaRef.current.selectionStart;
     const textBeforeCursor = text.substring(0, cursorPosition);
     const logicalLines = textBeforeCursor.split('\n');
+
+    console.log(`📍 [useCaretTracking] Cursor at position ${cursorPosition}, text length: ${text.length}`);
 
     // Logical line and column (1-based)
     const logicalLine = logicalLines.length;
@@ -75,6 +82,8 @@ const useCaretTracking = (textareaRef, text) => {
 
     // Calculate visual line (accounting for wrapping)
     const visualLine = calculateVisualLine(textareaRef.current, cursorPosition, text);
+
+    console.log(`📊 [useCaretTracking] Calculated - Logical: ${logicalLine}, Visual: ${visualLine}, Column: ${column}`);
 
     // Create the new caret info object
     const newCaretInfo = {
@@ -85,11 +94,16 @@ const useCaretTracking = (textareaRef, text) => {
     };
 
     // Only update state if the position has changed or forceUpdate is true
-    if (forceUpdate || 
+    const shouldUpdate = forceUpdate || 
         caretInfo.logicalLine !== logicalLine || 
         caretInfo.column !== column ||
-        caretInfo.cursorPosition !== cursorPosition) {
+        caretInfo.cursorPosition !== cursorPosition;
+
+    console.log(`🔄 [useCaretTracking] Should update state: ${shouldUpdate} (forceUpdate: ${forceUpdate}, position changed: ${caretInfo.cursorPosition !== cursorPosition})`);
+
+    if (shouldUpdate) {
       setCaretInfo(newCaretInfo);
+      console.log(`✅ [useCaretTracking] State updated to:`, newCaretInfo);
     }
 
     return newCaretInfo;

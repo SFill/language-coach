@@ -11,6 +11,7 @@ import { useCallback } from 'react';
  * @param {Function} clearSelection - Function to clear selection state
  * @param {Function} handleSend - Function to send message/note
  * @param {Object} undoRedo - Undo/redo related functions
+ * @param {Function} translateSelection - Function to translate current selection
  * @returns {Object} Keyboard event handlers
  */
 const useKeyboardShortcuts = (
@@ -21,7 +22,8 @@ const useKeyboardShortcuts = (
   updateCaretAndScroll,
   clearSelection,
   handleSend,
-  undoRedo
+  undoRedo,
+  translateSelection
 ) => {
   const { undo, redo, beforeFormatting, handleTextChange } = undoRedo;
 
@@ -243,6 +245,11 @@ const useKeyboardShortcuts = (
       e.preventDefault();
       applyMarkdownFormatting('`', '`');
     }
+    // Translate selection: Ctrl+Shift+T
+    else if (e.key === 'T' && e.ctrlKey && e.shiftKey && translateSelection) {
+      e.preventDefault();
+      translateSelection();
+    }
   }, [
     textareaRef,
     text,
@@ -253,7 +260,8 @@ const useKeyboardShortcuts = (
     applyMarkdownFormatting,
     undo,
     redo,
-    beforeFormatting
+    beforeFormatting,
+    translateSelection
   ]);
 
   /**
