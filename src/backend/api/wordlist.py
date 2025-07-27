@@ -1,60 +1,20 @@
 import logging
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Annotated, List, Optional
-from sqlmodel import Session, select
+from sqlmodel import Session, select, desc
 
 from backend.database import get_session
 from backend.models.wordlist import (
     Wordlist, WordlistCreate, WordlistUpdate,
     WordlistResponse, Language, WordInList
 )
-from backend.services.phrase_service import get_phrase_with_example_and_translation
+from backend.services.phrase_service import get_phrase_with_example_and_translation, translate_phrase_and_example_with_google, translate_phrase_and_example_with_gpt
 
 # Create router
 router = APIRouter(prefix="/api/wordlist", tags=["wordlist"])
 
 # Type alias for session dependency
 SessionDep = Annotated[Session, Depends(get_session)]
-
-
-def convert_words_to_word_in_list(
-    words: List[str], 
-    language: str, 
-    session: Session,
-    use_gpt_translation: bool = False
-) -> List[WordInList]:
-    """Convert simple word strings to WordInList objects with translations and examples."""
-    word_in_list_objects = []
-    
-    for word in words:
-        try:
-            # Get word with translation and example
-            word_data = get_phrase_with_example_and_translation(
-                phrase=word,
-                language=language,
-                target_language="en",
-                proficiency="intermediate",
-                session=session,
-                use_gpt_translation=use_gpt_translation
-            )
-            
-            word_in_list_objects.append(WordInList(
-                word=word_data["word"],
-                word_translation=word_data["word_translation"],
-                example_phrase=word_data["example_phrase"],
-                example_phrase_translation=word_data["example_phrase_translation"]
-            ))
-        except Exception as e:
-            logging.error(f"Error processing word '{word}': {str(e)}")
-            # Fallback to basic word object
-            word_in_list_objects.append(WordInList(
-                word=word,
-                word_translation=word,
-                example_phrase=word,
-                example_phrase_translation=word
-            ))
-    
-    return word_in_list_objects
 
 
 @router.get('/', response_model=list[WordlistResponse])
@@ -65,7 +25,7 @@ def list_wordlists_endpoint(
     """Get a list of all wordlists with definitions for the specified language."""
     # Filter wordlists by language
     wordlists = session.exec(
-        select(Wordlist).where(Wordlist.language == language)
+        select(Wordlist).where(Wordlist.language == language).order_by(desc(Wordlist.name))
     ).all()
 
     results = []
@@ -97,11 +57,11 @@ def create_wordlist_endpoint(
     # Fill missing information for words
     processed_words = []
     for word in wordlist.words:
-        if not word.word_translation or not word.example_phrase or not word.example_phrase_translation:
+        if not word.example_phrase:
             # Fill missing information
             word_data = get_phrase_with_example_and_translation(
                 phrase=word.word,
-                language=list_language,
+                language=wordlist.language,
                 target_language="en",
                 proficiency="intermediate",
                 session=session,
@@ -110,11 +70,32 @@ def create_wordlist_endpoint(
             processed_word = WordInList(
                 word=word.word,
                 word_translation=word.word_translation or word_data["word_translation"],
-                example_phrase=word.example_phrase or word_data["example_phrase"],
-                example_phrase_translation=word.example_phrase_translation or word_data["example_phrase_translation"]
+                example_phrase=word_data["example_phrase"],
+                example_phrase_translation=word_data["example_phrase_translation"]
             )
         else:
-            processed_word = word
+            # Translate both phrase and example sentence
+            try:
+                if use_gpt_translation:
+                    translations = translate_phrase_and_example_with_gpt(
+                        word, word.example_phrase, wordlist.language
+                    )
+                else:
+                    translations = translate_phrase_and_example_with_google(
+                        word, word.example_phrase, wordlist.language
+                    )
+            except Exception as e:
+                logging.exception('error getting translation')
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to translate: {str(e)}"
+                )
+            processed_word = WordInList(
+                word=word.word,
+                word_translation=translations['phrase_translation'],
+                example_phrase=word.example_phrase,
+                example_phrase_translation=translations["example_translation"]
+            )
         processed_words.append(processed_word.model_dump())
 
     new_wordlist = Wordlist(
@@ -172,7 +153,7 @@ def update_wordlist_endpoint(
     # Fill missing information for words
     processed_words = []
     for word in wordlist.words:
-        if not word.word_translation or not word.example_phrase or not word.example_phrase_translation:
+        if not word.example_phrase:
             # Fill missing information
             word_data = get_phrase_with_example_and_translation(
                 phrase=word.word,
@@ -185,13 +166,34 @@ def update_wordlist_endpoint(
             processed_word = WordInList(
                 word=word.word,
                 word_translation=word.word_translation or word_data["word_translation"],
-                example_phrase=word.example_phrase or word_data["example_phrase"],
-                example_phrase_translation=word.example_phrase_translation or word_data["example_phrase_translation"]
-            ).model_dump()
-            
+                example_phrase=word_data["example_phrase"],
+                example_phrase_translation=word_data["example_phrase_translation"]
+            )
         else:
-            processed_word = word.model_dump()
-        processed_words.append(processed_word)
+            # Translate both phrase and example sentence
+            try:
+                if use_gpt_translation:
+                    translations = translate_phrase_and_example_with_gpt(
+                        word, word.example_phrase, wordlist.language
+                    )
+                else:
+                    translations = translate_phrase_and_example_with_google(
+                        word, word.example_phrase, wordlist.language
+                    )
+            except Exception as e:
+                logging.exception('error getting translation')
+                raise HTTPException(
+                    status_code=500,
+                    detail=f"Failed to translate: {str(e)}"
+                )
+            processed_word = WordInList(
+                word=word.word,
+                word_translation=translations['phrase_translation'],
+                example_phrase=word.example_phrase,
+                example_phrase_translation=translations["example_translation"]
+            )
+
+        processed_words.append(processed_word.model_dump())
     
     wl.name = wordlist.name
     wl.words = processed_words

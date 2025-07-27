@@ -32,7 +32,7 @@ export function WordlistProvider({ children }) {
   // Store filtered wordlists for the current language (derived state)
   const [wordlists, setWordlists] = useState([]);
   
-  const [loading, setLoading] = useState(true);
+  const [loadingWordLists, setLoadingWordLists] = useState(true);
   const [error, setError] = useState(null);
   const lastSyncTime = useRef(null);
   const syncInProgress = useRef(false);
@@ -60,7 +60,7 @@ export function WordlistProvider({ children }) {
     if (syncInProgress.current && !force) return;
 
     syncInProgress.current = true;
-    setLoading(true);
+    setLoadingWordLists(true);
 
     try {
       // First, check if we already have English wordlists
@@ -111,7 +111,7 @@ export function WordlistProvider({ children }) {
       console.error('Failed to load wordlists:', err);
       setError('Failed to load word lists. Please try again later.');
     } finally {
-      setLoading(false);
+      setLoadingWordLists(false);
       syncInProgress.current = false;
     }
   }, [currentLanguage, filterWordlistsByLanguage]);
@@ -183,10 +183,14 @@ export function WordlistProvider({ children }) {
           await Promise.all(esSyncPromises);
         }
 
-        // Mark lists as clean after successful sync
+        // Mark lists as clean and remove loading states after successful sync
         setAllWordlists(prev =>
           prev.map(list =>
-            list._isDirty ? { ...list, _isDirty: false } : list
+            list._isDirty ? { 
+              ...list, 
+              _isDirty: false,
+              words: list.words.map(word => ({ ...word, _isUpdating: false }))
+            } : list
           )
         );
 
@@ -288,8 +292,8 @@ export function WordlistProvider({ children }) {
     return null;
   }, [allWordlists]);
 
-  // Add a word to a list
-  const addWordToList = useCallback((word, listId) => {
+  // Add a word to a list with optional sentence context
+  const addWordToList = useCallback((word, listId, sentenceContext = null) => {
     if (!word.trim()) return { success: false, message: 'No word provided' };
 
     // Find if word exists in any list
@@ -316,7 +320,7 @@ export function WordlistProvider({ children }) {
         { 
           word: word.trim(),
           word_translation: null,
-          example_phrase: null,
+          example_phrase: sentenceContext || null,
           example_phrase_translation: null
         }
       ]
@@ -328,19 +332,22 @@ export function WordlistProvider({ children }) {
 
     return {
       success: true,
-      message: `Added "${word}" to list "${targetList.name}"`,
+      message: `Added "${word}" to list "${targetList.name}"${sentenceContext ? ' with sentence context' : ''}`,
     };
   }, [allWordlists, findWordInLists]);
 
-  // Update a word in a list (preserving definition data)
+  // Update a word in a list and trigger meta information regeneration
   const updateWordInList = useCallback((wordIndex, newWord, listId) => {
-
     const targetList = allWordlists.find(list => list.id === listId);
-    // Update the word while preserving all other data
+    
+    // Update the word and clear meta fields to trigger regeneration, add loading state
     const updatedWords = [...targetList.words];
     updatedWords[wordIndex] = {
-      ...updatedWords[wordIndex],
-      word: newWord.trim()
+      word: newWord.trim(),
+      word_translation: null,
+      example_phrase: null,
+      example_phrase_translation: null,
+      _isUpdating: true // Loading indicator
     };
 
     const updatedList = {
@@ -355,9 +362,9 @@ export function WordlistProvider({ children }) {
 
     return {
       success: true,
-      message: `Updated word with "${wordIndex}" to "${newWord}" in list "${targetList.name}"`,
+      message: `Updated word to "${newWord}" in list "${targetList.name}", meta information will be regenerated`,
     };
-  }, [allWordlists, findWordInLists]);
+  }, [allWordlists]);
 
   // Move a word from one list to another
   const moveWordBetweenLists = useCallback((word, sourceListId, targetListId) => {
@@ -412,8 +419,8 @@ export function WordlistProvider({ children }) {
     };
   }, [allWordlists]);
 
-  // Create a new list with a word
-  const createNewListWithWord = useCallback(async (word, listName = null) => {
+  // Create a new list with a word and optional sentence context
+  const createNewListWithWord = useCallback(async (word, listName = null, sentenceContext = null) => {
     if (!word.trim()) {
       return { success: false, message: 'No word provided' };
     }
@@ -432,7 +439,7 @@ export function WordlistProvider({ children }) {
         words: [{
           word: word.trim(),
           word_translation: null,
-          example_phrase: null,
+          example_phrase: sentenceContext || null,
           example_phrase_translation: null
         }],
         language: currentLanguage // Include language when creating new list
@@ -452,7 +459,7 @@ export function WordlistProvider({ children }) {
 
       return {
         success: true,
-        message: `Created new list "${newListName}" with word "${word}"`,
+        message: `Created new list "${newListName}" with word "${word}"${sentenceContext ? ' and sentence context' : ''}`,
         list: result,
       };
     } catch (err) {
@@ -573,7 +580,7 @@ export function WordlistProvider({ children }) {
   const value = {
     wordlists, // This is filtered for current language
     allWordlists, // Provide access to all wordlists if needed
-    loading,
+    loading: loadingWordLists,
     error,
     currentLanguage,
     changeLanguage,

@@ -53,6 +53,7 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect }, ref) =>
 
     // Expose methods to handle selection and translation to parent via ref
     React.useImperativeHandle(ref, () => ({
+        currentRange: currentRange,
         handleTranslate: async (lang) => {
             if (translatedNode) {
                 await updateTranslation(translatedNode, lang);

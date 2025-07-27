@@ -12,15 +12,16 @@ const chunkArray = (arr, size) => {
 };
 
 function WordLists() {
-  const { 
-    wordlists, 
-    loading, 
-    error, 
-    removeWordFromList, 
+  const {
+    wordlists,
+    loading,
+    error,
+    removeWordFromList,
     updateWordInList,
-    currentLanguage
+    currentLanguage,
+    syncWithBackend,
   } = useWordlist();
-  
+
   const [flippedCards, setFlippedCards] = useState(new Set()); // Set of flipped card IDs
   const [editingWord, setEditingWord] = useState(null); // { listId, wordIndex, originalWord, newWord }
   const [isEditing, setIsEditing] = useState(false)
@@ -43,7 +44,7 @@ function WordLists() {
     }
 
     const cardId = `${listId}-${wordIndex}`;
-    
+
     setFlippedCards(prev => {
       const newSet = new Set(prev);
       if (newSet.has(cardId)) {
@@ -57,10 +58,10 @@ function WordLists() {
 
   const handleWordClick = (e, listId, wordItem, wordIndex) => {
     e.stopPropagation();
-    if (editingWord){
+    if (editingWord) {
       handleEditSave()
     }; // Don't start editing if already editing
-    
+
     setEditingWord({
       listId,
       wordIndex,
@@ -94,7 +95,7 @@ function WordLists() {
     setEditingWord(null);
   };
 
-  const handleEditSave = () => {
+  const handleEditSave = async () => {
     if (!editingWord) return;
 
     const { listId, wordIndex, originalWord, newWord } = editingWord;
@@ -109,7 +110,11 @@ function WordLists() {
 
     // Use the context method to update the word by index
     const result = updateWordInList(wordIndex, trimmedNewWord, listId);
-    
+    setTimeout(async () => {
+      await syncWithBackend()
+    }, 5)
+
+
     if (!result.success) {
       // Handle error - you could show a toast or alert here
       console.error('Failed to update word:', result.message);
@@ -123,9 +128,9 @@ function WordLists() {
 
   const playSound = (e, wordItem) => {
     e.stopPropagation();
-    
+
     let audioUrl = null;
-    
+
     // Determine audio URL based on language and definition structure
     if (currentLanguage === "en" && wordItem?.audio?.audio_url) {
       audioUrl = wordItem.audio.audio_url;
@@ -137,7 +142,7 @@ function WordLists() {
         audioUrl = wordItem.english_audio.audio_url;
       }
     }
-    
+
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();
@@ -178,7 +183,7 @@ function WordLists() {
   // Export wordlist to markdown format
   const exportToMarkdown = (list) => {
     let markdown = `# ${list.name}\n\n`;
-    
+
     if (list.words && list.words.length > 0) {
       list.words.forEach((wordItem, index) => {
         markdown += `${wordItem.word},`;
@@ -187,7 +192,7 @@ function WordLists() {
         if (wordItem.example_phrase) {
           markdown += ` ${wordItem.example_phrase}`;
         }
-        
+
         markdown += " :: "
 
         // Add word translation if available
@@ -199,13 +204,13 @@ function WordLists() {
         if (wordItem.example_phrase_translation) {
           markdown += ` ${wordItem.example_phrase_translation}`;
         }
-        
+
         markdown += `\n`;
       });
     } else {
       markdown += `No words in this list.\n\n`;
     }
-    
+
     // Copy to clipboard
     navigator.clipboard.writeText(markdown).then(() => {
       console.log('Markdown copied to clipboard');
@@ -224,12 +229,12 @@ function WordLists() {
       <div className={styles.languageInfo}>
         <p>Displaying {currentLanguage === "en" ? "English" : "Spanish"} word lists</p>
       </div>
-      
+
       {wordlists.map((list) => {
         // Break the words into rows of 3 cards each.
         const rows = chunkArray(list.words || [], 3);
         return (
-          <div key={list.id} className={styles.wordlist}>
+          <div key={list.id} id={`wordlist-${list.id}`} className={styles.wordlist}>
             <div className={styles.listHeader}>
               <h2 className={styles.listName}>
                 {list.name}
@@ -244,7 +249,7 @@ function WordLists() {
                   </span>
                 )}
               </h2>
-              <button 
+              <button
                 className={styles.exportButton}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -261,11 +266,11 @@ function WordLists() {
                   const wordIndex = rowIndex * 3 + cardIndex
                   const cardId = `${list.id}-${wordIndex}`;
                   const isFlipped = isCardFlipped(cardId);
-                  
+
                   return (
                     <div
                       // key={wordItem.word}
-                      onClick={(e) => handleCardClick(e, list.id,  wordIndex)}
+                      onClick={(e) => handleCardClick(e, list.id, wordIndex)}
                       className={`${styles.wordCard} ${isFlipped ? styles.flipped : ''}`}
                     >
                       <div className={styles.cardInner}>
@@ -285,12 +290,19 @@ function WordLists() {
                                   className={styles.wordEditInput}
                                 />
                               ) : (
-                                <h3 
-                                  className={styles.wordTitle}
+                                <h3
+                                  className={`${styles.wordTitle} ${wordItem._isUpdating ? styles.updating : ''}`}
                                   onClick={(e) => handleWordClick(e, list.id, wordItem, wordIndex)}
                                   title="Click to edit"
                                 >
-                                  {wordItem.word}
+                                  {wordItem._isUpdating ? (
+                                    <>
+                                      <span className={styles.loadingSpinner}>⏳</span>
+                                      {wordItem.word}
+                                    </>
+                                  ) : (
+                                    wordItem.word
+                                  )}
                                 </h3>
                               )}
                             </div>
@@ -305,8 +317,8 @@ function WordLists() {
                             {/* Card actions */}
                             <div className={styles.cardActions}>
                               {/* Audio button based on unified dictionary structure */}
-                              {(currentLanguage === "en" && wordItem?.audio?.audio_url) || 
-                               (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
+                              {(currentLanguage === "en" && wordItem?.audio?.audio_url) ||
+                                (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
                                 <button
                                   onClick={(e) => playSound(e, wordItem)}
                                   className={styles.audioButton}
@@ -352,7 +364,7 @@ function WordLists() {
                     </div>
                   );
                 })}
-                
+
                 {/* Fill empty spaces in the row to maintain grid alignment */}
                 {row.length < 3 && Array.from({ length: 3 - row.length }, (_, i) => (
                   <div key={`empty-${i}`} className={styles.emptyCard}></div>

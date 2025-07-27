@@ -81,6 +81,68 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     };
   }, [messageRefs.current.length, isToolbarVisible]); // Depend on isToolbarVisible to properly update the closure
 
+  // Extract sentence containing the selected text using selection range
+  const extractSentenceFromSelection = (messageRef) => {
+    if (!messageRef || !messageRef.current) return null;
+    
+    
+    try {
+
+       const currentRange = messageRef.current.currentRange;
+
+      if (!currentRange) return null;
+
+      const messageContainer = currentRange.commonAncestorContainer;
+     
+      
+      const fullText = messageContainer.textContent || messageContainer.innerText || '';
+      
+      // Calculate absolute position of selection start in the full text
+      let absoluteStart = 0;
+      const walker = document.createTreeWalker(
+        messageContainer,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+      
+      let currentNode;
+      while (currentNode = walker.nextNode()) {
+        if (currentNode === currentRange.startContainer) {
+          absoluteStart += currentRange.startOffset;
+          break;
+        }
+        absoluteStart += currentNode.textContent.length;
+      }
+      
+      // Find sentence boundaries around this position
+      // Look for sentence endings before the selection
+      let sentenceStart = 0;
+      for (let i = absoluteStart - 1; i >= 0; i--) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceStart = i + 1;
+          break;
+        }
+      }
+      
+      // Look for sentence endings after the selection
+      let sentenceEnd = fullText.length;
+      for (let i = absoluteStart; i < fullText.length; i++) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceEnd = i;
+          break;
+        }
+      }
+      
+      const sentence = fullText.slice(sentenceStart, sentenceEnd).trim();
+      return sentence || null;
+      
+    } catch (error) {
+      console.error('Error extracting sentence from selection:', error);
+      return null;
+    }
+  };
+
   // Callback from ChatMessage when text is selected or a translated span is clicked.
   // The extra "isTranslated" flag indicates if the selection already has a translation.
   const handleTextSelect = (ref, rect, text, isTranslated = false) => {
@@ -122,10 +184,13 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
     onCheckInDictionary(selectedText);
   };
 
-  // Wordlist management handlers
+  // Wordlist management handlers with sentence context
   const handleAddToList = async (text, listId) => {
     if (!text.trim()) return null;
-    return addWordToList(text, listId);
+    
+    // Extract sentence context using selection range
+    const sentenceContext = extractSentenceFromSelection(activeMessageRef);
+    return addWordToList(text, listId, sentenceContext);
   };
 
   const handleMoveToList = async (text, sourceListId, targetListId) => {
@@ -135,7 +200,11 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
 
   const handleCreateNewList = async (text) => {
     if (!text.trim()) return null;
-    return createNewListWithWord(text);
+    
+    // Extract sentence context using selection range
+    const sentenceContext = extractSentenceFromSelection(activeMessageRef);
+    
+    return createNewListWithWord(text, null, sentenceContext);
   };
 
   return (
