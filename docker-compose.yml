@@ -21,5 +21,15 @@ services:
       timeout: 5s
       retries: 5
 
+  language_coach:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 80:80
+    
+    env_file: .env.docker
+
 volumes:
   postgres_data:

@@ -51,8 +51,23 @@ def shutdown_event():
 
 # Mount static files in production mode
 if not os.getenv('BACKEND_ENV', None) == 'dev':
-    # Mount the static files (built assets are in /app/dist)
-    app.mount("/", StaticFiles(directory="/app/dist", html=True), name="static")
+    from fastapi import Request
+    from fastapi.responses import FileResponse
+    
+    # Mount static assets first (CSS, JS, images, etc.)
+    app.mount("/assets", StaticFiles(directory="/app/dist/assets"), name="assets")
+    
+    # Catch-all route for SPA - serve index.html for non-API routes
+    @app.get("/{full_path:path}")
+    async def serve_spa(request: Request, full_path: str):
+        # Serve API routes normally (they're handled by routers above)
+        # This catch-all only handles unmatched routes
+        if full_path.startswith("api/"):
+            # This shouldn't happen as API routes are defined above
+            return {"error": "API route not found"}
+        
+        # For all other routes, serve the SPA index.html
+        return FileResponse("/app/dist/index.html")
 
 import logging
 

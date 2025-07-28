@@ -29,5 +29,6 @@ dist-ssr
 
 data/
 
-.env
+.env*
+!.env.example
 database.db
