@@ -193,3 +193,50 @@ export const fetchSentenceExamples = async (word, language = "en", topN = 5, pro
     throw error; // Re-throw for component-level handling
   }
 };
+
+// ========== Chat Images API Methods ==========
+
+// Upload an image to a chat
+export const uploadChatImage = async (chatId, file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await api.post(`coach/chat/${chatId}/images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+};
+
+// Get all images for a chat
+export const fetchChatImages = async (chatId) => {
+  try {
+    const response = await api.get(`coach/chat/${chatId}/images`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching chat images:', error);
+    return [];
+  }
+};
+
+// Delete an image from a chat
+export const deleteChatImage = async (chatId, imageId) => {
+  try {
+    const response = await api.delete(`coach/chat/${chatId}/images/${imageId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    throw error;
+  }
+};
+
+// Get image file URL
+export const getChatImageUrl = (chatId, imageId) => {
+  return `${API_BASE_URL}coach/chat/${chatId}/images/${imageId}/file`;
+};

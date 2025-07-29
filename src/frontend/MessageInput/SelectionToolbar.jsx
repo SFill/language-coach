@@ -9,15 +9,18 @@ import React, { useRef, useEffect, useState } from 'react';
  * @param {Function} props.onSend - Function to send message
  * @param {string} props.preferredLanguage - Currently active language for translation
  * @param {boolean} props.isTranslating - Flag indicating if translation is in progress
+ * @param {Function} props.onAttachImage - Function to handle image attachment
  */
 const SelectionToolbar = ({ 
   displayText, 
   onTranslate, 
   onSend, 
   preferredLanguage = null,
-  isTranslating = false 
+  isTranslating = false,
+  onAttachImage
 }) => {
   const spanRef = useRef(null);
+  const fileInputRef = useRef(null);
   const [isTruncated, setIsTruncated] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -65,6 +68,49 @@ const SelectionToolbar = ({
       });
   };
 
+  // Function to handle image attachment
+  const handleImageAttach = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // Function to handle file selection
+  const handleFileSelect = (event) => {
+    const files = Array.from(event.target.files);
+    if (files.length > 0 && onAttachImage) {
+      onAttachImage(files);
+    }
+    // Reset input to allow selecting same file again
+    event.target.value = '';
+  };
+
+  // Function to handle paste from clipboard
+  const handlePaste = async () => {
+    try {
+      const items = await navigator.clipboard.read();
+      const imageFiles = [];
+      
+      for (const item of items) {
+        for (const type of item.types) {
+          if (type.startsWith('image/')) {
+            const blob = await item.getType(type);
+            const file = new File([blob], `pasted-image-${Date.now()}.${type.split('/')[1]}`, {
+              type: type
+            });
+            imageFiles.push(file);
+          }
+        }
+      }
+      
+      if (imageFiles.length > 0 && onAttachImage) {
+        onAttachImage(imageFiles);
+      }
+    } catch (err) {
+      console.error('Failed to read clipboard contents:', err);
+    }
+  };
+
   return (
     <div className="selection-toolbar">
       <div className="buttons">
@@ -98,7 +144,37 @@ const SelectionToolbar = ({
         >
           {copied ? '✓ Copied!' : '📋 Copy'}
         </button>
+        {onAttachImage && (
+          <>
+            <button
+              onClick={handleImageAttach}
+              disabled={isTranslating}
+              title="Attach image"
+            >
+              📎 Attach
+            </button>
+            <button
+              onClick={handlePaste}
+              disabled={isTranslating}
+              title="Paste image from clipboard"
+            >
+              📋 Paste Image
+            </button>
+          </>
+        )}
       </div>
+      
+      {/* Hidden file input */}
+      {onAttachImage && (
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileSelect}
+          style={{ display: 'none' }}
+        />
+      )}
       <span
         ref={spanRef}
         className={isTruncated ? 'truncated' : ''}

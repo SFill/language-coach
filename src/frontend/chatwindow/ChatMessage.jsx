@@ -10,7 +10,7 @@ const FOLD_THRESHOLD = 300; // Character threshold to consider a message long
 /**
  * Complete chat message component
  */
-const ChatMessage = React.forwardRef(({ msg, onTextSelect }, ref) => {
+const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId }, ref) => {
   const isBot = msg.sender === 'bot';
   const isLong = msg.text.length > FOLD_THRESHOLD;
 
@@ -22,6 +22,7 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect }, ref) => {
             ref={ref}
             content={msg.text}
             onTextSelect={onTextSelect}
+            chatId={chatId}
           />
         </ExpandableContent>
       ) : (
@@ -29,6 +30,7 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect }, ref) => {
           ref={ref}
           content={msg.text}
           onTextSelect={onTextSelect}
+          chatId={chatId}
         />
       )}
     </MessageBubble>
@@ -40,7 +42,8 @@ ChatMessage.propTypes = {
     sender: PropTypes.oneOf(['user', 'bot']).isRequired,
     text: PropTypes.string.isRequired
   }).isRequired,
-  onTextSelect: PropTypes.func
+  onTextSelect: PropTypes.func,
+  chatId: PropTypes.string
 };
 
 ChatMessage.displayName = 'ChatMessage';

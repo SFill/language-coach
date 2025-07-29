@@ -10,7 +10,6 @@ import { useCallback } from 'react';
  * @param {Function} updateCaretAndScroll - Function to update caret and scroll position
  * @param {Function} clearSelection - Function to clear selection state
  * @param {Function} handleSend - Function to send message/note
- * @param {Object} undoRedo - Undo/redo related functions
  * @param {Function} translateSelection - Function to translate current selection
  * @returns {Object} Keyboard event handlers
  */
@@ -22,10 +21,8 @@ const useKeyboardShortcuts = (
   updateCaretAndScroll,
   clearSelection,
   handleSend,
-  undoRedo,
   translateSelection
 ) => {
-  const { undo, redo, beforeFormatting, handleTextChange } = undoRedo;
 
   /**
    * Applies markdown formatting to selected text or at cursor position
@@ -46,8 +43,6 @@ const useKeyboardShortcuts = (
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
 
-    // Save current state to history before making changes
-    beforeFormatting();
 
     if (startPos === endPos) {
       // No selection, just insert the markers and place cursor between them
@@ -79,7 +74,7 @@ const useKeyboardShortcuts = (
     }
 
    
-  }, [textareaRef, text, setText, updateCaretAndScroll, beforeFormatting]);
+  }, [textareaRef, text, setText, updateCaretAndScroll]);
 
   const handleTabKey = (e) => {
     function _changed(text, textarea) {
@@ -92,8 +87,6 @@ const useKeyboardShortcuts = (
     const textarea = textareaRef.current;
     e.preventDefault();
     
-    // Save current state before tab formatting
-    beforeFormatting();
     
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
@@ -195,18 +188,6 @@ const useKeyboardShortcuts = (
         });
       }
     }
-    // TODO doensot work well, fix later
-    // Undo - Ctrl+Z
-    // if (e.key === 'z' && e.ctrlKey && !e.shiftKey) {
-    //   e.preventDefault();
-    //   undo();
-    // }
-
-    // Redo - Ctrl+Y or Ctrl+Shift+Z
-    else if ((e.key === 'y' && e.ctrlKey) || (e.key === 'z' && e.ctrlKey && e.shiftKey)) {
-      e.preventDefault();
-      redo();
-    }
 
     // Tab key - insert 4 spaces instead of changing focus
     else if (e.key === 'Tab') {
@@ -250,6 +231,13 @@ const useKeyboardShortcuts = (
       e.preventDefault();
       translateSelection();
     }
+    
+    // Paste: Ctrl+V - Let the browser handle paste, but we need to track it for history
+    else if (e.key === 'v' && e.ctrlKey) {
+      // Let the browser handle the paste operation, but we'll track it in a paste event
+      // The textarea's onChange will capture the change and update history
+      return; // Don't prevent default to allow normal paste behavior
+    }
   }, [
     textareaRef,
     text,
@@ -258,9 +246,6 @@ const useKeyboardShortcuts = (
     clearSelection,
     handleSend,
     applyMarkdownFormatting,
-    undo,
-    redo,
-    beforeFormatting,
     translateSelection
   ]);
 

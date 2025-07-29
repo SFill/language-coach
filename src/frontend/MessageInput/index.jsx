@@ -7,7 +7,6 @@ import useCaretTracking from './hooks/useCaretTracking';
 import useScrollBehavior from './hooks/useScrollBehavior';
 import useTextSelection from './hooks/useTextSelection';
 import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
-import useUndoRedo from './hooks/useUndoRedo';
 
 // Import components
 import TextEditor from './TextEditor';
@@ -24,8 +23,9 @@ const PREFERRED_LANGUAGE_KEY = 'language-coach-preferred-language';
  * 
  * @param {Object} props - Component props
  * @param {Function} props.onSend - Callback function when user sends a message
+ * @param {Function} props.onAttachImage - Callback function when user attaches images
  */
-const MessageInput = ({ onSend }) => {
+const MessageInput = ({ onSend, onAttachImage }) => {
   // Create ref for the textarea
   const textareaRef = useRef(null);
 
@@ -50,16 +50,6 @@ const MessageInput = ({ onSend }) => {
     updateCaretInfo,
     input
   );
-
-  // Set up undo/redo functionality with improved behavior
-  const {
-    undo,
-    redo,
-    handleTextChange,
-    beforeFormatting,
-    canUndo,
-    canRedo
-  } = useUndoRedo(textareaRef, input, setInput, updateCaretAndScroll);
 
   // Handle text selections and translations with persisted language preference
   const {
@@ -97,7 +87,6 @@ const MessageInput = ({ onSend }) => {
     }
   }, [input, selectedText, onSend, setInput, clearSelection]);
 
-  // Set up keyboard shortcuts (pass undo/redo functions)
   const {
     handleKeyDown,
     handleKeyUp
@@ -109,7 +98,6 @@ const MessageInput = ({ onSend }) => {
     updateCaretAndScroll,
     clearSelection,
     handleSendMessage,
-    { undo, redo, beforeFormatting, handleTextChange }, // Pass undo/redo functions
     translateSelection // Pass translate selection function
   );
 
@@ -135,14 +123,6 @@ const MessageInput = ({ onSend }) => {
     
     // Update the input state
     setInput(newValue);
-    console.log(`✅ [handleChange] Input state updated`);
-    
-    // Track this change in history
-    handleTextChange(
-      newValue, 
-      textarea.selectionStart, 
-      textarea.selectionEnd
-    );
 
     // When text changes, we need to update caret position and scrolling
     // Use requestAnimationFrame to ensure DOM is updated first
@@ -150,7 +130,7 @@ const MessageInput = ({ onSend }) => {
       console.log(`🎬 [handleChange] Calling updateCaretAndScroll(true) in requestAnimationFrame`);
       updateCaretAndScroll(true);
     });
-  }, [setInput, updateCaretAndScroll, handleTextChange, input.length]);
+  }, [setInput, updateCaretAndScroll, input.length]);
 
   // Improved wheel handler with debouncing
   const handleWheel = useCallback((e) => {
@@ -187,6 +167,7 @@ const MessageInput = ({ onSend }) => {
             onSend={handleSendMessage}
             preferredLanguage={preferredLanguage}
             isTranslating={isTranslating}
+            onAttachImage={onAttachImage}
           />
         </div>
         <TextEditor
@@ -199,6 +180,7 @@ const MessageInput = ({ onSend }) => {
           onWheel={handleWheel}
           onScroll={handleScroll}
           textareaRef={textareaRef}
+          onImageDrop={onAttachImage}
         />
       </div>
     </div>

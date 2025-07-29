@@ -4,7 +4,7 @@ import ChatToolbar from './ChatToolbar';
 import './ChatWindow.css';
 import { useWordlist } from '../wordlist/WordlistContext';
 
-const ChatWindow = ({ messages, onCheckInDictionary }) => {
+const ChatWindow = ({ messages, onCheckInDictionary, chatId }) => {
   const chatContainerRef = useRef(null);
   const toolbarRef = useRef(null);
 
@@ -222,6 +222,7 @@ const ChatWindow = ({ messages, onCheckInDictionary }) => {
               key={index}
               ref={messageRefs.current[index]}
               msg={msg}
+              chatId={chatId}
               onTextSelect={(rect, text, isTranslated) => {
                 // Use a timeout to ensure the child event has completed.
                 setTimeout(() => handleTextSelect(messageRefs.current[index], rect, text, isTranslated), 0);

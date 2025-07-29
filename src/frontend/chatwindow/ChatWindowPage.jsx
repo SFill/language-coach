@@ -3,7 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router';
 import ChatWindow from './ChatWindow';
 import MessageInput from '../MessageInput/index';
 import SideDictionaryPanel from '../SideDictionaryPanel';
-import { fetchChatById, sendMessage, createNewChat } from '../api';
+import ChatImagesList from './ChatImagesList';
+import { fetchChatById, sendMessage, createNewChat, uploadChatImage } from '../api';
 import './ChatWindowPage.css';
 
 function ChatWindowPage({ onChatCreated }) {
@@ -12,9 +13,11 @@ function ChatWindowPage({ onChatCreated }) {
     const location = useLocation();
     const [messages, setMessages] = useState([]);
     const [dictionaryWord, setDictionaryWord] = useState('');
+    const [showImagesList, setShowImagesList] = useState(true);
 
     // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
     const isLoadingChat = useRef(false);
+    const imagesListRef = useRef(null);
 
     useEffect(() => {
 
@@ -95,12 +98,50 @@ function ChatWindowPage({ onChatCreated }) {
         }
     };
 
+    const handleImageUpload = (uploadedImage) => {
+        // Optional: Show a notification or refresh something
+        console.log('Image uploaded:', uploadedImage);
+        // Refresh the images list
+        if (imagesListRef.current && imagesListRef.current.loadImages) {
+            imagesListRef.current.loadImages();
+        }
+    };
+
+    const handleImageReference = (image) => {
+        // This could trigger insertion of image reference into the message input
+        // For now, we'll just log it
+        console.log('Image clicked for reference:', image);
+    };
+
+    const handleAttachImage = async (files) => {
+        if (!chatId || !files.length) return;
+
+        try {
+            for (const file of files) {
+                const uploadedImage = await uploadChatImage(chatId, file);
+                handleImageUpload(uploadedImage);
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error);
+            alert('Error uploading images. Please try again.');
+        }
+    };
+
     return (
         <div className="page">
-            <div className="left-area"></div>
+            <div className="left-area">
+                {showImagesList && (
+                    <ChatImagesList 
+                        ref={imagesListRef}
+                        chatId={chatId} 
+                        onImageUpload={handleImageUpload}
+                        onImageReference={handleImageReference}
+                    />
+                )}
+            </div>
             <div className="chat-window-page">
-                <ChatWindow messages={messages} onCheckInDictionary={setDictionaryWord} />
-                <MessageInput onSend={handleSend} />
+                <ChatWindow messages={messages} onCheckInDictionary={setDictionaryWord} chatId={chatId} />
+                <MessageInput onSend={handleSend} onAttachImage={handleAttachImage} />
             </div>
             <div className={"dictionary-area" + (dictionaryWord ? "" : " hidden")}>
                 <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />
