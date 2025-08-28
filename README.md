@@ -38,7 +38,6 @@ Language Coach helps users improve their language skills by working with foreign
   - Text formatting (Ctrl+B for bold, Ctrl+I for italic, Ctrl+K for code)
   - Clear translation area with backspace or Ctrl+E
   - Tab key inserts 4 spaces
-  - Undo/Redo functionality (Ctrl+Z, Ctrl+Y/Ctrl+Shift+Z) - currently disabled
 - Persistent text input (saved across page reloads)
 - Improved UI with navbar showing current chat name
 - Word deletion functionality from word lists - wordlist deletion is not supported so far
