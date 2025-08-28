@@ -3,8 +3,9 @@ import ChatMessage from './ChatMessage';
 import ChatToolbar from './ChatToolbar';
 import './ChatWindow.css';
 import { useWordlist } from '../wordlist/WordlistContext';
+import { uploadChatImage } from '../api';
 
-const ChatWindow = ({ messages, onCheckInDictionary, chatId }) => {
+const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, onImageUploaded }) => {
   const chatContainerRef = useRef(null);
   const toolbarRef = useRef(null);
 
@@ -37,6 +38,50 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId }) => {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Single paste handler for images: uploads and inserts refs into editor
+  useEffect(() => {
+    const handlePaste = async (event) => {
+      if (!chatId) return;
+      const clipboard = event.clipboardData;
+      if (!clipboard) return;
+
+      const items = Array.from(clipboard.items || []);
+      const imageItems = items.filter((i) => i.type && i.type.startsWith('image/'));
+      if (imageItems.length === 0) return;
+
+      event.preventDefault();
+
+      // Convert items to Files, ensure a name exists
+      const files = [];
+      for (const item of imageItems) {
+        const file = item.getAsFile();
+        if (file) {
+          const ext = (file.type?.split('/')?.[1] || 'png');
+          const named = new File([file], `pasted-image-${Date.now()}.${ext}`, { type: file.type || 'image/png' });
+          files.push(named);
+        }
+      }
+
+      for (const file of files) {
+        try {
+          const uploaded = await uploadChatImage(chatId, file);
+          // Notify images list to refresh
+          if (onImageUploaded) onImageUploaded(uploaded);
+          // Insert a reference into the editor
+          const refText = `@image:${uploaded.id} `;
+          if (messageInputRef && messageInputRef.current && messageInputRef.current.insertTextAtCursor) {
+            messageInputRef.current.insertTextAtCursor(refText);
+          }
+        } catch (err) {
+          console.error('Error uploading pasted image:', err);
+        }
+      }
+    };
+
+    document.addEventListener('paste', handlePaste);
+    return () => document.removeEventListener('paste', handlePaste);
+  }, [chatId, messageInputRef, onImageUploaded]);
 
   useEffect(() => {
     // Single global mouseup handler for event delegation

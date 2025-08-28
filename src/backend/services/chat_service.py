@@ -1,13 +1,11 @@
 import os
 import uuid
-import aiofiles
 from pathlib import Path
 from sqlmodel import Session, select, update, delete
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from openai import OpenAI
 from typing import List
-import mimetypes
 
 from backend.models.chat import Chat, ChatListResponse, Message, ChatImage, ChatImageResponse
 from backend.constants import SYSTEM_PROMPT
@@ -208,8 +206,8 @@ async def upload_chat_image(session: Session, chat_id: int, file: UploadFile) ->
     file_path = UPLOAD_DIR / unique_filename
     
     # Save file
-    async with aiofiles.open(file_path, 'wb') as f:
-        await f.write(content)
+    with open(file_path, 'wb') as f:
+        f.write(content)
     
     # Create database record
     chat_image = ChatImage(

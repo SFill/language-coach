@@ -65,46 +65,7 @@ const TextEditor = ({
     event.preventDefault();
   };
 
-  const handlePaste = async (event) => {
-    console.log('Paste event detected');
-    
-    const clipboardData = event.clipboardData;
-    if (!clipboardData) return;
-
-    // Check for images in clipboard
-    const items = Array.from(clipboardData.items);
-    const imageItems = items.filter(item => item.type.startsWith('image/'));
-    
-    if (imageItems.length > 0 && onImageDrop) {
-      // Handle image paste
-      event.preventDefault();
-      
-      const imageFiles = [];
-      for (const item of imageItems) {
-        const file = item.getAsFile();
-        if (file) {
-          // Create a proper File object with a name
-          const renamedFile = new File([file], `pasted-image-${Date.now()}.${file.type.split('/')[1]}`, {
-            type: file.type
-          });
-          imageFiles.push(renamedFile);
-        }
-      }
-      
-      if (imageFiles.length > 0) {
-        console.log('Pasting images:', imageFiles);
-        // Call the image attachment handler
-        if (onImageDrop && typeof onImageDrop === 'function') {
-          onImageDrop(imageFiles);
-        }
-      }
-    } else {
-      // Handle text paste - let browser handle normally
-      const textData = clipboardData.getData('text/plain');
-      console.log('Pasting text:', textData);
-      // Don't prevent default for text paste
-    }
-  };
+  // Paste handling moved to ChatWindow (single source of truth)
 
   return (
     <textarea
@@ -121,7 +82,7 @@ const TextEditor = ({
       onBlur={onBlur}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      onPaste={handlePaste}
+      // onPaste handled globally in ChatWindow
       placeholder="Type your message... (Ctrl+B for bold, Ctrl+I for italic)"
       className="vs-code-textarea"
       autoFocus

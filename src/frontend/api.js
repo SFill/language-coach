@@ -44,7 +44,7 @@ export const deleteChat = async (id) => {
 // Create a new chat using POST /api/coach/chat
 export const createNewChat = async () => {
   try {
-    const response = await api.post(`coach/chat`, {
+    const response = await api.post(`coach/chat/`, {
       name: new Date().toLocaleString(),
       history: { content: [] },
     });

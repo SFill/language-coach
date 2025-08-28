@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useCallback, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import './MessageInput.css';
 
 // Import custom hooks
@@ -25,7 +25,7 @@ const PREFERRED_LANGUAGE_KEY = 'language-coach-preferred-language';
  * @param {Function} props.onSend - Callback function when user sends a message
  * @param {Function} props.onAttachImage - Callback function when user attaches images
  */
-const MessageInput = ({ onSend, onAttachImage }) => {
+const MessageInput = forwardRef(({ onSend, onAttachImage }, ref) => {
   // Create ref for the textarea
   const textareaRef = useRef(null);
 
@@ -157,6 +157,30 @@ const MessageInput = ({ onSend, onAttachImage }) => {
     scrollHandleScroll(e);
   }, [scrollHandleScroll]);
 
+  // Expose imperative API to parent for inserting text (e.g., image refs)
+  useImperativeHandle(ref, () => ({
+    insertTextAtCursor: (text) => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+
+      const start = textarea.selectionStart ?? input.length;
+      const end = textarea.selectionEnd ?? input.length;
+      const newValue = input.slice(0, start) + text + input.slice(end);
+      
+      setInput(newValue);
+
+      // After state update, focus and set caret position, keep scroll in sync
+      requestAnimationFrame(() => {
+        try {
+          textarea.focus();
+          const pos = start + text.length;
+          textarea.selectionStart = textarea.selectionEnd = pos;
+        } catch (_) {}
+        updateCaretAndScroll(true);
+      });
+    }
+  }));
+
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
@@ -185,6 +209,6 @@ const MessageInput = ({ onSend, onAttachImage }) => {
       </div>
     </div>
   );
-};
+});
 
 export default MessageInput;

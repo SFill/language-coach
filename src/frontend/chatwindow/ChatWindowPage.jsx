@@ -18,6 +18,7 @@ function ChatWindowPage({ onChatCreated }) {
     // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
     const isLoadingChat = useRef(false);
     const imagesListRef = useRef(null);
+    const messageInputRef = useRef(null);
 
     useEffect(() => {
 
@@ -140,8 +141,14 @@ function ChatWindowPage({ onChatCreated }) {
                 )}
             </div>
             <div className="chat-window-page">
-                <ChatWindow messages={messages} onCheckInDictionary={setDictionaryWord} chatId={chatId} />
-                <MessageInput onSend={handleSend} onAttachImage={handleAttachImage} />
+                <ChatWindow 
+                    messages={messages} 
+                    onCheckInDictionary={setDictionaryWord} 
+                    chatId={chatId}
+                    messageInputRef={messageInputRef}
+                    onImageUploaded={handleImageUpload}
+                />
+                <MessageInput ref={messageInputRef} onSend={handleSend} onAttachImage={handleAttachImage} />
             </div>
             <div className={"dictionary-area" + (dictionaryWord ? "" : " hidden")}>
                 <SideDictionaryPanel word={dictionaryWord} onClose={() => setDictionaryWord('')} />

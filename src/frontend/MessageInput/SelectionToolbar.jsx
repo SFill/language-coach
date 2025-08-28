@@ -84,33 +84,6 @@ const SelectionToolbar = ({
     // Reset input to allow selecting same file again
     event.target.value = '';
   };
-
-  // Function to handle paste from clipboard
-  const handlePaste = async () => {
-    try {
-      const items = await navigator.clipboard.read();
-      const imageFiles = [];
-      
-      for (const item of items) {
-        for (const type of item.types) {
-          if (type.startsWith('image/')) {
-            const blob = await item.getType(type);
-            const file = new File([blob], `pasted-image-${Date.now()}.${type.split('/')[1]}`, {
-              type: type
-            });
-            imageFiles.push(file);
-          }
-        }
-      }
-      
-      if (imageFiles.length > 0 && onAttachImage) {
-        onAttachImage(imageFiles);
-      }
-    } catch (err) {
-      console.error('Failed to read clipboard contents:', err);
-    }
-  };
-
   return (
     <div className="selection-toolbar">
       <div className="buttons">
@@ -152,13 +125,6 @@ const SelectionToolbar = ({
               title="Attach image"
             >
               📎 Attach
-            </button>
-            <button
-              onClick={handlePaste}
-              disabled={isTranslating}
-              title="Paste image from clipboard"
-            >
-              📋 Paste Image
             </button>
           </>
         )}

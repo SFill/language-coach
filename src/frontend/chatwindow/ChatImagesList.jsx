@@ -14,6 +14,8 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
     }
   }, [chatId]);
 
+  // Paste handling moved to ChatWindow as the single handler
+
   const loadImages = async () => {
     setLoading(true);
     try {
