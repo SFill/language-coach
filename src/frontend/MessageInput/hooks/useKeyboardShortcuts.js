@@ -9,7 +9,7 @@ import { useCallback } from 'react';
  * @param {Function} updateCaretInfo - Function to update caret position
  * @param {Function} updateCaretAndScroll - Function to update caret and scroll position
  * @param {Function} clearSelection - Function to clear selection state
- * @param {Function} handleSend - Function to send message/note
+ * @param {Function} handleSendMessage - Function to send message/note
  * @param {Function} translateSelection - Function to translate current selection
  * @returns {Object} Keyboard event handlers
  */
@@ -20,7 +20,7 @@ const useKeyboardShortcuts = (
   updateCaretInfo,
   updateCaretAndScroll,
   clearSelection,
-  handleSend,
+  handleSendMessage,
   translateSelection
 ) => {
 
@@ -207,7 +207,7 @@ const useKeyboardShortcuts = (
     // Ctrl + Enter to send as note
     else if (e.key === 'Enter' && e.ctrlKey) {
       e.preventDefault();
-      handleSend(true); // true = send as note
+      handleSendMessage(true); // true = send as note
     }
 
     // Markdown shortcuts
@@ -244,7 +244,7 @@ const useKeyboardShortcuts = (
     setText,
     updateCaretInfo,
     clearSelection,
-    handleSend,
+    handleSendMessage,
     applyMarkdownFormatting,
     translateSelection
   ]);

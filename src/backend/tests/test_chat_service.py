@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from backend.services.chat_service import (
     create_chat, get_chat_list, get_chat, delete_chat, send_message
 )
-from backend.models.chat import Chat, ChatListResponse, Message
+from backend.models.chat import Chat, ChatListResponse, ChatMessageCreate
 
 
 class TestChatService:
@@ -150,12 +150,13 @@ class TestChatService:
             MockChunk("help you today?")
         ]
         
-        message = Message(message="Hello there", is_note=False)
+        message = ChatMessageCreate(message="Hello there", is_note=False)
         result = send_message(test_session, chat.id, message)
-        
+
         # Verify response structure
-        assert 'chat_bot_message' in result
-        assert result['chat_bot_message'] == "Hello! How can I help you today?"
+        assert result['status'] == 'ok'
+        assert len(result['new_messages']) == 2
+        assert result['new_messages'][1]['content'] == "Hello! How can I help you today?"
         
         # Verify AI client was called
         mock_client.chat.completions.create.assert_called_once()
@@ -165,10 +166,16 @@ class TestChatService:
         # Verify chat history was updated in database
         updated_chat = test_session.get(Chat, chat.id)
         assert len(updated_chat.history["content"]) == 2
-        assert updated_chat.history["content"][0]["role"] == "user"
-        assert updated_chat.history["content"][0]["content"] == "Hello there"
-        assert updated_chat.history["content"][1]["role"] == "assistant"
-        assert updated_chat.history["content"][1]["content"] == "Hello! How can I help you today?"
+        first_message = updated_chat.history["content"][0]
+        second_message = updated_chat.history["content"][1]
+
+        assert first_message["role"] == "user"
+        assert first_message["content"] == "Hello there"
+        assert first_message["id"] == 1
+
+        assert second_message["role"] == "assistant"
+        assert second_message["content"] == "Hello! How can I help you today?"
+        assert second_message["id"] == 2
     
     def test_send_message_note_message(self, test_session, sample_chats):
         """Test sending note message (no AI response)."""
@@ -178,21 +185,25 @@ class TestChatService:
         test_session.commit()
         test_session.refresh(chat)
         
-        message = Message(message="This is my note about the lesson", is_note=True)
+        message = ChatMessageCreate(message="This is my note about the lesson", is_note=True)
         result = send_message(test_session, chat.id, message)
-        
+
         # Notes should not trigger AI response
-        assert result['chat_bot_message'] == ''
+        assert result['status'] == 'ok'
+        assert result['new_messages'][0]['content'] == 'This is my note about the lesson'
         
         # Verify only user message was added to history
         updated_chat = test_session.get(Chat, chat.id)
         assert len(updated_chat.history["content"]) == 1
-        assert updated_chat.history["content"][0]["role"] == "user"
-        assert updated_chat.history["content"][0]["content"] == "This is my note about the lesson"
+        only_message = updated_chat.history["content"][0]
+        assert only_message["role"] == "user"
+        assert only_message["content"] == "This is my note about the lesson"
+        assert only_message["is_note"] is True
+        assert only_message["id"] == 1
     
     def test_send_message_chat_not_found(self, test_session):
         """Test sending message to non-existent chat."""
-        message = Message(message="Hello", is_note=False)
+        message = ChatMessageCreate(message="Hello", is_note=False)
         
         with pytest.raises(HTTPException) as exc_info:
             send_message(test_session, 999, message)
@@ -208,15 +219,17 @@ class TestChatService:
         test_session.commit()
         test_session.refresh(chat)
         
-        message = Message(message="First message", is_note=True)
+        message = ChatMessageCreate(message="First message", is_note=True)
         send_message(test_session, chat.id, message)
         
         # Verify history was initialized
         updated_chat = test_session.get(Chat, chat.id)
         assert 'content' in updated_chat.history
         assert len(updated_chat.history['content']) == 1
-        assert updated_chat.history['content'][0]["role"] == "user"
-        assert updated_chat.history['content'][0]["content"] == "First message"
+        first_entry = updated_chat.history['content'][0]
+        assert first_entry["role"] == "user"
+        assert first_entry["content"] == "First message"
+        assert first_entry["id"] == 1
     
     @patch('backend.services.chat_service.client')
     def test_send_message_ai_error_handling(self, mock_client, test_session, sample_chats):
@@ -230,7 +243,7 @@ class TestChatService:
         # Mock AI client to raise an error
         mock_client.chat.completions.create.side_effect = Exception("AI Service Error")
         
-        message = Message(message="Hello", is_note=False)
+        message = ChatMessageCreate(message="Hello", is_note=False)
         
         # Service should handle AI errors gracefully
         with pytest.raises(Exception) as exc_info:
@@ -258,7 +271,7 @@ class TestChatService:
         
         mock_client.chat.completions.create.return_value = [MockChunk("Great question!")]
         
-        message = Message(message="Can you help me?", is_note=False)
+        message = ChatMessageCreate(message="Can you help me?", is_note=False)
         send_message(test_session, chat.id, message)
         
         # Verify new messages were appended
@@ -271,14 +284,24 @@ class TestChatService:
         
         assert new_user_msg["role"] == "user"
         assert new_user_msg["content"] == "Can you help me?"
+        assert new_user_msg["id"] == 1
         assert new_ai_msg["role"] == "assistant"
         assert new_ai_msg["content"] == "Great question!"
+        assert new_ai_msg["id"] == 2
     
     def test_create_multiple_chats(self, test_session):
         """Test creating multiple chats in the same session."""
         chats_data = [
             ("Chat 1", {"content": []}),
-            ("Chat 2", {"content": [{"role": "user", "content": "Hello"}]}),
+            ("Chat 2", {"content": [{
+                "id": 0,
+                "role": "user",
+                "content": "Hello",
+                "created_at": "2024-01-02T00:00:00",
+                "updated_at": "2024-01-02T00:00:00",
+                "is_note": False,
+                "image_ids": [],
+            }]}),
             ("Chat 3", {"content": []})
         ]
         
@@ -305,13 +328,23 @@ class TestChatService:
         complex_history = {
             "content": [
                 {
+                    "id": 0,
                     "role": "user", 
                     "content": "Hello",
+                    "created_at": "2024-01-03T00:00:00",
+                    "updated_at": "2024-01-03T00:00:00",
+                    "is_note": False,
+                    "image_ids": [],
                     "metadata": {"timestamp": "2023-01-01T00:00:00"}
                 },
                 {
+                    "id": 1,
                     "role": "assistant",
                     "content": "Hi there!",
+                    "created_at": "2024-01-03T00:05:00",
+                    "updated_at": "2024-01-03T00:05:00",
+                    "is_note": False,
+                    "image_ids": [],
                     "metadata": {"model": "gpt-3.5-turbo"}
                 }
             ],

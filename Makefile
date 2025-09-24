@@ -8,7 +8,7 @@ run_frontend:
 	npx vite --host 0.0.0.0
 
 run_backend:
-	fastapi dev --host 0.0.0.0 src/backend/main.py
+	fastapi dev --host 0.0.0.0 src/backend/main.py 
 
 
 run_claude_dashboard:

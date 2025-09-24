@@ -26,6 +26,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./data:/app/data
+      - ./docs:/app/docs
+      - ./src/backend/:/app/src/backend/
     ports:
       - 8000:80
     

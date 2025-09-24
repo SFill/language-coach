@@ -19,6 +19,33 @@ export const fetchChats = async () => {
   }
 };
 
+// ===== Notes API =====
+export const updateMessage = async (chatId, noteId, text) => {
+  if (noteId === undefined) throw new Error('Missing note identifier');
+  try {
+    const response = await api.patch(`coach/chat/${chatId}/message/${noteId}`,
+     {
+        "message": text,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting chat:', error);
+    return null;
+  }
+};
+export const deleteMessage = async (chatId, noteId) => {
+  if (noteId === undefined) throw new Error('Missing note identifier');
+  try {
+    const response = await api.delete(`coach/chat/${chatId}/message/${noteId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting chat:', error);
+    return null;
+  }
+
+};
+
 // Get Chat details from GET /api/coach/chat/{id}
 export const fetchChatById = async (id) => {
   try {
@@ -59,7 +86,7 @@ export const createNewChat = async () => {
 export const sendMessage = async (chatId, message) => {
   try {
     const response = await api.post(`coach/chat/${chatId}/message`, message);
-    return response.data.chat_bot_message;
+    return response.data.new_messages;
   } catch (error) {
     console.error('Error sending message:', error);
     return 'Sorry, something went wrong.';

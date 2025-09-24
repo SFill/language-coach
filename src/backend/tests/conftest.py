@@ -52,19 +52,51 @@ def sample_chats():
     """Provide sample chat data for testing."""
     return [
         Chat(
-            id=1, 
-            name="English Practice", 
+            id=1,
+            name="English Practice",
             history={"content": [
-                {"role": "user", "content": "Hello"},
-                {"role": "assistant", "content": "Hi there! How can I help you practice English today?"}
+                {
+                    "id": 0,
+                    "role": "user",
+                    "content": "Hello",
+                    "created_at": "2024-01-01T00:00:00",
+                    "updated_at": "2024-01-01T00:00:00",
+                    "is_note": False,
+                    "image_ids": [],
+                },
+                {
+                    "id": 1,
+                    "role": "assistant",
+                    "content": "Hi there! How can I help you practice English today?",
+                    "created_at": "2024-01-01T00:05:00",
+                    "updated_at": "2024-01-01T00:05:00",
+                    "is_note": False,
+                    "image_ids": [],
+                },
             ]}
         ),
         Chat(
-            id=2, 
-            name="Spanish Learning", 
+            id=2,
+            name="Spanish Learning",
             history={"content": [
-                {"role": "user", "content": "Hola"},
-                {"role": "assistant", "content": "¡Hola! ¿En qué puedo ayudarte?"}
+                {
+                    "id": 0,
+                    "role": "user",
+                    "content": "Hola",
+                    "created_at": "2024-01-01T01:00:00",
+                    "updated_at": "2024-01-01T01:00:00",
+                    "is_note": False,
+                    "image_ids": [],
+                },
+                {
+                    "id": 1,
+                    "role": "assistant",
+                    "content": "¡Hola! ¿En qué puedo ayudarte?",
+                    "created_at": "2024-01-01T01:02:00",
+                    "updated_at": "2024-01-01T01:02:00",
+                    "is_note": False,
+                    "image_ids": [],
+                },
             ]}
         ),
         Chat(

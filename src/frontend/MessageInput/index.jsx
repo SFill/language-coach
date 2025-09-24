@@ -25,12 +25,22 @@ const PREFERRED_LANGUAGE_KEY = 'language-coach-preferred-language';
  * @param {Function} props.onSend - Callback function when user sends a message
  * @param {Function} props.onAttachImage - Callback function when user attaches images
  */
-const MessageInput = forwardRef(({ onSend, onAttachImage }, ref) => {
+const MessageInput = forwardRef(({ onSend, onAttachImage, initialValue,
+onInputChange,
+hideToolbar,
+autoFocus,
+
+ }, ref) => {
   // Create ref for the textarea
   const textareaRef = useRef(null);
 
   // Use local storage for text persistence and language preference
-  const [input, setInput] = useLocalStorage(LOCAL_STORAGE_KEY, '');
+  const [input, setInput] = (() =>  {
+    if (initialValue) {
+      return useState(initialValue)
+    }
+    return useLocalStorage(LOCAL_STORAGE_KEY, '');
+  })()
   const [savedLanguage, setSavedLanguage] = useLocalStorage(PREFERRED_LANGUAGE_KEY, 'en');
 
   // Set up caret tracking
@@ -120,7 +130,9 @@ const MessageInput = forwardRef(({ onSend, onAttachImage }, ref) => {
       console.log(`❌ [handleChange] No textarea ref`);
       return;
     }
-    
+    if (onInputChange) {
+      onInputChange(newValue);
+    }
     // Update the input state
     setInput(newValue);
 
@@ -184,6 +196,7 @@ const MessageInput = forwardRef(({ onSend, onAttachImage }, ref) => {
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
+        {hideToolbar ||        
         <div className="selection-toolbar-div">
           <SelectionToolbar
             displayText={displayText}
@@ -193,7 +206,7 @@ const MessageInput = forwardRef(({ onSend, onAttachImage }, ref) => {
             isTranslating={isTranslating}
             onAttachImage={onAttachImage}
           />
-        </div>
+        </div>}
         <TextEditor
           value={input}
           onChange={handleChange}

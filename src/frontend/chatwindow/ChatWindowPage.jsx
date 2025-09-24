@@ -13,7 +13,7 @@ function ChatWindowPage({ onChatCreated }) {
     const location = useLocation();
     const [messages, setMessages] = useState([]);
     const [dictionaryWord, setDictionaryWord] = useState('');
-    const [showImagesList, setShowImagesList] = useState(true);
+    const [maxMessageId, setMaxMessageId] = useState(null);
 
     // Use a ref to track if we're currently loading a chat to prevent duplicate API calls
     const isLoadingChat = useRef(false);
@@ -41,11 +41,9 @@ function ChatWindowPage({ onChatCreated }) {
             const chatData = await fetchChatById(id);
             if (chatData) {
                 setMessages(
-                    chatData.history?.content?.map((item) => ({
-                        sender: item.role === 'user' ? 'user' : 'bot',
-                        text: item.content,
-                    })) || []
+                    chatData.messages
                 );
+                setMaxMessageId(chatData.max_message_id);
             }
         } catch (error) {
             console.error('Error loading chat:', error);
@@ -76,7 +74,7 @@ function ChatWindowPage({ onChatCreated }) {
                 onChatCreated(newChat.id, { message, isNote });
                 return
             } catch (error) {
-                setMessages(prev => [...prev, { sender: 'bot', text: 'Error: Could not create or find an active chat.' }]);
+                setMessages(prev => [...prev, { sender: 'bot', content: 'Error: Could not create or find an active chat.' }]);
                 console.log(error);
                 return;
             }
@@ -84,18 +82,21 @@ function ChatWindowPage({ onChatCreated }) {
 
 
         // Add user message to UI immediately
-        const userMessage = { sender: 'user', text: message.trim() };
+        // TODO reimplement with normal id
+        const newMessageId = maxMessageId+1
+        setMaxMessageId(newMessageId)
+        const userMessage = { sender: 'user', content: message.trim(), id: newMessageId};
         setMessages(prev => [...prev, userMessage]);
 
         try {
 
-            const botReply = await sendMessage(chatId, { message, is_note: isNote });
+            const [userMessage, botReply] = await sendMessage(chatId, { message, is_note: isNote });
             if (!botReply) return;
 
-            setMessages(prev => [...prev, { sender: 'bot', text: botReply }]);
+            setMessages(prev => [...prev, botReply]);
         } catch (error) {
             console.error('Error sending message:', error);
-            setMessages(prev => [...prev, { sender: 'bot', text: 'Error sending message' }]);
+            setMessages(prev => [...prev, { sender: 'bot', content: 'Error sending message' }]);
         }
     };
 
@@ -131,14 +132,12 @@ function ChatWindowPage({ onChatCreated }) {
     return (
         <div className="page">
             <div className="left-area">
-                {showImagesList && (
-                    <ChatImagesList 
-                        ref={imagesListRef}
-                        chatId={chatId} 
-                        onImageUpload={handleImageUpload}
-                        onImageReference={handleImageReference}
-                    />
-                )}
+               <ChatImagesList 
+                    ref={imagesListRef}
+                    chatId={chatId} 
+                    onImageUpload={handleImageUpload}
+                    onImageReference={handleImageReference}
+                />
             </div>
             <div className="chat-window-page">
                 <ChatWindow 

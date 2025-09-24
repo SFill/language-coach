@@ -1,1 +1,1 @@
-docs/chat-bot-backend.md
+../../docs/chat-bot-backend.md

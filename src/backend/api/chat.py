@@ -4,11 +4,17 @@ from typing import Annotated, List
 from sqlmodel import Session
 
 from backend.database import get_session
-from backend.models.chat import Chat, ChatListResponse, Message, ChatImageResponse
+from backend.models.chat import (
+    Chat,
+    ChatListResponse,
+    ChatMessageCreate,
+    ChatMessageUpdate,
+    ChatImageResponse,
+)
 from backend.services.chat_service import (
     create_chat, get_chat_list, get_chat,
-    delete_chat, send_message, upload_chat_image,
-    get_chat_images, delete_chat_image, get_chat_image_file
+    delete_chat, send_message, update_chat_message, delete_chat_message,
+    upload_chat_image, get_chat_images, delete_chat_image, get_chat_image_file
 )
 
 # Create router
@@ -47,9 +53,26 @@ def delete_chat_endpoint(session: SessionDep, id: int):
 
 
 @router.post('/{id}/message')
-def send_message_endpoint(session: SessionDep, id: int, message: Message):
+def send_message_endpoint(session: SessionDep, id: int, message: ChatMessageCreate):
     """Send a message to a chat and get a response."""
     return send_message(session, id, message)
+
+
+@router.patch('/{id}/message/{message_id}')
+def update_message_endpoint(
+    session: SessionDep,
+    id: int,
+    message_id: int,
+    payload: ChatMessageUpdate,
+):
+    """Update an existing message within a chat."""
+    return update_chat_message(session, id, message_id, payload)
+
+
+@router.delete('/{id}/message/{message_id}')
+def delete_message_endpoint(session: SessionDep, id: int, message_id: int):
+    """Delete a specific message from a chat."""
+    return delete_chat_message(session, id, message_id)
 
 
 @router.post('/{id}/images', response_model=ChatImageResponse)

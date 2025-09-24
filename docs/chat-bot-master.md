@@ -20,6 +20,8 @@ I am your lead that gives you tasks, if you don't understand something go ahead 
   3) If you investigate the bug, prompt you guess first so I could agree or disagree
   4) don't use useEffect like it magic, use only of you are certain it doesnot introduce bugs
 - Don't use try except in tests unless test fails by design like validation failed test
+- don't mind pyenv because I saw many time you want to handle pyenv
+- don't run test unless I specified, update tests if at place
 
 # Project structure
 

@@ -47,3 +47,128 @@
     pointer-events: none;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
 }
+
+.note-container {
+    position: relative;
+    margin-bottom: 14px;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.note-container--deleting {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+.note-actions {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+}
+.note-container:hover .note-actions,
+.note-actions:focus-within {
+    opacity: 1;
+}
+.note-actions[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+}
+.note-action-button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.92);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 15px 15px;
+    box-shadow: 0 4px 10px rgba(31, 31, 31, 0.12);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+.note-action-button:hover,
+.note-action-button:focus-visible {
+    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 16px rgba(31, 31, 31, 0.18);
+}
+.note-action-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+    box-shadow: 0 2px 6px rgba(31, 31, 31, 0.08);
+}
+.note-content--hidden {
+    display: none;
+}
+.note-edit-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+.note-edit-area {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.note-edit-area:focus {
+    outline: none;
+    border-color: #6aa5ff;
+    box-shadow: 0 0 0 3px rgba(106, 165, 255, 0.2);
+}
+.note-edit-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+.note-edit-button {
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+.note-edit-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+.note-edit-button--secondary {
+    background-color: transparent;
+    color: #5f6368;
+    border: 1px solid #d0d7de;
+}
+.note-edit-button--secondary:hover:not(:disabled),
+.note-edit-button--secondary:focus-visible:not(:disabled) {
+    background-color: #f3f4f6;
+}
+.note-edit-button:not(.note-edit-button--secondary) {
+    background-color: #387ef7;
+    color: #fff;
+}
+.note-edit-button:not(.note-edit-button--secondary):hover:not(:disabled),
+.note-edit-button:not(.note-edit-button--secondary):focus-visible:not(:disabled) {
+    background-color: #2f6ed9;
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

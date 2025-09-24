@@ -1,6 +1,12 @@
 # Import all models for easy access
 from .dict_english import Dictionary, EnglishDialect
-from .chat import Chat, Message, ChatListResponse
+from .chat import (
+    Chat,
+    ChatListResponse,
+    ChatMessage,
+    ChatMessageCreate,
+    ChatMessageUpdate,
+)
 from .wordlist import (
     Wordlist, WordlistCreate, 
     WordlistUpdate, WordlistResponse,

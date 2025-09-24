@@ -10,7 +10,7 @@ from unittest.mock import patch
 from fastapi import HTTPException, UploadFile
 from starlette.datastructures import Headers
 
-from backend.models.chat import Chat, ChatImage
+from backend.models.chat import Chat, ChatImage, ChatMessageCreate
 from backend.services import chat_service
 from backend.services.chat_service import (
     upload_chat_image,
@@ -19,7 +19,6 @@ from backend.services.chat_service import (
     get_chat_image_file,
     send_message,
 )
-from backend.models.chat import Message
 
     
 
@@ -208,7 +207,7 @@ def test_send_message_with_image_refs_embeds_and_keeps_original(mock_client, tes
 
     mock_client.chat.completions.create.return_value = [MockChunk("OK")] 
 
-    msg = Message(message=f"Here is an image @image:{image.id}")
+    msg = ChatMessageCreate(message=f"Here is an image @image:{image.id}")
     result = send_message(test_session, chat.id, msg)
 
     # Verify OpenAI call contains image_url with data: URL

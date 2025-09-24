@@ -1,5 +1,6 @@
 import os
 import uuid
+from datetime import datetime
 from pathlib import Path
 from sqlmodel import Session, select, update, delete
 from fastapi import HTTPException, UploadFile
@@ -7,7 +8,15 @@ from fastapi.responses import FileResponse
 from openai import OpenAI
 from typing import List
 
-from backend.models.chat import Chat, ChatListResponse, Message, ChatImage, ChatImageResponse
+from backend.models.chat import (
+    Chat,
+    ChatListResponse,
+    ChatMessage,
+    ChatMessageCreate,
+    ChatMessageUpdate,
+    ChatImage,
+    ChatImageResponse,
+)
 from backend.constants import SYSTEM_PROMPT
 
 # Initialize OpenAI client
@@ -42,7 +51,16 @@ def delete_chat(session: Session, id: int) -> dict:
     session.commit()
     return {'status': 'ok'}
 
-def send_message(session: Session, id: int, message: Message) -> dict:
+def _ensure_history_content(history: dict) -> List[dict]:
+    """Return chat history content ensuring list structure."""
+    if not(content:= history.get('content')):
+        content = []
+        history['content'] = content    
+    if not isinstance(content, list):
+        raise HTTPException(status_code=400, detail="Chat history is corrupted")
+    return content
+
+def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
     """Send a message to a chat session and get response."""
     import re
     import base64
@@ -53,9 +71,8 @@ def send_message(session: Session, id: int, message: Message) -> dict:
         raise HTTPException(status_code=404, detail="Chat not found")
 
     # Ensure that history has a 'content' key which is a list
-    history = chat.history
-    if 'content' not in history or not isinstance(history['content'], list):
-        history['content'] = []
+    history = chat.history or {}
+    content = _ensure_history_content(history)
 
     # Parse image references in the message
     processed_message = message.message
@@ -102,11 +119,19 @@ def send_message(session: Session, id: int, message: Message) -> dict:
         user_content = processed_message
         history_content = message.message
 
+    timestamp = datetime.utcnow()
+    user_message = ChatMessage(
+        id=chat.get_new_message_id(),
+        role="user",
+        content=history_content,
+        created_at=timestamp,
+        updated_at=timestamp,
+        is_note=message.is_note,
+        image_ids=message.image_ids,
+    )
+
     # Append the user's message to history
-    history['content'].append({
-        "role": "user",
-        "content": history_content,
-    })
+    content.append(user_message.model_dump(mode="json"))
 
     # Update DB with user's message
     session.exec(
@@ -117,7 +142,7 @@ def send_message(session: Session, id: int, message: Message) -> dict:
     session.commit()
 
     assistant_response = ''
-    
+    assistant_message = None
     if not message.is_note:
         # Prepare messages for OpenAI API
         api_messages = [
@@ -128,8 +153,13 @@ def send_message(session: Session, id: int, message: Message) -> dict:
         ]
         
         # Add chat history (text only for previous messages)
-        for hist_msg in history['content'][:-1]:  # Exclude the current message
-            api_messages.append(hist_msg)
+        for hist_msg in content[:-1]:  # Exclude the current message
+            role = hist_msg.get("role")
+            msg_content = hist_msg.get("content")
+            api_messages.append({
+                "role": role,
+                "content": msg_content,
+            })
         
         # Add current message with potential images
         api_messages.append({
@@ -150,11 +180,18 @@ def send_message(session: Session, id: int, message: Message) -> dict:
             if delta:
                 assistant_response += delta
 
-        # Append the assistant's message
-        history['content'].append({
-            "role": "assistant",
-            "content": assistant_response,
-        })
+        if assistant_response:
+            assistant_timestamp = datetime.utcnow()
+            assistant_message = ChatMessage(
+                id=chat.get_new_message_id(),
+                role="assistant",
+                content=assistant_response,
+                created_at=assistant_timestamp,
+                updated_at=assistant_timestamp,
+            )
+
+            # Append the assistant's message
+            content.append(assistant_message.model_dump(mode="json"))
 
         # Update DB with assistant's response
         session.exec(
@@ -164,9 +201,86 @@ def send_message(session: Session, id: int, message: Message) -> dict:
         )
         session.commit()
 
+    new_messages = [user_message.model_dump(mode="json")]
+    if assistant_message is not None:
+        new_messages.append(assistant_message.model_dump(mode="json"))
     return {
-        'chat_bot_message': assistant_response
+        'status': 'ok',
+        'new_messages': new_messages
     }
+
+
+def get_first(iterable, value=None, key=None, default=None):
+    match value is None, callable(key):
+        case (True, True):
+            gen = (elem for elem in iterable if key(elem))
+        case (False, True):
+            gen = (elem for elem in iterable if key(elem) == value)
+        case (True, False):
+            gen = (elem for elem in iterable if elem)
+        case (False, False):
+            gen = (elem for elem in iterable if elem == value)
+
+    return next(gen, default)
+
+
+def update_chat_message(
+    session: Session,
+    chat_id: int,
+    message_id: int,
+    payload: ChatMessageUpdate,
+) -> dict:
+    """Update an existing chat message."""
+    chat = session.get(Chat, chat_id)
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat not found")
+
+    history = chat.history or {}
+    content = _ensure_history_content(history)
+
+    target_message = get_first(content, key=lambda msg: ChatMessage.model_validate(msg).id == message_id)
+    if target_message is None:
+        raise HTTPException(status_code=404, detail="Message not found")
+
+    updated = False
+    now = datetime.utcnow().isoformat()
+
+    if payload.message is not None:
+        target_message['content'] = payload.message
+        updated = True
+
+    if updated:
+        target_message['updated_at'] = now
+
+        history['content'] = content
+        session.exec(
+            update(Chat)
+            .where(Chat.id == chat_id)
+            .values(history=history)
+        )
+        session.commit()
+
+    return {'status': 'ok'}
+
+
+def delete_chat_message(session: Session, chat_id: int, message_id: int) -> dict:
+    """Remove a message from chat history."""
+    chat = session.get(Chat, chat_id)
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat not found")
+
+    history = chat.history or {}
+    content = _ensure_history_content(history)
+    content = list(filter(lambda msg: ChatMessage.model_validate(msg).id != message_id, content))
+    history['content'] = content
+    session.exec(
+        update(Chat)
+        .where(Chat.id == chat_id)
+        .values(history=history)
+    )
+    session.commit()
+
+    return {'status': 'ok'}
 
 # Image upload directory configuration
 UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "/tmp/chat_images"))
