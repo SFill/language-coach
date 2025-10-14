@@ -22,6 +22,7 @@ services:
       retries: 5
 
   language_coach:
+    restart: unless-stopped
     build:
       dockerfile: Dockerfile
     volumes:
@@ -29,7 +30,7 @@ services:
       - ./docs:/app/docs
       - ./src/backend/:/app/src/backend/
     ports:
-      - 8000:80
+      - 80:80
     
     env_file: .env.docker
 

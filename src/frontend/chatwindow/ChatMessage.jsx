@@ -98,7 +98,7 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onE
 
   return (
     <div className={`note-container${isDeleting ? ' note-container--deleting' : ''}`}>
-      {canManageNote && (
+      (
         <div className="note-actions" aria-hidden={isEditing}>
           <button
             type="button"
@@ -121,7 +121,7 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onE
             <span className="visually-hidden">Delete note</span>
           </button>
         </div>
-      )}
+      )
 
       <MessageBubble sender={msg.sender}>
         <div className={`note-content${isEditing ? ' note-content--hidden' : ''}`}>
