@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use a base URL that covers the /api/coach prefix.
-const API_BASE_URL = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:8000/api/' : 'http://localhost/api/';
+const API_BASE_URL = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:80/api/' : 'http://localhost/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -267,3 +267,67 @@ export const deleteChatImage = async (chatId, imageId) => {
 export const getChatImageUrl = (chatId, imageId) => {
   return `${API_BASE_URL}coach/chat/${chatId}/images/${imageId}/file`;
 };
+
+// ========== Q/A Tiles Mock API Methods ==========
+
+// Mock function to simulate API delay and potential errors
+const mockApiCall = async (responseData, delay = 1000) => {
+  await new Promise(resolve => setTimeout(resolve, delay + Math.random() * 2000));
+  
+  // 15% chance of error as specified in requirements
+  if (Math.random() < 0.15) {
+    throw new Error('Network error occurred');
+  }
+  
+  return responseData;
+};
+
+// Send a question about a note using POST /api/coach/chat/{id}/message
+export const sendQuestion = async (chatId, question) => {
+  try {
+    // For now, use mock data as specified in requirements
+    // Return both user question and bot response as the existing sendMessage does
+    const userMessage = {
+      id: Date.now(),
+      sender: "user",
+      content: question,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_note: false
+    };
+
+    const botResponse = {
+      id: Date.now() + 1,
+      sender: "bot",
+      content: `This is a mock answer to the question: "${question}". In a real implementation, this would be the AI assistant's response to your question about the note.`,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_note: false
+    };
+
+    // Simulate API delay and potential errors
+    await mockApiCall([userMessage, botResponse]);
+    
+    return [userMessage, botResponse];
+  } catch (error) {
+    console.error('Error sending question:', error);
+    throw error;
+  }
+};
+
+// Real API call (commented out for now, will be used when backend is ready)
+/*
+export const sendQuestion = async (chatId, question) => {
+  try {
+    const response = await api.post(`coach/chat/${chatId}/message`, {
+      message: question,
+      is_note: false,
+      image_ids: []
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error sending question:', error);
+    throw error;
+  }
+};
+*/

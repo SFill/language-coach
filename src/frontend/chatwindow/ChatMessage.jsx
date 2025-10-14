@@ -1,10 +1,11 @@
 import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import MessageBubble from './components/MessageBubble';
-import ExpandableContent from './components/ExpandableContent';
 import TranslatableContent from './components/TranslatableContent';
 import MessageInput from '../MessageInput';
+import ChatTile from './ChatTile';
 import './ChatMessage.css';
+import './ChatTile.css';
 import deleteIcon from '../assets/delete-message.png';
 import editIcon from '../assets/edit-mesage.png';
 import { deleteMessage, updateMessage } from '../api';
@@ -14,9 +15,18 @@ const FOLD_THRESHOLD = 300; // Character threshold to consider a message long
 /**
  * Complete chat message component
  */
-const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onEdit }, ref) => {
+const ChatMessage = React.forwardRef(({
+  msg,
+  onTextSelect,
+  chatId,
+  onDelete,
+  onEdit,
+  tiles = [],
+  onSendQuestion,
+  onRetryTile
+}, ref) => {
   const isBot = msg.sender === 'bot';
-  const isLong = msg.content.length > FOLD_THRESHOLD;
+  const isNote = msg.is_note || false;
   const messageId = msg.id;
   const contentRef = useRef(null);
   const [displayText, setDisplayText] = useState(msg.content);
@@ -25,6 +35,8 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onE
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
+  const [questionText, setQuestionText] = useState('');
+  const [isAskingQuestion, setIsAskingQuestion] = useState(false);
   const canManageNote = true;
 
   useEffect(() => {
@@ -94,54 +106,62 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onE
     }
   };
 
+  const handleAskQuestion = async () => {
+    if (!questionText.trim() || isAskingQuestion || !onSendQuestion) return;
+
+    try {
+      setIsAskingQuestion(true);
+      await onSendQuestion(questionText.trim(), messageId);
+      setQuestionText('');
+    } catch (error) {
+      console.error('Failed to ask question:', error);
+    } finally {
+      setIsAskingQuestion(false);
+    }
+  };
+
+  const handleQuestionKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleAskQuestion();
+    }
+  };
+
   if (isRemoved) return null;
 
   return (
     <div className={`note-container${isDeleting ? ' note-container--deleting' : ''}`}>
-      (
-        <div className="note-actions" aria-hidden={isEditing}>
-          <button
-            type="button"
-            className="note-action-button"
-            onClick={handleEditToggle}
-            disabled={isEditing || isWorking}
-            title="Edit note"
-            style={{ backgroundImage: `url(${editIcon})` }}
-          >
-            <span className="visually-hidden">Edit note</span>
-          </button>
-          <button
-            type="button"
-            className="note-action-button"
-            onClick={handleDelete}
-            disabled={isWorking}
-            title="Delete note"
-            style={{ backgroundImage: `url(${deleteIcon})` }}
-          >
-            <span className="visually-hidden">Delete note</span>
-          </button>
-        </div>
-      )
+      <div className={`note-actions${isNote ? ' note-actions--sticky' : ''}`} aria-hidden={isEditing}>
+        <button
+          type="button"
+          className="note-action-button"
+          onClick={handleEditToggle}
+          disabled={isEditing || isWorking}
+          title="Edit note"
+          style={{ backgroundImage: `url(${editIcon})` }}
+        >
+          <span className="visually-hidden">Edit note</span>
+        </button>
+        <button
+          type="button"
+          className="note-action-button"
+          onClick={handleDelete}
+          disabled={isWorking}
+          title="Delete note"
+          style={{ backgroundImage: `url(${deleteIcon})` }}
+        >
+          <span className="visually-hidden">Delete note</span>
+        </button>
+      </div>
 
       <MessageBubble sender={msg.sender}>
         <div className={`note-content${isEditing ? ' note-content--hidden' : ''}`}>
-          {isBot ? (
-            <ExpandableContent isLong={isLong}>
-              <TranslatableContent 
-                ref={contentRef}
-                content={displayText}
-                onTextSelect={onTextSelect}
-                chatId={chatId}
-              />
-            </ExpandableContent>
-          ) : (
-            <TranslatableContent 
-              ref={contentRef}
-              content={displayText}
-              onTextSelect={onTextSelect}
-              chatId={chatId}
-            />
-          )}
+          <TranslatableContent
+            ref={contentRef}
+            content={displayText}
+            onTextSelect={onTextSelect}
+            chatId={chatId}
+          />
         </div>
 
         {isEditing && (
@@ -175,6 +195,45 @@ const ChatMessage = React.forwardRef(({ msg, onTextSelect, chatId, onDelete, onE
             </div>
           </div>
         )}
+
+        {/* Question input section for notes */}
+        {isNote && !isEditing && (
+          <div className="question-input-section">
+            <div className="question-input-row">
+              <textarea
+                className="question-input"
+                value={questionText}
+                onChange={(e) => setQuestionText(e.target.value)}
+                onKeyPress={handleQuestionKeyPress}
+                placeholder="Ask a question about this note..."
+                disabled={isAskingQuestion}
+                rows={1}
+              />
+              <button
+                className="question-ask-button"
+                onClick={handleAskQuestion}
+                disabled={!questionText.trim() || isAskingQuestion}
+              >
+                {isAskingQuestion ? 'Asking...' : 'Ask'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Render tiles for this note */}
+        {isNote && tiles.length > 0 && (
+          <div className="tiles-container">
+            <h4>Questions & Answers</h4>
+            {tiles.map((tile) => (
+              <ChatTile
+                key={tile.id}
+                tile={tile}
+                onRetry={onRetryTile}
+                chatId={chatId}
+              />
+            ))}
+          </div>
+        )}
       </MessageBubble>
     </div>
   );
@@ -185,11 +244,15 @@ ChatMessage.propTypes = {
     sender: PropTypes.oneOf(['user', 'bot']).isRequired,
     content: PropTypes.string.isRequired,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    is_note: PropTypes.bool,
   }).isRequired,
   onTextSelect: PropTypes.func,
   chatId: PropTypes.string,
   onDelete: PropTypes.func,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  tiles: PropTypes.array,
+  onSendQuestion: PropTypes.func,
+  onRetryTile: PropTypes.func
 };
 
 ChatMessage.displayName = 'ChatMessage';

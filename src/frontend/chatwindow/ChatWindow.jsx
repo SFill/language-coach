@@ -3,9 +3,9 @@ import ChatMessage from './ChatMessage';
 import ChatToolbar from './ChatToolbar';
 import './ChatWindow.css';
 import { useWordlist } from '../wordlist/WordlistContext';
-import { uploadChatImage } from '../api';
+import { uploadChatImage, sendQuestion } from '../api';
 
-const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, onImageUploaded }) => {
+const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, onImageUploaded, onSendQuestion }) => {
   const chatContainerRef = useRef(null);
   const toolbarRef = useRef(null);
 
@@ -18,6 +18,8 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
   const [selectedText, setSelectedText] = useState('');
   const [activeIsTranslated, setActiveIsTranslated] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
+
+  // No separate tiles state - tiles are derived from messages
 
   // Use the wordlist context
   // Load wordlists is done internally
@@ -252,6 +254,60 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     return createNewListWithWord(text, null, sentenceContext);
   };
 
+  // Group messages into tiles by note they relate to
+  const groupTilesByNote = () => {
+    const tileGroups = {};
+    let currentNoteId = null;
+    
+    // Iterate through messages to find notes and questions
+    messages.forEach((msg) => {
+      if (msg.is_note) {
+        // This is a note - track its ID
+        currentNoteId = msg.id;
+        if (!tileGroups[currentNoteId]) {
+          tileGroups[currentNoteId] = [];
+        }
+      } else {
+        // This is a question following a note
+        // Create tile from question and answer pair
+        const tile = {
+            id: msg.id,
+            noteId: currentNoteId,
+            title: "question",
+            content: msg.content,
+            state: 'ready',
+            expanded: false,
+            createdAt: msg.created_at,
+            error: null
+          };
+        tileGroups[currentNoteId].push(tile);
+      }
+    });
+    
+    return tileGroups;
+  };
+
+  // Send question about a note
+  const handleSendQuestion = async (questionText, noteId) => {
+    if (!questionText.trim() || !chatId || !onSendQuestion) return;
+
+    try {
+      // Call the parent component's send question handler
+      await onSendQuestion(questionText, noteId);
+    } catch (error) {
+      console.error('Failed to send question:', error);
+      // Handle error - could show a toast notification
+    }
+  };
+
+  // Retry failed tile - for now just log, as real implementation would need message retry
+  const handleRetryTile = async (tileId) => {
+    console.log('Retry tile:', tileId);
+    // In real implementation, this would retry the question by resending the message
+  };
+
+  const tileGroups = groupTilesByNote();
+
   return (
     <div
       className="chat-window-container"
@@ -262,12 +318,21 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
           if (!messageRefs.current[index]) {
             messageRefs.current[index] = React.createRef();
           }
+          if (!msg.is_note) {
+            return
+          }
+          // Get tiles for this message if it's a note, and apply UI states
+          const messageTiles = tileGroups[msg.id] || [];
+          
           return (
             <ChatMessage
               key={index}
               ref={messageRefs.current[index]}
               msg={msg}
               chatId={chatId}
+              tiles={messageTiles}
+              onSendQuestion={handleSendQuestion}
+              onRetryTile={handleRetryTile}
               onTextSelect={(rect, text, isTranslated) => {
                 // Use a timeout to ensure the child event has completed.
                 setTimeout(() => handleTextSelect(messageRefs.current[index], rect, text, isTranslated), 0);

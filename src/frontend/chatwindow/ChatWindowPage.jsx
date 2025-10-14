@@ -4,7 +4,7 @@ import ChatWindow from './ChatWindow';
 import MessageInput from '../MessageInput/index';
 import SideDictionaryPanel from '../SideDictionaryPanel';
 import ChatImagesList from './ChatImagesList';
-import { fetchChatById, sendMessage, createNewChat, uploadChatImage } from '../api';
+import { fetchChatById, sendMessage, createNewChat, uploadChatImage, sendQuestion } from '../api';
 import './ChatWindowPage.css';
 
 function ChatWindowPage({ onChatCreated }) {
@@ -100,6 +100,48 @@ function ChatWindowPage({ onChatCreated }) {
         }
     };
 
+    const handleSendQuestion = async (questionText, noteId) => {
+        if (!questionText.trim() || !chatId) return;
+
+        try {
+            // Add user question to UI immediately
+            const newMessageId = maxMessageId + 1;
+            setMaxMessageId(newMessageId + 1); // Reserve ID for bot response too
+            const userQuestion = {
+                sender: 'user',
+                content: questionText.trim(),
+                id: newMessageId,
+                is_note: false,
+                created_at: new Date().toISOString()
+            };
+            setMessages(prev => [...prev, userQuestion]);
+
+            // Send question and get response
+            const [userMessage, botReply] = await sendQuestion(chatId, questionText);
+            
+            // Update the user message with server response and add bot reply
+            if (botReply) {
+                setMessages(prev => {
+                    // Replace the optimistic user message and add bot reply
+                    const updated = prev.map(msg =>
+                        msg.id === newMessageId ? { ...userMessage, id: newMessageId } : msg
+                    );
+                    return [...updated, { ...botReply, id: newMessageId + 1 }];
+                });
+            }
+        } catch (error) {
+            console.error('Error sending question:', error);
+            // Add error message
+            setMessages(prev => [...prev, {
+                sender: 'bot',
+                content: 'Error sending question. Please try again.',
+                id: maxMessageId + 2,
+                created_at: new Date().toISOString()
+            }]);
+            setMaxMessageId(maxMessageId + 2);
+        }
+    };
+
     const handleImageUpload = (uploadedImage) => {
         // Optional: Show a notification or refresh something
         console.log('Image uploaded:', uploadedImage);
@@ -140,12 +182,13 @@ function ChatWindowPage({ onChatCreated }) {
                 />
             </div>
             <div className="chat-window-page">
-                <ChatWindow 
-                    messages={messages} 
-                    onCheckInDictionary={setDictionaryWord} 
+                <ChatWindow
+                    messages={messages}
+                    onCheckInDictionary={setDictionaryWord}
                     chatId={chatId}
                     messageInputRef={messageInputRef}
                     onImageUploaded={handleImageUpload}
+                    onSendQuestion={handleSendQuestion}
                 />
                 <MessageInput ref={messageInputRef} onSend={handleSend} onAttachImage={handleAttachImage} />
             </div>
