@@ -93,15 +93,19 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
         // Don't hide the toolbar if clicking within it
         return;
       }
-      if (isToolbarVisible) {
-        // when click outside the toolbar, we want to hide it
+
+      // Check if the selection is within any of our note block components
+      const selection = window.getSelection();
+      const hasValidSelection = selection && !selection.isCollapsed;
+
+      // Only hide toolbar if there's no new selection
+      if (isToolbarVisible && !hasValidSelection) {
+        // when click outside the toolbar with no new selection, hide it
         setIsToolbarVisible(false);
         return;
       }
 
-      // Check if the selection is within any of our note block components
-      const selection = window.getSelection();
-      if (!selection || selection.isCollapsed) {
+      if (!hasValidSelection) {
         // No valid selection, ignore
         return;
       }
