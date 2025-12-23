@@ -105,7 +105,7 @@ language-coach/
 │   │   └── react.svg
 │   ├── notewindow/             # Note interface components
 │   │   ├── components/         # Reusable note components
-│   │   ├── NoteMessage.jsx     # Note message component
+│   │   ├── NoteBlock.jsx    # Note message component
 │   │   ├── NoteToolbar.jsx     # Selection toolbar component
 │   │   ├── NoteWindow.jsx      # Main note window component
 │   │   └── NoteWindowPage.jsx  # Note page container
