@@ -256,7 +256,7 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
 
   // Group messages into tiles by note they relate to
   const groupTilesByNote = () => {
-    const tileGroups = {};
+    let tileGroups = {};
     let currentNoteId = null;
     
     // Iterate through messages to find notes and questions
@@ -280,7 +280,8 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
             createdAt: msg.created_at,
             error: null
           };
-        tileGroups[currentNoteId].push(tile);
+
+        if(tileGroups[currentNoteId]) tileGroups[currentNoteId].push(tile);
       }
     });
     

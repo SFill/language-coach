@@ -222,9 +222,11 @@ const ChatMessage = React.forwardRef(({
 
         {/* Render tiles for this note */}
         {isNote && tiles.length > 0 && (
-          <div className="tiles-container">
-            <h4>Questions & Answers</h4>
-            {tiles.map((tile) => (
+          <section
+            className="chat-tiles-section"
+            aria-label="Questions"
+          >
+            {tiles.map((tile, idx) => (
               <ChatTile
                 key={tile.id}
                 tile={tile}
@@ -232,8 +234,12 @@ const ChatMessage = React.forwardRef(({
                 chatId={chatId}
               />
             ))}
-          </div>
+            {tiles.length === 0 && (
+              <p className="chat-tiles__no-results">No results.</p>
+            )}
+          </section>
         )}
+
       </MessageBubble>
     </div>
   );

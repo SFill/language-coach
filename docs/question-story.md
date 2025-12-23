@@ -8,11 +8,12 @@ Enhance or current chat note taking workflow by building a UI where a user write
 
 
 * Remove <ExpandableContent isLong={isLong}> component as we gonna replace it with new tile system
-* One page(@src/frontend/chatwindow/ChatWindowPage.jsx):
-
-  * Message component @src/frontend/chatwindow/ChatMessage.jsx
+* Page component(@src/frontend/chatwindow/ChatWindowPage.jsx):
+  * Message component @src/frontend/chatwindow/ChatMessage.jsx that are rendered in @src/frontend/chatwindow/ChatWindow.jsx
   * An input row (simple text field + Ask button) to submit a question about the current note, in the block of buttons of @src/frontend/chatwindow/ChatMessage.jsx
   * A list of **Question Tiles** rendered below the note(create a new component @src/frontend/chatwindow/ChatTile.jsx)
+*  All logic of tile grouping and getting tiles from ChatWindow.messages must be placed in ChatWindow.jsx, 
+  * Ask Question logic must be placed in  @src/frontend/chatwindow/ChatWindow.jsx, but propogate a method like sendQuestion to @src/frontend/chatwindow/ChatTile.jsx, so it was similar to edit and delete message methods in use
 * Behavior for creating tiles, loading, success, error, expand/collapse
 * Make those ChatMessage buttons as **sticky action buttons** (when scrolling, the buttons stick in view and relate to the current note)
 * Mock API integration (specify DTOs for data to display). Calls will be mocked locally for now. use @src/frontend/api.js to store mocks
@@ -32,7 +33,7 @@ Enhance or current chat note taking workflow by building a UI where a user write
 2. When I click **Ask**, I immediately see a **loading tile** appear below the note.
 3. When the response resolves, the tile shows a **title** (derived from the question) and becomes **clickable** to expand/collapse full content.
 4. I can collapse the tile by clicking a **Hide** button near the title or clicking the title area.
-5. If the API fails, the tile shows an **error state** with a retry action.
+5. If the API fails, the tile shows an **error state**
 6. When I scroll, the **action buttons row** remains **sticky** and always associated with the note.
 
 
@@ -42,7 +43,7 @@ Enhance or current chat note taking workflow by building a UI where a user write
 
   * `loading`: shows skeleton(loading text) / spinner
   * `ready`: shows **title** row; clicking title toggles **expanded**
-  * `error`: shows error icon/message and **Retry** button
+  * `error`: shows error icon/message
 * **Expanded Content** (ready state)
 
   * Title row: "Q: <title>" + actions (Hide)
@@ -130,7 +131,7 @@ export interface TileDisplay {
 
 
 
-## 16) QA Acceptance Criteria
+## 16) QA Acceptance Criteria(review yourself)
 
 * [ ] When I type a question and press **Ask** or hit **Enter**, a **loading tile** appears immediately below the note.
 * [ ] After mock delay, tile becomes **ready** with a **title**. Clicking the title toggles expand/collapse.

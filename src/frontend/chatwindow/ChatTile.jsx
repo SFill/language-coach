@@ -14,88 +14,63 @@ const ChatTile = ({ tile, onRetry, chatId }) => {
 
   const handleHeaderClick = () => {
     if (state === 'ready') {
-      setExpanded(true)
-    }
-  };
-
-  const handleHideClick = (e) => {
-    e.stopPropagation();
-    setExpanded(false)
-  };
-
-  const handleRetryClick = (e) => {
-    e.stopPropagation();
-    if (onRetry) {
-      onRetry(id);
+      setExpanded(!expanded)
     }
   };
 
   const renderLoadingState = () => (
-    <div className="chat-tile__loading">
-      <div className="chat-tile__spinner"></div>
-      <span>Loading answer...</span>
-    </div>
+  <>
+    <div className="chat-tile__spinner"></div>
+    <span>Loading answer...</span>
+  </>
+  
   );
 
   const renderErrorState = () => (
-    <div className="chat-tile__error">
-      <div className="chat-tile__error-icon">⚠️</div>
-      <div className="chat-tile__error-content">
-        <div className="chat-tile__error-message">
-          {error?.message || 'Failed to get answer'}
-        </div>
-        {error?.retriable && (
-          <button 
-            className="chat-tile__retry-button"
-            onClick={handleRetryClick}
-          >
-            Try Again
-          </button>
-        )}
-      </div>
-    </div>
-  );
+      <span>Error</span>
+  )
+
+  const toneBg = {
+    blue: "chat-tile--tone-blue",
+    green: "chat-tile--tone-green",
+    rose: "chat-tile--tone-rose",
+    amber: "chat-tile--tone-amber",
+    slate: "chat-tile--tone-slate",
+  };
+
+function classNames(...xs) {
+  return xs.filter(Boolean).join(" ");
+}
+
 
   const renderReadyState = () => (
     <>
-      <div 
-        className="chat-tile__header"
-        onClick={handleHeaderClick}
+      <header className="chat-tile__header">
+        <time className="chat-tile__time">{createdAt}</time>
+      </header>
+
+      <h3
+      onClick={handleHeaderClick}
+      className="chat-tile__title">{title}</h3>
+
+
+      <div
+        id={'tile ' + id}
+        aria-hidden={!expanded}
+        className={classNames(
+          "chat-tile__content",
+          expanded ? "chat-tile__content--expanded" : "chat-tile__content--collapsed"
+        )}
       >
-        <div className="chat-tile__title">
-          Q: {title}
-        </div>
-        <div className="chat-tile__actions">
-          <button 
-            className="chat-tile__hide-button"
-            onClick={handleHideClick}
-            title="Hide"
-          >
-            Hide
-          </button>
-          <div className="chat-tile__expand-icon">
-            {expanded ? '▲' : '▼'}
-          </div>
+        <div className="chat-tile__content-inner">
+          <h4 className="chat-tile__answer-label">Answer</h4>
+          <p className="chat-tile__answer-text">
+            <MarkdownContent content={content} chatId={chatId} />
+
+          </p>
         </div>
       </div>
       
-      <div className="chat-tile__content">
-        <div className="chat-tile__question">
-          <div className="chat-tile__question-label">Question</div>
-          <div className="chat-tile__question-text">{title}</div>
-        </div>
-        
-        <div className="chat-tile__answer">
-          <div className="chat-tile__answer-label">Answer</div>
-          <div className="chat-tile__answer-content">
-            <MarkdownContent content={content} chatId={chatId} />
-          </div>
-        </div>
-        
-        <div className="chat-tile__timestamp">
-          {new Date(createdAt).toLocaleString()}
-        </div>
-      </div>
     </>
   );
 
@@ -112,16 +87,22 @@ const ChatTile = ({ tile, onRetry, chatId }) => {
     }
   };
 
-  const tileClasses = [
-    'chat-tile',
-    `chat-tile--${state}`,
-    expanded ? 'chat-tile--expanded' : ''
-  ].filter(Boolean).join(' ');
 
   return (
-    <div className={tileClasses}>
+    <article 
+      // ref={refFn}
+      role="button"
+      tabIndex={0}
+      aria-expanded={expanded}
+      aria-controls={'tile ' + id}
+      className={classNames(
+        "chat-tile__article",
+        expanded ? "chat-tile__article--expanded" : "chat-tile__article--collapsed",
+        toneBg['blue']
+      )}
+    >
       {renderContent()}
-    </div>
+    </article>
   );
 };
 
@@ -144,3 +125,4 @@ ChatTile.propTypes = {
 };
 
 export default ChatTile;
+
