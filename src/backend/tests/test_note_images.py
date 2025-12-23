@@ -10,31 +10,31 @@ from unittest.mock import patch
 from fastapi import HTTPException, UploadFile
 from starlette.datastructures import Headers
 
-from backend.models.chat import Chat, ChatImage, ChatMessageCreate
-from backend.services import chat_service
-from backend.services.chat_service import (
-    upload_chat_image,
-    get_chat_images,
-    delete_chat_image,
-    get_chat_image_file,
-    send_message,
+from backend.models.note import Note, NoteImage, NoteBlockCreate
+from backend.services import notes_service
+from backend.services.notes_service import (
+    upload_note_image,
+    get_note_images,
+    delete_note_image,
+    get_note_image_file,
+    send_note_block,
 )
 
     
 
 
 @pytest.mark.asyncio
-async def test_upload_chat_image_success(test_session, temp_directory, monkeypatch):
+async def test_upload_note_image_success(test_session, temp_directory, monkeypatch):
     # Use a temp upload directory for isolation
     temp_upload_dir = temp_directory / "uploads"
     temp_upload_dir.mkdir(parents=True, exist_ok=True)
-    monkeypatch.setattr(chat_service, "UPLOAD_DIR", temp_upload_dir, raising=False)
+    monkeypatch.setattr(notes_service, "UPLOAD_DIR", temp_upload_dir, raising=False)
 
-    # Create a chat
-    chat = Chat(name="Upload Test", history={"content": []})
-    test_session.add(chat)
+    # Create a note
+    note = Note(name="Upload Test", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
     # Minimal PNG file bytes
     png_bytes = (
@@ -52,7 +52,7 @@ async def test_upload_chat_image_success(test_session, temp_directory, monkeypat
         headers=Headers({"content-type": "image/png"}),
     )
 
-    resp = await upload_chat_image(test_session, chat.id, upload)
+    resp = await upload_note_image(test_session, note.id, upload)
 
     # Response fields
     assert resp.id is not None
@@ -61,23 +61,23 @@ async def test_upload_chat_image_success(test_session, temp_directory, monkeypat
     assert resp.file_size == len(png_bytes)
 
     # DB row exists
-    row = test_session.get(ChatImage, resp.id)
+    row = test_session.get(NoteImage, resp.id)
     assert row is not None
     assert os.path.exists(row.file_path)
 
     # Cleanup
-    delete_chat_image(test_session, chat.id, resp.id)
+    delete_note_image(test_session, note.id, resp.id)
     assert not os.path.exists(row.file_path)
 
 
 @pytest.mark.asyncio
-async def test_upload_chat_image_invalid_type(test_session, temp_directory, monkeypatch):
-    monkeypatch.setattr(chat_service, "UPLOAD_DIR", temp_directory, raising=False)
+async def test_upload_note_image_invalid_type(test_session, temp_directory, monkeypatch):
+    monkeypatch.setattr(notes_service, "UPLOAD_DIR", temp_directory, raising=False)
 
-    chat = Chat(name="Bad Type", history={"content": []})
-    test_session.add(chat)
+    note = Note(name="Bad Type", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
     upload = UploadFile(
         filename="note.txt",
@@ -86,21 +86,21 @@ async def test_upload_chat_image_invalid_type(test_session, temp_directory, monk
     )
 
     with pytest.raises(HTTPException) as exc:
-        await upload_chat_image(test_session, chat.id, upload)
+        await upload_note_image(test_session, note.id, upload)
     assert exc.value.status_code == 400
     assert "Invalid file type" in exc.value.detail
 
 
 @pytest.mark.asyncio
-async def test_upload_chat_image_too_large(test_session, temp_directory, monkeypatch):
-    monkeypatch.setattr(chat_service, "UPLOAD_DIR", temp_directory, raising=False)
+async def test_upload_note_image_too_large(test_session, temp_directory, monkeypatch):
+    monkeypatch.setattr(notes_service, "UPLOAD_DIR", temp_directory, raising=False)
     # Make MAX_FILE_SIZE small to avoid big allocations
-    monkeypatch.setattr(chat_service, "MAX_FILE_SIZE", 10, raising=False)
+    monkeypatch.setattr(notes_service, "MAX_FILE_SIZE", 10, raising=False)
 
-    chat = Chat(name="Too Large", history={"content": []})
-    test_session.add(chat)
+    note = Note(name="Too Large", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
     upload = UploadFile(
         filename="big.png",
@@ -109,19 +109,19 @@ async def test_upload_chat_image_too_large(test_session, temp_directory, monkeyp
     )
 
     with pytest.raises(HTTPException) as exc:
-        await upload_chat_image(test_session, chat.id, upload)
+        await upload_note_image(test_session, note.id, upload)
     assert exc.value.status_code == 400
     assert "File too large" in exc.value.detail
 
 
-def test_get_chat_images_ordering(test_session):
-    chat = Chat(name="List Images", history={"content": []})
-    test_session.add(chat)
+def test_get_note_images_ordering(test_session):
+    note = Note(name="List Images", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
-    older = ChatImage(
-        chat_id=chat.id,
+    older = NoteImage(
+        note_id=note.id,
         filename="a.png",
         original_filename="a.png",
         file_path="/tmp/a.png",
@@ -129,8 +129,8 @@ def test_get_chat_images_ordering(test_session):
         file_size=1,
         uploaded_at=datetime.now(timezone.utc) - timedelta(hours=1),
     )
-    newer = ChatImage(
-        chat_id=chat.id,
+    newer = NoteImage(
+        note_id=note.id,
         filename="b.png",
         original_filename="b.png",
         file_path="/tmp/b.png",
@@ -142,21 +142,21 @@ def test_get_chat_images_ordering(test_session):
     test_session.add(newer)
     test_session.commit()
 
-    items = get_chat_images(test_session, chat.id)
+    items = get_note_images(test_session, note.id)
     assert [i.original_filename for i in items] == ["b.png", "a.png"]
 
 
-def test_get_chat_image_file_returns_fileresponse(test_session, temp_directory):
-    chat = Chat(name="File Serve", history={"content": []})
-    test_session.add(chat)
+def test_get_note_image_file_returns_fileresponse(test_session, temp_directory):
+    note = Note(name="File Serve", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
     img_path = temp_directory / "img.png"
     img_path.write_bytes(b"PNGDATA")
 
-    image = ChatImage(
-        chat_id=chat.id,
+    image = NoteImage(
+        note_id=note.id,
         filename="img.png",
         original_filename="img.png",
         file_path=str(img_path),
@@ -167,27 +167,27 @@ def test_get_chat_image_file_returns_fileresponse(test_session, temp_directory):
     test_session.commit()
     test_session.refresh(image)
 
-    resp = get_chat_image_file(test_session, chat.id, image.id)
+    resp = get_note_image_file(test_session, note.id, image.id)
     # Verify basic attributes
     assert resp.path == str(img_path)
     assert resp.media_type == "image/png"
 
 
-@patch("backend.services.chat_service.client")
-def test_send_message_with_image_refs_embeds_and_keeps_original(mock_client, test_session, temp_directory):
-    # Prepare chat and image on disk
-    chat = Chat(name="Image Chat", history={"content": []})
-    test_session.add(chat)
+@patch("backend.services.notes_service.client")
+def test_send_note_block_with_image_refs_embeds_and_keeps_original(mock_client, test_session, temp_directory):
+    # Prepare note and image on disk
+    note = Note(name="Image Note", history={"content": []})
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
+    test_session.refresh(note)
 
     # Create a real small file for base64
     img_bytes = b"abc123"
     img_path = temp_directory / "upl.png"
     img_path.write_bytes(img_bytes)
 
-    image = ChatImage(
-        chat_id=chat.id,
+    image = NoteImage(
+        note_id=note.id,
         filename="upl.png",
         original_filename="upl.png",
         file_path=str(img_path),
@@ -207,8 +207,8 @@ def test_send_message_with_image_refs_embeds_and_keeps_original(mock_client, tes
 
     mock_client.chat.completions.create.return_value = [MockChunk("OK")] 
 
-    msg = ChatMessageCreate(message=f"Here is an image @image:{image.id}")
-    result = send_message(test_session, chat.id, msg)
+    msg = NoteBlockCreate(block=f"Here is an image @image:{image.id}")
+    result = send_note_block(test_session, note.id, msg)
 
     # Verify OpenAI call contains image_url with data: URL
     mock_client.chat.completions.create.assert_called_once()
@@ -229,5 +229,5 @@ def test_send_message_with_image_refs_embeds_and_keeps_original(mock_client, tes
     assert url.endswith(base64.b64encode(img_bytes).decode())
 
     # History keeps the original message with @image:id
-    updated = test_session.get(Chat, chat.id)
-    assert updated.history["content"][0]["content"] == msg.message
+    updated = test_session.get(Note, note.id)
+    assert updated.history["content"][0]["content"] == msg.block

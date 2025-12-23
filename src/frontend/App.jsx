@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router'; // Keep using 'react-router' if that's what's available
-import ChatListPage from './ChatListPage';
-import ChatWindowPage from './chatwindow/ChatWindowPage';
+import NoteListPage from './NoteListPage';
+import NoteWindowPage from './notewindow/NoteWindowPage';
 import WordListPage from './wordlist/WordListPage';
-import { fetchChats, deleteChat } from './api';
+import { fetchNotes, deleteNote } from './api';
 import WordlistProvider from './wordlist/WordlistContext';
 import LanguagePicker from './LanguagePicker';
 import './App.css';
@@ -22,81 +22,81 @@ function App() {
 
 // Content component that has access to router hooks
 function AppContent() {
-  const [chatList, setChatList] = useState([]);
-  const [currentChatName, setCurrentChatName] = useState(null);
-  const [currentChatId, setCurrentChatId] = useState(null);
+  const [noteList, setNoteList] = useState([]);
+  const [currentNoteName, setCurrentNoteName] = useState(null);
+  const [currentNoteId, setCurrentNoteId] = useState(null);
   const navigate = useNavigate(); // React Router's navigate function
   const location = useLocation(); // Get current location
 
   useEffect(() => {
     // load once for navbar mount, refresh when changes
-    loadChats();
-    console.log("loadChats() init")
+    loadNotes();
+    console.log("loadNotes() init")
   }, [])
 
-  // Extract chatId from location pathname instead of using useParams
+  // Extract noteId from location pathname instead of using useParams
   useEffect(() => {
-    console.log("currentChatId " + currentChatId)
-    if (location.pathname.match(/\/chat\/(\d+)/) || location.pathname === '/') {
-      // Extract chatId from location pathname using regex
-      const match = location.pathname.match(/\/chat\/(\d+)/);
-      const chatIdFromPath = match ? parseInt(match[1]) : null;
+    console.log("currentNoteId " + currentNoteId)
+    if (location.pathname.match(/\/note\/(\d+)/) || location.pathname === '/') {
+      // Extract noteId from location pathname using regex
+      const match = location.pathname.match(/\/note\/(\d+)/);
+      const noteIdFromPath = match ? parseInt(match[1]) : null;
       // set it, null if it's a default page
-      if (chatIdFromPath !== currentChatId) {
-        setCurrentChatId(chatIdFromPath);
+      if (noteIdFromPath !== currentNoteId) {
+        setCurrentNoteId(noteIdFromPath);
       }
     }
     console.log("[location.pathname])")
   }, [location.pathname]);
 
-  // Handle selection when chatList changes
+  // Handle selection when noteList changes
   useEffect(() => {
-    let foundChatName = null;
-    if (chatList.length > 0 && currentChatId) {
-      const currentChat = chatList.find(chat => chat.id === currentChatId);
+    let foundNoteName = null;
+    if (noteList.length > 0 && currentNoteId) {
+      const currentNote = noteList.find(note => note.id === currentNoteId);
 
-      if (currentChat) {
-        foundChatName = currentChat.name
+      if (currentNote) {
+        foundNoteName = currentNote.name
       }
     }
-    setCurrentChatName(foundChatName)
-    console.log("[chatList, currentChatId])")
-  }, [chatList, currentChatId]);
+    setCurrentNoteName(foundNoteName)
+    console.log("[noteList, currentNoteId])")
+  }, [noteList, currentNoteId]);
 
-  const loadChats = async () => {
-    const chats = await fetchChats();
-    setChatList(chats);
+  const loadNotes = async () => {
+    const notes = await fetchNotes();
+    setNoteList(notes);
   };
 
-  const handleChatSelect = (chatId) => {
-    setCurrentChatId(chatId);
+  const handleNoteSelect = (noteId) => {
+    setCurrentNoteId(noteId);
     // Navigate without page reload
-    navigate(`/chat/${chatId}`);
+    navigate(`/note/${noteId}`);
   };
 
-  const onDeleteChat = async (chatId) => {
-    if (!chatId) return;
-    await deleteChat(chatId);
-    const updatedChats = chatList.filter(chat => chat.id !== chatId);
-    setChatList(updatedChats);
-    if (currentChatId === chatId) {
-      setCurrentChatId(null);
-      // Navigate to chat list if we deleted the current chat
-      navigate('/chatlist');
+  const onDeleteNote = async (noteId) => {
+    if (!noteId) return;
+    await deleteNote(noteId);
+    const updatedNotes = noteList.filter(note => note.id !== noteId);
+    setNoteList(updatedNotes);
+    if (currentNoteId === noteId) {
+      setCurrentNoteId(null);
+      // Navigate to note list if we deleted the current note
+      navigate('/notelist');
     }
   };
 
-  // Function to handle chat name click
-  const handleChatNameClick = () => {
+  // Function to handle note name click
+  const handleNoteNameClick = () => {
     const path = location.pathname;
-    // Check if we're already on a chat page
-    if (path === '/' || path.startsWith('/chat/')) {
-      // If on home or chat page, go to chat list
-      navigate('/chatlist');
+    // Check if we're already on a note page
+    if (path === '/' || path.startsWith('/note/')) {
+      // If on home or note page, go to note list
+      navigate('/notelist');
     } else {
-      // If we have a current chat ID, go to that chat
-      if (currentChatId) {
-        navigate(`/chat/${currentChatId}`);
+      // If we have a current note ID, go to that note
+      if (currentNoteId) {
+        navigate(`/note/${currentNoteId}`);
       } else {
         // Otherwise go to home page
         navigate('/');
@@ -104,12 +104,12 @@ function AppContent() {
     }
   };
 
-  // This function will be passed to ChatWindowPage to notify when a new chat is created
-  const onChatCreated = (newChatId, message) => {
-    loadChats(); // Reload the chat list to include the new chat
-    setCurrentChatId(newChatId); // Update the current chat ID
+  // This function will be passed to NoteWindowPage to notify when a new note is created
+  const onNoteCreated = (newNoteId, message) => {
+    loadNotes(); // Reload the note list to include the new note
+    setCurrentNoteId(newNoteId); // Update the current note ID
     // Pass message as state in navigation
-    navigate(`/chat/${newChatId}`, {
+    navigate(`/note/${newNoteId}`, {
       state: { initialMessage: message, },
       replace: true
     });
@@ -118,11 +118,11 @@ function AppContent() {
   return (
     <div className="main-container">
       <nav className="navbar">
-        <h3 onClick={handleChatNameClick} style={{ cursor: 'pointer', color: 'inherit' }}>
-          {currentChatName || "Select Chat"}
+        <h3 onClick={handleNoteNameClick} style={{ cursor: 'pointer', color: 'inherit' }}>
+          {currentNoteName || "Select Note"}
         </h3>
         <div className="nav-links">
-          <Link to="/">New chat</Link>
+          <Link to="/">New note</Link>
           <Link to="/wordlist">My words</Link>
         </div>
         <div className="nav-controls">
@@ -131,27 +131,27 @@ function AppContent() {
       </nav>
       <div className="main-block">
         <Routes>
-          {/* Root path directly shows ChatWindowPage, no redirection */}
+          {/* Root path directly shows NoteWindowPage, no redirection */}
           <Route
             path="/"
-            element={<ChatWindowPage key={location.pathname} onChatCreated={onChatCreated} />}
+            element={<NoteWindowPage key={location.pathname} onNoteCreated={onNoteCreated} />}
           />
 
-          {/* Individual chat route with path parameter */}
+          {/* Individual note route with path parameter */}
           <Route
-            path="/chat/:chatId"
-            element={<ChatWindowPage onChatCreated={onChatCreated} />}
+            path="/note/:noteId"
+            element={<NoteWindowPage onNoteCreated={onNoteCreated} />}
           />
 
           <Route path="/wordlist" element={<WordListPage />} />
           <Route
-            path="/chatlist"
+            path="/notelist"
             element={
-              <ChatListPage
-                chatList={chatList}
-                currentChatId={currentChatId}
-                loadChat={handleChatSelect}
-                deleteChat={onDeleteChat}
+              <NoteListPage
+                noteList={noteList}
+                currentNoteId={currentNoteId}
+                loadNote={handleNoteSelect}
+                deleteNote={onDeleteNote}
               />
             }
           />

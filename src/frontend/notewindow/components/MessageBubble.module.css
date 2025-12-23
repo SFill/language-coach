@@ -1,4 +1,4 @@
-.chatMessage {
+.noteMessage {
     max-width: 60%;
     margin-bottom: 10px;
     padding: 10px;
@@ -18,32 +18,32 @@
 }
 
 
-.chatMessage code {
+.noteMessage code {
     white-space: wrap;
 }
 
 
-.chatMessage ul,
-.chatMessage ol {
+.noteMessage ul,
+.noteMessage ol {
     margin: 0;
     /* Remove default outer margins */
     padding-left: 1.2em;
     /* Keep some left indentation for bullets/numbers */
 }
 
-.chatMessage li {
+.noteMessage li {
     margin-bottom: 0;
     /* Remove extra spacing between list items */
     line-height: 1.2;
     /* Optionally reduce line height for denser text */
 }
 
-.chatMessage p {
+.noteMessage p {
     margin: 0.5em 0;
     /* Less top/bottom margin for a more compact look */
 }
 
-.chatMessage a[href] {
+.noteMessage a[href] {
     /* Add ellipsis at the end if text does not fit in given width */
     text-overflow: ellipsis;
     /* Have to add this line to make upper line work */

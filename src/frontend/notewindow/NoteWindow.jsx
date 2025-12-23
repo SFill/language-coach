@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ChatMessage from './ChatMessage';
-import ChatToolbar from './ChatToolbar';
-import './ChatWindow.css';
+import NoteBlock from './NoteBlock';
+import NoteToolbar from './NoteToolbar';
+import './NoteWindow.css';
 import { useWordlist } from '../wordlist/WordlistContext';
-import { uploadChatImage, sendQuestion } from '../api';
+import { uploadNoteImage, sendQuestion } from '../api';
 
-const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, onImageUploaded, onSendQuestion }) => {
-  const chatContainerRef = useRef(null);
+const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef, onImageUploaded, onSendQuestion }) => {
+  const noteContainerRef = useRef(null);
   const toolbarRef = useRef(null);
 
-  // Create refs for each ChatMessage (using index as key for simplicity)
-  const messageRefs = useRef([]);
+  // Create refs for each NoteBlock (using index as key for simplicity)
+  const noteBlockRefs = useRef([]);
 
-  // Toolbar state: style (including position), active message ref, and whether the selection is translated.
+  // Toolbar state: style (including position), active note block ref, and whether the selection is translated.
   const [toolbarStyle, setToolbarStyle] = useState({ display: 'none' });
-  const [activeMessageRef, setActiveMessageRef] = useState(null);
+  const [activeNoteBlockRef, setActiveNoteBlockRef] = useState(null);
   const [selectedText, setSelectedText] = useState('');
   const [activeIsTranslated, setActiveIsTranslated] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
-  // No separate tiles state - tiles are derived from messages
+  // No separate tiles state - tiles are derived from noteBlocks
 
   // Use the wordlist context
   // Load wordlists is done internally
@@ -35,16 +35,16 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
 
 
   useEffect(() => {
-    // Scroll to bottom when new messages arrive
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    // Scroll to bottom when new note blocks arrive
+    if (noteContainerRef.current) {
+      noteContainerRef.current.scrollTop = noteContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [noteBlocks]);
 
   // Single paste handler for images: uploads and inserts refs into editor
   useEffect(() => {
     const handlePaste = async (event) => {
-      if (!chatId) return;
+      if (!noteId) return;
       const clipboard = event.clipboardData;
       if (!clipboard) return;
 
@@ -67,13 +67,13 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
 
       for (const file of files) {
         try {
-          const uploaded = await uploadChatImage(chatId, file);
+          const uploaded = await uploadNoteImage(noteId, file);
           // Notify images list to refresh
           if (onImageUploaded) onImageUploaded(uploaded);
           // Insert a reference into the editor
           const refText = `@image:${uploaded.id} `;
-          if (messageInputRef && messageInputRef.current && messageInputRef.current.insertTextAtCursor) {
-            messageInputRef.current.insertTextAtCursor(refText);
+          if (noteBlockInputRef && noteBlockInputRef.current && noteBlockInputRef.current.insertTextAtCursor) {
+            noteBlockInputRef.current.insertTextAtCursor(refText);
           }
         } catch (err) {
           console.error('Error uploading pasted image:', err);
@@ -83,7 +83,7 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
 
     document.addEventListener('paste', handlePaste);
     return () => document.removeEventListener('paste', handlePaste);
-  }, [chatId, messageInputRef, onImageUploaded]);
+  }, [noteId, noteBlockInputRef, onImageUploaded]);
 
   useEffect(() => {
     // Single global mouseup handler for event delegation
@@ -99,20 +99,20 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
         return;
       }
 
-      // Check if the selection is within any of our message components
+      // Check if the selection is within any of our note block components
       const selection = window.getSelection();
       if (!selection || selection.isCollapsed) {
         // No valid selection, ignore
         return;
       }
 
-      // Find the message component that contains this selection
-      for (let i = 0; i < messageRefs.current.length; i++) {
-        const messageRef = messageRefs.current[i];
-        if (messageRef && messageRef.current && messageRef.current.checkSelectionWithinContainer) {
-          if (messageRef.current.checkSelectionWithinContainer()) {
-            // This message contains the selection, call its handler
-            messageRef.current.handleGlobalSelection(e);
+      // Find the note block component that contains this selection
+      for (let i = 0; i < noteBlockRefs.current.length; i++) {
+        const noteBlockRef = noteBlockRefs.current[i];
+        if (noteBlockRef && noteBlockRef.current && noteBlockRef.current.checkSelectionWithinContainer) {
+          if (noteBlockRef.current.checkSelectionWithinContainer()) {
+            // This note block contains the selection, call its handler
+            noteBlockRef.current.handleGlobalSelection(e);
             return; // Once we've found a match, don't continue checking
           }
         }
@@ -126,28 +126,28 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     return () => {
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
-  }, [messageRefs.current.length, isToolbarVisible]); // Depend on isToolbarVisible to properly update the closure
+  }, [noteBlockRefs.current.length, isToolbarVisible]); // Depend on isToolbarVisible to properly update the closure
 
   // Extract sentence containing the selected text using selection range
-  const extractSentenceFromSelection = (messageRef) => {
-    if (!messageRef || !messageRef.current) return null;
+  const extractSentenceFromSelection = (noteBlockRef) => {
+    if (!noteBlockRef || !noteBlockRef.current) return null;
     
     
     try {
 
-       const currentRange = messageRef.current.currentRange;
+       const currentRange = noteBlockRef.current.currentRange;
 
       if (!currentRange) return null;
 
-      const messageContainer = currentRange.commonAncestorContainer;
+      const noteBlockContainer = currentRange.commonAncestorContainer;
      
       
-      const fullText = messageContainer.textContent || messageContainer.innerText || '';
+      const fullText = noteBlockContainer.textContent || noteBlockContainer.innerText || '';
       
       // Calculate absolute position of selection start in the full text
       let absoluteStart = 0;
       const walker = document.createTreeWalker(
-        messageContainer,
+        noteBlockContainer,
         NodeFilter.SHOW_TEXT,
         null,
         false
@@ -190,15 +190,15 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     }
   };
 
-  // Callback from ChatMessage when text is selected or a translated span is clicked.
+  // Callback from NoteBlock when text is selected or a translated span is clicked.
   // The extra "isTranslated" flag indicates if the selection already has a translation.
   const handleTextSelect = (ref, rect, text, isTranslated = false) => {
-    setActiveMessageRef(ref);
+    setActiveNoteBlockRef(ref);
     setSelectedText(text);
     setActiveIsTranslated(isTranslated);
 
-    // Compute toolbar position relative to chat container.
-    const containerRect = chatContainerRef.current.getBoundingClientRect();
+    // Compute toolbar position relative to note container.
+    const containerRect = noteContainerRef.current.getBoundingClientRect();
     const top = rect.top - containerRect.top - 40; // 40px above.
     const left = rect.left - containerRect.left;
 
@@ -212,16 +212,16 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     setIsToolbarVisible(true);
   };
 
-  // Toolbar button handlers call the exposed API on the active ChatMessage.
+  // Toolbar button handlers call the exposed API on the active NoteBlock.
   const handleToolbarTranslate = async (lang) => {
-    if (activeMessageRef && activeMessageRef.current) {
-      await activeMessageRef.current.handleTranslate(lang);
+    if (activeNoteBlockRef && activeNoteBlockRef.current) {
+      await activeNoteBlockRef.current.handleTranslate(lang);
     }
   };
 
   const handleToolbarRollback = () => {
-    if (activeMessageRef && activeMessageRef.current) {
-      activeMessageRef.current.handleRollback();
+    if (activeNoteBlockRef && activeNoteBlockRef.current) {
+      activeNoteBlockRef.current.handleRollback();
       setIsToolbarVisible(false);
     }
   };
@@ -236,7 +236,7 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     if (!text.trim()) return null;
     
     // Extract sentence context using selection range
-    const sentenceContext = extractSentenceFromSelection(activeMessageRef);
+    const sentenceContext = extractSentenceFromSelection(activeNoteBlockRef);
     return addWordToList(text, listId, sentenceContext);
   };
 
@@ -249,21 +249,21 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     if (!text.trim()) return null;
     
     // Extract sentence context using selection range
-    const sentenceContext = extractSentenceFromSelection(activeMessageRef);
+    const sentenceContext = extractSentenceFromSelection(activeNoteBlockRef);
     
     return createNewListWithWord(text, null, sentenceContext);
   };
 
-  // Group messages into tiles by note they relate to
+  // Group note blocks into tiles by note they relate to
   const groupTilesByNote = () => {
     let tileGroups = {};
     let currentNoteId = null;
     
-    // Iterate through messages to find notes and questions
-    messages.forEach((msg) => {
-      if (msg.is_note) {
+    // Iterate through note blocks to find notes and questions
+    noteBlocks.forEach((block) => {
+      if (block.is_note) {
         // This is a note - track its ID
-        currentNoteId = msg.id;
+        currentNoteId = block.id;
         if (!tileGroups[currentNoteId]) {
           tileGroups[currentNoteId] = [];
         }
@@ -271,13 +271,13 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
         // This is a question following a note
         // Create tile from question and answer pair
         const tile = {
-            id: msg.id,
+            id: block.id,
             noteId: currentNoteId,
             title: "question",
-            content: msg.content,
+            content: block.content,
             state: 'ready',
             expanded: false,
-            createdAt: msg.created_at,
+            createdAt: block.created_at,
             error: null
           };
 
@@ -289,8 +289,8 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
   };
 
   // Send question about a note
-  const handleSendQuestion = async (questionText, noteId) => {
-    if (!questionText.trim() || !chatId || !onSendQuestion) return;
+  const handleSendQuestion = async (questionText, noteBlockId) => {
+    if (!questionText.trim() || !noteId || !onSendQuestion) return;
 
     try {
       // Call the parent component's send question handler
@@ -301,49 +301,49 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
     }
   };
 
-  // Retry failed tile - for now just log, as real implementation would need message retry
+  // Retry failed tile - for now just log, as real implementation would need note block retry
   const handleRetryTile = async (tileId) => {
     console.log('Retry tile:', tileId);
-    // In real implementation, this would retry the question by resending the message
+    // In real implementation, this would retry the question by resending the note block
   };
 
   const tileGroups = groupTilesByNote();
 
   return (
     <div
-      className="chat-window-container"
-      ref={chatContainerRef}
+      className="note-window-container"
+      ref={noteContainerRef}
     >
-      <div className="chat-window">
-        {messages.map((msg, index) => {
-          if (!messageRefs.current[index]) {
-            messageRefs.current[index] = React.createRef();
+      <div className="note-window">
+        {noteBlocks.map((block, index) => {
+          if (!noteBlockRefs.current[index]) {
+            noteBlockRefs.current[index] = React.createRef();
           }
-          if (!msg.is_note) {
+          if (!block.is_note) {
             return
           }
-          // Get tiles for this message if it's a note, and apply UI states
-          const messageTiles = tileGroups[msg.id] || [];
+          // Get tiles for this note block if it's a note, and apply UI states
+          const blockTiles = tileGroups[block.id] || [];
           
           return (
-            <ChatMessage
+            <NoteBlock
               key={index}
-              ref={messageRefs.current[index]}
-              msg={msg}
-              chatId={chatId}
-              tiles={messageTiles}
+              ref={noteBlockRefs.current[index]}
+              block={block}
+              noteId={noteId}
+              tiles={blockTiles}
               onSendQuestion={handleSendQuestion}
               onRetryTile={handleRetryTile}
               onTextSelect={(rect, text, isTranslated) => {
                 // Use a timeout to ensure the child event has completed.
-                setTimeout(() => handleTextSelect(messageRefs.current[index], rect, text, isTranslated), 0);
+                setTimeout(() => handleTextSelect(noteBlockRefs.current[index], rect, text, isTranslated), 0);
               }}
             />
           );
         })}
       </div>
 
-      <ChatToolbar
+      <NoteToolbar
         toolbarRef={toolbarRef}
         style={toolbarStyle}
         handleTranslate={handleToolbarTranslate}
@@ -362,4 +362,4 @@ const ChatWindow = ({ messages, onCheckInDictionary, chatId, messageInputRef, on
   );
 };
 
-export default ChatWindow;
+export default NoteWindow;

@@ -32,3 +32,5 @@ data/
 .env*
 !.env.example
 database.db
+
+.pytest_cache/**

@@ -7,7 +7,7 @@ import styles from './MessageBubble.module.css';
  */
 const MessageBubble = React.memo(({ sender, children }) => {
   return (
-    <div className={`${styles.chatMessage}`}>
+    <div className={`${styles.noteMessage}`}>
       {children}
     </div>
   );

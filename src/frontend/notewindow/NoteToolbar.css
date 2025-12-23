@@ -1,4 +1,4 @@
-.chat-toolbar {
+.note-toolbar {
     position: absolute;
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -9,7 +9,7 @@
     min-width: 170px;
 }
 
-.chat-toolbar button {
+.note-toolbar button {
     margin-right: 5px;
     padding: 3px 8px;
     border-radius: 3px;
@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.chat-toolbar button:hover {
+.note-toolbar button:hover {
     background-color: #e8e8e8;
 }
 

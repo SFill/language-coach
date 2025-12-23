@@ -1,8 +1,8 @@
-.chat-window-container {
+.note-window-container {
     position: relative;
 }
 
-.chat-window {
+.note-window {
     min-height: 50vh;
     flex: 1;
     overflow-y: auto;

@@ -12,7 +12,7 @@ Enhance or current chat note taking workflow by building a UI where a user write
   * Message component @src/frontend/chatwindow/ChatMessage.jsx that are rendered in @src/frontend/chatwindow/ChatWindow.jsx
   * An input row (simple text field + Ask button) to submit a question about the current note, in the block of buttons of @src/frontend/chatwindow/ChatMessage.jsx
   * A list of **Question Tiles** rendered below the note(create a new component @src/frontend/chatwindow/ChatTile.jsx)
-*  All logic of tile grouping and getting tiles from ChatWindow.messages must be placed in ChatWindow.jsx, 
+*  All logic of tile grouping and getting tiles from ChatWindow.note_blocks must be placed in ChatWindow.jsx, 
   * Ask Question logic must be placed in  @src/frontend/chatwindow/ChatWindow.jsx, but propogate a method like sendQuestion to @src/frontend/chatwindow/ChatTile.jsx, so it was similar to edit and delete message methods in use
 * Behavior for creating tiles, loading, success, error, expand/collapse
 * Make those ChatMessage buttons as **sticky action buttons** (when scrolling, the buttons stick in view and relate to the current note)

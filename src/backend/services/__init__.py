@@ -1,12 +1,12 @@
 # Import all services for easy access
-from .chat_service import (
-    create_chat,
-    get_chat_list,
-    get_chat,
-    delete_chat,
-    send_message,
-    update_chat_message,
-    delete_chat_message,
+from .notes_service import (
+    create_note,
+    get_note_list,
+    get_note,
+    delete_note,
+    send_note_block,
+    update_note_block,
+    delete_note_block,
 )
 from .translation_service import translate_text
 from .dictionary_service import get_english_word_definition as get_english_word_definition

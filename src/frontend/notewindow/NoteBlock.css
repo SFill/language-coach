@@ -1,39 +1,39 @@
-.chat-message {
+.note-message {
     max-width: 60%;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 5px;
 }
 
-.chat-message.user {
+.note-message.user {
     align-self: flex-end;
     /* anchor on the right side */
     background-color: #daf1ff;
     /* your chosen color */
 }
 
-.chat-message.bot {
+.note-message.bot {
     align-self: flex-start;
     /* anchor on the left side */
     max-width: 100%;
 }
 
-.chat-message ul,
-.chat-message ol {
+.note-message ul,
+.note-message ol {
     margin: 0;
     /* Remove default outer margins */
     padding-left: 1.2em;
     /* Keep some left indentation for bullets/numbers */
 }
 
-.chat-message li {
+.note-message li {
     margin-bottom: 0;
     /* Remove extra spacing between list items */
     line-height: 1.2;
     /* Optionally reduce line height for denser text */
 }
 
-.chat-message p {
+.note-message p {
     margin: 0.5em 0;
     /* Less top/bottom margin for a more compact look */
 }

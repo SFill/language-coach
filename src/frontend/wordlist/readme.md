@@ -14,7 +14,7 @@ I've created a comprehensive solution for managing wordlists in your application
   - Saves changes when the app is closing using the `beforeunload` event
 
 ### 3. UI Updates
-- Updated `ChatToolbar.jsx` to show wordlist status and match information
+- Updated `NoteToolbar.jsx` to show wordlist status and match information
 - Updated `WordListPage.jsx` to support `WordlistContext` using the `useWordlist` hook
 - Improved styling with updated CSS
 
@@ -26,7 +26,7 @@ I've created a comprehensive solution for managing wordlists in your application
 ### Usage Flow
 
 1. The application loads and wordlists are fetched from the backend
-2. Users can select text in chat messages to trigger the wordlist toolbar
+2. Users can select text in note messages to trigger the wordlist toolbar
 3. Users can add selected text to an existing list or create a new one
 4. Changes are stored in memory and immediately reflected in the UI
 5. The application periodically syncs with the backend and also saves changes when closing

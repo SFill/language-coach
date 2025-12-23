@@ -65,7 +65,7 @@ const TextEditor = ({
     event.preventDefault();
   };
 
-  // Paste handling moved to ChatWindow (single source of truth)
+  // Paste handling moved to NoteWindow (single source of truth)
 
   return (
     <textarea
@@ -82,7 +82,7 @@ const TextEditor = ({
       onBlur={onBlur}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      // onPaste handled globally in ChatWindow
+      // onPaste handled globally in NoteWindow
       placeholder="Type your message... (Ctrl+B for bold, Ctrl+I for italic)"
       className="vs-code-textarea"
       autoFocus

@@ -1,28 +1,28 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { fetchChatImages, deleteChatImage, uploadChatImage, getChatImageUrl } from '../api';
-import './ChatImagesList.css';
+import { fetchNoteImages, deleteNoteImage, uploadNoteImage, getNoteImageUrl } from '../api';
+import './NoteImagesList.css';
 
-const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, ref) => {
+const NoteImagesList = forwardRef(({ noteId, onImageUpload, onImageReference }, ref) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
   useEffect(() => {
-    if (chatId) {
+    if (noteId) {
       loadImages();
     }
-  }, [chatId]);
+  }, [noteId]);
 
-  // Paste handling moved to ChatWindow as the single handler
+  // Paste handling moved to NoteWindow as the single handler
 
   const loadImages = async () => {
     setLoading(true);
     try {
-      const chatImages = await fetchChatImages(chatId);
-      setImages(chatImages);
+      const noteImages = await fetchNoteImages(noteId);
+      setImages(noteImages);
     } catch (error) {
-      console.error('Error loading images:', error);
+      console.error('Error loading note images:', error);
     } finally {
       setLoading(false);
     }
@@ -34,12 +34,12 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
   }));
 
   const handleFileUpload = async (files) => {
-    if (!files.length || !chatId) return;
+    if (!files.length || !noteId) return;
 
     setUploading(true);
     try {
       for (const file of files) {
-        const uploadedImage = await uploadChatImage(chatId, file);
+        const uploadedImage = await uploadNoteImage(noteId, file);
         setImages(prev => [uploadedImage, ...prev]);
         if (onImageUpload) {
           onImageUpload(uploadedImage);
@@ -86,7 +86,7 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
     if (!confirm('Are you sure you want to delete this image?')) return;
 
     try {
-      await deleteChatImage(chatId, imageId);
+      await deleteNoteImage(noteId, imageId);
       setImages(prev => prev.filter(img => img.id !== imageId));
     } catch (error) {
       console.error('Error deleting image:', error);
@@ -105,20 +105,20 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
     event.dataTransfer.effectAllowed = 'copy';
   };
 
-  if (!chatId) {
+  if (!noteId) {
     return (
-      <div className="chat-images-list">
-        <div className="no-chat-message">
-          Select a chat to view images
+      <div className="note-images-list">
+        <div className="no-note-message">
+          Select a note to view images
         </div>
       </div>
     );
   }
 
   return (
-    <div className="chat-images-list">
-      <div className="chat-images-header">
-        <h3>Chat Images</h3>
+    <div className="note-images-list">
+      <div className="note-images-header">
+        <h3>Note Images</h3>
         <div className="upload-controls">
           <label className="upload-button" htmlFor="image-upload">
             📎 Upload
@@ -164,7 +164,7 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
                 onClick={() => handleImageClick(image)}
               >
                 <img
-                  src={getChatImageUrl(chatId, image.id)}
+                  src={getNoteImageUrl(noteId, image.id)}
                   alt={image.original_filename}
                   className="image-thumbnail"
                 />
@@ -195,4 +195,4 @@ const ChatImagesList = forwardRef(({ chatId, onImageUpload, onImageReference }, 
   );
 });
 
-export default ChatImagesList;
+export default NoteImagesList;

@@ -4,8 +4,8 @@ from datetime import datetime
 from typing import List, Literal, Optional
 
 
-class ChatMessage(BaseModel):
-    """Schema representing a message stored in chat history."""
+class NoteBlock(BaseModel):
+    """Schema representing a message stored in note history."""
     id: int
     role: Literal["user", "assistant", "system", "developer"]
     content: str
@@ -15,20 +15,20 @@ class ChatMessage(BaseModel):
     image_ids: List[int] = PydanticField(default_factory=list)
 
 
-class Chat(SQLModel, table=True):
-    """Model for chat sessions."""
+class Note(SQLModel, table=True):
+    """Model for note sessions."""
     id: int | None = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     history: dict = Field(default_factory=lambda: {'content': []}, sa_column=Column(JSON))
-    images: List["ChatImage"] = Relationship(back_populates="chat")
+    images: List["NoteImage"] = Relationship(back_populates="note")
     max_message_id: int = Field(default=0)
 
     @computed_field
     @property
-    def messages(self) -> list[ChatMessage]:
-        return [ChatMessage.model_validate(msg) for msg in self.history['content']]
+    def note_blocks(self) -> list[NoteBlock]:
+        return [NoteBlock.model_validate(msg) for msg in self.history['content']]
     
-    def get_new_message_id(self):
+    def get_new_note_block_id(self):
         self.max_message_id+=1
         return self.max_message_id
     
@@ -37,10 +37,10 @@ class Chat(SQLModel, table=True):
         kwargs['exclude'].append('history')
         return super().model_dump(*args,**kwargs)
 
-class ChatImage(SQLModel, table=True):
-    """Model for images attached to chats."""
+class NoteImage(SQLModel, table=True):
+    """Model for images attached to notes."""
     id: int | None = Field(default=None, primary_key=True)
-    chat_id: int = Field(foreign_key="chat.id")
+    note_id: int = Field(foreign_key="note.id")
     filename: str = Field(index=True)
     original_filename: str
     file_path: str
@@ -48,14 +48,14 @@ class ChatImage(SQLModel, table=True):
     file_size: int
     uploaded_at: datetime = Field(default_factory=datetime.utcnow)
     
-    chat: Chat = Relationship(back_populates="images")
+    note: Note = Relationship(back_populates="images")
 
-class ChatListResponse(BaseModel):
+class NoteListResponse(BaseModel):
     id: int 
     name: str
 
-class ChatImageResponse(BaseModel):
-    """Response schema for chat images."""
+class NoteImageResponse(BaseModel):
+    """Response schema for note images."""
     id: int
     filename: str
     original_filename: str
@@ -66,13 +66,13 @@ class ChatImageResponse(BaseModel):
 
 
 
-class ChatMessageCreate(BaseModel):
-    """Schema for creating chat messages."""
-    message: str
+class NoteBlockCreate(BaseModel):
+    """Schema for creating note messages."""
+    block: str
     is_note: bool = False
     image_ids: List[int] = PydanticField(default_factory=list)
 
 
-class ChatMessageUpdate(BaseModel):
-    """Schema for updating existing chat messages."""
-    message: Optional[str] = None
+class NoteBlockUpdate(BaseModel):
+    """Schema for updating existing note messages."""
+    block: Optional[str] = None

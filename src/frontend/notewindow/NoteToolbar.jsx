@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './ChatToolbar.css';
+import './NoteToolbar.css';
 import { areExactMatches, areCloseMatches } from '../wordlist/utils';
 
-const ChatToolbar = ({
+const NoteToolbar = ({
   toolbarRef,
   style,
   handleTranslate,
@@ -100,7 +100,7 @@ const ChatToolbar = ({
 
   return (
     <div
-      className="chat-toolbar"
+      className="note-toolbar"
       style={style}
       ref={toolbarRef}
     >
@@ -195,4 +195,4 @@ const ChatToolbar = ({
   );
 };
 
-export default ChatToolbar;
+export default NoteToolbar;

@@ -7,7 +7,7 @@ import MarkdownContent from './MarkdownContent';
 /**
  * Component for content that can be translated
  */
-const TranslatableContent = React.forwardRef(({ content, onTextSelect, chatId }, ref) => {
+const TranslatableContent = React.forwardRef(({ content, onTextSelect, noteId }, ref) => {
     // Set up translation handling
     const {
         translatedNode,
@@ -83,7 +83,7 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect, chatId },
             ref={containerRef}
             onClick={handleTranslatedClick}
         >
-            <MarkdownContent content={content} chatId={chatId} />
+            <MarkdownContent content={content} noteId={noteId} />
         </div>
     );
 });
@@ -91,7 +91,7 @@ const TranslatableContent = React.forwardRef(({ content, onTextSelect, chatId },
 TranslatableContent.propTypes = {
     content: PropTypes.string.isRequired,
     onTextSelect: PropTypes.func,
-    chatId: PropTypes.string
+    noteId: PropTypes.string
 };
 
 TranslatableContent.displayName = 'TranslatableContent';

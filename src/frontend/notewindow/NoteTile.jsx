@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import MarkdownContent from './components/MarkdownContent';
-import './ChatTile.css';
+import './NoteTile.css';
 
 /**
- * ChatTile component - Card-style design that expands to fill container
+ * NoteTile component - Card-style design that expands to fill container
  * States: loading, ready, error
  * Modes: expanded, collapsed
  */
-const ChatTile = ({ tile, onRetry, chatId }) => {
+const NoteTile = ({ tile, onRetry, noteId }) => {
   const { id, title, content, createdAt,state, error } = tile;
   const [expanded, setExpanded] = useState(tile.expanded)
 
@@ -20,7 +20,7 @@ const ChatTile = ({ tile, onRetry, chatId }) => {
 
   const renderLoadingState = () => (
   <>
-    <div className="chat-tile__spinner"></div>
+    <div className="note-tile__spinner"></div>
     <span>Loading answer...</span>
   </>
   
@@ -31,11 +31,11 @@ const ChatTile = ({ tile, onRetry, chatId }) => {
   )
 
   const toneBg = {
-    blue: "chat-tile--tone-blue",
-    green: "chat-tile--tone-green",
-    rose: "chat-tile--tone-rose",
-    amber: "chat-tile--tone-amber",
-    slate: "chat-tile--tone-slate",
+    blue: "note-tile--tone-blue",
+    green: "note-tile--tone-green",
+    rose: "note-tile--tone-rose",
+    amber: "note-tile--tone-amber",
+    slate: "note-tile--tone-slate",
   };
 
 function classNames(...xs) {
@@ -45,27 +45,27 @@ function classNames(...xs) {
 
   const renderReadyState = () => (
     <>
-      <header className="chat-tile__header">
-        <time className="chat-tile__time">{createdAt}</time>
+      <header className="note-tile__header">
+        <time className="note-tile__time">{createdAt}</time>
       </header>
 
       <h3
       onClick={handleHeaderClick}
-      className="chat-tile__title">{title}</h3>
+      className="note-tile__title">{title}</h3>
 
 
       <div
         id={'tile ' + id}
         aria-hidden={!expanded}
         className={classNames(
-          "chat-tile__content",
-          expanded ? "chat-tile__content--expanded" : "chat-tile__content--collapsed"
+          "note-tile__content",
+          expanded ? "note-tile__content--expanded" : "note-tile__content--collapsed"
         )}
       >
-        <div className="chat-tile__content-inner">
-          <h4 className="chat-tile__answer-label">Answer</h4>
-          <p className="chat-tile__answer-text">
-            <MarkdownContent content={content} chatId={chatId} />
+        <div className="note-tile__content-inner">
+          <h4 className="note-tile__answer-label">Answer</h4>
+          <p className="note-tile__answer-text">
+            <MarkdownContent content={content} noteId={noteId} />
 
           </p>
         </div>
@@ -89,15 +89,15 @@ function classNames(...xs) {
 
 
   return (
-    <article 
+    <article
       // ref={refFn}
       role="button"
       tabIndex={0}
       aria-expanded={expanded}
       aria-controls={'tile ' + id}
       className={classNames(
-        "chat-tile__article",
-        expanded ? "chat-tile__article--expanded" : "chat-tile__article--collapsed",
+        "note-tile__article",
+        expanded ? "note-tile__article--expanded" : "note-tile__article--collapsed",
         toneBg['blue']
       )}
     >
@@ -106,7 +106,7 @@ function classNames(...xs) {
   );
 };
 
-ChatTile.propTypes = {
+NoteTile.propTypes = {
   tile: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
@@ -121,8 +121,8 @@ ChatTile.propTypes = {
     })
   }).isRequired,
   onRetry: PropTypes.func,
-  chatId: PropTypes.string
+  noteId: PropTypes.string
 };
 
-export default ChatTile;
+export default NoteTile;
 

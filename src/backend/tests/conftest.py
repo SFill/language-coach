@@ -13,7 +13,7 @@ from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine
 from sqlalchemy.pool import StaticPool
 
-from backend.models.chat import Chat
+from backend.models.note import Note
 from backend.models.dict_english import Dictionary
 from backend.models.dict_spanish import SpanishDictionary
 from backend.services.sentence.db_models import Text, Phrase, Word
@@ -46,12 +46,12 @@ def temp_directory():
     shutil.rmtree(temp_dir)
 
 
-# Chat-related fixtures
+# Note-related fixtures
 @pytest.fixture
-def sample_chats():
-    """Provide sample chat data for testing."""
+def sample_notes():
+    """Provide sample note data for testing."""
     return [
-        Chat(
+        Note(
             id=1,
             name="English Practice",
             history={"content": [
@@ -75,7 +75,7 @@ def sample_chats():
                 },
             ]}
         ),
-        Chat(
+        Note(
             id=2,
             name="Spanish Learning",
             history={"content": [
@@ -99,9 +99,9 @@ def sample_chats():
                 },
             ]}
         ),
-        Chat(
-            id=3, 
-            name="Empty Chat", 
+        Note(
+            id=3,
+            name="Empty Note",
             history={"content": []}
         )
     ]
@@ -477,13 +477,18 @@ def create_spanish_dictionary_entry(test_session, word, word_data, audio_data=No
     return dictionary_entry
 
 
-def create_chat(test_session, name, history=None):
-    """Helper function to create chats in the database."""
+def create_note(test_session, name, history=None):
+    """Helper function to create notes in the database."""
     if history is None:
         history = {"content": []}
     
-    chat = Chat(name=name, history=history)
-    test_session.add(chat)
+    note = Note(name=name, history=history)
+    test_session.add(note)
     test_session.commit()
-    test_session.refresh(chat)
-    return chat
+    test_session.refresh(note)
+    return note
+
+# Keep old function for backward compatibility during transition
+def create_chat(test_session, name, history=None):
+    """Helper function to create chats in the database. DEPRECATED: Use create_note instead."""
+    return create_note(test_session, name, history)

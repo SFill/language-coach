@@ -43,7 +43,7 @@
 }
 
 
-.chat-window-page {
+.note-window-page {
     flex-direction: column;
     width: 60%;
     min-width: 500px;

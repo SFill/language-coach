@@ -1,94 +1,94 @@
 import axios from 'axios';
 
 // Use a base URL that covers the /api/coach prefix.
-const API_BASE_URL = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:80/api/' : 'http://localhost/api/';
+const API_BASE_URL = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:8000/api/' : 'http://localhost/api/';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Get Chat List from GET /api/coach/chat/
-export const fetchChats = async () => {
+// Get Notes List from GET /api/coach/notes/
+export const fetchNotes = async () => {
   try {
-    const response = await api.get(`coach/chat/`);
+    const response = await api.get(`coach/notes/`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching chats:', error);
+    console.error('Error fetching notes:', error);
     return [];
   }
 };
 
 // ===== Notes API =====
-export const updateMessage = async (chatId, noteId, text) => {
-  if (noteId === undefined) throw new Error('Missing note identifier');
+export const updateNoteBlock = async (noteId, noteBlockId, text) => {
+  if (noteBlockId === undefined) throw new Error('Missing note block identifier');
   try {
-    const response = await api.patch(`coach/chat/${chatId}/message/${noteId}`,
+    const response = await api.patch(`coach/notes/${noteId}/block/${noteBlockId}`,
      {
-        "message": text,
+        "block": text,
       }
     );
     return response.data;
   } catch (error) {
-    console.error('Error deleting chat:', error);
+    console.error('Error updating note block:', error);
     return null;
   }
 };
-export const deleteMessage = async (chatId, noteId) => {
-  if (noteId === undefined) throw new Error('Missing note identifier');
+export const deleteNoteBlock = async (noteId, noteBlockId) => {
+  if (noteBlockId === undefined) throw new Error('Missing note block identifier');
   try {
-    const response = await api.delete(`coach/chat/${chatId}/message/${noteId}`);
+    const response = await api.delete(`coach/notes/${noteId}/block/${noteBlockId}`);
     return response.data;
   } catch (error) {
-    console.error('Error deleting chat:', error);
+    console.error('Error deleting note block:', error);
     return null;
   }
 
 };
 
-// Get Chat details from GET /api/coach/chat/{id}
-export const fetchChatById = async (id) => {
+// Get Note details from GET /api/coach/notes/{id}
+export const fetchNoteById = async (id) => {
   try {
-    const response = await api.get(`coach/chat/${id}`);
+    const response = await api.get(`coach/notes/${id}`);
     return response.data;
   } catch (error) {
-    console.error('Error loading chat:', error);
+    console.error('Error loading note:', error);
     return null;
   }
 };
 
-// Delete Chat at DELETE /api/coach/chat/{id}
-export const deleteChat = async (id) => {
+// Delete Note at DELETE /api/coach/notes/{id}
+export const deleteNote = async (id) => {
   try {
-    const response = await api.delete(`coach/chat/${id}`);
+    const response = await api.delete(`coach/notes/${id}`);
     return response.data;
   } catch (error) {
-    console.error('Error loading chat:', error);
+    console.error('Error deleting note:', error);
     return null;
   }
 };
 
-// Create a new chat using POST /api/coach/chat
-export const createNewChat = async () => {
+// Create a new note using POST /api/coach/notes
+export const createNewNote = async () => {
   try {
-    const response = await api.post(`coach/chat/`, {
+    const response = await api.post(`coach/notes/`, {
       name: new Date().toLocaleString(),
       history: { content: [] },
     });
     return response.data;
   } catch (error) {
-    console.error('Error creating chat:', error);
+    console.error('Error creating note:', error);
     return null;
   }
 };
 
-// Send a message using POST /api/coach/chat/{id}/message
-export const sendMessage = async (chatId, message) => {
+// Send a note block using POST /api/coach/notes/{id}/block
+export const sendNoteBlock = async (noteId, data) => {
   try {
-    const response = await api.post(`coach/chat/${chatId}/message`, message);
-    return response.data.new_messages;
+    const response = await api.post(`coach/notes/${noteId}/block`, data);
+    return response.data.new_note_blocks;
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('Error sending note block:', error);
     return 'Sorry, something went wrong.';
   }
 };
@@ -98,7 +98,7 @@ export const translateText = async (text, target) => {
     const response = await api.post(`translate`, { text, target });
     return response.data.text;
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.error('Error translating text:', error);
     return 'Sorry, something went wrong.';
   }
 };
@@ -221,15 +221,15 @@ export const fetchSentenceExamples = async (word, language = "en", topN = 5, pro
   }
 };
 
-// ========== Chat Images API Methods ==========
+// ========== Note Images API Methods ==========
 
-// Upload an image to a chat
-export const uploadChatImage = async (chatId, file) => {
+// Upload an image to a note
+export const uploadNoteImage = async (noteId, file) => {
   try {
     const formData = new FormData();
     formData.append('file', file);
     
-    const response = await api.post(`coach/chat/${chatId}/images`, formData, {
+    const response = await api.post(`coach/notes/${noteId}/images`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -241,21 +241,21 @@ export const uploadChatImage = async (chatId, file) => {
   }
 };
 
-// Get all images for a chat
-export const fetchChatImages = async (chatId) => {
+// Get all images for a note
+export const fetchNoteImages = async (noteId) => {
   try {
-    const response = await api.get(`coach/chat/${chatId}/images`);
+    const response = await api.get(`coach/notes/${noteId}/images`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching chat images:', error);
+    console.error('Error fetching note images:', error);
     return [];
   }
 };
 
-// Delete an image from a chat
-export const deleteChatImage = async (chatId, imageId) => {
+// Delete an image from a note
+export const deleteNoteImage = async (noteId, imageId) => {
   try {
-    const response = await api.delete(`coach/chat/${chatId}/images/${imageId}`);
+    const response = await api.delete(`coach/notes/${noteId}/images/${imageId}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting image:', error);
@@ -264,8 +264,8 @@ export const deleteChatImage = async (chatId, imageId) => {
 };
 
 // Get image file URL
-export const getChatImageUrl = (chatId, imageId) => {
-  return `${API_BASE_URL}coach/chat/${chatId}/images/${imageId}/file`;
+export const getNoteImageUrl = (noteId, imageId) => {
+  return `${API_BASE_URL}coach/notes/${noteId}/images/${imageId}/file`;
 };
 
 // ========== Q/A Tiles Mock API Methods ==========
@@ -282,12 +282,12 @@ const mockApiCall = async (responseData, delay = 1000) => {
   return responseData;
 };
 
-// Send a question about a note using POST /api/coach/chat/{id}/message
-export const sendQuestion = async (chatId, question) => {
+// Send a question about a note using POST /api/coach/notes/{id}/block
+export const sendQuestion = async (noteId, question) => {
   try {
     // For now, use mock data as specified in requirements
-    // Return both user question and bot response as the existing sendMessage does
-    const userMessage = {
+    // Return both user question and bot response as the existing sendNoteBlock does
+    const userNoteBlock = {
       id: Date.now(),
       sender: "user",
       content: question,
@@ -306,9 +306,9 @@ export const sendQuestion = async (chatId, question) => {
     };
 
     // Simulate API delay and potential errors
-    await mockApiCall([userMessage, botResponse]);
+    await mockApiCall([userNoteBlock, botResponse]);
     
-    return [userMessage, botResponse];
+    return [userNoteBlock, botResponse];
   } catch (error) {
     console.error('Error sending question:', error);
     throw error;
@@ -317,9 +317,9 @@ export const sendQuestion = async (chatId, question) => {
 
 // Real API call (commented out for now, will be used when backend is ready)
 /*
-export const sendQuestion = async (chatId, question) => {
+export const sendQuestion = async (noteId, question) => {
   try {
-    const response = await api.post(`coach/chat/${chatId}/message`, {
+    const response = await api.post(`coach/notes/${noteId}/block`, {
       message: question,
       is_note: false,
       image_ids: []

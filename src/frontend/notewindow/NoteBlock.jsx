@@ -3,35 +3,35 @@ import PropTypes from 'prop-types';
 import MessageBubble from './components/MessageBubble';
 import TranslatableContent from './components/TranslatableContent';
 import MessageInput from '../MessageInput';
-import ChatTile from './ChatTile';
-import './ChatMessage.css';
-import './ChatTile.css';
+import NoteTile from './NoteTile';
+import './NoteBlock.css';
+import './NoteTile.css';
 import deleteIcon from '../assets/delete-message.png';
 import editIcon from '../assets/edit-mesage.png';
-import { deleteMessage, updateMessage } from '../api';
+import { deleteNoteBlock, updateNoteBlock } from '../api';
 
-const FOLD_THRESHOLD = 300; // Character threshold to consider a message long
+const FOLD_THRESHOLD = 300; // Character threshold to consider a note block long
 
 /**
- * Complete chat message component
+ * Complete note block component
  */
-const ChatMessage = React.forwardRef(({
-  msg,
+const NoteBlock = React.forwardRef(({
+  block,
   onTextSelect,
-  chatId,
+  noteId,
   onDelete,
   onEdit,
   tiles = [],
   onSendQuestion,
   onRetryTile
 }, ref) => {
-  const isBot = msg.sender === 'bot';
-  const isNote = msg.is_note || false;
-  const messageId = msg.id;
+  const isBot = block.sender === 'bot';
+  const isNote = block.is_note || false;
+  const noteBlockId = block.id;
   const contentRef = useRef(null);
-  const [displayText, setDisplayText] = useState(msg.content);
+  const [displayText, setDisplayText] = useState(block.content);
   const [isEditing, setIsEditing] = useState(false);
-  const [draftText, setDraftText] = useState(msg.content);
+  const [draftText, setDraftText] = useState(block.content);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRemoved, setIsRemoved] = useState(false);
   const [isWorking, setIsWorking] = useState(false);
@@ -40,9 +40,9 @@ const ChatMessage = React.forwardRef(({
   const canManageNote = true;
 
   useEffect(() => {
-    setDisplayText(msg.content);
-    setDraftText(msg.content);
-  }, [msg.content]);
+    setDisplayText(block.content);
+    setDraftText(block.content);
+  }, [block.content]);
 
   useImperativeHandle(ref, () => ({
     get currentRange() {
@@ -75,13 +75,13 @@ const ChatMessage = React.forwardRef(({
 
     try {
       setIsWorking(true);
-      await updateMessage(chatId, messageId, trimmed);
+      await updateNoteBlock(noteId, noteBlockId, trimmed);
       setDisplayText(trimmed);
       setDraftText(trimmed);
       setIsEditing(false);
       if (onEdit) onEdit(trimmed);
     } catch (error) {
-      console.error('Failed to update note', error);
+      console.error('Failed to update note block', error);
     } finally {
       setIsWorking(false);
     }
@@ -92,14 +92,14 @@ const ChatMessage = React.forwardRef(({
 
     try {
       setIsWorking(true);
-      await deleteMessage(chatId, messageId);
+      await deleteNoteBlock(noteId, noteBlockId);
       setIsDeleting(true);
       setTimeout(() => {
         setIsRemoved(true);
-        if (onDelete) onDelete(messageId);
+        if (onDelete) onDelete(noteBlockId);
       }, 220);
     } catch (error) {
-      console.error('Failed to delete note', error);
+      console.error('Failed to delete note block', error);
       setIsDeleting(false);
     } finally {
       setIsWorking(false);
@@ -111,7 +111,7 @@ const ChatMessage = React.forwardRef(({
 
     try {
       setIsAskingQuestion(true);
-      await onSendQuestion(questionText.trim(), messageId);
+      await onSendQuestion(questionText.trim(), noteBlockId);
       setQuestionText('');
     } catch (error) {
       console.error('Failed to ask question:', error);
@@ -154,13 +154,13 @@ const ChatMessage = React.forwardRef(({
         </button>
       </div>
 
-      <MessageBubble sender={msg.sender}>
+      <MessageBubble sender={block.sender}>
         <div className={`note-content${isEditing ? ' note-content--hidden' : ''}`}>
           <TranslatableContent
             ref={contentRef}
             content={displayText}
             onTextSelect={onTextSelect}
-            chatId={chatId}
+            noteId={noteId}
           />
         </div>
 
@@ -223,19 +223,19 @@ const ChatMessage = React.forwardRef(({
         {/* Render tiles for this note */}
         {isNote && tiles.length > 0 && (
           <section
-            className="chat-tiles-section"
+            className="note-tiles-section"
             aria-label="Questions"
           >
             {tiles.map((tile, idx) => (
-              <ChatTile
+              <NoteTile
                 key={tile.id}
                 tile={tile}
                 onRetry={onRetryTile}
-                chatId={chatId}
+                noteId={noteId}
               />
             ))}
             {tiles.length === 0 && (
-              <p className="chat-tiles__no-results">No results.</p>
+              <p className="note-tiles__no-results">No results.</p>
             )}
           </section>
         )}
@@ -245,15 +245,15 @@ const ChatMessage = React.forwardRef(({
   );
 });
 
-ChatMessage.propTypes = {
-  msg: PropTypes.shape({
+NoteBlock.propTypes = {
+  block: PropTypes.shape({
     sender: PropTypes.oneOf(['user', 'bot']).isRequired,
     content: PropTypes.string.isRequired,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     is_note: PropTypes.bool,
   }).isRequired,
   onTextSelect: PropTypes.func,
-  chatId: PropTypes.string,
+  noteId: PropTypes.string,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   tiles: PropTypes.array,
@@ -261,6 +261,6 @@ ChatMessage.propTypes = {
   onRetryTile: PropTypes.func
 };
 
-ChatMessage.displayName = 'ChatMessage';
+NoteBlock.displayName = 'NoteBlock';
 
-export default React.memo(ChatMessage);
+export default React.memo(NoteBlock);

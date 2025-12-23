@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from backend.services.sentence.sentence_service import get_sentence_retriever
 
 from .database import create_db_and_tables
-from .api.chat import router as chat_router
+from .api.notes import router as notes_router
 from .api.translation import router as translation_router
 from .api.dictionary import router as dictionary_router
 from .api.wordlist import router as wordlist_router
@@ -28,7 +28,7 @@ app.add_middleware(
 # -----------------------------
 
 # Include routers
-app.include_router(chat_router)
+app.include_router(notes_router)
 app.include_router(translation_router)
 app.include_router(dictionary_router)
 app.include_router(wordlist_router)

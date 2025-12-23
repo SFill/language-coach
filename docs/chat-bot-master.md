@@ -29,7 +29,7 @@ src/
 ├── backend/
 │   ├── api/
 │   │   ├── __init__.py
-│   │   ├── chat.py             # Chat endpoints
+│   │   ├── note.py             # Note endpoints
 │   │   ├── dictionary.py       # Dictionary lookup endpoints
 │   │   ├── sentence.py         # Example sentence retrieval endpoints
 │   │   ├── translation.py      # Translation endpoints
@@ -41,13 +41,13 @@ src/
 │   │   └── requirements.txt    # Downloader dependencies
 │   ├── models/
 │   │   ├── __init__.py
-│   │   ├── chat.py             # Chat data models
+│   │   ├── note.py             # Note data models
 │   │   ├── dict_english.py     # English dictionary models
 │   │   ├── dict_spanish.py     # Spanish dictionary models
 │   │   └── wordlist.py         # Wordlist data models
 │   ├── services/
 │   │   ├── __init__.py
-│   │   ├── chat_service.py     # Chat service with GPT integration
+│   │   ├── note_service.py     # Note service with GPT integration
 │   │   ├── dict_spanish_service.py  # Spanish dictionary service
 │   │   ├── dictionary_service.py    # English dictionary service
 │   │   ├── sentence/           # Sentence retrieval services
@@ -65,12 +65,12 @@ src/
 ├── frontend/
 │   ├── assets/
 │   │   └── react.svg
-│   ├── chatwindow/             # Chat interface components
-│   │   ├── components/         # Reusable chat components
-│   │   ├── ChatMessage.jsx     # Chat message component
-│   │   ├── ChatToolbar.jsx     # Selection toolbar component
-│   │   ├── ChatWindow.jsx      # Main chat window component
-│   │   └── ChatWindowPage.jsx  # Chat page container
+│   ├── notewindow/             # Note interface components
+│   │   ├── components/         # Reusable note components
+│   │   ├── NoteMessage.jsx     # Note message component
+│   │   ├── NoteToolbar.jsx     # Selection toolbar component
+│   │   ├── NoteWindow.jsx      # Main note window component
+│   │   └── NoteWindowPage.jsx  # Note page container
 │   ├── MessageInput/           # Advanced text input component
 │   │   ├── hooks/              # Custom hooks for input behavior
 │   │   ├── index.jsx           # Main component export

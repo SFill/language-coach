@@ -8,14 +8,14 @@ from fastapi.responses import FileResponse
 from openai import OpenAI
 from typing import List
 
-from backend.models.chat import (
-    Chat,
-    ChatListResponse,
-    ChatMessage,
-    ChatMessageCreate,
-    ChatMessageUpdate,
-    ChatImage,
-    ChatImageResponse,
+from backend.models.note import (
+    Note,
+    NoteListResponse,
+    NoteBlock,
+    NoteBlockCreate,
+    NoteBlockUpdate,
+    NoteImage,
+    NoteImageResponse,
 )
 from backend.constants import SYSTEM_PROMPT
 
@@ -24,69 +24,69 @@ client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
 
-def create_chat(session: Session, chat: Chat) -> Chat:
-    """Create a new chat session."""
-    session.add(chat)
+def create_note(session: Session, note: Note) -> Note:
+    """Create a new note session."""
+    session.add(note)
     session.commit()
-    session.refresh(chat)
-    return chat
+    session.refresh(note)
+    return note
 
-def get_chat_list(session: Session, offset: int = 0, limit: int = 100) -> list[ChatListResponse]:
-    """Get a list of chat sessions."""
-    chats = session.exec(select(Chat).order_by(Chat.id.desc()).limit(limit).offset(offset)).all()
-    chats = [ChatListResponse(id=chat.id, name=chat.name) for chat in chats]
-    return chats
+def get_note_list(session: Session, offset: int = 0, limit: int = 100) -> list[NoteListResponse]:
+    """Get a list of note sessions."""
+    notes = session.exec(select(Note).order_by(Note.id.desc()).limit(limit).offset(offset)).all()
+    notes = [NoteListResponse(id=note.id, name=note.name) for note in notes]
+    return notes
 
-def get_chat(session: Session, id: int) -> Chat:
-    """Get a specific chat session by ID."""
-    chat = session.get(Chat, id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
-    return chat
+def get_note(session: Session, id: int) -> Note:
+    """Get a specific note session by ID."""
+    note = session.get(Note, id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+    return note
 
-def delete_chat(session: Session, id: int) -> dict:
-    """Delete a chat session by ID."""
-    query = delete(Chat).where(Chat.id == id)
+def delete_note(session: Session, id: int) -> dict:
+    """Delete a note session by ID."""
+    query = delete(Note).where(Note.id == id)
     session.exec(query)
     session.commit()
     return {'status': 'ok'}
 
 def _ensure_history_content(history: dict) -> List[dict]:
-    """Return chat history content ensuring list structure."""
+    """Return note history content ensuring list structure."""
     if not(content:= history.get('content')):
         content = []
         history['content'] = content    
     if not isinstance(content, list):
-        raise HTTPException(status_code=400, detail="Chat history is corrupted")
+        raise HTTPException(status_code=400, detail="Note history is corrupted")
     return content
 
-def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
-    """Send a message to a chat session and get response."""
+def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> dict:
+    """Send a note block to a note session and get response."""
     import re
     import base64
     
-    # Retrieve the chat object
-    chat = session.get(Chat, id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+    # Retrieve the note object
+    note = session.get(Note, id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
 
     # Ensure that history has a 'content' key which is a list
-    history = chat.history or {}
+    history = note.history or {}
     content = _ensure_history_content(history)
 
-    # Parse image references in the message
-    processed_message = message.message
+    # Parse image references in the note block
+    processed_message = note_block.block
     image_contents = []
     
     # Find all image references in format @image:id
-    image_refs = re.findall(r'@image:(\d+)', message.message)
+    image_refs = re.findall(r'@image:(\d+)', note_block.block)
     
     if image_refs:
         # Get referenced images
         for img_id in image_refs:
             try:
                 image = session.exec(
-                    select(ChatImage).where(ChatImage.id == int(img_id), ChatImage.chat_id == id)
+                    select(NoteImage).where(NoteImage.id == int(img_id), NoteImage.note_id == id)
                 ).first()
                 
                 if image and os.path.exists(image.file_path):
@@ -109,41 +109,41 @@ def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
             except (ValueError, TypeError):
                 continue
 
-    # Create message content for chat history and OpenAI
+    # Create note block content for note history and OpenAI
     if image_contents:
         # For OpenAI API with images
         user_content = [{"type": "text", "text": processed_message}] + image_contents
-        # For chat history - keep original message with @image:id references for frontend
-        history_content = message.message
+        # For note history - keep original note block with @image:id references for frontend
+        history_content = note_block.block
     else:
         user_content = processed_message
-        history_content = message.message
+        history_content = note_block.block
 
     timestamp = datetime.utcnow()
-    user_message = ChatMessage(
-        id=chat.get_new_message_id(),
+    user_note_block = NoteBlock(
+        id=note.get_new_note_block_id(),
         role="user",
         content=history_content,
         created_at=timestamp,
         updated_at=timestamp,
-        is_note=message.is_note,
-        image_ids=message.image_ids,
+        is_note=note_block.is_note,
+        image_ids=note_block.image_ids,
     )
 
-    # Append the user's message to history
-    content.append(user_message.model_dump(mode="json"))
+    # Append the user's note block to history
+    content.append(user_note_block.model_dump(mode="json"))
 
-    # Update DB with user's message
+    # Update DB with user's note block
     session.exec(
-        update(Chat)
-        .where(Chat.id == id)
+        update(Note)
+        .where(Note.id == id)
         .values(history=history)
     )
     session.commit()
 
     assistant_response = ''
-    assistant_message = None
-    if not message.is_note:
+    assistant_note_block = None
+    if not note_block.is_note:
         # Prepare messages for OpenAI API
         api_messages = [
             {
@@ -152,8 +152,8 @@ def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
             }
         ]
         
-        # Add chat history (text only for previous messages)
-        for hist_msg in content[:-1]:  # Exclude the current message
+        # Add note history (text only for previous note blocks)
+        for hist_msg in content[:-1]:  # Exclude the current note block
             role = hist_msg.get("role")
             msg_content = hist_msg.get("content")
             api_messages.append({
@@ -161,7 +161,7 @@ def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
                 "content": msg_content,
             })
         
-        # Add current message with potential images
+        # Add current note block with potential images
         api_messages.append({
             "role": "user",
             "content": user_content
@@ -182,31 +182,31 @@ def send_message(session: Session, id: int, message: ChatMessageCreate) -> dict:
 
         if assistant_response:
             assistant_timestamp = datetime.utcnow()
-            assistant_message = ChatMessage(
-                id=chat.get_new_message_id(),
+            assistant_note_block = NoteBlock(
+                id=note.get_new_note_block_id(),
                 role="assistant",
                 content=assistant_response,
                 created_at=assistant_timestamp,
                 updated_at=assistant_timestamp,
             )
 
-            # Append the assistant's message
-            content.append(assistant_message.model_dump(mode="json"))
+            # Append the assistant's note block
+            content.append(assistant_note_block.model_dump(mode="json"))
 
         # Update DB with assistant's response
         session.exec(
-            update(Chat)
-            .where(Chat.id == id)
+            update(Note)
+            .where(Note.id == id)
             .values(history=history)
         )
         session.commit()
 
-    new_messages = [user_message.model_dump(mode="json")]
-    if assistant_message is not None:
-        new_messages.append(assistant_message.model_dump(mode="json"))
+    new_note_blocks = [user_note_block.model_dump(mode="json")]
+    if assistant_note_block is not None:
+        new_note_blocks.append(assistant_note_block.model_dump(mode="json"))
     return {
         'status': 'ok',
-        'new_messages': new_messages
+        'new_note_blocks': new_note_blocks
     }
 
 
@@ -224,38 +224,38 @@ def get_first(iterable, value=None, key=None, default=None):
     return next(gen, default)
 
 
-def update_chat_message(
+def update_note_block(
     session: Session,
-    chat_id: int,
-    message_id: int,
-    payload: ChatMessageUpdate,
+    note_id: int,
+    note_block_id: int,
+    payload: NoteBlockUpdate,
 ) -> dict:
-    """Update an existing chat message."""
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+    """Update an existing note block."""
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
 
-    history = chat.history or {}
+    history = note.history or {}
     content = _ensure_history_content(history)
 
-    target_message = get_first(content, key=lambda msg: ChatMessage.model_validate(msg).id == message_id)
-    if target_message is None:
-        raise HTTPException(status_code=404, detail="Message not found")
+    target_note_block = get_first(content, key=lambda block: NoteBlock.model_validate(block).id == note_block_id)
+    if target_note_block is None:
+        raise HTTPException(status_code=404, detail="Note block not found")
 
     updated = False
     now = datetime.utcnow().isoformat()
 
-    if payload.message is not None:
-        target_message['content'] = payload.message
+    if payload.block is not None:
+        target_note_block['content'] = payload.block
         updated = True
 
     if updated:
-        target_message['updated_at'] = now
+        target_note_block['updated_at'] = now
 
         history['content'] = content
         session.exec(
-            update(Chat)
-            .where(Chat.id == chat_id)
+            update(Note)
+            .where(Note.id == note_id)
             .values(history=history)
         )
         session.commit()
@@ -263,19 +263,19 @@ def update_chat_message(
     return {'status': 'ok'}
 
 
-def delete_chat_message(session: Session, chat_id: int, message_id: int) -> dict:
-    """Remove a message from chat history."""
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+def delete_note_block(session: Session, note_id: int, note_block_id: int) -> dict:
+    """Remove a note block from note history."""
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
 
-    history = chat.history or {}
+    history = note.history or {}
     content = _ensure_history_content(history)
-    content = list(filter(lambda msg: ChatMessage.model_validate(msg).id != message_id, content))
+    content = list(filter(lambda block: NoteBlock.model_validate(block).id != note_block_id, content))
     history['content'] = content
     session.exec(
-        update(Chat)
-        .where(Chat.id == chat_id)
+        update(Note)
+        .where(Note.id == note_id)
         .values(history=history)
     )
     session.commit()
@@ -283,7 +283,7 @@ def delete_chat_message(session: Session, chat_id: int, message_id: int) -> dict
     return {'status': 'ok'}
 
 # Image upload directory configuration
-UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "/tmp/chat_images"))
+UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "/tmp/note_images"))
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Allowed image types
@@ -292,12 +292,12 @@ ALLOWED_IMAGE_TYPES = {
 }
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
-async def upload_chat_image(session: Session, chat_id: int, file: UploadFile) -> ChatImageResponse:
-    """Upload an image to a chat."""
-    # Verify chat exists
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+async def upload_note_image(session: Session, note_id: int, file: UploadFile) -> NoteImageResponse:
+    """Upload an image to a note."""
+    # Verify note exists
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
     
     # Validate file type
     if file.content_type not in ALLOWED_IMAGE_TYPES:
@@ -324,8 +324,8 @@ async def upload_chat_image(session: Session, chat_id: int, file: UploadFile) ->
         f.write(content)
     
     # Create database record
-    chat_image = ChatImage(
-        chat_id=chat_id,
+    note_image = NoteImage(
+        note_id=note_id,
         filename=unique_filename,
         original_filename=file.filename,
         file_path=str(file_path),
@@ -333,32 +333,32 @@ async def upload_chat_image(session: Session, chat_id: int, file: UploadFile) ->
         file_size=len(content)
     )
     
-    session.add(chat_image)
+    session.add(note_image)
     session.commit()
-    session.refresh(chat_image)
+    session.refresh(note_image)
     
-    return ChatImageResponse(
-        id=chat_image.id,
-        filename=chat_image.filename,
-        original_filename=chat_image.original_filename,
-        mime_type=chat_image.mime_type,
-        file_size=chat_image.file_size,
-        uploaded_at=chat_image.uploaded_at
+    return NoteImageResponse(
+        id=note_image.id,
+        filename=note_image.filename,
+        original_filename=note_image.original_filename,
+        mime_type=note_image.mime_type,
+        file_size=note_image.file_size,
+        uploaded_at=note_image.uploaded_at
     )
 
-def get_chat_images(session: Session, chat_id: int) -> List[ChatImageResponse]:
-    """Get all images for a chat."""
-    # Verify chat exists
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+def get_note_images(session: Session, note_id: int) -> List[NoteImageResponse]:
+    """Get all images for a note."""
+    # Verify note exists
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
     
     images = session.exec(
-        select(ChatImage).where(ChatImage.chat_id == chat_id).order_by(ChatImage.uploaded_at.desc())
+        select(NoteImage).where(NoteImage.note_id == note_id).order_by(NoteImage.uploaded_at.desc())
     ).all()
     
     return [
-        ChatImageResponse(
+        NoteImageResponse(
             id=img.id,
             filename=img.filename,
             original_filename=img.original_filename,
@@ -369,16 +369,16 @@ def get_chat_images(session: Session, chat_id: int) -> List[ChatImageResponse]:
         for img in images
     ]
 
-def delete_chat_image(session: Session, chat_id: int, image_id: int) -> dict:
-    """Delete an image from a chat."""
-    # Verify chat exists
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+def delete_note_image(session: Session, note_id: int, image_id: int) -> dict:
+    """Delete an image from a note."""
+    # Verify note exists
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
     
     # Get image
     image = session.exec(
-        select(ChatImage).where(ChatImage.id == image_id, ChatImage.chat_id == chat_id)
+        select(NoteImage).where(NoteImage.id == image_id, NoteImage.note_id == note_id)
     ).first()
     
     if not image:
@@ -396,16 +396,16 @@ def delete_chat_image(session: Session, chat_id: int, image_id: int) -> dict:
     
     return {"status": "ok"}
 
-def get_chat_image_file(session: Session, chat_id: int, image_id: int) -> FileResponse:
+def get_note_image_file(session: Session, note_id: int, image_id: int) -> FileResponse:
     """Get the actual image file."""
-    # Verify chat exists
-    chat = session.get(Chat, chat_id)
-    if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+    # Verify note exists
+    note = session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
     
     # Get image
     image = session.exec(
-        select(ChatImage).where(ChatImage.id == image_id, ChatImage.chat_id == chat_id)
+        select(NoteImage).where(NoteImage.id == image_id, NoteImage.note_id == note_id)
     ).first()
     
     if not image:

@@ -1,36 +1,36 @@
-/* Chat Tile Styles */
-.chat-tile {
+/* Note Tile Styles */
+.note-tile {
   /* Container styles */
 }
 
 /* Loading spinner */
-.chat-tile__spinner {
+.note-tile__spinner {
   /* Add spinner styles if needed */
 }
 
 /* Tone background gradients */
-.chat-tile--tone-blue {
+.note-tile--tone-blue {
   background: linear-gradient(to bottom, white, #e6f2ff);
 }
 
-.chat-tile--tone-green {
+.note-tile--tone-green {
   background: linear-gradient(to bottom, white, #e9f9ee);
 }
 
-.chat-tile--tone-rose {
+.note-tile--tone-rose {
   background: linear-gradient(to bottom, white, #ffe8ec);
 }
 
-.chat-tile--tone-amber {
+.note-tile--tone-amber {
   background: linear-gradient(to bottom, white, #fff4e0);
 }
 
-.chat-tile--tone-slate {
+.note-tile--tone-slate {
   background: linear-gradient(to bottom, white, #f1f5f9);
 }
 
 /* Ready state article */
-.chat-tile__article {
+.note-tile__article {
   transition: all 0.2s ease-out;
   outline: none;
   border: 1px solid transparent;
@@ -42,23 +42,23 @@
 }
 
 @media (min-width: 768px) {
-  .chat-tile__article {
+  .note-tile__article {
     padding: 1.25rem;
   }
 }
 
 /* Expanded state */
-.chat-tile__article--expanded {
+.note-tile__article--expanded {
   flex-basis: 100%;
 }
 
 /* Collapsed state */
-.chat-tile__article--collapsed {
+.note-tile__article--collapsed {
   flex-basis: calc(33.333% - 1rem);
 }
 
 /* Header */
-.chat-tile__header {
+.note-tile__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,13 +67,13 @@
 }
 
 /* Time */
-.chat-tile__time {
+.note-tile__time {
   font-size: 11px;
   color: #64748b;
 }
 
 /* Title */
-.chat-tile__title {
+.note-tile__title {
   font-size: 1rem;
   font-weight: 700;
   color: #0f172a;
@@ -82,32 +82,32 @@
 }
 
 @media (min-width: 768px) {
-  .chat-tile__title {
+  .note-tile__title {
     font-size: 1.125rem;
   }
 }
 
 /* Content container */
-.chat-tile__content {
+.note-tile__content {
   display: grid;
   transition: grid-template-rows 0.2s ease-in-out;
 }
 
-.chat-tile__content--expanded {
+.note-tile__content--expanded {
   grid-template-rows: 1fr;
 }
 
-.chat-tile__content--collapsed {
+.note-tile__content--collapsed {
   grid-template-rows: 0fr;
 }
 
 /* Content inner */
-.chat-tile__content-inner {
+.note-tile__content-inner {
   overflow: hidden;
 }
 
 /* Answer label */
-.chat-tile__answer-label {
+.note-tile__answer-label {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -116,21 +116,21 @@
 }
 
 /* Answer text */
-.chat-tile__answer-text {
+.note-tile__answer-text {
   font-size: 0.875rem;
   color: #1e293b;
   line-height: 1.625;
 }
 
 /* Tiles container styles */
-.chat-tiles-section {
+.note-tiles-section {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
 /* No results message */
-.chat-tiles__no-results {
+.note-tiles__no-results {
   font-size: 0.875rem;
   color: #64748b;
 }
