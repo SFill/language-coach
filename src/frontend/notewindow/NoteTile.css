@@ -1,35 +1,11 @@
 /* Note Tile Styles */
-.note-tile {
-  /* Container styles */
-}
 
-/* Loading spinner */
-.note-tile__spinner {
-  /* Add spinner styles if needed */
-}
-
-/* Tone background gradients */
+/* Tone background gradient */
 .note-tile--tone-blue {
   background: linear-gradient(to bottom, white, #e6f2ff);
 }
 
-.note-tile--tone-green {
-  background: linear-gradient(to bottom, white, #e9f9ee);
-}
-
-.note-tile--tone-rose {
-  background: linear-gradient(to bottom, white, #ffe8ec);
-}
-
-.note-tile--tone-amber {
-  background: linear-gradient(to bottom, white, #fff4e0);
-}
-
-.note-tile--tone-slate {
-  background: linear-gradient(to bottom, white, #f1f5f9);
-}
-
-/* Ready state article */
+/* Article */
 .note-tile__article {
   transition: all 0.2s ease-out;
   outline: none;
@@ -39,22 +15,24 @@
   padding: 1rem;
   flex: none;
   min-width: 260px;
+  cursor: pointer;
+}
+
+.note-tile__article:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Selected state */
+.note-tile__article--selected {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 768px) {
   .note-tile__article {
     padding: 1.25rem;
   }
-}
-
-/* Expanded state */
-.note-tile__article--expanded {
-  flex-basis: 100%;
-}
-
-/* Collapsed state */
-.note-tile__article--collapsed {
-  flex-basis: calc(33.333% - 1rem);
 }
 
 /* Header */
@@ -87,50 +65,9 @@
   }
 }
 
-/* Content container */
-.note-tile__content {
-  display: grid;
-  transition: grid-template-rows 0.2s ease-in-out;
-}
-
-.note-tile__content--expanded {
-  grid-template-rows: 1fr;
-}
-
-.note-tile__content--collapsed {
-  grid-template-rows: 0fr;
-}
-
-/* Content inner */
-.note-tile__content-inner {
-  overflow: hidden;
-}
-
-/* Answer label */
-.note-tile__answer-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #64748b;
-  margin-top: 0.75rem;
-}
-
-/* Answer text */
-.note-tile__answer-text {
-  font-size: 0.875rem;
-  color: #1e293b;
-  line-height: 1.625;
-}
-
 /* Tiles container styles */
 .note-tiles-section {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-}
-
-/* No results message */
-.note-tiles__no-results {
-  font-size: 0.875rem;
-  color: #64748b;
 }

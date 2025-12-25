@@ -38,6 +38,30 @@ const NoteBlock = React.forwardRef(({
   const [questionText, setQuestionText] = useState('');
   const [isAskingQuestion, setIsAskingQuestion] = useState(false);
   const canManageNote = true;
+  
+  // State for tracking which content is displayed: null = main note, tileId = selected tile
+  const [activeContentId, setActiveContentId] = useState(null);
+  
+  // State for tracking deleted tiles (to hide them immediately)
+  const [deletedTileIds, setDeletedTileIds] = useState(new Set());
+  
+  // Filter out deleted tiles
+  const visibleTiles = useMemo(() => {
+    return tiles.filter(t => !deletedTileIds.has(t.id));
+  }, [tiles, deletedTileIds]);
+  
+  // Get the currently displayed content based on activeContentId
+  const currentContent = useMemo(() => {
+    if (activeContentId === null) {
+      return { id: noteBlockId, content: displayText, type: 'note' };
+    }
+    const selectedTile = visibleTiles.find(t => t.id === activeContentId);
+    if (selectedTile) {
+      return { id: selectedTile.id, content: selectedTile.content, type: 'tile' };
+    }
+    // Fallback to main note if tile not found
+    return { id: noteBlockId, content: displayText, type: 'note' };
+  }, [activeContentId, displayText, visibleTiles, noteBlockId]);
 
   useEffect(() => {
     setDisplayText(block.content);
@@ -54,32 +78,57 @@ const NoteBlock = React.forwardRef(({
     checkSelectionWithinContainer: (...args) => contentRef.current?.checkSelectionWithinContainer?.(...args)
   }));
 
+  // Handle tile click - toggle between tile and main note
+  const handleTileClick = (tileId) => {
+    if (activeContentId === tileId) {
+      // Clicking active tile returns to main note
+      setActiveContentId(null);
+    } else {
+      // Switch to selected tile
+      setActiveContentId(tileId);
+    }
+  };
+
   const handleEditToggle = () => {
     if (isDeleting || isEditing) return;
-    setDraftText(displayText);
+    setDraftText(currentContent.content);
     setIsEditing(true);
   };
 
   const handleEditCancel = () => {
     setIsEditing(false);
-    setDraftText(displayText);
+    setDraftText(currentContent.content);
   };
 
   const handleEditSave = async () => {
     const trimmed = draftText.trim();
-    if (!trimmed || trimmed === displayText || isWorking) {
+    if (!trimmed || trimmed === currentContent.content || isWorking) {
       setIsEditing(false);
-      setDraftText(displayText);
+      setDraftText(currentContent.content);
       return;
     }
 
     try {
       setIsWorking(true);
-      await updateNoteBlock(noteId, noteBlockId, trimmed);
-      setDisplayText(trimmed);
-      setDraftText(trimmed);
+      
+      if (currentContent.type === 'note') {
+        // Update main note block
+        await updateNoteBlock(noteId, noteBlockId, trimmed);
+        setDisplayText(trimmed);
+        setDraftText(trimmed);
+        if (onEdit) onEdit(trimmed);
+      } else {
+        // Update tile content
+        await updateNoteBlock(noteId, currentContent.id, trimmed);
+        // Update the tile in the tiles array
+        const updatedTiles = tiles.map(t =>
+          t.id === currentContent.id ? { ...t, content: trimmed } : t
+        );
+        // Note: We need to notify parent to update tiles, but for now just update draft
+        setDraftText(trimmed);
+      }
+      
       setIsEditing(false);
-      if (onEdit) onEdit(trimmed);
     } catch (error) {
       console.error('Failed to update note block', error);
     } finally {
@@ -92,12 +141,23 @@ const NoteBlock = React.forwardRef(({
 
     try {
       setIsWorking(true);
-      await deleteNoteBlock(noteId, noteBlockId);
-      setIsDeleting(true);
-      setTimeout(() => {
-        setIsRemoved(true);
-        if (onDelete) onDelete(noteBlockId);
-      }, 220);
+      
+      if (currentContent.type === 'tile') {
+        // Delete the selected tile
+        await deleteNoteBlock(noteId, currentContent.id);
+        // Mark tile as deleted to hide it immediately
+        setDeletedTileIds(prev => new Set([...prev, currentContent.id]));
+        // Return to main note content after deleting tile
+        setActiveContentId(null);
+      } else {
+        // Delete the main note block
+        await deleteNoteBlock(noteId, noteBlockId);
+        setIsDeleting(true);
+        setTimeout(() => {
+          setIsRemoved(true);
+          if (onDelete) onDelete(noteBlockId);
+        }, 220);
+      }
     } catch (error) {
       console.error('Failed to delete note block', error);
       setIsDeleting(false);
@@ -155,10 +215,30 @@ const NoteBlock = React.forwardRef(({
       </div>
 
       <MessageBubble sender={block.sender}>
+
+          {/* Render tiles for this note */}
+          {isNote && visibleTiles.length > 0 && (
+            <section
+              className="note-tiles-section"
+              aria-label="Questions"
+            >
+              {visibleTiles.map((tile, idx) => (
+                <NoteTile
+                  key={tile.id}
+                  tile={tile}
+                  onRetry={onRetryTile}
+                  noteId={noteId}
+                  onClick={() => handleTileClick(tile.id)}
+                  isSelected={activeContentId === tile.id}
+                />
+              ))}
+            </section>
+          )}
+
         <div className={`note-content${isEditing ? ' note-content--hidden' : ''}`}>
           <TranslatableContent
             ref={contentRef}
-            content={displayText}
+            content={currentContent.content}
             onTextSelect={onTextSelect}
             noteId={noteId}
           />
@@ -169,11 +249,11 @@ const NoteBlock = React.forwardRef(({
             <MessageInput
               onSend={() => {}}
               onAttachImage={() => {}}
-              initialValue={displayText}
+              initialValue={currentContent.content}
               onInputChange={(value) => setDraftText(value)}
               hideToolbar
               autoFocus
-              placeholder="Edit note..."
+              placeholder={currentContent.type === 'note' ? "Edit note..." : "Edit question..."}
             />
             <div className="note-edit-controls">
               <button
@@ -196,49 +276,7 @@ const NoteBlock = React.forwardRef(({
           </div>
         )}
 
-        {/* Question input section for notes */}
-        {isNote && !isEditing && (
-          <div className="question-input-section">
-            <div className="question-input-row">
-              <textarea
-                className="question-input"
-                value={questionText}
-                onChange={(e) => setQuestionText(e.target.value)}
-                onKeyPress={handleQuestionKeyPress}
-                placeholder="Ask a question about this note..."
-                disabled={isAskingQuestion}
-                rows={1}
-              />
-              <button
-                className="question-ask-button"
-                onClick={handleAskQuestion}
-                disabled={!questionText.trim() || isAskingQuestion}
-              >
-                {isAskingQuestion ? 'Asking...' : 'Ask'}
-              </button>
-            </div>
-          </div>
-        )}
 
-        {/* Render tiles for this note */}
-        {isNote && tiles.length > 0 && (
-          <section
-            className="note-tiles-section"
-            aria-label="Questions"
-          >
-            {tiles.map((tile, idx) => (
-              <NoteTile
-                key={tile.id}
-                tile={tile}
-                onRetry={onRetryTile}
-                noteId={noteId}
-              />
-            ))}
-            {tiles.length === 0 && (
-              <p className="note-tiles__no-results">No results.</p>
-            )}
-          </section>
-        )}
 
       </MessageBubble>
     </div>
