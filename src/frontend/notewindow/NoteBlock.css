@@ -51,12 +51,21 @@
 .note-container {
     position: relative;
     margin-bottom: 14px;
-    transition: opacity 0.22s ease, transform 0.22s ease;
+    transition: opacity 0.22s ease, transform 0.22s ease, background-color 0.3s ease;
 }
 .note-container--deleting {
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
+}
+.note-container--highlighted {
+    animation: highlight-flash 1.5s ease-out;
+}
+
+@keyframes highlight-flash {
+    0% { background-color: transparent; }
+    20% { background-color: rgba(255, 235, 59, 0.3); }
+    100% { background-color: transparent; }
 }
 .note-actions {
     position: absolute;

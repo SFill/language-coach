@@ -64,7 +64,7 @@
 
 /* Toolbar that appears when text is selected */
 .selection-toolbar {
-  position: absolute;
+  
   box-sizing: border-box;
   width: 100%;
   top: 0;

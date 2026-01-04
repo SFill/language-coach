@@ -39,9 +39,25 @@ def get_note_list(session: Session, offset: int = 0, limit: int = 100) -> list[N
 
 def get_note(session: Session, id: int) -> Note:
     """Get a specific note session by ID."""
+    import re
+    
     note = session.get(Note, id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
+    
+    # Populate image_ids for existing note blocks by scanning content
+    history = note.history or {}
+    content = _ensure_history_content(history)
+    
+    for block_dict in content:
+        # Check if image_ids is missing or empty
+        if 'image_ids' not in block_dict or not block_dict['image_ids']:
+            # Scan content for @image:X references
+            block_content = block_dict.get('content', '')
+            image_refs = re.findall(r'@image:(\d+)', block_content)
+            if image_refs:
+                block_dict['image_ids'] = [int(img_id) for img_id in image_refs]
+    
     return note
 
 def delete_note(session: Session, id: int) -> dict:
@@ -80,6 +96,9 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
     
     # Find all image references in format @image:id
     image_refs = re.findall(r'@image:(\d+)', note_block.block)
+    
+    # Extract image IDs from content
+    extracted_image_ids = [int(img_id) for img_id in image_refs]
     
     if image_refs:
         # Get referenced images
@@ -127,7 +146,7 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         created_at=timestamp,
         updated_at=timestamp,
         is_note=note_block.is_note,
-        image_ids=note_block.image_ids,
+        image_ids=extracted_image_ids,
     )
 
     # Append the user's note block to history
@@ -231,6 +250,8 @@ def update_note_block(
     payload: NoteBlockUpdate,
 ) -> dict:
     """Update an existing note block."""
+    import re
+    
     note = session.get(Note, note_id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -247,6 +268,11 @@ def update_note_block(
 
     if payload.block is not None:
         target_note_block['content'] = payload.block
+        
+        # Rescan for image references when content is updated
+        image_refs = re.findall(r'@image:(\d+)', payload.block)
+        target_note_block['image_ids'] = [int(img_id) for img_id in image_refs]
+        
         updated = True
 
     if updated:

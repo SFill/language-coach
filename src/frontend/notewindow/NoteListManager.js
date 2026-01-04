@@ -84,6 +84,22 @@ class NoteListManager {
 
   /**
    * Set current note ID from URL path and load the note
+   *
+   * FLOW SEQUENCE:
+   * 1. Called from App.jsx useEffect when pathname or location.state changes
+   * 2. Extracts noteId from URL path (e.g., /note/63 → 63)
+   * 3. If noteId changed:
+   *    a. Updates currentNoteId
+   *    b. Updates currentNoteName from noteList
+   *    c. Resets NoteManager state (clears noteBlocks, maxNoteBlockId)
+   *    d. If noteId exists:
+   *       - Extracts initialMessage from locationState (for new note flow)
+   *       - Calls noteManager.loadNote(noteId, initialMessage)
+   *         * Fetches note data from backend via fetchNoteById
+   *         * Sets noteBlocks and maxNoteBlockId from response
+   *         * If initialMessage exists, calls handleSend to send it
+   *    e. Notifies all listeners with updated state
+   *
    * @param {string} pathname - Current URL pathname
    * @param {Object} locationState - Location state from React Router (for initialMessage)
    */
@@ -114,6 +130,17 @@ class NoteListManager {
 
   /**
    * Handle note selection
+   *
+   * FLOW SEQUENCE (EXISTING NOTE FLOW):
+   * 1. Called when user clicks a note in the note list
+   * 2. Updates currentNoteId and currentNoteName
+   * 3. Navigates to /note/{noteId}
+   * 4. Resets NoteManager state (clears noteBlocks)
+   * 5. Loads note via noteManager.loadNote(noteId)
+   *    - Fetches note data from backend
+   *    - Sets noteBlocks and maxNoteBlockId
+   * 6. Notifies listeners with updated state
+   *
    * @param {number} noteId - The note ID to select
    */
   async selectNote(noteId) {
@@ -161,8 +188,30 @@ class NoteListManager {
 
   /**
    * Handle note creation
+   *
+   * FLOW SEQUENCE (NEW NOTE FLOW):
+   * 1. User sends message from home page (noteId is null)
+   * 2. NoteManager.handleSend() called with null noteId
+   * 3. NoteManager creates new note via createNewNote() API
+   * 4. NoteManager resets its state and calls this callback with newNoteId and initialMessage
+   * 5. This method:
+   *    a. Reloads note list via loadNotes() to include new note
+   *    b. Navigates to /note/{newNoteId} with initialMessage in state
+   * 6. Navigation triggers setCurrentNoteFromPath (see above):
+   *    a. Updates currentNoteId to newNoteId
+   *    b. Resets NoteManager state
+   *    c. Calls noteManager.loadNote(newNoteId, initialMessage)
+   * 7. loadNote():
+   *    a. Fetches note data from backend (empty note_blocks)
+   *    b. Sets noteBlocks and maxNoteBlockId
+   *    c. Calls handleSend(newNoteId, message, isNote) with the initialMessage
+   * 8. handleSend() now has noteId, so calls sendBlock():
+   *    a. Adds user message to UI optimistically
+   *    b. Sends to backend via sendNoteBlock()
+   *    c. Adds bot reply to UI
+   *
    * @param {number} newNoteId - The newly created note ID
-   * @param {Object} message - The initial message to send
+   * @param {Object} message - The initial message to send {message: string, isNote: boolean}
    */
   handleNoteCreated(newNoteId, message) {
     // Reload the note list to include the new note

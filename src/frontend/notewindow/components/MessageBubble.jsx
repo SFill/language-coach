@@ -14,7 +14,6 @@ const MessageBubble = React.memo(({ sender, children }) => {
 });
 
 MessageBubble.propTypes = {
-  sender: PropTypes.oneOf(['user', 'bot']).isRequired,
   children: PropTypes.node.isRequired
 };
 

@@ -5,6 +5,8 @@
     border-radius: 5px;
     align-self: flex-start;
     max-width: 100%;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .user {

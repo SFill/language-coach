@@ -23,12 +23,15 @@ const NoteBlock = React.forwardRef(({
   onEdit,
   tiles = [],
   onSendQuestion,
-  onRetryTile
+  onRetryTile,
+  isHighlighted = false,
+  noteBlockId: dataBlockId
 }, ref) => {
   const isBot = block.sender === 'bot';
   const isNote = block.is_note || false;
   const noteBlockId = block.id;
   const contentRef = useRef(null);
+  const containerRef = useRef(null);
   const [displayText, setDisplayText] = useState(block.content);
   const [isEditing, setIsEditing] = useState(false);
   const [draftText, setDraftText] = useState(block.content);
@@ -75,7 +78,11 @@ const NoteBlock = React.forwardRef(({
     handleTranslate: (...args) => contentRef.current?.handleTranslate?.(...args),
     handleRollback: (...args) => contentRef.current?.handleRollback?.(...args),
     handleGlobalSelection: (...args) => contentRef.current?.handleGlobalSelection?.(...args),
-    checkSelectionWithinContainer: (...args) => contentRef.current?.checkSelectionWithinContainer?.(...args)
+    checkSelectionWithinContainer: (...args) => contentRef.current?.checkSelectionWithinContainer?.(...args),
+    // Expose container element for scrolling
+    get containerElement() {
+      return containerRef.current;
+    }
   }));
 
   // Handle tile click - toggle between tile and main note
@@ -190,7 +197,11 @@ const NoteBlock = React.forwardRef(({
   if (isRemoved) return null;
 
   return (
-    <div className={`note-container${isDeleting ? ' note-container--deleting' : ''}`}>
+    <div
+      ref={containerRef}
+      data-note-block-id={dataBlockId}
+      className={`note-container${isDeleting ? ' note-container--deleting' : ''}${isHighlighted ? ' note-container--highlighted' : ''}`}
+    >
       <div className={`note-actions${isNote ? ' note-actions--sticky' : ''}`} aria-hidden={isEditing}>
         <button
           type="button"
@@ -217,7 +228,7 @@ const NoteBlock = React.forwardRef(({
       <MessageBubble sender={block.sender}>
 
           {/* Render tiles for this note */}
-          {isNote && visibleTiles.length > 0 && (
+          {visibleTiles.length > 0 && (
             <section
               className="note-tiles-section"
               aria-label="Questions"
@@ -285,7 +296,6 @@ const NoteBlock = React.forwardRef(({
 
 NoteBlock.propTypes = {
   block: PropTypes.shape({
-    sender: PropTypes.oneOf(['user', 'bot']).isRequired,
     content: PropTypes.string.isRequired,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     is_note: PropTypes.bool,
@@ -296,7 +306,9 @@ NoteBlock.propTypes = {
   onEdit: PropTypes.func,
   tiles: PropTypes.array,
   onSendQuestion: PropTypes.func,
-  onRetryTile: PropTypes.func
+  onRetryTile: PropTypes.func,
+  isHighlighted: PropTypes.bool,
+  noteBlockId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 NoteBlock.displayName = 'NoteBlock';

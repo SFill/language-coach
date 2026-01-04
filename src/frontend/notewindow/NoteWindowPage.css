@@ -23,9 +23,10 @@
 .left-area {
     /* Similar styling to dictionary-area for consistency */
     height: 100%;
-    min-width: 350px;
-    flex: 1;
-    flex-shrink: 2;
+    width: 400px;
+    min-width: 250px;
+    max-width: 800px;
+    flex-shrink: 0;
     /* to attach to the top */
     position: sticky;
     align-self: flex-start;
@@ -33,7 +34,8 @@
 
     overflow-y: auto;
     max-height: 100vh;
-    transition: min-width ease 0.5s;
+    transition: width ease 0.3s;
+    resize: horizontal;
 }
 
 @media screen and (max-width: 900px) {
@@ -46,6 +48,31 @@
 .note-window-page {
     flex-direction: column;
     width: 60%;
-    min-width: 500px;
+    min-width: 800px;
     display: flex;
+}
+
+.expand-images-button {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    /* transform: translateY(-50%); */
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 1rem 0.5rem;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.expand-images-button:hover {
+    background: #0056b3;
+    padding-left: 0.75rem;
 }

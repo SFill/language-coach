@@ -5,12 +5,13 @@ import './NoteWindow.css';
 import { useWordlist } from '../wordlist/WordlistContext';
 import { uploadNoteImage, sendQuestion } from '../api';
 
-const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef, onImageUploaded, onSendQuestion }) => {
+const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef, onImageUploaded, onSendQuestion }, ref) => {
   const noteContainerRef = useRef(null);
   const toolbarRef = useRef(null);
 
-  // Create refs for each NoteBlock (using index as key for simplicity)
+  // Create refs for each NoteBlock component
   const noteBlockRefs = useRef([]);
+  const [highlightedNoteId, setHighlightedNoteId] = useState(null);
 
   // Toolbar state: style (including position), active note block ref, and whether the selection is translated.
   const [toolbarStyle, setToolbarStyle] = useState({ display: 'none' });
@@ -40,6 +41,21 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
       noteContainerRef.current.scrollTop = noteContainerRef.current.scrollHeight;
     }
   }, [noteBlocks]);
+
+  // Expose scrollToNoteBlock method to parent
+  React.useImperativeHandle(ref, () => ({
+    scrollToNoteBlock: (noteBlockId) => {
+      const index = noteBlocks.findIndex(block => block.id === noteBlockId);
+      if (index !== -1 && noteBlockRefs.current[index]?.current?.containerElement) {
+        const element = noteBlockRefs.current[index].current.containerElement;
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Add highlight animation
+        setHighlightedNoteId(noteBlockId);
+        setTimeout(() => setHighlightedNoteId(null), 1500);
+      }
+    }
+  }));
 
   // Single paste handler for images: uploads and inserts refs into editor
   useEffect(() => {
@@ -264,31 +280,33 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
     let currentNoteId = null;
     
     // Iterate through note blocks to find notes and questions
-    noteBlocks.forEach((block) => {
-      if (block.is_note) {
+    for (let index = 0; index < noteBlocks.length; index++) {
+      const block = noteBlocks[index];
+      
+      if (block.role =='user' && !tileGroups[block.id]) {
+          tileGroups[block.id] = [];
+          currentNoteId = block.id
+      }
+
+      if (block.role == 'assistant') {
         // This is a note - track its ID
-        currentNoteId = block.id;
-        if (!tileGroups[currentNoteId]) {
-          tileGroups[currentNoteId] = [];
-        }
-      } else {
-        // This is a question following a note
-        // Create tile from question and answer pair
-        const tile = {
+        // Join this block with the next assistant block as a single tile
+          const tile = {
             id: block.id,
             noteId: currentNoteId,
-            title: "question",
+            title: "answer to exercise",
             content: block.content,
             state: 'ready',
             expanded: false,
             createdAt: block.created_at,
             error: null
           };
-
-        if(tileGroups[currentNoteId]) tileGroups[currentNoteId].push(tile);
+          
+          tileGroups[currentNoteId].push(tile);
+          
       }
-    });
-    
+
+    }
     return tileGroups;
   };
 
@@ -323,11 +341,11 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
           if (!noteBlockRefs.current[index]) {
             noteBlockRefs.current[index] = React.createRef();
           }
-          if (!block.is_note) {
-            return
-          }
+
           // Get tiles for this note block if it's a note, and apply UI states
           const blockTiles = tileGroups[block.id] || [];
+          
+          const isHighlighted = highlightedNoteId === block.id;
           
           return (
             <NoteBlock
@@ -338,6 +356,8 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
               tiles={blockTiles}
               onSendQuestion={handleSendQuestion}
               onRetryTile={handleRetryTile}
+              isHighlighted={isHighlighted}
+              noteBlockId={block.id}
               onTextSelect={(rect, text, isTranslated) => {
                 // Use a timeout to ensure the child event has completed.
                 setTimeout(() => handleTextSelect(noteBlockRefs.current[index], rect, text, isTranslated), 0);
@@ -364,6 +384,8 @@ const NoteWindow = ({ noteBlocks, onCheckInDictionary, noteId, noteBlockInputRef
       />
     </div>
   );
-};
+});
+
+NoteWindow.displayName = 'NoteWindow';
 
 export default NoteWindow;
