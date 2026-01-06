@@ -65,8 +65,9 @@ class NoteManager {
       }
 
       // If there's an initial message, send it after loading
-      if (initialMessage) {
-        await this.handleSend(noteId, initialMessage.message, initialMessage.isNote);
+      // Only send if message is provided and not empty
+      if (initialMessage && initialMessage.message && initialMessage.message.trim()) {
+        await this.sendBlock(noteId, initialMessage.message, initialMessage.isNote);
       }
     } catch (error) {
       console.error('Error loading note:', error);
@@ -122,94 +123,61 @@ class NoteManager {
    * @param {boolean} isNote - Whether this is a note (true) or question (false)
    * @returns {Promise<void>}
    */
-  async sendBlock(noteId, message, isNote = false) {
+  async sendBlock(noteId, message, isNote = false, parentNoteBlockId = null) {
     if (!message.trim()) return;
     if (!noteId) {
       throw new Error('Note ID is required to send a block');
     }
 
-    // Add user note block to UI immediately with optimistic ID
-    const newNoteBlockId = this.maxNoteBlockId + 1;
-    this.maxNoteBlockId = newNoteBlockId;
-    const userNoteBlock = {
-      sender: 'user',
-      content: message.trim(),
-      id: newNoteBlockId,
-      is_note: isNote
-    };
-    this.noteBlocks = [...this.noteBlocks, userNoteBlock];
-    this.notifyListeners();
+    // Add user block optimistically ONLY for notes
+    if (isNote) {
+      const newNoteBlockId = this.maxNoteBlockId + 1;
+      this.maxNoteBlockId = newNoteBlockId;
+      const userNoteBlock = {
+        sender: 'user',
+        content: message.trim(),
+        id: newNoteBlockId,
+        is_note: isNote
+      };
+      this.noteBlocks = [...this.noteBlocks, userNoteBlock];
+      this.notifyListeners();
+    }
 
     try {
-      const [userNoteBlock, botReply] = await sendNoteBlock(noteId, {
-        block: message,
-        is_note: isNote
-      });
+      if (isNote) {
+        // EXISTING: Note flow - returns [userBlock] (only 1 block)
+        // Backend always returns userBlock, but for notes there's no assistant response
+        const [userNoteBlock] = await sendNoteBlock(noteId, {
+          block: message,
+          is_note: isNote
+        });
+        
+        // User block already added optimistically above, no need to add again
+      } else {
+        // NEW: Question flow - returns SINGLE Q&A block
+        // REPLACES the old sendNoteBlock with is_note=false
+        const qaBlock = await sendQuestion(noteId, {
+          question: message,
+          parent_note_block_id: parentNoteBlockId
+        });
 
-      if (botReply) {
-        this.noteBlocks = [...this.noteBlocks, botReply];
-        this.notifyListeners();
+        if (qaBlock) {
+          this.noteBlocks = [...this.noteBlocks, qaBlock];
+          this.notifyListeners();
+        }
       }
     } catch (error) {
-      console.error('Error sending note block:', error);
+      console.error('Error sending block:', error);
       // Add error message to UI
       this.noteBlocks = [...this.noteBlocks, {
         sender: 'bot',
-        content: 'Error sending note block'
+        content: 'Error sending block'
       }];
       this.notifyListeners();
       throw error;
     }
   }
 
-  /**
-   * Handle sending a question about a note
-   * @param {number} noteId - The note ID
-   * @param {string} questionText - The question text
-   * @returns {Promise<void>}
-   */
-  async handleSendQuestion(noteId, questionText) {
-    if (!questionText.trim() || !noteId) return;
-
-    try {
-      // Add user question to UI immediately
-      const newNoteBlockId = this.maxNoteBlockId + 1;
-      this.maxNoteBlockId = newNoteBlockId + 1; // Reserve ID for bot response too
-      const userQuestion = {
-        sender: 'user',
-        content: questionText.trim(),
-        id: newNoteBlockId,
-        is_note: false,
-        created_at: new Date().toISOString()
-      };
-      this.noteBlocks = [...this.noteBlocks, userQuestion];
-      this.notifyListeners();
-
-      // Send question and get response
-      const [userNoteBlock, botReply] = await sendQuestion(noteId, questionText);
-
-      // Update the user note block with server response and add bot reply
-      if (botReply) {
-        this.noteBlocks = this.noteBlocks.map(block =>
-          block.id === newNoteBlockId ? { ...userNoteBlock, id: newNoteBlockId } : block
-        );
-        this.noteBlocks = [...this.noteBlocks, { ...botReply, id: newNoteBlockId + 1 }];
-        this.notifyListeners();
-      }
-    } catch (error) {
-      console.error('Error sending question:', error);
-      // Add error note block
-      this.noteBlocks = [...this.noteBlocks, {
-        sender: 'bot',
-        content: 'Error sending question. Please try again.',
-        id: this.maxNoteBlockId + 2,
-        created_at: new Date().toISOString()
-      }];
-      this.maxNoteBlockId = this.maxNoteBlockId + 2;
-      this.notifyListeners();
-      throw error;
-    }
-  }
 
   /**
    * Reset the manager state

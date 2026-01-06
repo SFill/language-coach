@@ -113,7 +113,9 @@ function NoteWindowPage({ noteManager }) {
                     noteId={noteId}
                     noteBlockInputRef={noteBlockInputRef}
                     onImageUploaded={handleImageUpload}
-                    onSendQuestion={(questionText) => noteManager.handleSendQuestion(noteId, questionText)}
+                    onSendQuestion={(questionText, parentNoteBlockId) =>
+                        noteManager.sendBlock(noteId, questionText, false, parentNoteBlockId)
+                    }
                     onActiveNoteChange={handleActiveNoteChange}
                 />
                 <MessageInput

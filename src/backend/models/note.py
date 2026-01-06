@@ -1,18 +1,27 @@
 from sqlmodel import SQLModel, Field, Column, JSON, Relationship
 from pydantic import BaseModel, Field as PydanticField, computed_field
 from datetime import datetime
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Union
+import re
 
 
 class NoteBlock(BaseModel):
     """Schema representing a message stored in note history."""
     id: int
     role: Literal["user", "assistant", "system", "developer"]
-    content: str
+    content: str  # Always string for backward compatibility
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     is_note: bool = False
-    image_ids: List[int] = PydanticField(default_factory=list)
+    parent_note_block_id: Optional[int] = None  # Links questions to parent note
+    block_type: Optional[str] = None  # "note", "question", "qa_response"
+    question_title: Optional[str] = None  # Rephrased question title for Q&A blocks
+    
+    @computed_field
+    @property
+    def image_ids(self) -> List[int]:
+        """Parse image IDs from content dynamically - no storage needed."""
+        return [int(img_id) for img_id in re.findall(r'@image:(\d+)', self.content)]
 
 
 class Note(SQLModel, table=True):
@@ -76,3 +85,9 @@ class NoteBlockCreate(BaseModel):
 class NoteBlockUpdate(BaseModel):
     """Schema for updating existing note messages."""
     block: Optional[str] = None
+
+
+class QuestionCreate(BaseModel):
+    """Schema for creating a question about a note."""
+    question: str
+    parent_note_block_id: Optional[int] = None

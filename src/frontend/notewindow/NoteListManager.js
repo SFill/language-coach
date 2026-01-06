@@ -121,6 +121,11 @@ class NoteListManager {
           const initialMessage = locationState?.initialMessage;
           await this.noteManager.loadNote(this.currentNoteId, initialMessage);
           console.log(`setCurrentNoteFromPath: ${this.noteManager}, ${initialMessage}`)
+          
+          // Clear the location state after using initialMessage to prevent re-sending on refresh
+          if (initialMessage && this.navigateCallback) {
+            this.navigateCallback(`/note/${this.currentNoteId}`, { replace: true, state: {} });
+          }
         }
         
         this.notifyListeners();

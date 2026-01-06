@@ -10,11 +10,13 @@ from backend.models.note import (
     NoteBlockCreate,
     NoteBlockUpdate,
     NoteImageResponse,
+    QuestionCreate,
 )
 from backend.services.notes_service import (
     create_note, get_note_list, get_note,
     delete_note, send_note_block, update_note_block, delete_note_block,
-    upload_note_image, get_note_images, delete_note_image, get_note_image_file
+    upload_note_image, get_note_images, delete_note_image, get_note_image_file,
+    send_question
 )
 
 # Create router
@@ -56,6 +58,12 @@ def delete_note_endpoint(session: SessionDep, id: int):
 def send_note_block_endpoint(session: SessionDep, id: int, note_block: NoteBlockCreate):
     """Send a note block to a note and get a response."""
     return send_note_block(session, id, note_block)
+
+
+@router.post('/{id}/question')
+def send_question_endpoint(session: SessionDep, id: int, question_data: QuestionCreate):
+    """Send a question about a note block and get a structured Q&A response."""
+    return send_question(session, id, question_data)
 
 
 @router.patch('/{id}/block/{note_block_id}')

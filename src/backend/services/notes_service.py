@@ -16,8 +16,10 @@ from backend.models.note import (
     NoteBlockUpdate,
     NoteImage,
     NoteImageResponse,
+    QuestionCreate,
 )
 from backend.constants import SYSTEM_PROMPT
+from backend.services.question_service import QuestionService
 
 # Initialize OpenAI client
 client = OpenAI(
@@ -54,6 +56,7 @@ def get_note(session: Session, id: int) -> Note:
         if 'image_ids' not in block_dict or not block_dict['image_ids']:
             # Scan content for @image:X references
             block_content = block_dict.get('content', '')
+            print(block_content)
             image_refs = re.findall(r'@image:(\d+)', block_content)
             if image_refs:
                 block_dict['image_ids'] = [int(img_id) for img_id in image_refs]
@@ -446,3 +449,20 @@ def get_note_image_file(session: Session, note_id: int, image_id: int) -> FileRe
         media_type=image.mime_type,
         filename=image.original_filename
     )
+
+
+def send_question(session: Session, note_id: int, question_data: QuestionCreate) -> dict:
+    """
+    Send a question about a note and get a structured Q&A response.
+    Uses QuestionService with proper OOP design.
+    
+    Args:
+        session: Database session
+        note_id: ID of the note to ask about
+        question_data: Question data including question text and parent block ID
+        
+    Returns:
+        Dict with status and qa_block
+    """
+    service = QuestionService(session)
+    return service.process_question(note_id, question_data)

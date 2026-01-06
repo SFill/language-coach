@@ -196,7 +196,7 @@ autoFocus,
   return (
     <div className="message-input">
       <div className="text-area-with-toolbar">
-        {hideToolbar ||        
+        {/* {hideToolbar ||        
         <div className="selection-toolbar-div">
           <SelectionToolbar
             displayText={displayText}
@@ -206,7 +206,18 @@ autoFocus,
             isTranslating={isTranslating}
             onAttachImage={onAttachImage}
           />
-        </div>}
+        </div>} */}
+        
+        <div className="selection-toolbar-div">
+          <SelectionToolbar
+            displayText={displayText}
+            onTranslate={handleTranslate}
+            onSend={handleSendMessage}
+            preferredLanguage={preferredLanguage}
+            isTranslating={isTranslating}
+            onAttachImage={onAttachImage}
+          />
+        </div>
         <TextEditor
           value={input}
           onChange={handleChange}

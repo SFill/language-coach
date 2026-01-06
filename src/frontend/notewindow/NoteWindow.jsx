@@ -294,7 +294,7 @@ const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, 
           const tile = {
             id: block.id,
             noteId: currentNoteId,
-            title: "answer to exercise",
+            title: block.question_title,
             content: block.content,
             state: 'ready',
             expanded: false,
@@ -311,12 +311,12 @@ const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, 
   };
 
   // Send question about a note
-  const handleSendQuestion = async (questionText, noteBlockId) => {
+  const handleSendQuestion = async (questionText, parentNoteBlockId) => {
     if (!questionText.trim() || !noteId || !onSendQuestion) return;
 
     try {
-      // Call the parent component's send question handler
-      await onSendQuestion(questionText, noteId);
+      // Call the parent component's send question handler with parent block ID
+      await onSendQuestion(questionText, parentNoteBlockId);
     } catch (error) {
       console.error('Failed to send question:', error);
       // Handle error - could show a toast notification
@@ -346,7 +346,9 @@ const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, 
           const blockTiles = tileGroups[block.id] || [];
           
           const isHighlighted = highlightedNoteId === block.id;
-          
+          if (!block.is_note) {
+            return
+          }
           return (
             <NoteBlock
               key={index}

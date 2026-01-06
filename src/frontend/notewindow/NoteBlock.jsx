@@ -2,6 +2,7 @@ import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from
 import PropTypes from 'prop-types';
 import MessageBubble from './components/MessageBubble';
 import TranslatableContent from './components/TranslatableContent';
+import MarkdownContent from './components/MarkdownContent';
 import MessageInput from '../MessageInput';
 import NoteTile from './NoteTile';
 import './NoteBlock.css';
@@ -32,6 +33,10 @@ const NoteBlock = React.forwardRef(({
   const noteBlockId = block.id;
   const contentRef = useRef(null);
   const containerRef = useRef(null);
+  
+  // Q&A blocks have question_title field
+  const isQABlock = block.block_type === 'qa_response' && block.question_title;
+  
   const [displayText, setDisplayText] = useState(block.content);
   const [isEditing, setIsEditing] = useState(false);
   const [draftText, setDraftText] = useState(block.content);
@@ -258,7 +263,7 @@ const NoteBlock = React.forwardRef(({
         {isEditing && (
           <div className="note-edit-panel">
             <MessageInput
-              onSend={() => {}}
+              onSend={onSendQuestion}
               onAttachImage={() => {}}
               initialValue={currentContent.content}
               onInputChange={(value) => setDraftText(value)}
@@ -299,6 +304,8 @@ NoteBlock.propTypes = {
     content: PropTypes.string.isRequired,
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     is_note: PropTypes.bool,
+    block_type: PropTypes.string,
+    question_title: PropTypes.string,
   }).isRequired,
   onTextSelect: PropTypes.func,
   noteId: PropTypes.string,
