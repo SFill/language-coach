@@ -13,7 +13,7 @@
     "test:a11y": "playwright test tests/accessibility.spec.ts",
     "test:console": "playwright test tests/console.spec.ts",
     "test:all": "playwright test",
-    "judge": "node scripts/judge.mjs",
+    "judge": "python scripts/judge.py",
     "iterate": "./scripts/iterate.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

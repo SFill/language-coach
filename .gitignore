@@ -47,3 +47,5 @@ storybook-static
 .playwright-mcp/*
 .stitch/*
 .python-version
+tests/screenshots/*
+tests/snapshots/*

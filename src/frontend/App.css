@@ -51,7 +51,7 @@
 .navbar .nav-links a {
   min-width: 100px;
   padding: 8px;
-  background-color: #007bff;
+  background-color: #0056b3;
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -64,7 +64,7 @@
 .navbar button {
   width: 100px;
   padding: 8px;
-  background-color: #007bff;
+  background-color: #0056b3;
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -72,7 +72,7 @@
 }
 
 .navbar button:hover {
-  background-color: #0056b3;
+  background-color: #003d80;
 }
 
 .page {

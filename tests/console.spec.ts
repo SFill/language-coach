@@ -15,7 +15,7 @@ function isRealError(msg: string): boolean {
 }
 
 test.describe('Console errors', () => {
-  test('no console errors on home page', async ({ page }) => {
+  test('no console errors on homework page', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (msg) => {
       if (msg.type() === 'error') {
@@ -24,22 +24,6 @@ test.describe('Console errors', () => {
     });
 
     await page.goto('/');
-    await page.waitForLoadState('networkidle');
-
-    const realErrors = errors.filter(isRealError);
-
-    expect(realErrors, `Console errors found: ${realErrors.join('\n')}`).toEqual([]);
-  });
-
-  test('no console errors on notelist page', async ({ page }) => {
-    const errors: string[] = [];
-    page.on('console', (msg) => {
-      if (msg.type() === 'error') {
-        errors.push(msg.text());
-      }
-    });
-
-    await page.goto('/notelist');
     await page.waitForLoadState('networkidle');
 
     const realErrors = errors.filter(isRealError);

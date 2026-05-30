@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Layout checks', () => {
-  test('no horizontal overflow on home', async ({ page }) => {
+  test('no horizontal overflow on homework page', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     const overflow = await page.evaluate(() => {
@@ -11,20 +11,17 @@ test.describe('Layout checks', () => {
     expect(overflow).toBe(false);
   });
 
-  test('navbar is visible and has links', async ({ page }) => {
+  test('sidebar is visible', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    const navbar = page.locator('.navbar');
-    await expect(navbar).toBeVisible();
-    const links = navbar.locator('a');
-    const count = await links.count();
-    expect(count).toBeGreaterThan(0);
+    const sidebar = page.locator('.hw-sidebar');
+    await expect(sidebar).toBeVisible();
   });
 
   test('main content area renders', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
-    const main = page.locator('.main-container, .main-block, .page').first();
+    const main = page.locator('.hw-page').first();
     await expect(main).toBeVisible();
   });
 

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Accessibility', () => {
-  test('home page has no axe violations', async ({ page }) => {
+  test('homework page has no axe violations', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 

@@ -2,6 +2,12 @@
 
 This project supports an agentic UI development loop where a coding agent (non-vision model) implements UI changes and verifies them automatically using Playwright MCP. Vision model comparison is optional.
 
+## List of don'ts:
+- dont read image directly as you dont dupport image recognition
+Read 1 file (ctrl+o to expand)
+  ⎿  API Error: 400 this model does not support image input (ref: c18d58d5-7a20-4ce9-9e8a-d1770bdcb9fb)
+- for image feedback use scripts
+
 ### Architecture
 
 ```
@@ -11,12 +17,14 @@ Agent (implement) → code changes → Playwright MCP (verify) → agent iterate
 
 ### Tools
 
-| Tool                     | Purpose                                                                                                                                         |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Playwright MCP**       | Interactive browser control — navigate, screenshot, evaluate JS, check console, get accessibility tree                                          |
-| **Playwright tests**     | Automated regression — `visual.spec.ts`, `layout.spec.ts`, `accessibility.spec.ts`, `console.spec.ts`                                           |
-| **`scripts/judge.mjs`**  | *(Optional)* Vision model comparison — sends target + implementation screenshots to GPT-4o or Claude, returns `{ match, feedback, diff_areas }` |
-| **`scripts/iterate.sh`** | CLI loop — runs Playwright tests, optionally calls judge on failures, writes reports to `tests/reports/`                                        |
+| Tool                                       | Purpose                                                                                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Playwright MCP**                         | Interactive browser control — navigate, screenshot, evaluate JS, check console, get accessibility tree                                      |
+| **Playwright tests**                       | Automated regression — `visual.spec.ts`, `layout.spec.ts`, `accessibility.spec.ts`, `console.spec.ts`                                       |
+| **`scripts/judge.py`**                     | *(Optional)* Vision model comparison — sends target + implementation screenshots to vision model, returns `{ match, feedback, diff_areas }` |
+| **`scripts/explain_screenshot.py`**        | *(Optional)* Vision model description of a single screenshot — modes: `brief`, `detailed`; `--focus <aspect>` to emphasize a specific detail (e.g. `cards`, `spacing`, `text readability`) |
+| **`scripts/prepare_stitch_screenshot.py`** | Download Stitch screen HTML and serve locally for high-res Playwright rendering                                                             |
+| **`/stitch-screenshot` skill**             | Full workflow: fetch Stitch HTML → serve → navigate → check errors → screenshot                                                             |
 
 ### MCP Verification Workflow
 
@@ -24,7 +32,7 @@ When using Playwright MCP to verify UI changes:
 
 1. **Set viewport** — `browser_resize` to 1920×1280
 2. **Navigate** — `browser_navigate` to the route
-3. **Screenshot** — `browser_take_screenshot` saves to `tests/screenshots/`
+3. **Screenshot** — `browser_take_screenshot` saves to `tests/screenshots/` - (optional) only if visial model is involved as judge
 4. **Layout check** — `browser_evaluate` for overflow, element visibility:
    ```js
    () => {
@@ -34,7 +42,7 @@ When using Playwright MCP to verify UI changes:
    ```
 5. **Console errors** — `browser_console_messages({ level: "error" })`, filter backend-connection errors
 6. **Accessibility** — Inject axe-core via `browser_evaluate`, then run `window.axe.run()`
-7. **Judge comparison** (optional) — `node scripts/judge.mjs --target <target.png> --impl <current.png>`
+7. **Judge comparison** (optional) — `python scripts/judge.py --target <target.png> --impl <current.png>`
 
 ### App Routes
 
@@ -60,7 +68,7 @@ npm run test:layout    # Overflow, element visibility, viewport
 npm run test:a11y      # axe-core accessibility violations
 npm run test:console   # Console error detection (filtered)
 npm run test:all       # All Playwright tests
-npm run judge          # node scripts/judge.mjs
+npm run judge          # python scripts/judge.py
 npm run iterate        # ./scripts/iterate.sh
 ```
 
@@ -79,8 +87,10 @@ tests/
 └── reports/                 # Judge + iterate output (gitignored)
 
 scripts/
-├── judge.mjs               # Vision model comparison (OpenAI/Claude)
-└── iterate.sh               # Edit → build → test → report loop
+├── judge.py                     # Vision model comparison (OpenAI-compatible endpoint)
+├── explain_screenshot.py        # Describe a screenshot via vision model (brief/detailed)
+├── prepare_stitch_screenshot.py # Download Stitch HTML, serve locally for Playwright
+└── iterate.sh                   # Edit → build → test → report loop
 ```
 
 ## General information

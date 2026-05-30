@@ -17,13 +17,14 @@ export default function HomeworkLab() {
         <TopNavBar />
 
         <main className="hw-split-layout">
-          {/* Left Pane: Task Feed */}
+          {/* Left Pane: Visual Writing Prompts */}
           <section className="hw-task-pane">
             <div className="hw-task-pane-header">
-              <h3 className="hw-pane-title">Visual Writing Prompts</h3>
-              <p className="hw-pane-subtitle">
-                Select a scene and describe it in detail to practice descriptive vocabulary.
-              </p>
+              <h2 className="hw-pane-title">Visual Prompts</h2>
+              <button className="hw-gallery-btn">
+                <span className="hw-material-icon">view_cozy</span>
+                Gallery
+              </button>
             </div>
             <div className="hw-task-feed">
               {tasks.map((task) => (
@@ -35,6 +36,11 @@ export default function HomeworkLab() {
               ))}
             </div>
           </section>
+
+          {/* Drag Handle Divider */}
+          <div className="hw-drag-handle">
+            <div className="hw-drag-handle-dot" />
+          </div>
 
           {/* Right Pane: Drafting Area */}
           <DraftingArea />
