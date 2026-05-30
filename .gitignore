@@ -45,4 +45,5 @@ database.db
 *storybook.log
 storybook-static
 .playwright-mcp/*
-.stitch
+.stitch/*
+.python-version

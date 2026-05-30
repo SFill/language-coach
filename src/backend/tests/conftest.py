@@ -6,12 +6,19 @@ These fixtures follow the refactoring pattern of using real database sessions an
 while only mocking external dependencies.
 """
 
+import os
 import pytest
 import tempfile
 import shutil
 from pathlib import Path
 from sqlmodel import Session, SQLModel, create_engine
 from sqlalchemy.pool import StaticPool
+
+# Load test environment before any backend module imports
+from dotenv import load_dotenv
+
+_test_env = Path(__file__).resolve().parent.parent.parent.parent / ".env.test"
+load_dotenv(_test_env, override=True)
 
 from backend.models.note import Note
 from backend.models.dict_english import Dictionary

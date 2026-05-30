@@ -8,8 +8,10 @@ run_frontend:
 	npx vite --host 0.0.0.0
 
 run_backend:
-	fastapi dev --host 0.0.0.0 src/backend/main.py 
+	fastapi dev --host 0.0.0.0 src/backend/main.py
 
+test:
+	OPENAI_API_KEY=test-key python -m pytest src/backend/tests/ -v
 
 run_claude_dashboard:
 	uvx sniffly init

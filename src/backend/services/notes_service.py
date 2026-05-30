@@ -307,7 +307,9 @@ def delete_note_block(session: Session, note_id: int, note_block_id: int) -> dic
     return {'status': 'ok'}
 
 # Image upload directory configuration
-UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "/tmp/note_images"))
+from backend.settings import get_settings
+
+UPLOAD_DIR = get_settings().upload_dir
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Allowed image types

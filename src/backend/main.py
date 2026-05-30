@@ -1,9 +1,11 @@
+import logging
 import logging.config
-import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from backend.settings import get_settings
 from backend.services.sentence.sentence_service import get_sentence_retriever
 
 from .database import create_db_and_tables
@@ -12,6 +14,8 @@ from .api.translation import router as translation_router
 from .api.dictionary import router as dictionary_router
 from .api.wordlist import router as wordlist_router
 from .api import sentence_router
+
+settings = get_settings()
 
 # Create FastAPI application
 app = FastAPI()
@@ -50,13 +54,13 @@ def shutdown_event():
 
 
 # Mount static files in production mode
-if not os.getenv('BACKEND_ENV', None) == 'dev':
+if not settings.is_dev:
     from fastapi import Request
     from fastapi.responses import FileResponse
-    
+
     # Mount static assets first (CSS, JS, images, etc.)
     app.mount("/assets", StaticFiles(directory="/app/dist/assets"), name="assets")
-    
+
     # Catch-all route for SPA - serve index.html for non-API routes
     @app.get("/{full_path:path}")
     async def serve_spa(request: Request, full_path: str):
@@ -65,10 +69,8 @@ if not os.getenv('BACKEND_ENV', None) == 'dev':
         if full_path.startswith("api/"):
             # This shouldn't happen as API routes are defined above
             return {"error": "API route not found"}
-        
+
         # For all other routes, serve the SPA index.html
         return FileResponse("/app/dist/index.html")
 
-import logging
-
-logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(levelname)-8s] %(name)s: %(message)s",)
+logging.basicConfig(level=logging.INFO, format="[%(asctime)s] [%(levelname)-8s] %(name)s: %(message)s")

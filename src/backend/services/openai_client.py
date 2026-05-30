@@ -1,11 +1,14 @@
 """Shared OpenAI client initialization."""
 
-import os
-from openai import OpenAI
+from backend.settings import get_settings
+
+settings = get_settings()
+
+from openai import OpenAI  # noqa: E402
 
 client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-    base_url=os.environ.get("OPENAI_BASE_URL"),
+    api_key=settings.openai_api_key.get_secret_value(),
+    base_url=settings.openai_base_url,
 )
 
-DEFAULT_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+DEFAULT_MODEL = settings.openai_model

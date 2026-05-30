@@ -61,3 +61,8 @@ Key Conventions
    - Structure routes and dependencies clearly to optimize readability and maintainability.
 
 Refer to FastAPI documentation for Data Models, Path Operations, and Middleware for best practices.
+
+## Development Workflow
+
+- Configuration lives in `settings.py` using Pydantic `BaseSettings` — never read env vars with `os.environ` directly. Always use `get_settings()` from `backend.settings`. Secrets use `SecretStr`.
+- Run backend tests with `make test`. Tests load `.env.test` via conftest, so no real API keys are needed. Always run tests before considering work done.
