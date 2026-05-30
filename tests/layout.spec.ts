@@ -12,14 +12,14 @@ test.describe('Layout checks', () => {
   });
 
   test('sidebar is visible', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/homework');
     await page.waitForLoadState('networkidle');
     const sidebar = page.locator('.hw-sidebar');
     await expect(sidebar).toBeVisible();
   });
 
   test('main content area renders', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/homework');
     await page.waitForLoadState('networkidle');
     const main = page.locator('.hw-page').first();
     await expect(main).toBeVisible();

@@ -71,7 +71,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--hw-on-background);
   background: var(--hw-background);
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   display: flex;
 }
@@ -286,7 +286,7 @@
   flex-direction: column;
   flex: 1;
   margin-left: var(--hw-sidebar-width);
-  height: 100vh;
+  height: 100%;
   width: calc(100% - var(--hw-sidebar-width));
   position: relative;
 }
@@ -537,13 +537,18 @@
   gap: var(--hw-unit-sm);
 }
 
-.hw-card-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 20px;
+.hw-card-category {
+  display: inline-block;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 1.3;
-  color: var(--hw-on-surface);
-  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hw-primary);
+  background: var(--hw-primary-fixed);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: var(--hw-unit-sm);
 }
 
 .hw-card-desc {
@@ -931,4 +936,178 @@
 
 .hw-submit-btn:hover {
   background: var(--hw-primary-fixed-variant);
+}
+
+.hw-submit-btn:disabled,
+.hw-ai-check-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* === Assignment Prompt === */
+.hw-assignment-prompt {
+  padding: var(--hw-unit-lg);
+  background: var(--hw-surface-container-low);
+  border-bottom: 1px solid var(--hw-outline-variant);
+}
+
+.hw-assignment-prompt-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--hw-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--hw-unit-sm);
+}
+
+.hw-assignment-prompt-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--hw-on-surface);
+  margin: 0;
+}
+
+/* === Card Image Placeholder === */
+.hw-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hw-surface-container);
+}
+
+/* === Empty State === */
+.hw-draft-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hw-unit-md);
+  color: var(--hw-on-surface-variant);
+  font-size: 16px;
+}
+
+.hw-draft-empty p {
+  margin: 0;
+}
+
+/* === Loading & Error States === */
+.hw-loading {
+  text-align: center;
+  color: var(--hw-on-surface-variant);
+  padding: var(--hw-unit-xl);
+  font-size: 14px;
+}
+
+.hw-error {
+  text-align: center;
+  color: var(--hw-error);
+  padding: var(--hw-unit-xl);
+  font-size: 14px;
+}
+
+/* === Q&A Panel === */
+.hw-qa-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hw-qa-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--hw-unit-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hw-unit-md);
+}
+
+.hw-qa-empty {
+  text-align: center;
+  color: var(--hw-on-surface-variant);
+  font-size: 14px;
+  margin: auto;
+}
+
+.hw-qa-item {
+  background: var(--hw-surface-container-lowest);
+  border: 1px solid var(--hw-outline-variant);
+  border-radius: 8px;
+  padding: var(--hw-unit-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--hw-unit-xs);
+}
+
+.hw-qa-question {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hw-primary);
+  line-height: 1.4;
+}
+
+.hw-qa-answer {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--hw-on-surface);
+}
+
+.hw-qa-input-row {
+  display: flex;
+  gap: var(--hw-unit-sm);
+  padding: var(--hw-unit-md) var(--hw-unit-lg);
+  border-top: 1px solid var(--hw-outline-variant);
+  background: var(--hw-surface);
+}
+
+.hw-qa-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--hw-outline-variant);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--hw-on-surface);
+  background: var(--hw-surface-container-lowest);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.hw-qa-input:focus {
+  border-color: var(--hw-primary);
+}
+
+.hw-qa-input:disabled {
+  opacity: 0.5;
+}
+
+.hw-qa-send-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--hw-primary);
+  color: var(--hw-on-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.hw-qa-send-btn:hover {
+  background: var(--hw-primary-fixed-variant);
+}
+
+.hw-qa-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

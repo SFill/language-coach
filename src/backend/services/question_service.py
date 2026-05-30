@@ -1,5 +1,6 @@
 """Question service for processing questions about notes."""
 
+import uuid
 from typing import Optional, List, Tuple
 from datetime import datetime
 from sqlmodel import Session, update
@@ -51,10 +52,10 @@ class QuestionService:
             note_id
         )
         
-        # 3. Get parent note context if specified
+        # 3. Get assignment context if specified
         parent_context = ""
-        if question_data.parent_note_block_id:
-            parent_block = self._get_note_block(note, question_data.parent_note_block_id)
+        if question_data.assignment_ref:
+            parent_block = self._get_note_block(note, question_data.assignment_ref)
             if parent_block:
                 parent_context = f"\n\n---\nNote Context:\n{parent_block.get('content', '')}\n---\n"
         
@@ -77,7 +78,7 @@ class QuestionService:
             note=note,
             title=title,
             answer=answer,
-            parent_note_block_id=question_data.parent_note_block_id
+            assignment_ref=question_data.assignment_ref
         )
         
         self._save_note_block(note_id, note, qa_block)
@@ -96,7 +97,7 @@ class QuestionService:
             raise HTTPException(status_code=404, detail="Note not found")
         return note
     
-    def _get_note_block(self, note: Note, block_id: int) -> Optional[dict]:
+    def _get_note_block(self, note: Note, block_id: str) -> Optional[dict]:
         """Get specific note block from note history."""
         history = note.history or {}
         content = history.get('content', [])
@@ -122,13 +123,19 @@ class QuestionService:
             "content": SYSTEM_PROMPT
         })
         
-        # Add note history (only actual notes, not questions)
+        # Add note history (only simple_note blocks, not questions or assignments)
         content = note_history.get('content', [])
         for hist_msg in content:
-            if hist_msg.get("is_note", False):
+            block_type = hist_msg.get("block_type")
+            # Include simple_note blocks and ai_feedback in context
+            if block_type in ("simple_note", "ai_feedback") or (block_type is None and hist_msg.get("role") == "user"):
+                msg_content = hist_msg.get("content")
+                # Flatten segmented content to plain text for OpenAI
+                if isinstance(msg_content, list):
+                    msg_content = "".join(seg.get("text", "") for seg in msg_content)
                 messages.append({
                     "role": hist_msg.get("role"),
-                    "content": hist_msg.get("content")
+                    "content": msg_content
                 })
         
         # Add current question with context
@@ -175,20 +182,19 @@ Then provide your detailed answer below."""
         note: Note,
         title: str,
         answer: str,
-        parent_note_block_id: Optional[int]
+        assignment_ref: Optional[str]
     ) -> NoteBlock:
         """Create a Q&A note block from parsed content."""
         timestamp = datetime.utcnow()
         return NoteBlock(
-            id=note.get_new_note_block_id(),
+            id=str(uuid.uuid4()),
             role="assistant",
-            content=answer,  # Answer goes in content (string for backward compatibility)
-            question_title=title,  # Title goes in separate field
+            content=answer,
+            question_title=title,
             created_at=timestamp,
             updated_at=timestamp,
-            is_note=False,
-            parent_note_block_id=parent_note_block_id,
-            block_type="qa_response"
+            assignment_ref=assignment_ref,
+            block_type="question"
         )
     
     def _save_note_block(self, note_id: int, note: Note, note_block: NoteBlock) -> None:

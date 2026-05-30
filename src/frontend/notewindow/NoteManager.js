@@ -60,7 +60,7 @@ class NoteManager {
       const noteData = await fetchNoteById(noteId);
       if (noteData) {
         this.noteBlocks = noteData.note_blocks || [];
-        this.maxNoteBlockId = noteData.max_note_block_id ?? 0;
+        this.maxNoteBlockId = noteData.max_message_id ?? 0;
         this.notifyListeners();
       }
 
@@ -104,7 +104,7 @@ class NoteManager {
       } catch (error) {
         console.error('Error creating note:', error);
         this.noteBlocks = [{
-          sender: 'bot',
+          role: 'assistant',
           content: 'Error: Could not create or find an active note.'
         }];
         this.notifyListeners();
@@ -134,7 +134,7 @@ class NoteManager {
       const newNoteBlockId = this.maxNoteBlockId + 1;
       this.maxNoteBlockId = newNoteBlockId;
       const userNoteBlock = {
-        sender: 'user',
+        role: 'user',
         content: message.trim(),
         id: newNoteBlockId,
         is_note: isNote
@@ -158,7 +158,7 @@ class NoteManager {
         // REPLACES the old sendNoteBlock with is_note=false
         const qaBlock = await sendQuestion(noteId, {
           question: message,
-          parent_note_block_id: parentNoteBlockId
+          assignment_ref: parentNoteBlockId
         });
 
         if (qaBlock) {
@@ -170,7 +170,7 @@ class NoteManager {
       console.error('Error sending block:', error);
       // Add error message to UI
       this.noteBlocks = [...this.noteBlocks, {
-        sender: 'bot',
+        role: 'assistant',
         content: 'Error sending block'
       }];
       this.notifyListeners();

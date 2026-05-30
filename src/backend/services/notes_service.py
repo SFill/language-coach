@@ -28,11 +28,26 @@ def create_note(session: Session, note: Note) -> Note:
     session.refresh(note)
     return note
 
-def get_note_list(session: Session, offset: int = 0, limit: int = 100) -> list[NoteListResponse]:
-    """Get a list of note sessions."""
-    notes = session.exec(select(Note).order_by(Note.id.desc()).limit(limit).offset(offset)).all()
-    notes = [NoteListResponse(id=note.id, name=note.name) for note in notes]
-    return notes
+def get_note_list(session: Session, offset: int = 0, limit: int = 100, block_type: str = None) -> list[NoteListResponse]:
+    """Get a list of note sessions, optionally filtered by block_type presence."""
+    query = select(Note).order_by(Note.id.desc()).limit(limit).offset(offset)
+    notes = session.exec(query).all()
+
+    result = [
+        NoteListResponse(
+            id=note.id,
+            name=note.name,
+            note_metadata=note.metadata_,
+            note_blocks=[NoteBlock.model_validate(msg) for msg in (note.history or {}).get('content', [])],
+        )
+        for note in notes
+    ]
+
+    # Filter by block_type if specified
+    if block_type:
+        result = [n for n in result if any(b.block_type == block_type for b in n.note_blocks)]
+
+    return result
 
 def get_note(session: Session, id: int) -> Note:
     """Get a specific note session by ID."""
@@ -49,9 +64,11 @@ def get_note(session: Session, id: int) -> Note:
     for block_dict in content:
         # Check if image_ids is missing or empty
         if 'image_ids' not in block_dict or not block_dict['image_ids']:
-            # Scan content for @image:X references
+            # Scan content for @image:X references (only for string content)
             block_content = block_dict.get('content', '')
-            print(block_content)
+            if isinstance(block_content, list):
+                # Segmented content has no @image: refs
+                continue
             image_refs = re.findall(r'@image:(\d+)', block_content)
             if image_refs:
                 block_dict['image_ids'] = [int(img_id) for img_id in image_refs]
@@ -138,12 +155,14 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
 
     timestamp = datetime.utcnow()
     user_note_block = NoteBlock(
-        id=note.get_new_note_block_id(),
+        id=note_block.id or str(uuid.uuid4()),
         role="user",
         content=history_content,
         created_at=timestamp,
         updated_at=timestamp,
-        is_note=note_block.is_note,
+        block_type=note_block.block_type,
+        metadata_=note_block.metadata_,
+        assignment_ref=note_block.assignment_ref,
         image_ids=extracted_image_ids,
     )
 
@@ -160,7 +179,11 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
 
     assistant_response = ''
     assistant_note_block = None
-    if not note_block.is_note:
+    # Determine whether to call AI: skip for assignment, simple_note, and ai_feedback blocks
+    skip_ai_types = {"assignment", "simple_note", "ai_feedback"}
+    should_call_ai = note_block.block_type not in skip_ai_types
+
+    if should_call_ai:
         # Prepare messages for OpenAI API
         api_messages = [
             {
@@ -168,11 +191,14 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
                 "content": SYSTEM_PROMPT,
             }
         ]
-        
+
         # Add note history (text only for previous note blocks)
         for hist_msg in content[:-1]:  # Exclude the current note block
             role = hist_msg.get("role")
             msg_content = hist_msg.get("content")
+            # Flatten segmented content to plain text for OpenAI
+            if isinstance(msg_content, list):
+                msg_content = "".join(seg.get("text", "") for seg in msg_content)
             api_messages.append({
                 "role": role,
                 "content": msg_content,
@@ -200,7 +226,7 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         if assistant_response:
             assistant_timestamp = datetime.utcnow()
             assistant_note_block = NoteBlock(
-                id=note.get_new_note_block_id(),
+                id=str(uuid.uuid4()),
                 role="assistant",
                 content=assistant_response,
                 created_at=assistant_timestamp,
@@ -244,12 +270,12 @@ def get_first(iterable, value=None, key=None, default=None):
 def update_note_block(
     session: Session,
     note_id: int,
-    note_block_id: int,
+    note_block_id: str,
     payload: NoteBlockUpdate,
 ) -> dict:
-    """Update an existing note block."""
+    """Upsert a note block: update if exists, create if not found (idempotent)."""
     import re
-    
+
     note = session.get(Note, note_id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -257,37 +283,61 @@ def update_note_block(
     history = note.history or {}
     content = _ensure_history_content(history)
 
-    target_note_block = get_first(content, key=lambda block: NoteBlock.model_validate(block).id == note_block_id)
-    if target_note_block is None:
-        raise HTTPException(status_code=404, detail="Note block not found")
+    target_note_block = get_first(content, key=lambda block: block.get('id') == note_block_id)
 
-    updated = False
     now = datetime.utcnow().isoformat()
 
-    if payload.block is not None:
-        target_note_block['content'] = payload.block
-        
-        # Rescan for image references when content is updated
-        image_refs = re.findall(r'@image:(\d+)', payload.block)
-        target_note_block['image_ids'] = [int(img_id) for img_id in image_refs]
-        
-        updated = True
+    if target_note_block is None:
+        # Block doesn't exist yet — create it (idempotent upsert)
+        if payload.block is None:
+            raise HTTPException(status_code=400, detail="Cannot create block without content")
 
-    if updated:
-        target_note_block['updated_at'] = now
-
-        history['content'] = content
-        session.exec(
-            update(Note)
-            .where(Note.id == note_id)
-            .values(history=history)
+        image_refs = re.findall(r'@image:(\d+)', payload.block) if isinstance(payload.block, str) else []
+        new_block = NoteBlock(
+            id=note_block_id,
+            role=payload.role or "user",
+            content=payload.block,
+            created_at=now,
+            updated_at=now,
+            block_type=payload.block_type,
+            metadata_=payload.metadata_,
+            assignment_ref=payload.assignment_ref,
+            image_ids=[int(img_id) for img_id in image_refs],
         )
-        session.commit()
+        content.append(new_block.model_dump(mode="json"))
+    else:
+        # Block exists — update it
+        if payload.block is not None:
+            target_note_block['content'] = payload.block
+            # Rescan for image references (only for string content)
+            if isinstance(payload.block, str):
+                image_refs = re.findall(r'@image:(\d+)', payload.block)
+                target_note_block['image_ids'] = [int(img_id) for img_id in image_refs]
+            else:
+                target_note_block['image_ids'] = []
+            target_note_block['updated_at'] = now
+
+        if payload.role is not None:
+            target_note_block['role'] = payload.role
+        if payload.block_type is not None:
+            target_note_block['block_type'] = payload.block_type
+        if payload.metadata_ is not None:
+            target_note_block['metadata_'] = payload.metadata_
+        if payload.assignment_ref is not None:
+            target_note_block['assignment_ref'] = payload.assignment_ref
+
+    history['content'] = content
+    session.exec(
+        update(Note)
+        .where(Note.id == note_id)
+        .values(history=history)
+    )
+    session.commit()
 
     return {'status': 'ok'}
 
 
-def delete_note_block(session: Session, note_id: int, note_block_id: int) -> dict:
+def delete_note_block(session: Session, note_id: int, note_block_id: str) -> dict:
     """Remove a note block from note history."""
     note = session.get(Note, note_id)
     if not note:
@@ -295,7 +345,7 @@ def delete_note_block(session: Session, note_id: int, note_block_id: int) -> dic
 
     history = note.history or {}
     content = _ensure_history_content(history)
-    content = list(filter(lambda block: NoteBlock.model_validate(block).id != note_block_id, content))
+    content = list(filter(lambda block: block.get('id') != note_block_id, content))
     history['content'] = content
     session.exec(
         update(Note)

@@ -11,20 +11,18 @@
 /* Layout Styles */
 .main-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-  /* If you want it centered vertically as well */
-  /* height: 90vh; */
   width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .main-block {
   display: flex;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 100px);
   align-items: start;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 

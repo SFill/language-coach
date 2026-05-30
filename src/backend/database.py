@@ -1,3 +1,4 @@
+from sqlalchemy import text, inspect
 from sqlmodel import SQLModel, Session, create_engine
 from typing import Generator, Optional
 
@@ -28,8 +29,25 @@ class DatabaseManager:
         """Get the database engine."""
         return self._engine
 
+    def _run_migrations(self):
+        """Add new columns to existing tables if they don't exist."""
+        with self._engine.connect() as conn:
+            inspector = inspect(self._engine)
+            existing_columns = {col['name'] for col in inspector.get_columns('note')}
+
+            if 'note_type' not in existing_columns:
+                conn.execute(text(
+                    "ALTER TABLE note ADD COLUMN note_type VARCHAR DEFAULT 'note'"
+                ))
+            if 'metadata' not in existing_columns:
+                conn.execute(text(
+                    "ALTER TABLE note ADD COLUMN metadata JSON"
+                ))
+            conn.commit()
+
     def create_db_and_tables(self):
-        """Create database and tables if they don't exist."""
+        """Run migrations and create database tables if they don't exist."""
+        self._run_migrations()
         SQLModel.metadata.create_all(self._engine)
 
     def get_session(self) -> Generator[Session, None, None]:

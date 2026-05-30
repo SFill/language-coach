@@ -6,6 +6,9 @@ from .note import (
     NoteBlock,
     NoteBlockCreate,
     NoteBlockUpdate,
+    NoteCreate,
+    DraftSegment,
+    AnalyzeResponse,
 )
 from .wordlist import (
     Wordlist, WordlistCreate, 

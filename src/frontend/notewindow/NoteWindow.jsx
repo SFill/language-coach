@@ -278,19 +278,17 @@ const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, 
   const groupTilesByNote = () => {
     let tileGroups = {};
     let currentNoteId = null;
-    
+
     // Iterate through note blocks to find notes and questions
     for (let index = 0; index < noteBlocks.length; index++) {
       const block = noteBlocks[index];
-      
-      if (block.role =='user' && !tileGroups[block.id]) {
+
+      if (block.role === 'user' && !tileGroups[block.id]) {
           tileGroups[block.id] = [];
-          currentNoteId = block.id
+          currentNoteId = block.id;
       }
 
-      if (block.role == 'assistant') {
-        // This is a note - track its ID
-        // Join this block with the next assistant block as a single tile
+      if (block.role === 'assistant') {
           const tile = {
             id: block.id,
             noteId: currentNoteId,
@@ -301,9 +299,13 @@ const NoteWindow = React.forwardRef(({ noteBlocks, onCheckInDictionary, noteId, 
             createdAt: block.created_at,
             error: null
           };
-          
-          tileGroups[currentNoteId].push(tile);
-          
+
+          // If no preceding user block, group under the block's own id
+          const groupId = currentNoteId ?? block.id;
+          if (!tileGroups[groupId]) {
+            tileGroups[groupId] = [];
+          }
+          tileGroups[groupId].push(tile);
       }
 
     }

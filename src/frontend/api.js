@@ -20,14 +20,10 @@ export const fetchNotes = async () => {
 };
 
 // ===== Notes API =====
-export const updateNoteBlock = async (noteId, noteBlockId, text) => {
+export const updateNoteBlock = async (noteId, noteBlockId, data) => {
   if (noteBlockId === undefined) throw new Error('Missing note block identifier');
   try {
-    const response = await api.patch(`coach/notes/${noteId}/block/${noteBlockId}`,
-     {
-        "block": text,
-      }
-    );
+    const response = await api.patch(`coach/notes/${noteId}/block/${noteBlockId}`, data);
     return response.data;
   } catch (error) {
     console.error('Error updating note block:', error);
@@ -266,6 +262,41 @@ export const deleteNoteImage = async (noteId, imageId) => {
 // Get image file URL
 export const getNoteImageUrl = (noteId, imageId) => {
   return `${API_BASE_URL}coach/notes/${noteId}/images/${imageId}/file`;
+};
+
+// ========== Homework / Assignment API Methods ==========
+
+// Fetch notes that contain assignment blocks (block_type="assignment")
+export const fetchAssignments = async () => {
+  try {
+    const response = await api.get('coach/notes/', { params: { block_type: 'assignment' } });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching assignments:', error);
+    return [];
+  }
+};
+
+// Fetch a single assignment with all its blocks
+export const fetchAssignmentDetail = async (id) => {
+  try {
+    const response = await api.get(`coach/notes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching assignment detail:', error);
+    return null;
+  }
+};
+
+// Analyze a student draft block (AI Check)
+export const analyzeDraft = async (noteId, blockId) => {
+  try {
+    const response = await api.post(`coach/notes/${noteId}/block/${blockId}/analyze`);
+    return response.data;
+  } catch (error) {
+    console.error('Error analyzing draft:', error);
+    return null;
+  }
 };
 
 // ========== Question API Methods ==========

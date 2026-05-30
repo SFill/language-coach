@@ -28,7 +28,7 @@
 
 .upload-button,
 .collapse-button {
-  background: #007bff;
+  background: #0056b3;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -63,20 +63,20 @@
 .uploading-indicator {
   text-align: center;
   padding: 1rem;
-  color: #6c757d;
+  color: #545b62;
   font-style: italic;
 }
 
 .loading {
   text-align: center;
   padding: 2rem;
-  color: #6c757d;
+  color: #545b62;
 }
 
 .no-images {
   text-align: center;
   padding: 2rem;
-  color: #6c757d;
+  color: #545b62;
 }
 
 .no-images p {
@@ -91,7 +91,7 @@
 .no-note-message {
   text-align: center;
   padding: 2rem;
-  color: #6c757d;
+  color: #545b62;
   font-style: italic;
 }
 
@@ -116,7 +116,7 @@
 
 .image-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-color: #007bff;
+  border-color: #0056b3;
 }
 
 .image-item:active {
@@ -124,7 +124,7 @@
 }
 
 .image-item--active {
-  border: 2px solid #007bff;
+  border: 2px solid #0056b3;
   box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
   background: #e3f2fd;
 }
@@ -217,7 +217,7 @@
 
 .image-size {
   font-size: 0.75rem;
-  color: #6c757d;
+  color: #545b62;
 }
 
 .expand-image-button {
@@ -245,7 +245,7 @@
 }
 
 .expand-image-button:hover {
-  background: #007bff;
+  background: #0056b3;
   /* transform: scale(1.1); */
 }
 

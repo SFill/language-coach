@@ -63,21 +63,19 @@ def sample_notes():
             name="English Practice",
             history={"content": [
                 {
-                    "id": 0,
+                    "id": "a0000000-0000-0000-0000-000000000001",
                     "role": "user",
                     "content": "Hello",
                     "created_at": "2024-01-01T00:00:00",
                     "updated_at": "2024-01-01T00:00:00",
-                    "is_note": False,
                     "image_ids": [],
                 },
                 {
-                    "id": 1,
+                    "id": "a0000000-0000-0000-0000-000000000002",
                     "role": "assistant",
                     "content": "Hi there! How can I help you practice English today?",
                     "created_at": "2024-01-01T00:05:00",
                     "updated_at": "2024-01-01T00:05:00",
-                    "is_note": False,
                     "image_ids": [],
                 },
             ]}
@@ -87,21 +85,19 @@ def sample_notes():
             name="Spanish Learning",
             history={"content": [
                 {
-                    "id": 0,
+                    "id": "b0000000-0000-0000-0000-000000000001",
                     "role": "user",
                     "content": "Hola",
                     "created_at": "2024-01-01T01:00:00",
                     "updated_at": "2024-01-01T01:00:00",
-                    "is_note": False,
                     "image_ids": [],
                 },
                 {
-                    "id": 1,
+                    "id": "b0000000-0000-0000-0000-000000000002",
                     "role": "assistant",
                     "content": "¡Hola! ¿En qué puedo ayudarte?",
                     "created_at": "2024-01-01T01:02:00",
                     "updated_at": "2024-01-01T01:02:00",
-                    "is_note": False,
                     "image_ids": [],
                 },
             ]}
