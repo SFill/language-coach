@@ -5,7 +5,6 @@ from pathlib import Path
 from sqlmodel import Session, select, update, delete
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import FileResponse
-from openai import OpenAI
 from typing import List
 
 from backend.models.note import (
@@ -20,11 +19,7 @@ from backend.models.note import (
 )
 from backend.constants import SYSTEM_PROMPT
 from backend.services.question_service import QuestionService
-
-# Initialize OpenAI client
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
+from backend.services.openai_client import client, DEFAULT_MODEL
 
 def create_note(session: Session, note: Note) -> Note:
     """Create a new note session."""
@@ -192,7 +187,7 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         # Call GPT with support for images
         response_stream = client.chat.completions.create(
             messages=api_messages,
-            model="gpt-4o-mini",  # This model supports images
+            model=DEFAULT_MODEL,
             stream=True,
         )
 

@@ -6,6 +6,7 @@ import WordListPage from './wordlist/WordListPage';
 import WordlistProvider from './wordlist/WordlistContext';
 import LanguagePicker from './LanguagePicker';
 import NoteListManager from './notewindow/NoteListManager';
+import HomeworkLab from './homework/HomeworkLab';
 import './App.css';
 
 // Main App component to set up routes
@@ -68,6 +69,7 @@ function AppContent() {
         <div className="nav-links">
           <Link to="/">New note</Link>
           <Link to="/wordlist">My words</Link>
+          <Link to="/homework">Homework</Link>
         </div>
         <div className="nav-controls">
           <LanguagePicker />
@@ -99,6 +101,7 @@ function AppContent() {
               />
             }
           />
+          <Route path="/homework" element={<HomeworkLab />} />
         </Routes>
       </div>
     </div>

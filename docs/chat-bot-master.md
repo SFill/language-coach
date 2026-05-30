@@ -1,3 +1,88 @@
+## Agentic UI Development Workflow
+
+This project supports an agentic UI development loop where a coding agent (non-vision model) implements UI changes and verifies them automatically using Playwright MCP. Vision model comparison is optional.
+
+### Architecture
+
+```
+Agent (implement) → code changes → Playwright MCP (verify) → agent iterates
+                                                       ↘ (optional) vision model (judge) → structured feedback → agent iterates
+```
+
+### Tools
+
+| Tool                     | Purpose                                                                                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Playwright MCP**       | Interactive browser control — navigate, screenshot, evaluate JS, check console, get accessibility tree                                          |
+| **Playwright tests**     | Automated regression — `visual.spec.ts`, `layout.spec.ts`, `accessibility.spec.ts`, `console.spec.ts`                                           |
+| **`scripts/judge.mjs`**  | *(Optional)* Vision model comparison — sends target + implementation screenshots to GPT-4o or Claude, returns `{ match, feedback, diff_areas }` |
+| **`scripts/iterate.sh`** | CLI loop — runs Playwright tests, optionally calls judge on failures, writes reports to `tests/reports/`                                        |
+
+### MCP Verification Workflow
+
+When using Playwright MCP to verify UI changes:
+
+1. **Set viewport** — `browser_resize` to 1920×1280
+2. **Navigate** — `browser_navigate` to the route
+3. **Screenshot** — `browser_take_screenshot` saves to `tests/screenshots/`
+4. **Layout check** — `browser_evaluate` for overflow, element visibility:
+   ```js
+   () => {
+     const doc = document.documentElement;
+     return { overflow: doc.scrollWidth > doc.clientWidth, viewport: { width: window.innerWidth, height: window.innerHeight } };
+   }
+   ```
+5. **Console errors** — `browser_console_messages({ level: "error" })`, filter backend-connection errors
+6. **Accessibility** — Inject axe-core via `browser_evaluate`, then run `window.axe.run()`
+7. **Judge comparison** (optional) — `node scripts/judge.mjs --target <target.png> --impl <current.png>`
+
+### App Routes
+
+| Path            | Component        | Notes              |
+| --------------- | ---------------- | ------------------ |
+| `/`             | `NoteWindowPage` | Home — note editor |
+| `/note/:noteId` | `NoteWindowPage` | Individual note    |
+| `/notelist`     | `NoteListPage`   | Saved notes list   |
+| `/wordlist`     | `WordListPage`   | Word collections   |
+| `/homework`     | `HomeworkLab`    | Writing exercises  |
+
+### Key Config
+
+- **Vite dev server**: port 5173 (no proxy, frontend calls backend at `localhost:8000`)
+- **Playwright**: 1920×1280 viewport, chromium only, `toHaveScreenshot` with 2% diff tolerance
+- **MCP**: `.mcp.json` with `@playwright/mcp@latest --browser chromium --caps vision,devtools,network`
+
+### NPM Scripts
+
+```bash
+npm run test:visual    # Visual regression (screenshot comparison)
+npm run test:layout    # Overflow, element visibility, viewport
+npm run test:a11y      # axe-core accessibility violations
+npm run test:console   # Console error detection (filtered)
+npm run test:all       # All Playwright tests
+npm run judge          # node scripts/judge.mjs
+npm run iterate        # ./scripts/iterate.sh
+```
+
+### Files
+
+```
+tests/
+├── visual.spec.ts          # Screenshot regression (3 routes)
+├── layout.spec.ts          # Overflow, navbar, main content, viewport
+├── accessibility.spec.ts   # axe-core violations, headings, alt text
+├── console.spec.ts         # Console error detection
+├── targets/
+│   └── home.json           # Text description of target UI state
+├── snapshots/              # Baseline screenshots (git-tracked)
+├── screenshots/             # Current-state screenshots (gitignored)
+└── reports/                 # Judge + iterate output (gitignored)
+
+scripts/
+├── judge.mjs               # Vision model comparison (OpenAI/Claude)
+└── iterate.sh               # Edit → build → test → report loop
+```
+
 ## General information
 You are professional senior software engineer developing the project language coach
 I am your lead that gives you tasks, if you don't understand something go ahead and ask questions, don't need to imagine things
@@ -90,4 +175,4 @@ src/
 │   └── SideDictionaryPanel.jsx # Dictionary lookup panel
 ├── docker-compose.yml          # Docker setup for deployment
 ├── requirements.txt            # Python dependencies
-└── README.md       
+└── README.md

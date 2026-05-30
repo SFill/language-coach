@@ -1,21 +1,15 @@
-import os
 import logging
 from typing import Optional, Dict, Any
 from fastapi import HTTPException
-from openai import OpenAI
 from sqlmodel import Session
 
 from .sentence.sentence_service import get_sentence_retriever, search_for_sentences
 from .translation_service import GoogleTranslateHelper
 from .text_processor import TextProcessor, DatabaseSaver
+from .openai_client import client, DEFAULT_MODEL
 
 # Configure logging
 logger = logging.getLogger(__name__)
-
-# Initialize OpenAI client
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
 
 def get_phrase_with_example_and_translation(
     phrase: str,
@@ -218,7 +212,7 @@ def translate_phrase_and_example_with_gpt(
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=DEFAULT_MODEL,
         messages=[
             {"role": "system", "content": "You are a professional translator. Provide accurate, natural translations maintaining the XML format."},
             {"role": "user", "content": prompt}
@@ -294,7 +288,7 @@ def generate_example_sentence_with_gpt(
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=DEFAULT_MODEL,
             messages=[
                 {"role": "system", "content": "You are a language learning assistant that creates example sentences with translations. Follow the XML format exactly."},
                 {"role": "user", "content": prompt}

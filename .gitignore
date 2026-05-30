@@ -34,3 +34,15 @@ data/
 database.db
 
 .pytest_cache/**
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+*storybook.log
+storybook-static
+.playwright-mcp/*
+.stitch

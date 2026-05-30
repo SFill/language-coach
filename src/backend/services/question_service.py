@@ -9,6 +9,7 @@ from backend.models.note import Note, NoteBlock, QuestionCreate
 from backend.constants import SYSTEM_PROMPT
 from backend.services.question.image_processor import ImageProcessor
 from backend.services.question.openai_provider import OpenAIProvider
+from backend.services.openai_client import DEFAULT_MODEL
 
 
 class QuestionService:
@@ -16,8 +17,8 @@ class QuestionService:
     Service for processing questions about notes.
     Handles the complete question-answer flow.
     """
-    
-    def __init__(self, session: Session, model: str = "gpt-4o-mini"):
+
+    def __init__(self, session: Session, model: str = DEFAULT_MODEL):
         """
         Initialize question service.
         

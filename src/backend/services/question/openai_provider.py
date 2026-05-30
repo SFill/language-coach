@@ -1,8 +1,7 @@
 """OpenAI provider for AI response generation."""
 
-import os
 from typing import List
-from openai import OpenAI
+from backend.services.openai_client import client, DEFAULT_MODEL
 
 
 class OpenAIProvider:
@@ -10,15 +9,15 @@ class OpenAIProvider:
     Handles OpenAI API communication.
     Separates AI provider logic from business logic.
     """
-    
-    def __init__(self, model: str = "gpt-4o-mini"):
+
+    def __init__(self, model: str = DEFAULT_MODEL):
         """
         Initialize OpenAI provider.
-        
+
         Args:
             model: OpenAI model to use (default: gpt-4o-mini)
         """
-        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        self.client = client
         self.model = model
     
     def generate_response(self, messages: List[dict]) -> str:

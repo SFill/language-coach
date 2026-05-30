@@ -1,0 +1,15 @@
+{
+  "route": "/",
+  "description": "Home page of the language coach app. Shows a navbar with navigation links (Home, Notes, Wordlist), a centered main content area, and language picker. Clean layout with blue accent buttons.",
+  "key_elements": [
+    "navbar with nav links",
+    "main-container centered content",
+    "language picker (if visible)"
+  ],
+  "acceptance_criteria": [
+    "No horizontal overflow",
+    "Navbar visible at top",
+    "All nav links render",
+    "No console errors"
+  ]
+}
