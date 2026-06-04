@@ -1,166 +1,98 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router';
-import {
-  fetchAssignments,
-  fetchNoteById,
-  sendNoteBlock,
-  updateNoteBlock,
-  analyzeDraft,
-  getNoteImageUrl,
-  sendQuestion as apiSendQuestion,
-} from '../../api';
+import { useSyncExternalStore, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useParams } from 'react-router';
+import { getNoteImageUrl } from '../../api';
 
-function generateUUID() {
-  return crypto.randomUUID();
-}
+const EMPTY_STATE = Object.freeze({
+  noteList: [],
+  currentNoteId: null,
+  currentNoteName: null,
+  homeworkManager: null,
+});
 
-export function useHomeworkLab() {
+/**
+ * useHomeworkLab — thin React adapter for HomeworkListManager.
+ * Subscribes via useSyncExternalStore. Caches the snapshot so React doesn't
+ * detect a "new" snapshot on every call (which would cause infinite renders).
+ */
+export function useHomeworkLab(homeworkListManager) {
   const { noteId } = useParams();
-  const navigate = useNavigate();
+  const snapshotRef = useRef(EMPTY_STATE);
 
-  const [notes, setNotes] = useState([]);          // all notes with assignment blocks (for /homework list)
-  const [activeNote, setActiveNote] = useState(null); // full note detail (for /homework/:noteId)
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const subscribe = useCallback(
+    (cb) => {
+      if (!homeworkListManager) return () => {};
+      return homeworkListManager.subscribe(cb);
+    },
+    [homeworkListManager],
+  );
 
-  // Fetch notes that contain assignment blocks (for the card list when no note is selected)
+  const getSnapshot = useCallback(() => {
+    if (!homeworkListManager) return EMPTY_STATE;
+    const next = homeworkListManager.getState();
+    // Only return a new object reference if state actually changed.
+    const prev = snapshotRef.current;
+    if (
+      prev === EMPTY_STATE ||
+      prev.noteList !== next.noteList ||
+      prev.currentNoteId !== next.currentNoteId ||
+      prev.currentNoteName !== next.currentNoteName ||
+      prev.homeworkManager !== next.homeworkManager
+    ) {
+      snapshotRef.current = next;
+    }
+    return snapshotRef.current;
+  }, [homeworkListManager]);
+
+  const state = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+
+  // Keep the manager in sync with the URL on path/noteId change.
   useEffect(() => {
-    fetchAssignments()
-      .then((data) => setNotes(data || []))
-      .catch((err) => setError(err.message));
-  }, []);
+    if (!homeworkListManager) return;
+    const path = window.location.pathname;
+    homeworkListManager.setCurrentNoteFromPath(path);
+  }, [noteId, homeworkListManager]);
 
-  // Fetch note detail when noteId changes
-  useEffect(() => {
-    if (!noteId) {
-      setActiveNote(null);
-      return;
-    }
+  const hm = state.homeworkManager;
+  const hmRevision = hm?.getState().revision || 0;
 
-    setLoading(true);
-    fetchNoteById(noteId)
-      .then((data) => {
-        setActiveNote(data);
-        setError(null);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [noteId]);
+  // Reconstruct activeNote shape expected by DraftingArea.
+  const activeNote = useMemo(() => {
+    if (!state.currentNoteId) return null;
+    const noteBlocks = hm?.getState().noteBlocks || [];
+    return { id: state.currentNoteId, note_blocks: noteBlocks };
+  }, [state.currentNoteId, hm, hmRevision]);
 
-  const selectNote = useCallback((id) => {
-    navigate(`/homework/${id}`);
-  }, [navigate]);
-
-  // Submit/update draft — uses PATCH for idempotent upsert
-  // If draft block exists, update it; if not, create it with a client-generated UUID
-  const submitDraft = useCallback(async (noteId, text, blockId, assignmentRef) => {
-    if (!noteId || !text?.trim()) return null;
-    const id = blockId || generateUUID();
-    try {
-      await updateNoteBlock(noteId, id, {
-        block: text,
-        role: 'user',
-        block_type: 'simple_note',
-        assignment_ref: assignmentRef || undefined,
-      });
-      const updated = await fetchNoteById(noteId);
-      if (updated) setActiveNote(updated);
-      return { status: 'ok', blockId: id };
-    } catch (err) {
-      console.error('Error submitting draft:', err);
-      return null;
-    }
-  }, []);
-
-  // Run AI Check on a draft block
-  const runAICheck = useCallback(async (id, blockId) => {
-    if (!id || !blockId) return null;
-    try {
-      const result = await analyzeDraft(id, blockId);
-      const updated = await fetchNoteById(id);
-      if (updated) setActiveNote(updated);
-      return result;
-    } catch (err) {
-      console.error('Error running AI Check:', err);
-      return null;
-    }
-  }, []);
-
-  // Send a Q&A question
-  const sendQuestion = useCallback(async (id, question, assignmentRef) => {
-    if (!id || !question?.trim()) return null;
-    try {
-      const qaBlock = await apiSendQuestion(id, { question, assignment_ref: assignmentRef });
-      const updated = await fetchNoteById(id);
-      if (updated) setActiveNote(updated);
-      return qaBlock;
-    } catch (err) {
-      console.error('Error sending question:', err);
-      return null;
-    }
-  }, []);
-
-  // Map a note to a card for the /homework list (shows one card per note)
-  const mapNoteToCard = useCallback((note) => {
-    const assignmentBlock = (note.note_blocks || []).find(
-      (b) => b.block_type === 'assignment'
-    );
-    let imageUrl = null;
-    if (assignmentBlock?.image_ids?.length) {
-      imageUrl = getNoteImageUrl(note.id, assignmentBlock.image_ids[0]);
-    }
-    const meta = assignmentBlock?.metadata_ || {};
-
-    return {
-      id: String(note.id),
-      image: imageUrl,
-      category: meta.category || '',
-      categoryColor: meta.categoryColor || 'primary',
-      duration: meta.duration || 0,
-      description: meta.description || '',
-      targetLength: meta.targetLength || '',
-      difficulty: meta.difficulty || '',
-    };
-  }, []);
-
-  // Cards when no note is selected: one card per note
-  const noteCards = notes.map(mapNoteToCard);
-
-  // Cards when a note is selected: one card per assignment block in that note
-  const assignmentCards = (activeNote?.note_blocks || [])
-    .filter((b) => b.block_type === 'assignment')
-    .map((block) => {
-      let imageUrl = null;
-      if (block.image_ids?.length) {
-        imageUrl = getNoteImageUrl(activeNote.id, block.image_ids[0]);
-      }
-      const meta = block.metadata_ || {};
-
-      return {
-        id: String(activeNote.id),
+  // Cards: one per assignment block in the active note. Empty when no note is active
+  // (the picker uses NoteListView, not the card grid).
+  const cards = useMemo(() => {
+    if (!state.currentNoteId) return [];
+    const noteBlocks = hm?.getState().noteBlocks || [];
+    return noteBlocks
+      .filter((b) => b.block_type === 'assignment')
+      .map((block) => ({
+        id: String(state.currentNoteId),
         blockId: String(block.id),
-        image: imageUrl,
-        category: meta.category || '',
-        categoryColor: meta.categoryColor || 'primary',
-        duration: meta.duration || 0,
-        description: meta.description || '',
-        targetLength: meta.targetLength || '',
-        difficulty: meta.difficulty || '',
-      };
-    });
-
-  // Final card list: per-note when on /homework, per-block when on /homework/:noteId
-  const cards = noteId ? assignmentCards : noteCards;
+        image: block.image_ids?.length ? getNoteImageUrl(state.currentNoteId, block.image_ids[0]) : null,
+        category: block.metadata_?.category || '',
+        categoryColor: block.metadata_?.categoryColor || 'primary',
+        duration: block.metadata_?.duration || 0,
+        description: block.metadata_?.description || '',
+        targetLength: block.metadata_?.targetLength || '',
+        difficulty: block.metadata_?.difficulty || '',
+      }));
+  }, [state.currentNoteId, hm, hmRevision]);
 
   return {
-    cards,
-    noteId,
+    notes: state.noteList,
+    noteId: state.currentNoteId,
     activeNote,
-    selectNote,
-    submitDraft,
-    runAICheck,
-    sendQuestion,
-    loading,
-    error,
+    cards,
+    selectNote: (id) => homeworkListManager?.selectNote(id),
+    submitDraft: hm?.submitDraft.bind(hm) || (() => null),
+    runAICheck: hm?.runAICheck.bind(hm) || (() => null),
+    sendQuestion: hm?.sendQuestion.bind(hm) || (() => null),
+    deleteNote: (id) => homeworkListManager?.deleteNote(id),
+    loading: false,
+    error: null,
   };
 }

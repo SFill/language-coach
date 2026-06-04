@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Layout checks', () => {
   test('no horizontal overflow on homework page', async ({ page }) => {
@@ -11,8 +11,8 @@ test.describe('Layout checks', () => {
     expect(overflow).toBe(false);
   });
 
-  test('sidebar is visible', async ({ page }) => {
-    await page.goto('/homework');
+  test('sidebar is visible on note view', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
     const sidebar = page.locator('.hw-sidebar');
     await expect(sidebar).toBeVisible();

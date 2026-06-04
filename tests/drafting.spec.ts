@@ -1,15 +1,17 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Drafting area – tab switching', () => {
-  test('preserves typed text when switching between Assignment and AI Q&A tabs', async ({ page }) => {
-    await page.goto('/homework/7');
+  test('preserves typed text when switching between Assignment and AI Q&A tabs', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     const editor = page.locator('.hw-editor-content');
     await expect(editor).toBeVisible({ timeout: 10000 });
 
-    // Focus editor and type text
+    // Clear pre-existing draft content and type fresh text
     await editor.click();
+    await page.keyboard.press('Control+a');
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('Hello world');
 
     const textAfterTyping = await editor.innerText();
@@ -28,15 +30,17 @@ test.describe('Drafting area – tab switching', () => {
     expect(textAfterSwitch.trim()).toBe('Hello world');
   });
 
-  test('preserves text after adding a word and switching tabs', async ({ page }) => {
-    await page.goto('/homework/7');
+  test('preserves text after adding a word and switching tabs', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     const editor = page.locator('.hw-editor-content');
     await expect(editor).toBeVisible({ timeout: 10000 });
 
-    // Type initial text
+    // Clear and type initial text
     await editor.click();
+    await page.keyboard.press('Control+a');
+    await page.keyboard.press('Backspace');
     await page.keyboard.type('Good morning');
 
     // Add a word
@@ -57,8 +61,8 @@ test.describe('Drafting area – tab switching', () => {
     expect(textAfterSwitch.trim()).toBe('Good morning everyone');
   });
 
-  test('tab content stays in DOM when hidden (no unmount)', async ({ page }) => {
-    await page.goto('/homework/7');
+  test('tab content stays in DOM when hidden (no unmount)', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     const editor = page.locator('.hw-editor-content');
@@ -92,11 +96,11 @@ test.describe('Drafting area – tab switching', () => {
 });
 
 test.describe('Scrolling – viewport containment and no clipping', () => {
-  test('Q&A panel stays within viewport and scrolls without clipping', async ({ page }) => {
-    await page.goto('/homework/8');
+  test('Q&A panel stays within viewport and scrolls without clipping', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
-    // Switch to Q&A tab (note 8 has multiple Q&A items)
+    // Switch to Q&A tab (fixture creates 6 Q&A items for scrollable content)
     await page.locator('.hw-tab', { hasText: 'AI Q&A' }).click();
     await expect(page.locator('.hw-qa-input')).toBeVisible();
 
@@ -128,8 +132,8 @@ test.describe('Scrolling – viewport containment and no clipping', () => {
     expect(panelStillContained).toBe(true);
   });
 
-  test('card feed stays within viewport and scrolls without clipping', async ({ page }) => {
-    await page.goto('/homework');
+  test('card feed stays within viewport and scrolls without clipping', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     const feed = page.locator('.hw-task-feed');
@@ -159,8 +163,8 @@ test.describe('Scrolling – viewport containment and no clipping', () => {
     }
   });
 
-  test('editor area scrolls long text without overflowing viewport', async ({ page }) => {
-    await page.goto('/homework/7');
+  test('editor area scrolls long text without overflowing viewport', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     const editor = page.locator('.hw-editor-content');
@@ -195,8 +199,8 @@ test.describe('Scrolling – viewport containment and no clipping', () => {
     }
   });
 
-  test('page does not scroll — content is contained within viewport', async ({ page }) => {
-    await page.goto('/homework/8');
+  test('page does not scroll — content is contained within viewport', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     // The page itself must not have vertical scroll — all content is contained
@@ -215,8 +219,8 @@ test.describe('Scrolling – viewport containment and no clipping', () => {
 });
 
 test.describe('Flex layout structure – prevents overflow clipping', () => {
-  test('active tab wrapper has flex layout to prevent overflow clipping', async ({ page }) => {
-    await page.goto('/homework/7');
+  test('active tab wrapper has flex layout to prevent overflow clipping', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     // The active (assignment) tab wrapper must be a flex column with flex:1 and min-height:0
@@ -265,8 +269,8 @@ test.describe('Flex layout structure – prevents overflow clipping', () => {
     expect(qaStyle.minHeight).toBe('0px');
   });
 
-  test('scroll containers have overflow-y auto or scroll', async ({ page }) => {
-    await page.goto('/homework/8');
+  test('scroll containers have overflow-y auto or scroll', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
     // Editor must allow vertical scroll

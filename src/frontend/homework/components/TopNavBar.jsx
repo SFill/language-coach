@@ -1,13 +1,48 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router';
 import { USER } from '../data/mockData';
+import LanguagePicker from '../../LanguagePicker';
 
-export default function TopNavBar({ user = USER }) {
+const NAV_LINKS = [
+  { to: '/', label: 'New note' },
+  { to: '/wordlist', label: 'My words' },
+  { to: '/homework', label: 'Homework' },
+];
+
+export default function TopNavBar({ currentNoteName, onNoteNameClick, user = USER }) {
+  const location = useLocation();
+
   return (
     <header className="hw-topbar">
       <div className="hw-topbar-title">
-        User Dashboard
+        {currentNoteName && (
+          <h3
+            className="hw-topbar-note-name"
+            onClick={onNoteNameClick}
+          >
+            {currentNoteName}
+          </h3>
+        )}
       </div>
+
+      <nav className="hw-topbar-nav">
+        {NAV_LINKS.map((link) => {
+          const isActive = location.pathname === link.to ||
+            (link.to !== '/' && location.pathname.startsWith(link.to));
+          return (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`hw-topbar-link ${isActive ? 'hw-topbar-link--active' : ''}`}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+      </nav>
+
       <div className="hw-topbar-actions">
+        <LanguagePicker />
         <span className="hw-level-badge">{user.level}</span>
         <div className="hw-topbar-icons">
           <button className="hw-icon-btn hw-icon-btn--notif">

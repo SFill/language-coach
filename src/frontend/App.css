@@ -2,9 +2,8 @@
 
 /* Global Styles */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  /* font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -19,58 +18,9 @@
 
 .main-block {
   display: flex;
-  align-items: start;
   width: 100%;
   flex: 1;
   min-height: 0;
-}
-
-
-
-.navbar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  justify-content: center;
-}
-
-.navbar h3 {
-  margin: 0;
-  width: 200px;
-  /* Prevent heading from pushing things onto new line */
-}
-
-.navbar .nav-links {
-  display: flex;
-}
-
-.navbar .nav-links a {
-  min-width: 100px;
-  padding: 8px;
-  background-color: #0056b3;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: None;
-  text-align: center;
-  margin: 0 10px;
-}
-
-.navbar button {
-  width: 100px;
-  padding: 8px;
-  background-color: #0056b3;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.navbar button:hover {
-  background-color: #003d80;
 }
 
 .page {

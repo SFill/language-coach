@@ -91,8 +91,11 @@ def _ensure_history_content(history: dict) -> List[dict]:
         raise HTTPException(status_code=400, detail="Note history is corrupted")
     return content
 
-def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> dict:
-    """Send a note block to a note session and get response."""
+def send_note_block(session: Session, id: int, note_block: NoteBlockCreate, *, test_mode: bool = False) -> dict:
+    """Send a note block to a note session and get response.
+
+    When test_mode is True, skip AI calls — just persist the block as-is.
+    """
     import re
     import base64
     
@@ -163,6 +166,7 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         block_type=note_block.block_type,
         metadata_=note_block.metadata_,
         assignment_ref=note_block.assignment_ref,
+        question_title=note_block.question_title,
         image_ids=extracted_image_ids,
     )
 
@@ -181,6 +185,8 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
     assistant_note_block = None
     # Determine whether to call AI: skip for assignment, simple_note, and ai_feedback blocks
     skip_ai_types = {"assignment", "simple_note", "ai_feedback"}
+    if test_mode:
+        skip_ai_types.add("question")
     should_call_ai = note_block.block_type not in skip_ai_types
 
     if should_call_ai:

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router';
 import NoteListPage from './NoteListPage';
 import NoteWindowPage from './notewindow/NoteWindowPage';
 import WordListPage from './wordlist/WordListPage';
 import WordlistProvider from './wordlist/WordlistContext';
-import LanguagePicker from './LanguagePicker';
 import NoteListManager from './notewindow/NoteListManager';
 import HomeworkLab from './homework/HomeworkLab';
+import HomeworkListManager from './homework/HomeworkListManager';
+import TopNavBar from './homework/components/TopNavBar';
 import './App.css';
 
 // Main App component to set up routes
@@ -44,6 +45,9 @@ function AppContent() {
     return manager;
   }, []);
 
+  // Create HomeworkListManager instance (singleton, sibling of noteListManager)
+  const homeworkListManager = useMemo(() => new HomeworkListManager(), []);
+
   // Load notes on mount
   useEffect(() => {
     noteListManager.loadNotes();
@@ -56,24 +60,23 @@ function AppContent() {
     console.log('[location.pathname])');
   }, [location.pathname, noteListManager]);
 
+  // Wire HomeworkListManager navigate callback + initial load
+  useEffect(() => {
+    homeworkListManager.setNavigateCallback((path, options) => navigate(path, options));
+    homeworkListManager.loadNotes();
+  }, [homeworkListManager, navigate]);
+
+  // Sync HomeworkListManager to URL on every path change
+  useEffect(() => {
+    homeworkListManager.setCurrentNoteFromPath(location.pathname);
+  }, [location.pathname, homeworkListManager]);
+
   return (
     <div className="main-container">
-      <nav className="navbar">
-        <h3
-          onClick={() => noteListManager.handleNoteNameClick(location.pathname)}
-          style={{ cursor: 'pointer', color: 'inherit' }}
-        >
-          {currentNoteName || 'Select Note'}
-        </h3>
-        <div className="nav-links">
-          <Link to="/">New note</Link>
-          <Link to="/wordlist">My words</Link>
-          <Link to="/homework">Homework</Link>
-        </div>
-        <div className="nav-controls">
-          <LanguagePicker />
-        </div>
-      </nav>
+      <TopNavBar
+        currentNoteName={currentNoteName}
+        onNoteNameClick={() => noteListManager.handleNoteNameClick(location.pathname)}
+      />
       <div className="main-block">
         <Routes>
           <Route
@@ -96,8 +99,8 @@ function AppContent() {
               />
             }
           />
-          <Route path="/homework" element={<HomeworkLab />} />
-          <Route path="/homework/:noteId" element={<HomeworkLab />} />
+          <Route path="/homework" element={<HomeworkLab homeworkListManager={homeworkListManager} />} />
+          <Route path="/homework/:noteId" element={<HomeworkLab homeworkListManager={homeworkListManager} />} />
         </Routes>
       </div>
     </div>

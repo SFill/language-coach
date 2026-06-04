@@ -64,9 +64,12 @@ def delete_note_endpoint(session: SessionDep, id: int):
 
 
 @router.post('/{id}/block')
-def send_note_block_endpoint(session: SessionDep, id: int, note_block: NoteBlockCreate):
-    """Send a note block to a note and get a response."""
-    return send_note_block(session, id, note_block)
+def send_note_block_endpoint(session: SessionDep, id: int, note_block: NoteBlockCreate, test_mode: bool = False):
+    """Send a note block to a note and get a response.
+
+    When test_mode is True, skip AI calls — just persist the block as-is.
+    """
+    return send_note_block(session, id, note_block, test_mode=test_mode)
 
 
 @router.post('/{id}/question')
