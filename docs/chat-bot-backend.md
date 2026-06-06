@@ -62,6 +62,15 @@ Key Conventions
 
 Refer to FastAPI documentation for Data Models, Path Operations, and Middleware for best practices.
 
+## File & Image Storage
+
+- Images are stored on the **local filesystem** at `UPLOAD_DIR` (default `data/note_images/`, configured via `settings.upload_dir`).
+- Upload flow: file bytes written to `UPLOAD_DIR/{uuid}{ext}`, `NoteImage` DB row created with metadata + absolute `file_path`.
+- Serve flow: `GET /coach/notes/{id}/images/{image_id}/file` → queries `NoteImage` row, verifies file exists at `file_path`, returns `FileResponse` from disk.
+- Delete flow: `os.remove(file_path)` + delete `NoteImage` row.
+- No cloud storage or database blobs — purely local filesystem with DB metadata.
+- Allowed MIME types: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/bmp`. Max size: 10 MB.
+
 ## Development Workflow
 
 - Configuration lives in `settings.py` using Pydantic `BaseSettings` — never read env vars with `os.environ` directly. Always use `get_settings()` from `backend.settings`. Secrets use `SecretStr`.

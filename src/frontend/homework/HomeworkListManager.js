@@ -14,6 +14,10 @@ class HomeworkListManager {
     this.homeworkManager = new HomeworkManager();
     this.listeners = [];
     this.navigateCallback = null;
+    this.showPicker = false;
+    // Propagate HomeworkManager state changes (e.g. loadNote completing)
+    // so useSyncExternalStore detects the update and re-renders.
+    this.homeworkManager.subscribe(() => this.notifyListeners());
   }
 
   setNavigateCallback(callback) {
@@ -126,12 +130,19 @@ class HomeworkListManager {
     return this.homeworkManager;
   }
 
+  /** Toggle between ImportWorkspace and NoteListView on /homework. */
+  togglePicker() {
+    this.showPicker = !this.showPicker;
+    this.notifyListeners();
+  }
+
   getState() {
     return {
       noteList: this.noteList,
       currentNoteId: this.currentNoteId,
       currentNoteName: this.currentNoteName,
       homeworkManager: this.homeworkManager,
+      showPicker: this.showPicker,
     };
   }
 }

@@ -65,10 +65,10 @@ export const deleteNote = async (id) => {
 };
 
 // Create a new note using POST /api/coach/notes
-export const createNewNote = async () => {
+export const createNewNote = async (opts = {}) => {
   try {
     const response = await api.post(`coach/notes/`, {
-      name: new Date().toLocaleString(),
+      name: opts.name || new Date().toLocaleString(),
       history: { content: [] },
     });
     return response.data;

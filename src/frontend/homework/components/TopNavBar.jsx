@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { to: '/homework', label: 'Homework' },
 ];
 
-export default function TopNavBar({ currentNoteName, onNoteNameClick, user = USER }) {
+export default function TopNavBar({ currentNoteName, onNoteNameClick, onHomeworkClick, user = USER }) {
   const location = useLocation();
 
   return (
@@ -29,10 +29,16 @@ export default function TopNavBar({ currentNoteName, onNoteNameClick, user = USE
         {NAV_LINKS.map((link) => {
           const isActive = location.pathname === link.to ||
             (link.to !== '/' && location.pathname.startsWith(link.to));
+          // When on /homework exactly, clicking the Homework link toggles between
+          // ImportWorkspace and NoteListView instead of navigating.
+          // On /homework/:id, it navigates normally back to /homework.
+          const isHomeworkToggle = link.to === '/homework' && onHomeworkClick &&
+            location.pathname === '/homework';
           return (
             <Link
               key={link.to}
               to={link.to}
+              onClick={isHomeworkToggle ? (e) => { e.preventDefault(); onHomeworkClick(); } : undefined}
               className={`hw-topbar-link ${isActive ? 'hw-topbar-link--active' : ''}`}
             >
               {link.label}

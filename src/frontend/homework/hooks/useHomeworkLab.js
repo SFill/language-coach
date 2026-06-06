@@ -29,6 +29,7 @@ export function useHomeworkLab(homeworkListManager) {
   const getSnapshot = useCallback(() => {
     if (!homeworkListManager) return EMPTY_STATE;
     const next = homeworkListManager.getState();
+    const hmRevision = next.homeworkManager?.getState().revision || 0;
     // Only return a new object reference if state actually changed.
     const prev = snapshotRef.current;
     if (
@@ -36,9 +37,10 @@ export function useHomeworkLab(homeworkListManager) {
       prev.noteList !== next.noteList ||
       prev.currentNoteId !== next.currentNoteId ||
       prev.currentNoteName !== next.currentNoteName ||
-      prev.homeworkManager !== next.homeworkManager
+      prev.hmRevision !== hmRevision ||
+      prev.showPicker !== next.showPicker
     ) {
-      snapshotRef.current = next;
+      snapshotRef.current = { ...next, hmRevision };
     }
     return snapshotRef.current;
   }, [homeworkListManager]);
@@ -87,11 +89,13 @@ export function useHomeworkLab(homeworkListManager) {
     noteId: state.currentNoteId,
     activeNote,
     cards,
+    showPicker: state.showPicker,
     selectNote: (id) => homeworkListManager?.selectNote(id),
     submitDraft: hm?.submitDraft.bind(hm) || (() => null),
     runAICheck: hm?.runAICheck.bind(hm) || (() => null),
     sendQuestion: hm?.sendQuestion.bind(hm) || (() => null),
     deleteNote: (id) => homeworkListManager?.deleteNote(id),
+    togglePicker: () => homeworkListManager?.togglePicker(),
     loading: false,
     error: null,
   };

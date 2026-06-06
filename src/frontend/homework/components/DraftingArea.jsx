@@ -59,19 +59,19 @@ function QATab({ qaBlocks, onSendQuestion, isSending }) {
   );
 }
 
-export default function DraftingArea({ activeNote, submitDraft, runAICheck, sendQuestion }) {
+export default function DraftingArea({ activeNote, activeAssignmentId, submitDraft, runAICheck, sendQuestion }) {
   const [activeTab, setActiveTab] = useState('assignment');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSendingQuestion, setIsSendingQuestion] = useState(false);
   const editorRef = useRef(null);
   const [wordCount, setWordCount] = useState(0);
-  // Local draft state — survives tab switches (contentEditable gets unmounted)
-  const [localDraft, setLocalDraft] = useState(null);
 
   // Derive blocks from activeNote
   const noteBlocks = activeNote?.note_blocks || [];
-  const assignmentBlock = noteBlocks.find((b) => b.block_type === 'assignment');
+  const assignmentBlock = activeAssignmentId
+    ? noteBlocks.find((b) => b.id === activeAssignmentId)
+    : noteBlocks.find((b) => b.block_type === 'assignment');
   const assignmentId = assignmentBlock?.id;
   // Draft and feedback are linked to the active assignment via assignment_ref
   const draftBlock = noteBlocks.find((b) => b.block_type === 'simple_note' && b.role === 'user' && b.assignment_ref === assignmentId);
@@ -84,11 +84,6 @@ export default function DraftingArea({ activeNote, submitDraft, runAICheck, send
     if (!feedbackBlock?.content || !Array.isArray(feedbackBlock.content)) return [];
     return feedbackBlock.content;
   }, [feedbackBlock?.id]);
-
-  // Clear local draft when switching to a different note
-  useEffect(() => {
-    setLocalDraft(null);
-  }, [activeNote?.id]);
 
   // Strip @image:X references from prompt text for display
   const rawPromptText = assignmentBlock?.content || '';
@@ -105,18 +100,13 @@ export default function DraftingArea({ activeNote, submitDraft, runAICheck, send
     }
   }, []);
 
-  // Set editor content only when the source blocks change (new note selected,
-  // draft saved, AI feedback arrived). Not on every re-render from word count etc.
+  // Set editor content when the active note, assignment, or source blocks change.
   useEffect(() => {
     if (!editorRef.current) return;
 
-    // Priority: server draft > local unsaved draft > segments > nothing
+    // Priority: server draft > segments > nothing
     if (draftBlock?.content && typeof draftBlock.content === 'string') {
       editorRef.current.innerHTML = draftBlock.content;
-      setLocalDraft(null); // server draft overrides local
-    } else if (localDraft) {
-      // Restore unsaved local text after tab switch remount
-      editorRef.current.innerHTML = localDraft;
     } else if (segments.length > 0) {
       // Render segmented content imperatively
       const container = document.createElement('div');
@@ -140,15 +130,14 @@ export default function DraftingArea({ activeNote, submitDraft, runAICheck, send
         }
       });
       editorRef.current.innerHTML = container.innerHTML;
+    } else {
+      editorRef.current.innerHTML = '';
     }
     updateWordCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-set innerHTML when blocks actually change
-  }, [activeNote?.id, draftBlock?.id, feedbackBlock?.id]);
+  }, [activeNote?.id, activeAssignmentId, draftBlock?.id, feedbackBlock?.id]);
 
   const handleEditorInput = useCallback(() => {
-    if (editorRef.current) {
-      setLocalDraft(editorRef.current.innerHTML);
-    }
     updateWordCount();
   }, [updateWordCount]);
 
@@ -208,6 +197,7 @@ export default function DraftingArea({ activeNote, submitDraft, runAICheck, send
   const targetWords = assignmentBlock?.metadata_?.targetLength
     ? parseInt(assignmentBlock.metadata_.targetLength, 10) || 0
     : 0;
+
 
   if (!activeNote) {
     return (
@@ -288,7 +278,7 @@ export default function DraftingArea({ activeNote, submitDraft, runAICheck, send
             contentEditable
             suppressContentEditableWarning
             style={{ outline: 'none' }}
-            onInput={handleEditorInput}
+              onInput={handleEditorInput}
           />
         </div>
 

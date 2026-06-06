@@ -17,16 +17,18 @@ Agent (implement) → code changes → Playwright MCP (verify) → agent iterate
 
 ### Tools
 
-| Tool                                       | Purpose                                                                                                                                     |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Playwright MCP**                         | Interactive browser control — navigate, screenshot, evaluate JS, check console, get accessibility tree                                      |
-| **Playwright tests**                       | Automated regression — `visual.spec.ts`, `layout.spec.ts`, `accessibility.spec.ts`, `console.spec.ts`                                       |
-| **`scripts/judge.py`**                     | *(Optional)* Vision model comparison — sends target + implementation screenshots to vision model, returns `{ match, feedback, diff_areas }` |
+| Tool                                       | Purpose                                                                                                                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Playwright MCP**                         | Interactive browser control — navigate, screenshot, evaluate JS, check console, get accessibility tree                                                                                     |
+| **Playwright tests**                       | Automated regression — `visual.spec.ts`, `layout.spec.ts`, `accessibility.spec.ts`, `console.spec.ts`                                                                                      |
+| **`scripts/judge.py`**                     | *(Optional)* Vision model comparison — sends target + implementation screenshots to vision model, returns `{ match, feedback, diff_areas }`                                                |
 | **`scripts/explain_screenshot.py`**        | *(Optional)* Vision model description of a single screenshot — modes: `brief`, `detailed`; `--focus <aspect>` to emphasize a specific detail (e.g. `cards`, `spacing`, `text readability`) |
-| **`scripts/prepare_stitch_screenshot.py`** | Download Stitch screen HTML and serve locally for high-res Playwright rendering                                                             |
-| **`/stitch-screenshot` skill**             | Full workflow: fetch Stitch HTML → serve → navigate → check errors → screenshot                                                             |
+| **`scripts/prepare_stitch_screenshot.py`** | Download Stitch screen HTML and serve locally for high-res Playwright rendering                                                                                                            |
+| **`/stitch-screenshot` skill**             | Full workflow: fetch Stitch HTML → serve → navigate → check errors → screenshot                                                                                                            |
 
 ### MCP Verification Workflow
+
+When take screenshots you MUST save them to `tests/screenshots/`
 
 When using Playwright MCP to verify UI changes:
 

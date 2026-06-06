@@ -31,7 +31,7 @@ class Settings(BaseSettings):
     vite_environment: str = "dev"
 
     # File uploads
-    upload_dir: Path = Path("/tmp/note_images")
+    upload_dir: Path = Path("data/note_images")
 
     @property
     def database_url(self) -> str:

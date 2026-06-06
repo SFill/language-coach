@@ -76,6 +76,7 @@ function AppContent() {
       <TopNavBar
         currentNoteName={currentNoteName}
         onNoteNameClick={() => noteListManager.handleNoteNameClick(location.pathname)}
+        onHomeworkClick={() => homeworkListManager.togglePicker()}
       />
       <div className="main-block">
         <Routes>

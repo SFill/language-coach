@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './HomeworkLab.css';
 import { useHomeworkLab } from './hooks/useHomeworkLab';
 import SideNavBar from './components/SideNavBar';
 import AssignmentCard from './components/AssignmentCard';
 import DraftingArea from './components/DraftingArea';
+import ImportWorkspace from './components/ImportWorkspace';
 import NoteListView from '../NoteListView';
 
 export default function HomeworkLab({ homeworkListManager }) {
@@ -17,7 +18,28 @@ export default function HomeworkLab({ homeworkListManager }) {
     submitDraft,
     runAICheck,
     sendQuestion,
+    showPicker,
+    togglePicker,
   } = useHomeworkLab(homeworkListManager);
+
+  const [activeAssignmentId, setActiveAssignmentId] = useState(null);
+
+  // Auto-select first assignment when note changes or cards first become available
+  useEffect(() => {
+    if (!activeNote?.id) {
+      setActiveAssignmentId(null);
+      return;
+    }
+    // Keep current selection if it's still valid, otherwise pick first card
+    if (activeAssignmentId && cards.some((c) => c.blockId === activeAssignmentId)) return;
+    setActiveAssignmentId(cards[0]?.blockId || null);
+  }, [activeNote?.id, cards]);
+
+  // After importing assignments, refresh list and navigate to the new note
+  const handleImportComplete = useCallback(async (newNoteId) => {
+    await homeworkListManager.loadNotes();
+    homeworkListManager.selectNote(String(newNoteId));
+  }, [homeworkListManager]);
 
   // Derive inquiries from activeNote's question blocks
   const inquiries = (activeNote?.note_blocks || [])
@@ -29,21 +51,25 @@ export default function HomeworkLab({ homeworkListManager }) {
       time: 'just now',
     }));
 
-  // No note selected — show the picker (uses NoteListView like /notelist).
+  // No note selected — show either ImportWorkspace or NoteListView
   if (!noteId) {
     return (
       <div className="hw-page">
         <div className="hw-content-wrapper hw-content-wrapper--no-sidebar">
           <main className="hw-pick-main">
-            <div className="hw-pick-container">
-              <h2 className="hw-pick-title">Homework</h2>
-              <NoteListView
-                noteList={notes}
-                currentNoteId={null}
-                onSelectNote={selectNote}
-                onDeleteNote={deleteNote}
-              />
-            </div>
+            {showPicker ? (
+              <div className="hw-pick-container">
+                <h2 className="hw-pick-title">Homework</h2>
+                <NoteListView
+                  noteList={notes}
+                  currentNoteId={null}
+                  onSelectNote={selectNote}
+                  onDeleteNote={deleteNote}
+                />
+              </div>
+            ) : (
+              <ImportWorkspace onImportComplete={handleImportComplete} />
+            )}
           </main>
         </div>
       </div>
@@ -72,10 +98,10 @@ export default function HomeworkLab({ homeworkListManager }) {
               )}
               {cards.map((card) => (
                 <AssignmentCard
-                  key={`${card.id}-${card.blockId}`}
+                  key={card.blockId}
                   assignment={card}
-                  isActive
-                  onSelect={selectNote}
+                  isActive={card.blockId === activeAssignmentId}
+                  onSelect={() => setActiveAssignmentId(card.blockId)}
                 />
               ))}
             </div>
@@ -89,6 +115,7 @@ export default function HomeworkLab({ homeworkListManager }) {
           {/* Right Pane: Drafting Area */}
           <DraftingArea
             activeNote={activeNote}
+            activeAssignmentId={activeAssignmentId}
             submitDraft={submitDraft}
             runAICheck={runAICheck}
             sendQuestion={sendQuestion}
