@@ -3,7 +3,7 @@ import MarkdownContent from '../../notewindow/components/MarkdownContent.jsx';
 import { reconcileHighlights } from '../utils/reconcileHighlights';
 
 // Tooltip shown when hovering/clicking a highlight span
-function FeedbackTooltip({ anchor, data, editorRect }) {
+function FeedbackTooltip({ anchor, data, editorRect, onMouseEnter, onMouseLeave }) {
   if (!anchor || !data) return null;
 
   const rect = anchor.getBoundingClientRect();
@@ -22,6 +22,8 @@ function FeedbackTooltip({ anchor, data, editorRect }) {
     <div
       className={`hw-feedback-tooltip ${config.accentClass}`}
       style={{ left: `${Math.min(left, editorRect.width - 280)}px`, top: `${top}px` }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div className="hw-feedback-tooltip-label">{config.label}</div>
       {data.type === 'suggestion' && data.annotation && (
@@ -482,6 +484,12 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
               anchor={tooltip.anchor}
               data={tooltip.data}
               editorRect={editorContainerRef.current.getBoundingClientRect()}
+              onMouseEnter={() => clearTimeout(tooltipHideTimer.current)}
+              onMouseLeave={() => {
+                tooltipHideTimer.current = setTimeout(() => {
+                  setTooltip({ anchor: null, data: null });
+                }, 200);
+              }}
             />
           )}
         </div>

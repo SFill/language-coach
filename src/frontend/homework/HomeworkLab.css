@@ -896,6 +896,7 @@
   padding: var(--hw-unit-xl);
   overflow-y: auto;
   background: var(--hw-surface-container-lowest);
+  position: relative;
 }
 
 .hw-editor-content {
