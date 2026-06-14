@@ -100,6 +100,17 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
         reader.readAsText(file);
         return;
       }
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const src = event.target?.result;
+          if (typeof src === 'string') {
+            setSegments(prev => [...prev, { type: 'image', content: '', src }]);
+          }
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
     }
   }, [handlePlainTextImport]);
 

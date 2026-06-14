@@ -16,6 +16,7 @@
 | `accessibility.spec.ts` | axe-core violations, heading hierarchy, alt text | Hardcoded routes |
 | `console.spec.ts` | Console error detection (filtered) | Hardcoded routes |
 | `visual.spec.ts` | Screenshot regression comparison | Hardcoded routes |
+| `highlight-reconciliation.spec.ts` | Grammarly-style highlights: rendering, per-span staleness, reconciliation after reload | API + route mock |
 
 ## Fixture System (`fixtures.ts`)
 
@@ -122,6 +123,43 @@ expect(cs.flex).toContain('1');
 expect(cs.minHeight).toBe('0px');
 ```
 
+## Highlight Reconciliation Tests (`highlight-reconciliation.spec.ts`)
+
+Tests the Grammarly-style inline feedback feature — highlight rendering, per-span staleness, and LCS-based diff reconciliation after page reload.
+
+### Route Mocking
+
+Since the standard API can't create `ai_feedback` blocks with list content (the `block` field is a string), the test uses Playwright's `page.route()` to intercept `GET /notes/{id}` and inject a synthetic `ai_feedback` block with predefined segments. This simulates a completed AI Check without requiring an AI backend.
+
+```ts
+function injectFeedbackRoute(page, noteId, assignmentId, draftBlockId, segments) {
+  page.route('**/api/coach/notes/**', async (route) => {
+    // Only intercept GET for our note — pass through PATCH/POST
+    if (method !== 'GET' || !url matches noteId) return route.continue();
+    // Fetch real response, add ai_feedback block to note_blocks + history.content
+    // Return modified response
+  });
+}
+```
+
+### Test Scenarios
+
+| Test | What it verifies |
+|---|---|
+| `renders suggestion highlights with tooltip data` | AI Check produces colored `<span>` elements with correct `data-*` attributes; hover shows tooltip with annotation |
+| `editing one highlight strips only that highlight` | Per-span staleness: editing "va" → "va a" strips only the "va" span; "quedamos" remains highlighted |
+| `reconciliation preserves unchanged highlights after reload` | After reload with edited draft text, reconciliation keeps "quedamos" highlight and drops "va" highlight |
+| `reconciliation with all highlights unchanged` | When draft text matches segments text, all highlights render normally (no reconciliation needed) |
+| `submit after editing preserves edits` | After editing and submitting, stale highlights are not re-applied; unchanged highlight persists |
+
+### Key Assertions
+
+- `data-original` matches the segment text (staleness detection anchor)
+- `data-annotation` contains the correction (tooltip content)
+- After edit: `span:not([class])` count = 1 (stripped span), `.hw-highlight-suggestion` count = 1 (remaining)
+- After reload with edited draft: `data-original="quedamos"` is visible, `data-original="va"` has count 0
+- `editor.innerText.trim()` matches the expected draft text
+
 ## Console Error Filtering
 
 `console.spec.ts` ignores backend-connection errors (ERR_CONNECTION_REFUSED, React DevTools, etc.). Add patterns to `IGNORE_PATTERNS` when new expected console noise appears.
@@ -142,5 +180,6 @@ npm run test:visual    # Visual regression (screenshot comparison)
 npm run test:layout    # Overflow, element visibility, viewport
 npm run test:a11y      # axe-core accessibility violations
 npm run test:console   # Console error detection (filtered)
+npm run test:highlights # Highlight rendering, staleness, reconciliation
 npm run test:all       # All Playwright tests
 ```

@@ -852,6 +852,71 @@
   cursor: pointer;
 }
 
+/* === Feedback Tooltip === */
+.hw-feedback-tooltip {
+  position: absolute;
+  z-index: 10;
+  min-width: 180px;
+  max-width: 280px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--hw-surface-container-lowest);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--hw-on-surface);
+  pointer-events: auto;
+  animation: hw-tooltip-fade-in 0.15s ease-out;
+}
+
+@keyframes hw-tooltip-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hw-feedback-tooltip--suggestion {
+  border-left: 3px solid var(--hw-error);
+}
+
+.hw-feedback-tooltip--vocab {
+  border-left: 3px solid var(--hw-primary);
+}
+
+.hw-feedback-tooltip--correct {
+  border-left: 3px solid var(--hw-secondary);
+}
+
+.hw-feedback-tooltip-label {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  color: var(--hw-on-surface-variant);
+}
+
+.hw-feedback-tooltip--suggestion .hw-feedback-tooltip-label {
+  color: var(--hw-error);
+}
+
+.hw-feedback-tooltip--vocab .hw-feedback-tooltip-label {
+  color: var(--hw-primary);
+}
+
+.hw-feedback-tooltip--correct .hw-feedback-tooltip-label {
+  color: var(--hw-secondary);
+}
+
+.hw-feedback-tooltip-body {
+  color: var(--hw-on-surface);
+}
+
+.hw-feedback-tooltip-phonetic {
+  color: var(--hw-on-surface-variant);
+  margin-left: 4px;
+  font-style: italic;
+}
+
 /* === Footer Actions === */
 .hw-draft-footer {
   height: 80px;

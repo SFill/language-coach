@@ -1,6 +1,47 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import MarkdownContent from '../../notewindow/components/MarkdownContent.jsx';
+import { reconcileHighlights } from '../utils/reconcileHighlights';
 
-function QATab({ qaBlocks, onSendQuestion, isSending }) {
+// Tooltip shown when hovering/clicking a highlight span
+function FeedbackTooltip({ anchor, data, editorRect }) {
+  if (!anchor || !data) return null;
+
+  const rect = anchor.getBoundingClientRect();
+  // Position tooltip below the span, relative to the editor container
+  const left = rect.left - editorRect.left;
+  const top = rect.bottom - editorRect.top + 6; // 6px gap below span
+
+  const typeConfig = {
+    suggestion: { label: '✏️ Suggestion', accentClass: 'hw-feedback-tooltip--suggestion' },
+    vocab:      { label: '📖 Vocabulary', accentClass: 'hw-feedback-tooltip--vocab' },
+    correct:    { label: '✅ Correct', accentClass: 'hw-feedback-tooltip--correct' },
+  };
+  const config = typeConfig[data.type] || typeConfig.correct;
+
+  return (
+    <div
+      className={`hw-feedback-tooltip ${config.accentClass}`}
+      style={{ left: `${Math.min(left, editorRect.width - 280)}px`, top: `${top}px` }}
+    >
+      <div className="hw-feedback-tooltip-label">{config.label}</div>
+      {data.type === 'suggestion' && data.annotation && (
+        <div className="hw-feedback-tooltip-body">{data.annotation}</div>
+      )}
+      {data.type === 'vocab' && (
+        <div className="hw-feedback-tooltip-body">
+          {data.word && <strong>{data.word}</strong>}
+          {data.phonetic && <span className="hw-feedback-tooltip-phonetic">{data.phonetic}</span>}
+          {data.annotation && <span> — {data.annotation}</span>}
+        </div>
+      )}
+      {data.type === 'correct' && data.annotation && (
+        <div className="hw-feedback-tooltip-body">{data.annotation}</div>
+      )}
+    </div>
+  );
+}
+
+function QATab({ qaBlocks, onSendQuestion, isSending, noteId }) {
   const [question, setQuestion] = useState('');
 
   const handleSend = () => {
@@ -29,7 +70,7 @@ function QATab({ qaBlocks, onSendQuestion, isSending }) {
             )}
             <div className="hw-qa-answer">
               {typeof block.content === 'string'
-                ? block.content
+                ? <MarkdownContent content={block.content} noteId={noteId} />
                 : Array.isArray(block.content)
                   ? block.content.map((seg, i) => <span key={i}>{seg.text || seg}</span>)
                   : '...'}
@@ -65,7 +106,19 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSendingQuestion, setIsSendingQuestion] = useState(false);
   const editorRef = useRef(null);
+  const editorContainerRef = useRef(null);
   const [wordCount, setWordCount] = useState(0);
+
+  // Tooltip state for highlight annotations
+  const [tooltip, setTooltip] = useState({ anchor: null, data: null });
+  const tooltipHideTimer = useRef(null);
+
+  // Track whether the user has edited inside highlight spans since the last AI Check.
+  // When true, segments are stale — the useEffect should render draft content instead.
+  const segmentsStaleRef = useRef(false);
+  // Remember which feedbackBlock.id the current segments correspond to,
+  // so we can reset staleness when a new AI Check produces fresh segments.
+  const renderedFeedbackIdRef = useRef(null);
 
   // Derive blocks from activeNote
   const noteBlocks = activeNote?.note_blocks || [];
@@ -73,9 +126,10 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     ? noteBlocks.find((b) => b.id === activeAssignmentId)
     : noteBlocks.find((b) => b.block_type === 'assignment');
   const assignmentId = assignmentBlock?.id;
-  // Draft and feedback are linked to the active assignment via assignment_ref
+  // Draft is linked to the assignment via assignment_ref
   const draftBlock = noteBlocks.find((b) => b.block_type === 'simple_note' && b.role === 'user' && b.assignment_ref === assignmentId);
-  const feedbackBlock = noteBlocks.find((b) => b.block_type === 'ai_feedback' && b.assignment_ref === assignmentId);
+  // Feedback is linked to the draft block via assignment_ref (backend sets it to the draft block id)
+  const feedbackBlock = noteBlocks.find((b) => b.block_type === 'ai_feedback' && (b.assignment_ref === assignmentId || b.assignment_ref === draftBlock?.id));
   const qaBlocks = noteBlocks.filter((b) => b.block_type === 'question');
 
   // Segments from ai_feedback block — memoized so the reference is stable
@@ -85,10 +139,10 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     return feedbackBlock.content;
   }, [feedbackBlock?.id]);
 
-  // Strip @image:X references from prompt text for display
+  // Strip @image:X references and collapse excessive newlines for display
   const rawPromptText = assignmentBlock?.content || '';
   const promptText = typeof rawPromptText === 'string'
-    ? rawPromptText.replace(/@image:\d+/g, '').trim()
+    ? rawPromptText.replace(/@image:\d+/g, '').replace(/\n{3,}/g, '\n\n').trim()
     : rawPromptText;
 
   // Calculate word count from editor
@@ -104,32 +158,81 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   useEffect(() => {
     if (!editorRef.current) return;
 
-    // Priority: server draft > segments > nothing
-    if (draftBlock?.content && typeof draftBlock.content === 'string') {
-      editorRef.current.innerHTML = draftBlock.content;
-    } else if (segments.length > 0) {
-      // Render segmented content imperatively
+    // When a fresh AI Check produces new segments, reset staleness.
+    // Also reset when switching notes/assignments (no feedback block for this context).
+    const feedbackId = feedbackBlock?.id;
+    if (feedbackId && feedbackId !== renderedFeedbackIdRef.current) {
+      segmentsStaleRef.current = false;
+      renderedFeedbackIdRef.current = feedbackId;
+    } else if (!feedbackId) {
+      // No feedback block — clear staleness so a future AI Check starts fresh
+      segmentsStaleRef.current = false;
+      renderedFeedbackIdRef.current = null;
+    }
+
+    // Determine what to render:
+    // 1. Fresh segments that match the draft → render all highlights
+    // 2. Segments that differ from the draft → reconcile (keep unchanged highlights, drop stale ones)
+    // 3. Stale segments (in-session edit) → skip, render draft content instead
+    // 4. No segments → render draft content
+    const draftText = typeof draftBlock?.content === 'string' ? draftBlock.content : '';
+    const segmentsText = segments.map((s) => s.text || '').join('');
+
+    if (segments.length > 0 && !segmentsStaleRef.current) {
+      // Build render chunks: either all segments or reconciled highlights
+      let chunks;
+      if (segmentsText === draftText.replace(/\r\n/g, '\n').trim() || !draftText.trim()) {
+        // No edits — all segments are fresh
+        chunks = segments.map((seg) => ({
+          text: seg.text,
+          type: seg.type,
+          highlight: seg.type !== 'plain',
+          annotation: seg.annotation,
+          word: seg.word,
+          phonetic: seg.phonetic,
+        }));
+      } else {
+        // Text was edited since last AI Check — reconcile highlights against draft
+        chunks = reconcileHighlights(segments, draftText);
+      }
+
+      // Render chunks into the editor
       const container = document.createElement('div');
-      segments.forEach((seg) => {
-        const span = document.createElement('span');
-        if (seg.type === 'vocab') {
-          span.className = 'hw-vocab-highlight';
-          span.textContent = seg.text;
-          container.appendChild(span);
-        } else if (seg.type === 'correct') {
-          span.className = 'hw-highlight-correct';
-          span.textContent = seg.text;
-          container.appendChild(span);
-        } else if (seg.type === 'suggestion') {
-          span.className = 'hw-highlight-suggestion';
-          span.textContent = seg.text;
+      chunks.forEach((chunk) => {
+        if (chunk.highlight) {
+          const span = document.createElement('span');
+          if (chunk.type === 'vocab') {
+            span.className = 'hw-vocab-highlight';
+          } else if (chunk.type === 'correct') {
+            span.className = 'hw-highlight-correct';
+          } else if (chunk.type === 'suggestion') {
+            span.className = 'hw-highlight-suggestion';
+          }
+          span.textContent = chunk.text;
+          span.dataset.type = chunk.type;
+          span.dataset.original = chunk.text;
+          if (chunk.annotation) span.dataset.annotation = chunk.annotation;
+          if (chunk.word) span.dataset.word = chunk.word;
+          if (chunk.phonetic) span.dataset.phonetic = chunk.phonetic;
           container.appendChild(span);
         } else {
-          span.textContent = seg.text;
-          container.appendChild(span);
+          // Plain text — convert \n to <br>
+          const lines = chunk.text.split('\n');
+          lines.forEach((line, i) => {
+            if (line) container.appendChild(document.createTextNode(line));
+            if (i < lines.length - 1) container.appendChild(document.createElement('br'));
+          });
         }
       });
       editorRef.current.innerHTML = container.innerHTML;
+      // Clear any stale tooltip
+      setTooltip({ anchor: null, data: null });
+    } else if (draftBlock?.content && typeof draftBlock.content === 'string') {
+      // Stale segments or no segments — render draft content
+      const html = /<[a-zA-Z]/.test(draftBlock.content)
+        ? draftBlock.content
+        : draftBlock.content.replace(/\n/g, '<br>');
+      editorRef.current.innerHTML = html;
     } else {
       editorRef.current.innerHTML = '';
     }
@@ -139,7 +242,97 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
 
   const handleEditorInput = useCallback(() => {
     updateWordCount();
+
+    // Per-span staleness: strip highlight styling from edited spans
+    // Instead of replacing the node (which kills the cursor), just remove
+    // the CSS class and data attributes so it renders as plain text.
+    if (editorRef.current) {
+      const highlights = editorRef.current.querySelectorAll(
+        '.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion'
+      );
+      let changed = false;
+      highlights.forEach(span => {
+        if (span.textContent !== span.dataset.original) {
+          // This span was edited — strip highlight styling, keep the node intact
+          span.className = '';
+          delete span.dataset.type;
+          delete span.dataset.original;
+          delete span.dataset.annotation;
+          delete span.dataset.word;
+          delete span.dataset.phonetic;
+          changed = true;
+        }
+      });
+      if (changed) {
+        // Segments are now stale — the feedback no longer matches the editor text.
+        // Future useEffect runs should render draft content, not segments.
+        segmentsStaleRef.current = true;
+        // If tooltip was showing on an edited span, hide it
+        setTooltip({ anchor: null, data: null });
+      }
+    }
   }, [updateWordCount]);
+
+  // Clean up stale (class-less) spans on blur to avoid DOM clutter.
+  // We don't do this on every input to prevent cursor jumps.
+  const handleEditorBlur = useCallback(() => {
+    if (!editorRef.current) return;
+    const staleSpans = editorRef.current.querySelectorAll('span:not([class])');
+    if (staleSpans.length > 0) {
+      staleSpans.forEach(span => {
+        const textNode = document.createTextNode(span.textContent);
+        span.parentNode.replaceChild(textNode, span);
+      });
+      editorRef.current.normalize();
+    }
+  }, []);
+
+  // Tooltip handlers: show on hover, hide with delay, toggle on click
+  const handleEditorMouseOver = useCallback((e) => {
+    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
+    if (!span) return;
+    clearTimeout(tooltipHideTimer.current);
+    setTooltip({
+      anchor: span,
+      data: {
+        type: span.dataset.type,
+        annotation: span.dataset.annotation || '',
+        word: span.dataset.word || '',
+        phonetic: span.dataset.phonetic || '',
+      },
+    });
+  }, []);
+
+  const handleEditorMouseOut = useCallback((e) => {
+    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
+    if (!span) return;
+    // Delay hide to allow mouse to reach the tooltip
+    tooltipHideTimer.current = setTimeout(() => {
+      setTooltip(prev => prev.anchor === span ? { anchor: null, data: null } : prev);
+    }, 200);
+  }, []);
+
+  const handleEditorClick = useCallback((e) => {
+    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
+    if (!span) {
+      // Clicked outside any highlight — dismiss tooltip
+      setTooltip({ anchor: null, data: null });
+      return;
+    }
+    // Toggle tooltip on click
+    setTooltip(prev => {
+      if (prev.anchor === span) return { anchor: null, data: null };
+      return {
+        anchor: span,
+        data: {
+          type: span.dataset.type,
+          annotation: span.dataset.annotation || '',
+          word: span.dataset.word || '',
+          phonetic: span.dataset.phonetic || '',
+        },
+      };
+    });
+  }, []);
 
   // Submit draft text
   const handleSubmit = async () => {
@@ -239,7 +432,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
               <span className="hw-material-icon">description</span>
               Assignment Prompt
             </div>
-            <p className="hw-assignment-prompt-text">{promptText}</p>
+            <div className="hw-assignment-prompt-text"><MarkdownContent content={promptText} noteId={activeNote?.id} /></div>
           </div>
         )}
 
@@ -271,15 +464,26 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
         </div>
 
         {/* Rich Text Editor */}
-        <div className="hw-editor">
+        <div className="hw-editor" ref={editorContainerRef}>
           <div
             ref={editorRef}
             className="hw-editor-content"
             contentEditable
             suppressContentEditableWarning
             style={{ outline: 'none' }}
-              onInput={handleEditorInput}
+            onInput={handleEditorInput}
+            onBlur={handleEditorBlur}
+            onMouseOver={handleEditorMouseOver}
+            onMouseOut={handleEditorMouseOut}
+            onClick={handleEditorClick}
           />
+          {tooltip.anchor && tooltip.data && editorContainerRef.current && (
+            <FeedbackTooltip
+              anchor={tooltip.anchor}
+              data={tooltip.data}
+              editorRect={editorContainerRef.current.getBoundingClientRect()}
+            />
+          )}
         </div>
 
         {/* Footer Actions */}
@@ -314,6 +518,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
           qaBlocks={qaBlocks}
           onSendQuestion={handleSendQuestion}
           isSending={isSendingQuestion}
+          noteId={activeNote?.id}
         />
       </div>
     </section>

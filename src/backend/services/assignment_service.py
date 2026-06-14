@@ -75,12 +75,15 @@ class AssignmentService:
         # Find assignment prompt for context
         assignment_prompt = self._find_assignment_prompt(content)
 
-        # Build messages and call OpenAI
+        # Build messages and call OpenAI for analysis
         messages = self._build_analysis_messages(draft_text, assignment_prompt)
-        response_text = self._call_openai(messages)
+        raw = self._call_openai(messages)
+        segments = self._parse_segments(raw, draft_text)
 
-        # Parse segments from response
-        segments = self._parse_segments(response_text, draft_text)
+        # Remove any existing ai_feedback block for this draft to avoid duplicates
+        content = [b for b in content if not (
+            b.get('block_type') == 'ai_feedback' and b.get('assignment_ref') == block_id
+        )]
 
         # Create ai_feedback block
         feedback_block = NoteBlock(
@@ -159,10 +162,19 @@ class AssignmentService:
     def _parse_segments(self, response_text: str, original_text: str) -> List[DraftSegment]:
         """Parse OpenAI JSON response into DraftSegment objects.
 
+        Handles responses wrapped in markdown code fences.
         Fallback to a single plain segment on parse failure.
         """
+        # Strip markdown code fences if present (```json ... ``` or ``` ... ```)
+        stripped = response_text.strip()
+        if stripped.startswith('```'):
+            first_newline = stripped.index('\n') if '\n' in stripped else len(stripped)
+            stripped = stripped[first_newline + 1:]
+            if stripped.rstrip().endswith('```'):
+                stripped = stripped.rstrip()[:-3].rstrip()
+
         try:
-            data = json.loads(response_text)
+            data = json.loads(stripped)
             if isinstance(data, dict) and 'segments' in data:
                 segments_data = data['segments']
             elif isinstance(data, list):
@@ -177,9 +189,9 @@ class AssignmentService:
                         segments.append(DraftSegment(
                             text=seg['text'],
                             type=seg['type'],
-                            word=seg.get('word'),
-                            phonetic=seg.get('phonetic'),
-                            annotation=seg.get('annotation'),
+                            word=seg.get('word') or None,
+                            phonetic=seg.get('phonetic') or None,
+                            annotation=seg.get('annotation') or None,
                         ))
                 if segments:
                     return segments
