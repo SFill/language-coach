@@ -1,5 +1,10 @@
-.word-list-page{
+.word-list-page {
     min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 .word-list-page-container {

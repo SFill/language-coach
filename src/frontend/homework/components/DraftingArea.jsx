@@ -1,6 +1,8 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import MarkdownContent from '../../notewindow/components/MarkdownContent.jsx';
 import { reconcileHighlights } from '../utils/reconcileHighlights';
+import HomeworkToolbar from './HomeworkToolbar.jsx';
+import { useWordlist } from '../../wordlist/WordlistContext';
 
 // Tooltip shown when hovering/clicking a highlight span
 function FeedbackTooltip({ anchor, data, editorRect, onMouseEnter, onMouseLeave }) {
@@ -110,6 +112,21 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   const editorRef = useRef(null);
   const editorContainerRef = useRef(null);
   const [wordCount, setWordCount] = useState(0);
+
+  // Selection toolbar state
+  const hwToolbarRef = useRef(null);
+  const [hwToolbarVisible, setHwToolbarVisible] = useState(false);
+  const [hwToolbarStyle, setHwToolbarStyle] = useState({});
+  const [hwSelectedText, setHwSelectedText] = useState('');
+  const [hwSelectedSentence, setHwSelectedSentence] = useState(null);
+
+  // Wordlist integration
+  const {
+    wordlists,
+    addWordToList,
+    moveWordBetweenLists,
+    createNewListWithWord,
+  } = useWordlist();
 
   // Tooltip state for highlight annotations
   const [tooltip, setTooltip] = useState({ anchor: null, data: null });
@@ -393,6 +410,153 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     ? parseInt(assignmentBlock.metadata_.targetLength, 10) || 0
     : 0;
 
+  // --- Selection toolbar handlers ---
+
+  // Extract the sentence containing the current selection from the editor content
+  const extractSentenceFromEditor = useCallback(() => {
+    const editor = editorRef.current;
+    if (!editor) return null;
+
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return null;
+
+    try {
+      const range = selection.getRangeAt(0);
+      const container = range.commonAncestorContainer;
+      // Walk up to the editor-level container for full text context
+      const root = container.nodeType === Node.TEXT_NODE ? container.parentElement : container;
+      const editorRoot = editor;
+
+      const fullText = editorRoot.textContent || '';
+
+      // Calculate absolute position of selection start in the full text
+      let absoluteStart = 0;
+      const walker = document.createTreeWalker(
+        editorRoot,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+      );
+
+      let currentNode;
+      while ((currentNode = walker.nextNode())) {
+        if (currentNode === range.startContainer) {
+          absoluteStart += range.startOffset;
+          break;
+        }
+        absoluteStart += currentNode.textContent.length;
+      }
+
+      // Find sentence boundaries around this position
+      let sentenceStart = 0;
+      for (let i = absoluteStart - 1; i >= 0; i--) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceStart = i + 1;
+          break;
+        }
+      }
+
+      let sentenceEnd = fullText.length;
+      for (let i = absoluteStart; i < fullText.length; i++) {
+        if (/[.!?]/.test(fullText[i])) {
+          sentenceEnd = i;
+          break;
+        }
+      }
+
+      const sentence = fullText.slice(sentenceStart, sentenceEnd).trim();
+      return sentence || null;
+    } catch (error) {
+      console.error('Error extracting sentence from editor:', error);
+      return null;
+    }
+  }, []);
+
+  const handleEditorMouseUp = useCallback((e) => {
+    // Check if click is inside the toolbar — don't hide it
+    if (hwToolbarRef.current && hwToolbarRef.current.contains(e.target)) {
+      return;
+    }
+
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) {
+      // No selection — hide toolbar if it was visible
+      if (hwToolbarVisible) setHwToolbarVisible(false);
+      return;
+    }
+
+    // Verify the selection is inside our editor
+    const editorEl = editorRef.current;
+    if (!editorEl || !editorEl.contains(selection.anchorNode)) {
+      return;
+    }
+
+    const text = selection.toString().trim();
+    if (!text) {
+      if (hwToolbarVisible) setHwToolbarVisible(false);
+      return;
+    }
+
+    setHwSelectedText(text);
+
+    // Extract sentence context while the selection is still active
+    const sentence = extractSentenceFromEditor();
+    setHwSelectedSentence(sentence);
+
+    // Position toolbar relative to editor container
+    const range = selection.getRangeAt(0);
+    const rangeRect = range.getBoundingClientRect();
+    const containerRect = editorContainerRef.current.getBoundingClientRect();
+
+    setHwToolbarStyle({
+      position: 'absolute',
+      top: rangeRect.top - containerRect.top - 40,
+      left: rangeRect.left - containerRect.left,
+    });
+    setHwToolbarVisible(true);
+  }, [hwToolbarVisible, extractSentenceFromEditor]);
+
+  // Hide toolbar on click outside editor or when selection is cleared
+  const handleDocumentMouseDown = useCallback((e) => {
+    if (hwToolbarRef.current && hwToolbarRef.current.contains(e.target)) {
+      return;
+    }
+    if (editorRef.current && editorRef.current.contains(e.target)) {
+      return;
+    }
+    setHwToolbarVisible(false);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleDocumentMouseDown);
+    return () => document.removeEventListener('mousedown', handleDocumentMouseDown);
+  }, [handleDocumentMouseDown]);
+
+  const handleToolbarTranslate = useCallback((lang) => {
+    // TODO: implement translation in homework context
+    console.log('Translate selected text to:', lang, hwSelectedText);
+  }, [hwSelectedText]);
+
+  const handleToolbarDictionaryLookup = useCallback(() => {
+    // TODO: implement dictionary lookup in homework context
+    console.log('Dictionary lookup for:', hwSelectedText);
+  }, [hwSelectedText]);
+
+  const handleToolbarAddToList = useCallback(async (text, listId) => {
+    if (!text.trim()) return null;
+    return addWordToList(text, listId, hwSelectedSentence);
+  }, [addWordToList, hwSelectedSentence]);
+
+  const handleToolbarMoveToList = useCallback(async (text, sourceListId, targetListId) => {
+    if (!text.trim() || sourceListId === targetListId) return null;
+    return moveWordBetweenLists(text, sourceListId, targetListId);
+  }, [moveWordBetweenLists]);
+
+  const handleToolbarCreateNewList = useCallback(async (text) => {
+    if (!text.trim()) return null;
+    return createNewListWithWord(text, null, hwSelectedSentence);
+  }, [createNewListWithWord, hwSelectedSentence]);
+
 
   if (!activeNote) {
     return (
@@ -475,6 +639,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
             style={{ outline: 'none' }}
             onInput={handleEditorInput}
             onBlur={handleEditorBlur}
+            onMouseUp={handleEditorMouseUp}
             onMouseOver={handleEditorMouseOver}
             onMouseOut={handleEditorMouseOut}
             onClick={handleEditorClick}
@@ -492,6 +657,18 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
               }}
             />
           )}
+          <HomeworkToolbar
+            toolbarRef={hwToolbarRef}
+            style={hwToolbarStyle}
+            onTranslate={handleToolbarTranslate}
+            onDictionaryLookup={handleToolbarDictionaryLookup}
+            selectedText={hwSelectedText}
+            wordLists={wordlists}
+            onAddToList={handleToolbarAddToList}
+            onMoveToList={handleToolbarMoveToList}
+            onCreateNewList={handleToolbarCreateNewList}
+            isVisible={hwToolbarVisible}
+          />
         </div>
 
         {/* Footer Actions */}
