@@ -562,6 +562,93 @@
   flex-shrink: 0;
 }
 
+.hw-card-expand-btn {
+  position: absolute;
+  top: var(--hw-unit-sm);
+  left: var(--hw-unit-sm);
+  background: rgba(79, 70, 229, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.hw-task-card:hover .hw-card-expand-btn {
+  opacity: 1;
+}
+
+.hw-card-expand-btn:hover {
+  background: var(--hw-primary-fixed-variant);
+  transform: scale(1.1);
+}
+
+/* === Expanded Card Image Overlay (rendered via Portal, overlays task pane only) === */
+.hw-card-expanded-overlay {
+  position: fixed;
+  /* Cover sidebar + task pane for maximum image width */
+  top: 72px; /* below topbar */
+  left: 0;
+  width: calc(var(--hw-sidebar-width) + (100vw - var(--hw-sidebar-width)) * 0.35);
+  bottom: 0;
+  z-index: 10000;
+  background: var(--hw-surface-container-lowest);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: var(--hw-unit-lg);
+  cursor: pointer;
+}
+
+.hw-card-expanded-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.hw-card-expanded-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.hw-card-expanded-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--hw-surface-container-highest);
+  color: var(--hw-on-surface);
+  border: 1px solid var(--hw-outline-variant);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.hw-card-expanded-close:hover {
+  background: var(--hw-error);
+  color: var(--hw-on-error);
+  border-color: var(--hw-error);
+}
+
 .hw-card-image {
   width: 100%;
   height: 100%;

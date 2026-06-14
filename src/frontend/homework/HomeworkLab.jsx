@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import './HomeworkLab.css';
 import { useHomeworkLab } from './hooks/useHomeworkLab';
 import SideNavBar from './components/SideNavBar';
@@ -23,6 +24,7 @@ export default function HomeworkLab({ homeworkListManager }) {
   } = useHomeworkLab(homeworkListManager);
 
   const [activeAssignmentId, setActiveAssignmentId] = useState(null);
+  const [expandedCardId, setExpandedCardId] = useState(null);
 
   // Auto-select first assignment when note changes or cards first become available
   useEffect(() => {
@@ -34,6 +36,25 @@ export default function HomeworkLab({ homeworkListManager }) {
     if (activeAssignmentId && cards.some((c) => c.blockId === activeAssignmentId)) return;
     setActiveAssignmentId(cards[0]?.blockId || null);
   }, [activeNote?.id, cards]);
+
+  // ESC key closes expanded card
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && expandedCardId) {
+        setExpandedCardId(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [expandedCardId]);
+
+  const handleExpandCard = useCallback((cardId) => {
+    setExpandedCardId((prev) => (prev === cardId ? null : cardId));
+  }, []);
+
+  const handleCloseExpanded = useCallback(() => {
+    setExpandedCardId(null);
+  }, []);
 
   // After importing assignments, refresh list and navigate to the new note
   const handleImportComplete = useCallback(async (newNoteId) => {
@@ -101,6 +122,8 @@ export default function HomeworkLab({ homeworkListManager }) {
                   key={card.blockId}
                   assignment={card}
                   isActive={card.blockId === activeAssignmentId}
+                  isExpanded={expandedCardId === card.blockId}
+                  onExpand={() => handleExpandCard(card.blockId)}
                   onSelect={() => setActiveAssignmentId(card.blockId)}
                 />
               ))}
@@ -121,6 +144,27 @@ export default function HomeworkLab({ homeworkListManager }) {
             sendQuestion={sendQuestion}
           />
         </main>
+
+        {/* Expanded card image — portal overlays the task pane column only */}
+        {expandedCardId && ReactDOM.createPortal(
+          <div className="hw-card-expanded-overlay" onClick={handleCloseExpanded}>
+            <div className="hw-card-expanded-container" onClick={(e) => e.stopPropagation()}>
+              <img
+                src={cards.find((c) => c.blockId === expandedCardId)?.image}
+                alt="Expanded view"
+                className="hw-card-expanded-image"
+              />
+              <button
+                className="hw-card-expanded-close"
+                onClick={handleCloseExpanded}
+                title="Close"
+              >
+                ✕
+              </button>
+            </div>
+          </div>,
+          document.body
+        )}
       </div>
     </div>
   );

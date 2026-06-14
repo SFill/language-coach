@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AssignmentCard({ assignment, isActive, onSelect }) {
+export default function AssignmentCard({ assignment, isActive, isExpanded, onExpand, onSelect }) {
   return (
     <div className={`hw-task-card ${isActive ? 'hw-task-card--active' : ''}`}>
       <div className="hw-card-image-wrap">
@@ -12,6 +12,15 @@ export default function AssignmentCard({ assignment, isActive, onSelect }) {
               image
             </span>
           </div>
+        )}
+        {assignment.image && (
+          <button
+            className="hw-card-expand-btn"
+            onClick={(e) => { e.stopPropagation(); onExpand?.(); }}
+            title="Expand image"
+          >
+            🔍
+          </button>
         )}
         {isActive && (
           <div className="hw-card-current-badge">
