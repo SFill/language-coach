@@ -477,6 +477,12 @@
   justify-content: space-between;
 }
 
+.hw-pane-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--hw-unit-md);
+}
+
 .hw-pane-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 24px;

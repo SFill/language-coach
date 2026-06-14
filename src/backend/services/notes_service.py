@@ -76,7 +76,18 @@ def get_note(session: Session, id: int) -> Note:
     return note
 
 def delete_note(session: Session, id: int) -> dict:
-    """Delete a note session by ID."""
+    """Delete a note session by ID, including associated images."""
+    # Delete associated NoteImage rows (and their files) first
+    images = session.exec(
+        select(NoteImage).where(NoteImage.note_id == id)
+    ).all()
+    for image in images:
+        try:
+            os.remove(image.file_path)
+        except OSError:
+            pass
+        session.delete(image)
+
     query = delete(Note).where(Note.id == id)
     session.exec(query)
     session.commit()

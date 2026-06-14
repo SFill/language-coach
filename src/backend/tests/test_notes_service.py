@@ -1,11 +1,13 @@
+import os
 import pytest
 from unittest.mock import patch
 from fastapi import HTTPException
+from datetime import datetime, timezone
 
 from backend.services.notes_service import (
     create_note, get_note_list, get_note, delete_note, send_note_block
 )
-from backend.models.note import Note, NoteListResponse, NoteBlockCreate
+from backend.models.note import Note, NoteImage, NoteListResponse, NoteBlockCreate
 
 
 class TestNotesService:
@@ -124,9 +126,71 @@ class TestNotesService:
     def test_delete_note_not_found(self, test_session):
         """Test deleting non-existent note - should still return ok."""
         result = delete_note(test_session, 999)
-        
+
         # Service returns ok even if note doesn't exist
         assert result == {'status': 'ok'}
+
+    def test_delete_note_with_images(self, test_session, temp_directory):
+        """Test deleting a note that has associated NoteImage rows."""
+        # Create a note
+        note = Note(name="Note With Images", history={"content": []})
+        test_session.add(note)
+        test_session.commit()
+        test_session.refresh(note)
+
+        # Create real files on disk for the images
+        img1_path = str(temp_directory / "img1.png")
+        img2_path = str(temp_directory / "img2.png")
+        with open(img1_path, "wb") as f:
+            f.write(b"PNG1")
+        with open(img2_path, "wb") as f:
+            f.write(b"PNG2")
+
+        # Create NoteImage rows referencing the note
+        img1 = NoteImage(
+            note_id=note.id,
+            filename="img1.png",
+            original_filename="img1.png",
+            file_path=img1_path,
+            mime_type="image/png",
+            file_size=4,
+            uploaded_at=datetime.now(timezone.utc),
+        )
+        img2 = NoteImage(
+            note_id=note.id,
+            filename="img2.png",
+            original_filename="img2.png",
+            file_path=img2_path,
+            mime_type="image/png",
+            file_size=4,
+            uploaded_at=datetime.now(timezone.utc),
+        )
+        test_session.add(img1)
+        test_session.add(img2)
+        test_session.commit()
+        test_session.refresh(img1)
+        test_session.refresh(img2)
+
+        image_ids = [img1.id, img2.id]
+
+        # Files exist on disk
+        assert os.path.exists(img1_path)
+        assert os.path.exists(img2_path)
+
+        # Delete the note — should clean up images without FK violation
+        result = delete_note(test_session, note.id)
+        assert result == {'status': 'ok'}
+
+        # Note is gone
+        assert test_session.get(Note, note.id) is None
+
+        # NoteImage rows are gone
+        for iid in image_ids:
+            assert test_session.get(NoteImage, iid) is None
+
+        # Image files are removed from disk
+        assert not os.path.exists(img1_path)
+        assert not os.path.exists(img2_path)
     
     @patch('backend.services.notes_service.client')
     def test_send_note_block_regular_message_success(self, mock_client, test_session, sample_notes):

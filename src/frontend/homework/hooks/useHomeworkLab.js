@@ -91,6 +91,7 @@ export function useHomeworkLab(homeworkListManager) {
     cards,
     showPicker: state.showPicker,
     selectNote: (id) => homeworkListManager?.selectNote(id),
+    addAssignment: hm?.addAssignment.bind(hm) || (() => null),
     submitDraft: hm?.submitDraft.bind(hm) || (() => null),
     runAICheck: hm?.runAICheck.bind(hm) || (() => null),
     sendQuestion: hm?.sendQuestion.bind(hm) || (() => null),

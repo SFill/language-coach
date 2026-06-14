@@ -3,6 +3,8 @@ import {
   updateNoteBlock,
   analyzeDraft,
   sendQuestion as apiSendQuestion,
+  sendNoteBlock,
+  uploadNoteImage,
 } from '../api';
 
 /**
@@ -133,6 +135,54 @@ class HomeworkManager {
       return qaBlock;
     } catch (error) {
       console.error('Error sending question:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Add a new assignment block to an existing note.
+   * Accepts either plain text, or an array of parsed segments
+   * (text + image) from the paste modal.
+   * @param {string|number} noteId
+   * @param {string|Array<{ type: 'text'|'image', content: string, src?: string }>} input
+   * @param {object} [metadata]
+   */
+  async addAssignment(noteId, input, metadata = {}) {
+    if (!noteId) return null;
+
+    const segments = Array.isArray(input) ? input : (input?.trim() ? [{ type: 'text', content: input.trim() }] : []);
+    if (segments.length === 0) return null;
+
+    try {
+      const { imageSrcToFile } = await import('./utils/importPaste');
+
+      for (const segment of segments) {
+        if (segment.type === 'text' && segment.content?.trim()) {
+          const text = segment.content.trim();
+          const description = text.length > 120 ? text.slice(0, 120) + '…' : text;
+          await sendNoteBlock(noteId, {
+            block: text,
+            block_type: 'assignment',
+            metadata_: { description, category: 'Writing', ...metadata },
+          });
+        } else if (segment.type === 'image' && segment.src) {
+          const file = await imageSrcToFile(segment.src);
+          if (!file) continue;
+          const uploaded = await uploadNoteImage(noteId, file);
+          if (!uploaded) continue;
+          await sendNoteBlock(noteId, {
+            block: `@image:${uploaded.id}`,
+            block_type: 'assignment',
+            image_ids: [uploaded.id],
+            metadata_: { description: 'Image assignment', category: 'Visual', ...metadata },
+          });
+        }
+      }
+
+      await this.refreshNote(noteId);
+      return { status: 'ok' };
+    } catch (error) {
+      console.error('Error adding assignment:', error);
       return null;
     }
   }
