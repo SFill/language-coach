@@ -97,7 +97,7 @@ function QATab({ qaBlocks, onSendQuestion, isSending, noteId }) {
           onClick={handleSend}
           disabled={!question.trim() || isSending}
         >
-          <span className="hw-material-icon">send</span>
+          {isSending ? <span className="hw-spinner" /> : <span className="hw-material-icon">send</span>}
         </button>
       </div>
     </div>
@@ -131,6 +131,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   // Tooltip state for highlight annotations
   const [tooltip, setTooltip] = useState({ anchor: null, data: null });
   const tooltipHideTimer = useRef(null);
+  const [hintsEnabled, setHintsEnabled] = useState(true);
 
   // Track whether the user has edited inside highlight spans since the last AI Check.
   // When true, segments are stale — the useEffect should render draft content instead.
@@ -310,6 +311,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   const handleEditorMouseOver = useCallback((e) => {
     const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
     if (!span) return;
+    if (!hintsEnabled) return;
     clearTimeout(tooltipHideTimer.current);
     setTooltip({
       anchor: span,
@@ -320,7 +322,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
         phonetic: span.dataset.phonetic || '',
       },
     });
-  }, []);
+  }, [hintsEnabled]);
 
   const handleEditorMouseOut = useCallback((e) => {
     const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
@@ -338,6 +340,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
       setTooltip({ anchor: null, data: null });
       return;
     }
+    if (!hintsEnabled) return;
     // Toggle tooltip on click
     setTooltip(prev => {
       if (prev.anchor === span) return { anchor: null, data: null };
@@ -351,7 +354,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
         },
       };
     });
-  }, []);
+  }, [hintsEnabled]);
 
   // Submit draft text
   const handleSubmit = async () => {
@@ -673,16 +676,28 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
 
         {/* Footer Actions */}
         <div className="hw-draft-footer">
-          <span className="hw-word-count">
-            Word count: {wordCount}{targetWords ? ` / ${targetWords}` : ''}
-          </span>
+          <div className="hw-draft-footer-left">
+            <span className="hw-word-count">
+              Word count: {wordCount}{targetWords ? ` / ${targetWords}` : ''}
+            </span>
+            <button
+              className={`hw-hints-toggle ${hintsEnabled ? 'hw-hints-toggle--active' : ''}`}
+              onClick={() => {
+                setHintsEnabled(prev => !prev);
+                if (hintsEnabled) setTooltip({ anchor: null, data: null });
+              }}
+              title={hintsEnabled ? 'Hide hints on hover' : 'Show hints on hover'}
+            >
+              <span className="hw-material-icon">{hintsEnabled ? 'visibility' : 'visibility_off'}</span>
+            </button>
+          </div>
           <div className="hw-draft-actions">
             <button
               className="hw-ai-check-btn"
               onClick={handleAICheck}
               disabled={isAnalyzing || isSubmitting}
             >
-              <span className="hw-material-icon">neurology</span>
+              {isAnalyzing ? <span className="hw-spinner" /> : <span className="hw-material-icon">neurology</span>}
               {isAnalyzing ? 'Analyzing...' : 'AI Check'}
             </button>
             <button

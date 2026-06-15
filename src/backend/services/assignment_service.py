@@ -97,6 +97,7 @@ class AssignmentService:
         )
 
         # Save to note history
+        # TODO bug ovveride history edited with Submit button
         content.append(feedback_block.model_dump(mode="json"))
         history['content'] = content
         self.session.exec(

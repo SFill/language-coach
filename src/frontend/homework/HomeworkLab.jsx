@@ -36,16 +36,28 @@ export default function HomeworkLab({ homeworkListManager }) {
     setAddSegments([]);
   }, []);
 
-  // Auto-select first assignment when note changes or cards first become available
+  // Auto-select assignment: prefer URL hash, then keep current, then first card
   useEffect(() => {
     if (!activeNote?.id) {
       setActiveAssignmentId(null);
       return;
     }
-    // Keep current selection if it's still valid, otherwise pick first card
+    // Check URL hash for persisted selection
+    const hashId = window.location.hash.slice(1); // remove leading '#'
+    if (hashId && cards.some((c) => c.blockId === hashId)) {
+      setActiveAssignmentId(hashId);
+      return;
+    }
+    // Keep current selection if it's still valid
     if (activeAssignmentId && cards.some((c) => c.blockId === activeAssignmentId)) return;
     setActiveAssignmentId(cards[0]?.blockId || null);
   }, [activeNote?.id, cards]);
+
+  // Persist selection to URL hash
+  const handleSelectAssignment = useCallback((blockId) => {
+    setActiveAssignmentId(blockId);
+    window.location.hash = blockId;
+  }, []);
 
   // ESC key closes expanded card or add modal
   useEffect(() => {
@@ -173,7 +185,7 @@ export default function HomeworkLab({ homeworkListManager }) {
                   isActive={card.blockId === activeAssignmentId}
                   isExpanded={expandedCardId === card.blockId}
                   onExpand={() => handleExpandCard(card.blockId)}
-                  onSelect={() => setActiveAssignmentId(card.blockId)}
+                  onSelect={() => handleSelectAssignment(card.blockId)}
                 />
               ))}
             </div>

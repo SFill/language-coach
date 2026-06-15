@@ -290,3 +290,112 @@ test.describe('Add Assignment modal', () => {
     await expect(page.getByText(/Detected \d+ segment/)).not.toBeVisible();
   });
 });
+
+test.describe('Assignment card selection via URL hash', () => {
+  test.describe.configure({ mode: 'serial' });
+
+  test('selecting a card updates the URL hash', async ({ page, homeworkNote }) => {
+    // Add a second assignment so we have 2 cards to switch between
+    await api.post(`/notes/${homeworkNote.id}/block`, {
+      block: 'Describe your hometown in three sentences.',
+      block_type: 'assignment',
+      metadata_: { description: 'Describe your hometown in three sentences.', category: 'Writing' },
+    });
+
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    // Wait for cards to load
+    const cards = page.locator('.hw-task-card');
+    await expect(cards).toHaveCount(2, { timeout: 5000 });
+
+    // Initially, URL has no hash (first assignment auto-selected)
+    expect(page.url().split('#')[1]).toBeFalsy();
+
+    // Click the Select button on the second (inactive) card
+    const secondSelectBtn = cards.nth(1).locator('.hw-select-btn');
+    await expect(secondSelectBtn).toBeVisible({ timeout: 3000 });
+    await secondSelectBtn.click();
+
+    // URL should now have a hash with the blockId
+    const hash = page.url().split('#')[1];
+    expect(hash).toBeTruthy();
+
+    // Verify the hash is a valid assignment block ID
+    const { data: note } = await api.get(`/notes/${homeworkNote.id}`);
+    const assignmentIds = note.note_blocks
+      .filter((b: { block_type?: string }) => b.block_type === 'assignment')
+      .map((b: { id: string }) => b.id);
+    expect(assignmentIds).toContain(hash);
+  });
+
+  test('URL hash restores assignment selection after reload', async ({ page, homeworkNote }) => {
+    // Get the assignment block IDs from the API
+    const { data: note } = await api.get(`/notes/${homeworkNote.id}`);
+    const assignmentBlocks = note.note_blocks.filter(
+      (b: { block_type?: string }) => b.block_type === 'assignment',
+    );
+    // Use the last assignment block — the one NOT auto-selected by default
+    const targetBlock = assignmentBlocks[assignmentBlocks.length - 1];
+    if (!targetBlock) return;
+
+    // Navigate directly with hash
+    await page.goto(`/homework/${homeworkNote.id}#${targetBlock.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    // Wait for cards to render
+    const cards = page.locator('.hw-task-card');
+    await expect(cards).toHaveCount(assignmentBlocks.length, { timeout: 5000 });
+
+    // The active card's prompt should show the target assignment's content
+    const promptText = await page.locator('.hw-assignment-prompt-text').innerText();
+    const content = targetBlock.content || targetBlock.block || '';
+    expect(promptText).toContain(content.slice(0, 30));
+
+    // The URL should still have the hash after load
+    const hash = page.url().split('#')[1];
+    expect(hash).toBe(targetBlock.id);
+  });
+
+  test('selecting a different card changes the hash', async ({ page, homeworkNote }) => {
+    // Add a second assignment so we have 2 cards
+    await api.post(`/notes/${homeworkNote.id}/block`, {
+      block: 'Write about a memorable holiday experience.',
+      block_type: 'assignment',
+      metadata_: { description: 'Write about a memorable holiday experience.', category: 'Writing' },
+    });
+
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    // Wait for 2 cards
+    const cards = page.locator('.hw-task-card');
+    await expect(cards).toHaveCount(2, { timeout: 5000 });
+
+    // Click second card's Select button
+    const secondSelectBtn = cards.nth(1).locator('.hw-select-btn');
+    await expect(secondSelectBtn).toBeVisible({ timeout: 3000 });
+    await secondSelectBtn.click();
+
+    const secondHash = page.url().split('#')[1];
+    expect(secondHash).toBeTruthy();
+
+    // Now click first card's Select button
+    const firstSelectBtn = cards.nth(0).locator('.hw-select-btn');
+    await expect(firstSelectBtn).toBeVisible({ timeout: 3000 });
+    await firstSelectBtn.click();
+
+    const firstHash = page.url().split('#')[1];
+    expect(firstHash).toBeTruthy();
+    expect(firstHash).not.toBe(secondHash);
+  });
+});

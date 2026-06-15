@@ -1032,6 +1032,43 @@
   color: var(--hw-on-surface-variant);
 }
 
+.hw-draft-footer-left {
+  display: flex;
+  align-items: center;
+  gap: var(--hw-unit-sm);
+}
+
+.hw-hints-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--hw-on-surface-variant);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+}
+
+.hw-hints-toggle:hover {
+  background: var(--hw-surface-container-high);
+}
+
+.hw-hints-toggle--active {
+  color: var(--hw-primary);
+}
+
+.hw-hints-toggle--active:hover {
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.hw-hints-toggle .hw-material-icon {
+  font-size: 20px;
+}
+
 .hw-draft-actions {
   display: flex;
   align-items: center;
@@ -1085,6 +1122,34 @@
 .hw-ai-check-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* === AI Spinner === */
+@keyframes hw-spin {
+  to { transform: rotate(360deg); }
+}
+
+.hw-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: hw-spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+
+.hw-ai-check-btn .hw-spinner {
+  width: 18px;
+  height: 18px;
+  border-width: 2.5px;
+}
+
+.hw-qa-send-btn .hw-spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2.5px;
 }
 
 /* === Assignment Prompt === */
