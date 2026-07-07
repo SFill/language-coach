@@ -287,3 +287,61 @@ test.describe('Flex layout structure – prevents overflow clipping', () => {
     expect(['auto', 'scroll']).toContain(qaListOverflow);
   });
 });
+
+test.describe('Paste — plain text only, undoable', () => {
+  test('pasting rich HTML inserts plain text only and is undoable', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    // Start from an empty editor.
+    await editor.click();
+    await page.keyboard.press('Control+a');
+    await page.keyboard.press('Backspace');
+
+    // Paste rich HTML (text/html + text/plain) — formatting must be stripped.
+    await page.evaluate(() => {
+      const el = document.querySelector('.hw-editor-content') as HTMLElement;
+      el.focus();
+      const dt = new DataTransfer();
+      dt.setData('text/html', '<p>Hello <b>bold</b> world</p><p>line two</p>');
+      dt.setData('text/plain', 'Hello bold world\nline two');
+      el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+    });
+
+    await expect(editor).toContainText('Hello bold world');
+    await expect(editor).toContainText('line two');
+    // No formatting carried over from the rich HTML source.
+    expect(await editor.locator('strong, b').count()).toBe(0);
+
+    // Ctrl+Z undoes the paste (Tiptap UndoRedo tracks the paste transaction).
+    await page.keyboard.press('Control+z');
+    expect(await editor.innerText()).not.toContain('Hello bold world');
+  });
+
+  test('pasting HTML with no text/plain falls back to stripped plain text', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+    await editor.click();
+    await page.keyboard.press('Control+a');
+    await page.keyboard.press('Backspace');
+
+    // HTML only, no text/plain — the handler must strip it to plain text.
+    await page.evaluate(() => {
+      const el = document.querySelector('.hw-editor-content') as HTMLElement;
+      el.focus();
+      const dt = new DataTransfer();
+      dt.setData('text/html', '<p>Rich <strong style="color:red">RED</strong> only</p>');
+      el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+    });
+
+    await expect(editor).toContainText('Rich RED only');
+    expect(await editor.locator('strong, b').count()).toBe(0);
+    expect(await editor.locator('[style]').count()).toBe(0);
+  });
+});

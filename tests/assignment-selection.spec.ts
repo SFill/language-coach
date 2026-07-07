@@ -8,8 +8,9 @@ const api = axios.create({ baseURL: API_BASE });
 async function createNoteWithAssignments(opts: {
   assignments: Array<{ text: string; description: string; category: string }>;
   drafts?: Array<{ text: string; assignmentIndex: number }>;
-}): Promise<{ noteId: number; assignmentIds: string[] }> {
-  const { data: note } = await api.post('/notes/', { name: `PW test ${Date.now()}`, history: { content: [] } });
+}): Promise<{ noteId: number; noteName: string; assignmentIds: string[] }> {
+  const noteName = `PW test ${Date.now()}`;
+  const { data: note } = await api.post('/notes/', { name: noteName, history: { content: [] } });
   const noteId = note.id;
   const assignmentIds: string[] = [];
 
@@ -32,7 +33,7 @@ async function createNoteWithAssignments(opts: {
     });
   }
 
-  return { noteId, assignmentIds };
+  return { noteId, noteName, assignmentIds };
 }
 
 async function deleteNote(noteId: number) {
@@ -91,7 +92,7 @@ test.describe('Assignment selection', () => {
   });
 
   test('first assignment is auto-selected when navigating from NoteListView', async ({ page }) => {
-    const { noteId } = await createNoteWithAssignments({
+    const { noteId, noteName } = await createNoteWithAssignments({
       assignments: [
         { text: 'Describe a book you recently read.', description: 'Book review', category: 'Writing' },
         { text: 'Write a letter to your future self.', description: 'Future letter', category: 'Writing' },
@@ -107,9 +108,10 @@ test.describe('Assignment selection', () => {
       await page.locator('.hw-topbar-nav .hw-topbar-link:has-text("Homework")').click();
       await expect(page.locator('.hw-pick-container')).toBeVisible();
 
-      // Click the first note in the list
-      await page.locator('.note-list-item').first().click();
-      await expect(page).toHaveURL(/\/homework\/\d+/);
+      // Click THIS test's note (the list is shared across parallel tests, so
+      // targeting .first() can race onto another test's note).
+      await page.locator('.note-list-item', { hasText: noteName }).click();
+      await expect(page).toHaveURL(new RegExp(`/homework/${noteId}(?:\\?|$|#)`));
 
       // Wait for the note to load and cards to render
       const cards = page.locator('.hw-task-card');

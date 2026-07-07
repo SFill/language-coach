@@ -164,6 +164,10 @@ test.describe('Grammarly-style highlights', () => {
       // Hover on "quedamos" — tooltip should update
       await quedamosSpan.hover();
       await expect(tooltip).toContainText('nos quedamos');
+
+      // The tooltip is portaled to <body>, so the .hw-editor scroll container
+      // can't clip it — regression guard for the scroll-clipping bug.
+      expect(await tooltip.evaluate((el) => el.closest('.hw-editor'))).toBeNull();
     } finally {
       await deleteNote(noteId);
     }
@@ -184,31 +188,33 @@ test.describe('Grammarly-style highlights', () => {
       const highlights = editor.locator('.hw-highlight-suggestion');
       await expect(highlights).toHaveCount(2, { timeout: 5000 });
 
-      // Simulate editing the "va" span: change its textContent and dispatch an
-      // input event to trigger the staleness handler in handleEditorInput.
-      // Direct DOM manipulation is more reliable than click+type for small spans
-      // in contentEditable, where cursor placement is unpredictable.
+      // Edit INSIDE the "va" highlight via the keyboard. Tiptap owns the DOM, so
+      // direct textContent changes aren't seen by ProseMirror — place the caret
+      // between 'v' and 'a' and type, which changes the marked text and lets the
+      // staleness plugin strip only this mark.
       await page.evaluate(() => {
-        const vaSpan = document.querySelector('.hw-highlight-suggestion[data-original="va"]');
-        if (vaSpan) {
-          // Simulate the user editing "va" → "va a" inside the span
-          vaSpan.textContent = 'va a';
-          // Dispatch input event on the contentEditable to trigger handleEditorInput
-          const editor = vaSpan.closest('.hw-editor-content');
-          editor.dispatchEvent(new Event('input', { bubbles: true }));
-        }
+        const vaSpan = document.querySelector('.hw-highlight-suggestion[data-original="va"]') as HTMLElement | null;
+        if (!vaSpan) throw new Error('va span not found');
+        const editorEl = vaSpan.closest('.hw-editor-content') as HTMLElement;
+        editorEl.focus();
+        const textNode = vaSpan.firstChild as Text;
+        const range = document.createRange();
+        range.setStart(textNode, 1); // between 'v' and 'a'
+        range.collapse(true);
+        const sel = window.getSelection()!;
+        sel.removeAllRanges();
+        sel.addRange(range);
       });
+      await page.keyboard.type('X'); // "va" -> "vXa"
 
-      // The "va" span should be stripped: className='', data attrs removed.
-      // It retains the text "va a" but is no longer a highlight.
-      // The "quedamos" span should still have its highlight class (unchanged)
+      // The "va" mark should be stripped (its text changed); "quedamos" stays.
       const remainingHighlights = editor.locator('.hw-highlight-suggestion');
       await expect(remainingHighlights).toHaveCount(1, { timeout: 3000 });
       await expect(remainingHighlights.first()).toHaveAttribute('data-original', 'quedamos');
 
-      // Verify the stripped span still exists in the DOM (text preserved, just not highlighted)
+      // The edited text is preserved (just no longer highlighted).
       const editorText = await editor.innerText();
-      expect(editorText).toContain('va a');
+      expect(editorText).toContain('vXa');
       expect(editorText).toContain('quedamos');
 
       // Verify tooltip is dismissed after edit (stale span has no tooltip data)
@@ -314,15 +320,21 @@ test.describe('Grammarly-style highlights', () => {
       const highlights = editor.locator('.hw-highlight-suggestion');
       await expect(highlights).toHaveCount(2, { timeout: 5000 });
 
-      // Simulate editing the "va" highlight via DOM (same approach as staleness test)
+      // Edit inside the "va" highlight via keyboard (Tiptap owns the DOM).
       await page.evaluate(() => {
-        const vaSpan = document.querySelector('.hw-highlight-suggestion[data-original="va"]');
-        if (vaSpan) {
-          vaSpan.textContent = 'va a';
-          const editor = vaSpan.closest('.hw-editor-content');
-          editor.dispatchEvent(new Event('input', { bubbles: true }));
-        }
+        const vaSpan = document.querySelector('.hw-highlight-suggestion[data-original="va"]') as HTMLElement | null;
+        if (!vaSpan) throw new Error('va span not found');
+        const editorEl = vaSpan.closest('.hw-editor-content') as HTMLElement;
+        editorEl.focus();
+        const textNode = vaSpan.firstChild as Text;
+        const range = document.createRange();
+        range.setStart(textNode, 1);
+        range.collapse(true);
+        const sel = window.getSelection()!;
+        sel.removeAllRanges();
+        sel.addRange(range);
       });
+      await page.keyboard.type('X'); // "va" -> "vXa" -> staleness strips the mark
 
       // "quedamos" should still be highlighted
       const remainingHighlights = editor.locator('.hw-highlight-suggestion');
@@ -342,6 +354,45 @@ test.describe('Grammarly-style highlights', () => {
       const highlightAfterSubmit = editor.locator('.hw-highlight-suggestion');
       await expect(highlightAfterSubmit).toHaveCount(1);
       await expect(highlightAfterSubmit.first()).toHaveAttribute('data-original', 'quedamos');
+    } finally {
+      await deleteNote(noteId);
+    }
+  });
+
+  test('typing at the boundary of a highlight does not strip it', async ({ page }) => {
+    // inclusive:false + per-mark staleness: typing immediately AFTER a highlight
+    // (at its end boundary) leaves the marked text unchanged, so the mark stays.
+    // Only edits that change the marked text itself strip the highlight.
+    const { noteId, assignmentId, draftBlockId } = await createNoteWithDraft();
+    try {
+      injectFeedbackRoute(page, noteId, assignmentId, draftBlockId);
+
+      await page.goto(`/homework/${noteId}`);
+      await page.waitForLoadState('networkidle');
+
+      const editor = page.locator('.hw-editor-content');
+      await expect(editor).toBeVisible({ timeout: 10000 });
+      await expect(editor.locator('.hw-highlight-suggestion')).toHaveCount(2, { timeout: 5000 });
+
+      // Place the caret at the END of the "va" highlight (its boundary).
+      await page.evaluate(() => {
+        const vaSpan = document.querySelector('.hw-highlight-suggestion[data-original="va"]') as HTMLElement | null;
+        if (!vaSpan) throw new Error('va span not found');
+        const editorEl = vaSpan.closest('.hw-editor-content') as HTMLElement;
+        editorEl.focus();
+        const textNode = vaSpan.firstChild as Text;
+        const range = document.createRange();
+        range.setStart(textNode, textNode.length); // end boundary
+        range.collapse(true);
+        const sel = window.getSelection()!;
+        sel.removeAllRanges();
+        sel.addRange(range);
+      });
+      await page.keyboard.type('X'); // typed after the mark -> "va" stays marked
+
+      // Both highlights remain — the marked text "va" is unchanged.
+      await expect(editor.locator('.hw-highlight-suggestion')).toHaveCount(2);
+      await expect(editor.locator('.hw-highlight-suggestion[data-original="va"]')).toHaveText('va');
     } finally {
       await deleteNote(noteId);
     }

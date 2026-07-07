@@ -5,8 +5,6 @@ import { areExactMatches, areCloseMatches } from '../../wordlist/utils';
 const HomeworkToolbar = ({
   toolbarRef,
   style,
-  onTranslate,
-  onDictionaryLookup,
   selectedText,
   wordLists,
   onAddToList,
@@ -81,14 +79,6 @@ const HomeworkToolbar = ({
 
   return (
     <div className="hw-selection-toolbar" style={style} ref={toolbarRef}>
-      {/* <button onClick={() => onTranslate('ru')}>ru</button>
-      <button onClick={() => onTranslate('en')}>en</button>
-      <button onClick={() => onTranslate('es')}>es</button> */}
-
-      {onDictionaryLookup && (
-        <button onClick={onDictionaryLookup} className="hw-selection-toolbar-dict" />
-      )}
-
       {plainText && (
         <>
           {isInList ? (

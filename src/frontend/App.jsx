@@ -73,6 +73,7 @@ function AppContent() {
 
   return (
     <div className="main-container">
+      <h1 className="visually-hidden">Language Coach</h1>
       <TopNavBar
         currentNoteName={currentNoteName}
         onNoteNameClick={() => noteListManager.handleNoteNameClick(location.pathname)}

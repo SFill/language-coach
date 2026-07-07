@@ -6,6 +6,19 @@
   height: 100%;
 }
 
+/* Visually-hidden — available app-wide (page headings, icon labels). Defined
+   here so it doesn't depend on a specific component's CSS being in the bundle. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 
 /* Layout Styles */
 .main-container {

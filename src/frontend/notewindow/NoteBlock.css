@@ -171,16 +171,6 @@
 .note-edit-button:not(.note-edit-button--secondary):focus-visible:not(:disabled) {
     background-color: #2f6ed9;
 }
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
 
 /* Q&A Block Styling */
 .qa-block {

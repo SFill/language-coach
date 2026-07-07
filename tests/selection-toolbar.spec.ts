@@ -83,12 +83,9 @@ test.describe('Selection toolbar', () => {
     // Toolbar should now be visible
     await expect(toolbar).toBeVisible({ timeout: 3000 });
 
-    // The toolbar should contain an add/move button and dictionary button
+    // The toolbar should contain an add/move button
     const addOrMoveBtn = page.locator('.hw-selection-toolbar-add, .hw-selection-toolbar-move').first();
     await expect(addOrMoveBtn).toBeVisible({ timeout: 3000 });
-
-    const dictBtn = page.locator('.hw-selection-toolbar-dict');
-    await expect(dictBtn).toBeVisible({ timeout: 3000 });
   });
 
   test('toolbar hides when clicking outside the editor', async ({ page, homeworkNote }) => {
@@ -233,22 +230,5 @@ test.describe('Selection toolbar', () => {
     expect(sentence).toContain('weekend');
     // The sentence should start from the beginning (single-sentence draft)
     expect(sentence?.toLowerCase()).toContain('last');
-  });
-
-  test('dictionary button is present in toolbar', async ({ page, homeworkNote }) => {
-    await page.goto(`/homework/${homeworkNote.id}`);
-    await page.waitForLoadState('networkidle');
-
-    const editor = page.locator('.hw-editor-content');
-    await expect(editor).toBeVisible({ timeout: 10000 });
-
-    const toolbar = page.locator('.hw-selection-toolbar');
-
-    await selectWordAndShowToolbar(page, 'played');
-    await expect(toolbar).toBeVisible({ timeout: 3000 });
-
-    // Dictionary button should be present
-    const dictBtn = page.locator('.hw-selection-toolbar-dict');
-    await expect(dictBtn).toBeVisible({ timeout: 3000 });
   });
 });

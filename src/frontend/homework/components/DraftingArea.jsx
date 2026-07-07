@@ -1,17 +1,54 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { useEditor, EditorContent } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
+import { useFloating, autoUpdate, offset, flip, shift } from '@floating-ui/react';
+import StarterKit from '@tiptap/starter-kit';
 import MarkdownContent from '../../notewindow/components/MarkdownContent.jsx';
 import { reconcileHighlights } from '../utils/reconcileHighlights';
 import HomeworkToolbar from './HomeworkToolbar.jsx';
 import { useWordlist } from '../../wordlist/WordlistContext';
+import { FeedbackMark } from '../extensions/FeedbackMark';
+import { PlainTextPaste } from '../extensions/PlainTextPaste';
+import { FeedbackStaleness } from '../extensions/FeedbackStaleness';
+import {
+  plainTextToDocJSON,
+  chunksToDocJSON,
+  docToPlainText,
+  sentenceAtPos,
+  loadEditorContent,
+  countWords,
+} from '../utils/draftDoc';
 
-// Tooltip shown when hovering/clicking a highlight span
-function FeedbackTooltip({ anchor, data, editorRect, onMouseEnter, onMouseLeave }) {
-  if (!anchor || !data) return null;
+const FEEDBACK_HIGHLIGHT_SELECTOR = '[data-feedback]';
 
-  const rect = anchor.getBoundingClientRect();
-  // Position tooltip below the span, relative to the editor container
-  const left = rect.left - editorRect.left;
-  const top = rect.bottom - editorRect.top + 6; // 6px gap below span
+// Read the `feedback` mark at a hovered/clicked highlight DOM span.
+function getFeedbackMarkAt(editor, target) {
+  if (!editor) return null;
+  const view = editor.view;
+  const pos = view.posAtDOM(target, 0);
+  if (pos == null) return null;
+  const doc = editor.state.doc;
+  const max = doc.content.size;
+  const candidates = [pos + 1, pos, Math.max(pos - 1, 0)].filter((p) => p <= max);
+  for (const p of candidates) {
+    const resolved = doc.resolve(p);
+    const mark = resolved.marks().find((m) => m.type.name === 'feedback');
+    if (mark) return mark;
+  }
+  const node = doc.nodeAt(pos);
+  if (node) {
+    const mark = node.marks.find((m) => m.type.name === 'feedback');
+    if (mark) return mark;
+  }
+  return null;
+}
+
+// Floating tooltip showing a highlight's annotation. Positioning is handled by
+// @floating-ui/react (portaled to <body> with strategy:'fixed'), so it is no
+// longer clipped by the .hw-editor scroll container.
+function FeedbackTooltip({ data, setFloating, style, onMouseEnter, onMouseLeave }) {
+  if (!data) return null;
 
   const typeConfig = {
     suggestion: { label: '✏️ Suggestion', accentClass: 'hw-feedback-tooltip--suggestion' },
@@ -22,8 +59,9 @@ function FeedbackTooltip({ anchor, data, editorRect, onMouseEnter, onMouseLeave 
 
   return (
     <div
+      ref={setFloating}
+      style={style}
       className={`hw-feedback-tooltip ${config.accentClass}`}
-      style={{ left: `${Math.min(left, editorRect.width - 280)}px`, top: `${top}px` }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
@@ -65,7 +103,7 @@ function QATab({ qaBlocks, onSendQuestion, isSending, noteId }) {
     <div className="hw-qa-panel">
       <div className="hw-qa-list">
         {qaBlocks.length === 0 && (
-          <p className="hw-qa-empty">No questions yet. Ask something about the assignment!</p>
+          <p className="hw-qa-empty">No questions yet. Ask something about this assignment!</p>
         )}
         {qaBlocks.map((block) => (
           <div key={block.id} className="hw-qa-item">
@@ -109,14 +147,11 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSendingQuestion, setIsSendingQuestion] = useState(false);
-  const editorRef = useRef(null);
-  const editorContainerRef = useRef(null);
   const [wordCount, setWordCount] = useState(0);
+  const lastWordCountRef = useRef(0);
 
-  // Selection toolbar state
+  // Selection toolbar state (text + sentence come from the editor selection)
   const hwToolbarRef = useRef(null);
-  const [hwToolbarVisible, setHwToolbarVisible] = useState(false);
-  const [hwToolbarStyle, setHwToolbarStyle] = useState({});
   const [hwSelectedText, setHwSelectedText] = useState('');
   const [hwSelectedSentence, setHwSelectedSentence] = useState(null);
 
@@ -128,16 +163,18 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     createNewListWithWord,
   } = useWordlist();
 
-  // Tooltip state for highlight annotations
-  const [tooltip, setTooltip] = useState({ anchor: null, data: null });
-  const tooltipHideTimer = useRef(null);
+  // Hover/click tooltip state for highlight annotations
+  const [tooltip, setTooltip] = useState({ anchorEl: null, data: null });
+  const tooltipHideTimerRef = useRef(null);
   const [hintsEnabled, setHintsEnabled] = useState(true);
+  const hintsEnabledRef = useRef(true);
+  useEffect(() => { hintsEnabledRef.current = hintsEnabled; }, [hintsEnabled]);
+  // Clear any pending tooltip hide timer on unmount (avoids a dangling setTimeout).
+  useEffect(() => () => clearTimeout(tooltipHideTimerRef.current), []);
 
-  // Track whether the user has edited inside highlight spans since the last AI Check.
-  // When true, segments are stale — the useEffect should render draft content instead.
+  // Staleness: tracks in-session edits to highlights so a re-render doesn't
+  // re-apply stale segments. Reset when a fresh AI Check changes feedbackBlock.id.
   const segmentsStaleRef = useRef(false);
-  // Remember which feedbackBlock.id the current segments correspond to,
-  // so we can reset staleness when a new AI Check produces fresh segments.
   const renderedFeedbackIdRef = useRef(null);
 
   // Derive blocks from activeNote
@@ -146,222 +183,204 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     ? noteBlocks.find((b) => b.id === activeAssignmentId)
     : noteBlocks.find((b) => b.block_type === 'assignment');
   const assignmentId = assignmentBlock?.id;
-  // Draft is linked to the assignment via assignment_ref
   const draftBlock = noteBlocks.find((b) => b.block_type === 'simple_note' && b.role === 'user' && b.assignment_ref === assignmentId);
-  // Feedback is linked to the draft block via assignment_ref (backend sets it to the draft block id)
   const feedbackBlock = noteBlocks.find((b) => b.block_type === 'ai_feedback' && (b.assignment_ref === assignmentId || b.assignment_ref === draftBlock?.id));
   const qaBlocks = noteBlocks.filter((b) => b.block_type === 'question');
 
-  // Segments from ai_feedback block — memoized so the reference is stable
-  // across re-renders when the feedback block hasn't changed.
   const segments = useMemo(() => {
     if (!feedbackBlock?.content || !Array.isArray(feedbackBlock.content)) return [];
     return feedbackBlock.content;
   }, [feedbackBlock?.id]);
 
-  // Strip @image:X references and collapse excessive newlines for display
   const rawPromptText = assignmentBlock?.content || '';
   const promptText = typeof rawPromptText === 'string'
     ? rawPromptText.replace(/@image:\d+/g, '').replace(/\n{3,}/g, '\n\n').trim()
     : rawPromptText;
 
-  // Calculate word count from editor
-  const updateWordCount = useCallback(() => {
-    if (editorRef.current) {
-      const text = editorRef.current.innerText || '';
-      const words = text.trim().split(/\s+/).filter(Boolean).length;
-      setWordCount(words);
+  const targetWords = assignmentBlock?.metadata_?.targetLength
+    ? parseInt(assignmentBlock.metadata_.targetLength, 10) || 0
+    : 0;
+
+  // Tiptap editor instance ref (the editor is null on first render).
+  const editorInstRef = useRef(null);
+
+  // Tooltip hover/click handlers — stable, read state via refs so the DOM event
+  // listeners bound once by ProseMirror keep working.
+  const handleHighlightHover = useCallback((event, isOver) => {
+    const target = event.target.closest(FEEDBACK_HIGHLIGHT_SELECTOR);
+    if (!target) return;
+    if (isOver) {
+      if (!hintsEnabledRef.current) return;
+      clearTimeout(tooltipHideTimerRef.current);
+      const mark = getFeedbackMarkAt(editorInstRef.current, target);
+      if (!mark) return;
+      setTooltip({
+        anchorEl: target,
+        data: {
+          type: mark.attrs.type,
+          annotation: mark.attrs.annotation || '',
+          word: mark.attrs.word || '',
+          phonetic: mark.attrs.phonetic || '',
+        },
+      });
+    } else {
+      tooltipHideTimerRef.current = setTimeout(() => setTooltip({ anchorEl: null, data: null }), 200);
     }
   }, []);
 
-  // Set editor content when the active note, assignment, or source blocks change.
-  useEffect(() => {
-    if (!editorRef.current) return;
+  const handleHighlightClick = useCallback((event) => {
+    const target = event.target.closest(FEEDBACK_HIGHLIGHT_SELECTOR);
+    if (!target) {
+      setTooltip({ anchorEl: null, data: null });
+      return;
+    }
+    if (!hintsEnabledRef.current) return;
+    const mark = getFeedbackMarkAt(editorInstRef.current, target);
+    if (!mark) return;
+    setTooltip((prev) => prev.anchorEl === target
+      ? { anchorEl: null, data: null }
+      : {
+          anchorEl: target,
+          data: {
+            type: mark.attrs.type,
+            annotation: mark.attrs.annotation || '',
+            word: mark.attrs.word || '',
+            phonetic: mark.attrs.phonetic || '',
+          },
+        });
+  }, []);
 
-    // When a fresh AI Check produces new segments, reset staleness.
-    // Also reset when switching notes/assignments (no feedback block for this context).
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        // Plain-text only: disable all formatting.
+        bold: false, italic: false, strike: false, code: false, underline: false,
+        heading: false, bulletList: false, orderedList: false, listItem: false,
+        blockquote: false, horizontalRule: false, link: false, listKeymap: false,
+        trailingNode: false,
+        // Undo/redo: 100 entries, 500ms group delay (matches the old burst grouping).
+        undoRedo: { depth: 100, newGroupDelay: 500 },
+      }),
+      FeedbackMark,
+      FeedbackStaleness.configure({
+        onStale: () => { segmentsStaleRef.current = true; },
+      }),
+      PlainTextPaste,
+    ],
+    content: '<p></p>',
+    editorProps: {
+      attributes: { class: 'hw-editor-content' },
+      handleDOMEvents: {
+        mouseover: (_view, event) => handleHighlightHover(event, true),
+        mouseout: (_view, event) => handleHighlightHover(event, false),
+        click: (_view, event) => handleHighlightClick(event),
+      },
+    },
+    onTransaction: ({ editor: e, transaction }) => {
+      if (!transaction.docChanged) return;
+      // Guard: only setState when the count actually changed (React would bail
+      // anyway, but this skips the getText() recompute on the next render path
+      // and avoids needless DraftingArea re-renders for non-word-changing edits).
+      const wc = countWords(e.getText());
+      if (wc !== lastWordCountRef.current) {
+        lastWordCountRef.current = wc;
+        setWordCount(wc);
+      }
+    },
+    onSelectionUpdate: ({ editor: e }) => {
+      const { from, to, empty } = e.state.selection;
+      if (empty || from === to) {
+        setHwSelectedText('');
+        setHwSelectedSentence(null);
+        return;
+      }
+      setHwSelectedText(e.state.doc.textBetween(from, to, '\n').trim());
+      setHwSelectedSentence(sentenceAtPos(e.state.doc, from));
+    },
+  });
+
+  useEffect(() => { editorInstRef.current = editor; }, [editor]);
+
+  // Floating tooltip positioning (portaled, fixed strategy -> no scroll clipping).
+  const { refs, floatingStyles, update } = useFloating({
+    placement: 'bottom',
+    middleware: [offset(6), flip(), shift({ padding: 8 })],
+    strategy: 'fixed',
+    whileElementsMounted: autoUpdate,
+  });
+  useEffect(() => {
+    if (tooltip.anchorEl) {
+      refs.setReference(tooltip.anchorEl);
+      // Compute now (the reference is already in the DOM) and again after paint,
+      // in case fonts/layout shift the anchor's rect after first commit.
+      update();
+      const raf = requestAnimationFrame(update);
+      return () => cancelAnimationFrame(raf);
+    }
+    refs.setReference(null);
+  }, [tooltip.anchorEl, refs, update]);
+
+  // Load content when the active note / assignment / draft / feedback changes.
+  useEffect(() => {
+    if (!editor) return;
+
     const feedbackId = feedbackBlock?.id;
     if (feedbackId && feedbackId !== renderedFeedbackIdRef.current) {
       segmentsStaleRef.current = false;
       renderedFeedbackIdRef.current = feedbackId;
     } else if (!feedbackId) {
-      // No feedback block — clear staleness so a future AI Check starts fresh
       segmentsStaleRef.current = false;
       renderedFeedbackIdRef.current = null;
     }
 
-    // Determine what to render:
-    // 1. Fresh segments that match the draft → render all highlights
-    // 2. Segments that differ from the draft → reconcile (keep unchanged highlights, drop stale ones)
-    // 3. Stale segments (in-session edit) → skip, render draft content instead
-    // 4. No segments → render draft content
-    const draftText = typeof draftBlock?.content === 'string' ? draftBlock.content : '';
-    const segmentsText = segments.map((s) => s.text || '').join('');
-
+    // Normalize once: \r\n -> \n. This normalized value is used both for the
+    // exact-match check and passed to reconcileHighlights, so a backend that
+    // returns \r\n doesn't cause the LCS diff to drop every highlight.
+    const draftText = typeof draftBlock?.content === 'string'
+      ? draftBlock.content.replace(/\r\n/g, '\n')
+      : '';
+    let docJSON;
     if (segments.length > 0 && !segmentsStaleRef.current) {
-      // Build render chunks: either all segments or reconciled highlights
-      let chunks;
-      if (segmentsText === draftText.replace(/\r\n/g, '\n').trim() || !draftText.trim()) {
-        // No edits — all segments are fresh
-        chunks = segments.map((seg) => ({
-          text: seg.text,
-          type: seg.type,
-          highlight: seg.type !== 'plain',
-          annotation: seg.annotation,
-          word: seg.word,
-          phonetic: seg.phonetic,
-        }));
-      } else {
-        // Text was edited since last AI Check — reconcile highlights against draft
-        chunks = reconcileHighlights(segments, draftText);
-      }
-
-      // Render chunks into the editor
-      const container = document.createElement('div');
-      chunks.forEach((chunk) => {
-        if (chunk.highlight) {
-          const span = document.createElement('span');
-          if (chunk.type === 'vocab') {
-            span.className = 'hw-vocab-highlight';
-          } else if (chunk.type === 'correct') {
-            span.className = 'hw-highlight-correct';
-          } else if (chunk.type === 'suggestion') {
-            span.className = 'hw-highlight-suggestion';
-          }
-          span.textContent = chunk.text;
-          span.dataset.type = chunk.type;
-          span.dataset.original = chunk.text;
-          if (chunk.annotation) span.dataset.annotation = chunk.annotation;
-          if (chunk.word) span.dataset.word = chunk.word;
-          if (chunk.phonetic) span.dataset.phonetic = chunk.phonetic;
-          container.appendChild(span);
-        } else {
-          // Plain text — convert \n to <br>
-          const lines = chunk.text.split('\n');
-          lines.forEach((line, i) => {
-            if (line) container.appendChild(document.createTextNode(line));
-            if (i < lines.length - 1) container.appendChild(document.createElement('br'));
-          });
-        }
-      });
-      editorRef.current.innerHTML = container.innerHTML;
-      // Clear any stale tooltip
-      setTooltip({ anchor: null, data: null });
-    } else if (draftBlock?.content && typeof draftBlock.content === 'string') {
-      // Stale segments or no segments — render draft content
-      const html = /<[a-zA-Z]/.test(draftBlock.content)
-        ? draftBlock.content
-        : draftBlock.content.replace(/\n/g, '<br>');
-      editorRef.current.innerHTML = html;
+      const segmentsText = segments.map((s) => s.text || '').join('');
+      // Use segments directly only on an EXACT (un-trimmed) match, so any
+      // leading/trailing whitespace present in the draft but not in the segments
+      // isn't silently dropped. Otherwise reconcile against the draft text,
+      // which rebuilds from the draft (preserving its whitespace) and drops
+      // only stale highlights.
+      const chunks = (segmentsText === draftText || !draftText.trim())
+        ? segments.map((seg) => ({
+            text: seg.text,
+            type: seg.type,
+            highlight: seg.type !== 'plain',
+            annotation: seg.annotation,
+            word: seg.word,
+            phonetic: seg.phonetic,
+          }))
+        : reconcileHighlights(segments, draftText);
+      docJSON = chunksToDocJSON(chunks);
+    } else if (draftText) {
+      docJSON = plainTextToDocJSON(draftText);
     } else {
-      editorRef.current.innerHTML = '';
+      docJSON = plainTextToDocJSON('');
     }
-    updateWordCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-set innerHTML when blocks actually change
-  }, [activeNote?.id, activeAssignmentId, draftBlock?.id, feedbackBlock?.id]);
 
-  const handleEditorInput = useCallback(() => {
-    updateWordCount();
+    loadEditorContent(editor, docJSON);
+    setTooltip({ anchorEl: null, data: null });
+    const wc = countWords(editor.getText());
+    lastWordCountRef.current = wc;
+    setWordCount(wc);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only reload when blocks change
+  }, [editor, activeNote?.id, activeAssignmentId, draftBlock?.id, feedbackBlock?.id]);
 
-    // Per-span staleness: strip highlight styling from edited spans
-    // Instead of replacing the node (which kills the cursor), just remove
-    // the CSS class and data attributes so it renders as plain text.
-    if (editorRef.current) {
-      const highlights = editorRef.current.querySelectorAll(
-        '.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion'
-      );
-      let changed = false;
-      highlights.forEach(span => {
-        if (span.textContent !== span.dataset.original) {
-          // This span was edited — strip highlight styling, keep the node intact
-          span.className = '';
-          delete span.dataset.type;
-          delete span.dataset.original;
-          delete span.dataset.annotation;
-          delete span.dataset.word;
-          delete span.dataset.phonetic;
-          changed = true;
-        }
-      });
-      if (changed) {
-        // Segments are now stale — the feedback no longer matches the editor text.
-        // Future useEffect runs should render draft content, not segments.
-        segmentsStaleRef.current = true;
-        // If tooltip was showing on an edited span, hide it
-        setTooltip({ anchor: null, data: null });
-      }
-    }
-  }, [updateWordCount]);
-
-  // Clean up stale (class-less) spans on blur to avoid DOM clutter.
-  // We don't do this on every input to prevent cursor jumps.
-  const handleEditorBlur = useCallback(() => {
-    if (!editorRef.current) return;
-    const staleSpans = editorRef.current.querySelectorAll('span:not([class])');
-    if (staleSpans.length > 0) {
-      staleSpans.forEach(span => {
-        const textNode = document.createTextNode(span.textContent);
-        span.parentNode.replaceChild(textNode, span);
-      });
-      editorRef.current.normalize();
-    }
+  const getDraftText = useCallback(() => {
+    const e = editorInstRef.current;
+    return e ? docToPlainText(e.state.doc) : '';
   }, []);
 
-  // Tooltip handlers: show on hover, hide with delay, toggle on click
-  const handleEditorMouseOver = useCallback((e) => {
-    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
-    if (!span) return;
-    if (!hintsEnabled) return;
-    clearTimeout(tooltipHideTimer.current);
-    setTooltip({
-      anchor: span,
-      data: {
-        type: span.dataset.type,
-        annotation: span.dataset.annotation || '',
-        word: span.dataset.word || '',
-        phonetic: span.dataset.phonetic || '',
-      },
-    });
-  }, [hintsEnabled]);
-
-  const handleEditorMouseOut = useCallback((e) => {
-    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
-    if (!span) return;
-    // Delay hide to allow mouse to reach the tooltip
-    tooltipHideTimer.current = setTimeout(() => {
-      setTooltip(prev => prev.anchor === span ? { anchor: null, data: null } : prev);
-    }, 200);
-  }, []);
-
-  const handleEditorClick = useCallback((e) => {
-    const span = e.target.closest('.hw-vocab-highlight, .hw-highlight-correct, .hw-highlight-suggestion');
-    if (!span) {
-      // Clicked outside any highlight — dismiss tooltip
-      setTooltip({ anchor: null, data: null });
-      return;
-    }
-    if (!hintsEnabled) return;
-    // Toggle tooltip on click
-    setTooltip(prev => {
-      if (prev.anchor === span) return { anchor: null, data: null };
-      return {
-        anchor: span,
-        data: {
-          type: span.dataset.type,
-          annotation: span.dataset.annotation || '',
-          word: span.dataset.word || '',
-          phonetic: span.dataset.phonetic || '',
-        },
-      };
-    });
-  }, [hintsEnabled]);
-
-  // Submit draft text
   const handleSubmit = async () => {
-    if (!activeNote || !editorRef.current) return;
-    const text = editorRef.current.innerText || '';
+    if (!activeNote || !editor) return;
+    const text = getDraftText();
     if (!text.trim()) return;
-
     setIsSubmitting(true);
     try {
       await submitDraft(activeNote.id, text, draftBlock?.id, assignmentId);
@@ -370,35 +389,31 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     }
   };
 
-  // AI Check: first ensure draft is saved, then analyze
   const handleAICheck = async () => {
-    if (!activeNote) return;
-
+    if (!activeNote || !editor) return;
     setIsAnalyzing(true);
     try {
-      // If no draft block yet, save the current text first
       let draftId = draftBlock?.id;
       if (!draftId) {
-        const text = editorRef.current?.innerText || '';
+        const text = getDraftText();
         if (text.trim()) {
           const result = await submitDraft(activeNote.id, text, undefined, assignmentId);
           draftId = result?.blockId;
         }
       }
-
       if (!draftId) {
-        console.error('No draft block to analyze');
+        // No draft to analyze (empty editor, no existing draft) — not a system
+        // error. Warn rather than console.error so it doesn't trip console.spec.ts.
+        console.warn('No draft block to analyze');
         setIsAnalyzing(false);
         return;
       }
-
       await runAICheck(activeNote.id, draftId);
     } finally {
       setIsAnalyzing(false);
     }
   };
 
-  // Send Q&A question
   const handleSendQuestion = async (question) => {
     if (!activeNote) return;
     setIsSendingQuestion(true);
@@ -409,142 +424,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     }
   };
 
-  const targetWords = assignmentBlock?.metadata_?.targetLength
-    ? parseInt(assignmentBlock.metadata_.targetLength, 10) || 0
-    : 0;
-
-  // --- Selection toolbar handlers ---
-
-  // Extract the sentence containing the current selection from the editor content
-  const extractSentenceFromEditor = useCallback(() => {
-    const editor = editorRef.current;
-    if (!editor) return null;
-
-    const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) return null;
-
-    try {
-      const range = selection.getRangeAt(0);
-      const container = range.commonAncestorContainer;
-      // Walk up to the editor-level container for full text context
-      const root = container.nodeType === Node.TEXT_NODE ? container.parentElement : container;
-      const editorRoot = editor;
-
-      const fullText = editorRoot.textContent || '';
-
-      // Calculate absolute position of selection start in the full text
-      let absoluteStart = 0;
-      const walker = document.createTreeWalker(
-        editorRoot,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-      );
-
-      let currentNode;
-      while ((currentNode = walker.nextNode())) {
-        if (currentNode === range.startContainer) {
-          absoluteStart += range.startOffset;
-          break;
-        }
-        absoluteStart += currentNode.textContent.length;
-      }
-
-      // Find sentence boundaries around this position
-      let sentenceStart = 0;
-      for (let i = absoluteStart - 1; i >= 0; i--) {
-        if (/[.!?]/.test(fullText[i])) {
-          sentenceStart = i + 1;
-          break;
-        }
-      }
-
-      let sentenceEnd = fullText.length;
-      for (let i = absoluteStart; i < fullText.length; i++) {
-        if (/[.!?]/.test(fullText[i])) {
-          sentenceEnd = i;
-          break;
-        }
-      }
-
-      const sentence = fullText.slice(sentenceStart, sentenceEnd).trim();
-      return sentence || null;
-    } catch (error) {
-      console.error('Error extracting sentence from editor:', error);
-      return null;
-    }
-  }, []);
-
-  const handleEditorMouseUp = useCallback((e) => {
-    // Check if click is inside the toolbar — don't hide it
-    if (hwToolbarRef.current && hwToolbarRef.current.contains(e.target)) {
-      return;
-    }
-
-    const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) {
-      // No selection — hide toolbar if it was visible
-      if (hwToolbarVisible) setHwToolbarVisible(false);
-      return;
-    }
-
-    // Verify the selection is inside our editor
-    const editorEl = editorRef.current;
-    if (!editorEl || !editorEl.contains(selection.anchorNode)) {
-      return;
-    }
-
-    const text = selection.toString().trim();
-    if (!text) {
-      if (hwToolbarVisible) setHwToolbarVisible(false);
-      return;
-    }
-
-    setHwSelectedText(text);
-
-    // Extract sentence context while the selection is still active
-    const sentence = extractSentenceFromEditor();
-    setHwSelectedSentence(sentence);
-
-    // Position toolbar relative to editor container
-    const range = selection.getRangeAt(0);
-    const rangeRect = range.getBoundingClientRect();
-    const containerRect = editorContainerRef.current.getBoundingClientRect();
-
-    setHwToolbarStyle({
-      position: 'absolute',
-      top: rangeRect.top - containerRect.top - 40,
-      left: rangeRect.left - containerRect.left,
-    });
-    setHwToolbarVisible(true);
-  }, [hwToolbarVisible, extractSentenceFromEditor]);
-
-  // Hide toolbar on click outside editor or when selection is cleared
-  const handleDocumentMouseDown = useCallback((e) => {
-    if (hwToolbarRef.current && hwToolbarRef.current.contains(e.target)) {
-      return;
-    }
-    if (editorRef.current && editorRef.current.contains(e.target)) {
-      return;
-    }
-    setHwToolbarVisible(false);
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleDocumentMouseDown);
-    return () => document.removeEventListener('mousedown', handleDocumentMouseDown);
-  }, [handleDocumentMouseDown]);
-
-  const handleToolbarTranslate = useCallback((lang) => {
-    // TODO: implement translation in homework context
-    console.log('Translate selected text to:', lang, hwSelectedText);
-  }, [hwSelectedText]);
-
-  const handleToolbarDictionaryLookup = useCallback(() => {
-    // TODO: implement dictionary lookup in homework context
-    console.log('Dictionary lookup for:', hwSelectedText);
-  }, [hwSelectedText]);
-
+  // Selection toolbar handlers
   const handleToolbarAddToList = useCallback(async (text, listId) => {
     if (!text.trim()) return null;
     return addWordToList(text, listId, hwSelectedSentence);
@@ -560,7 +440,6 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
     return createNewListWithWord(text, null, hwSelectedSentence);
   }, [createNewListWithWord, hwSelectedSentence]);
 
-
   if (!activeNote) {
     return (
       <section className="hw-draft-section">
@@ -573,6 +452,11 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
       </section>
     );
   }
+
+  const bubbleMenuShouldShow = ({ state }) => {
+    const { empty, from, to } = state.selection;
+    return !empty && from !== to;
+  };
 
   return (
     <section className="hw-draft-section">
@@ -605,73 +489,31 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
           </div>
         )}
 
-        {/* Editor Toolbar */}
+        {/* Editor Toolbar (autosave indicator only — plain-text editor) */}
         <div className="hw-toolbar">
-          <div className="hw-toolbar-group">
-            <button className="hw-tool-btn" title="Bold">
-              <span className="hw-material-icon">format_bold</span>
-            </button>
-            <button className="hw-tool-btn" title="Italic">
-              <span className="hw-material-icon">format_italic</span>
-            </button>
-            <button className="hw-tool-btn" title="Underline">
-              <span className="hw-material-icon">format_underlined</span>
-            </button>
-          </div>
-          <div className="hw-toolbar-group">
-            <button className="hw-tool-btn" title="Bullet List">
-              <span className="hw-material-icon">format_list_bulleted</span>
-            </button>
-            <button className="hw-tool-btn" title="Numbered List">
-              <span className="hw-material-icon">format_list_numbered</span>
-            </button>
-          </div>
           <div className="hw-toolbar-autosave">
             <span className="hw-autosave-dot" />
             Autosaved
           </div>
         </div>
 
-        {/* Rich Text Editor */}
-        <div className="hw-editor" ref={editorContainerRef}>
-          <div
-            ref={editorRef}
-            className="hw-editor-content"
-            contentEditable
-            suppressContentEditableWarning
-            style={{ outline: 'none' }}
-            onInput={handleEditorInput}
-            onBlur={handleEditorBlur}
-            onMouseUp={handleEditorMouseUp}
-            onMouseOver={handleEditorMouseOver}
-            onMouseOut={handleEditorMouseOut}
-            onClick={handleEditorClick}
-          />
-          {tooltip.anchor && tooltip.data && editorContainerRef.current && (
-            <FeedbackTooltip
-              anchor={tooltip.anchor}
-              data={tooltip.data}
-              editorRect={editorContainerRef.current.getBoundingClientRect()}
-              onMouseEnter={() => clearTimeout(tooltipHideTimer.current)}
-              onMouseLeave={() => {
-                tooltipHideTimer.current = setTimeout(() => {
-                  setTooltip({ anchor: null, data: null });
-                }, 200);
-              }}
-            />
+        {/* Tiptap editor */}
+        <div className="hw-editor">
+          <EditorContent editor={editor} />
+          {editor && (
+            <BubbleMenu editor={editor} shouldShow={bubbleMenuShouldShow}>
+              <HomeworkToolbar
+                toolbarRef={hwToolbarRef}
+                style={{}}
+                selectedText={hwSelectedText}
+                wordLists={wordlists}
+                onAddToList={handleToolbarAddToList}
+                onMoveToList={handleToolbarMoveToList}
+                onCreateNewList={handleToolbarCreateNewList}
+                isVisible
+              />
+            </BubbleMenu>
           )}
-          <HomeworkToolbar
-            toolbarRef={hwToolbarRef}
-            style={hwToolbarStyle}
-            onTranslate={handleToolbarTranslate}
-            onDictionaryLookup={handleToolbarDictionaryLookup}
-            selectedText={hwSelectedText}
-            wordLists={wordlists}
-            onAddToList={handleToolbarAddToList}
-            onMoveToList={handleToolbarMoveToList}
-            onCreateNewList={handleToolbarCreateNewList}
-            isVisible={hwToolbarVisible}
-          />
         </div>
 
         {/* Footer Actions */}
@@ -684,7 +526,7 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
               className={`hw-hints-toggle ${hintsEnabled ? 'hw-hints-toggle--active' : ''}`}
               onClick={() => {
                 setHintsEnabled(prev => !prev);
-                if (hintsEnabled) setTooltip({ anchor: null, data: null });
+                if (hintsEnabled) setTooltip({ anchorEl: null, data: null });
               }}
               title={hintsEnabled ? 'Hide hints on hover' : 'Show hints on hover'}
             >
@@ -721,6 +563,20 @@ export default function DraftingArea({ activeNote, activeAssignmentId, submitDra
           noteId={activeNote?.id}
         />
       </div>
+
+      {/* Feedback tooltip — portaled to <body> so .hw-editor overflow can't clip it */}
+      {tooltip.anchorEl && tooltip.data && createPortal(
+        <FeedbackTooltip
+          data={tooltip.data}
+          setFloating={refs.setFloating}
+          style={floatingStyles}
+          onMouseEnter={() => clearTimeout(tooltipHideTimerRef.current)}
+          onMouseLeave={() => {
+            tooltipHideTimerRef.current = setTimeout(() => setTooltip({ anchorEl: null, data: null }), 200);
+          }}
+        />,
+        document.body
+      )}
     </section>
   );
 }

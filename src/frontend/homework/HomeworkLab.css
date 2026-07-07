@@ -918,6 +918,12 @@
   outline: none;
 }
 
+/* Tiptap adds .ProseMirror to the editable element (alongside .hw-editor-content). */
+.hw-editor .ProseMirror {
+  outline: none;
+  min-height: 300px;
+}
+
 /* === Vocabulary Highlight (with popup) === */
 .hw-vocab-highlight {
   background: rgba(79, 70, 229, 0.2);
