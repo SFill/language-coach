@@ -9,6 +9,7 @@ import QATab from './QATab';
 import { useDraftTooltip } from '../hooks/useDraftTooltip';
 import { useDraftAutosave } from '../hooks/useDraftAutosave';
 import { useDraftSelectionToolbar } from '../hooks/useDraftSelectionToolbar';
+import { useDraftTranslation } from '../hooks/useDraftTranslation';
 import { useDraftEditor } from '../hooks/useDraftEditor';
 import { useDraftContentLoader } from '../hooks/useDraftContentLoader';
 
@@ -66,6 +67,9 @@ export default function DraftingArea({
     wordlists,
   } = useDraftSelectionToolbar();
 
+  // Translate the current editor selection (ru/en/es) for the selection toolbar.
+  const translation = useDraftTranslation({ selectedText: hwSelectedText });
+
   // Tiptap editor instance ref (the editor is null on first render). Shared by
   // the tooltip hook (hover/click handlers), the editor sync effect, and the
   // content loader.
@@ -94,6 +98,10 @@ export default function DraftingArea({
   // re-apply stale segments. Shared with the editor (FeedbackStaleness onStale)
   // and the content loader (reset on feedbackId change / clean slate).
   const segmentsStaleRef = useRef(false);
+  // True while the mouse button is held in the editor (a drag selection is in
+  // progress) — hides the selection toolbar's content during the drag; flipped
+  // back on mouseup so the toolbar appears the instant the drag ends.
+  const [isDragging, setIsDragging] = useState(false);
 
   // Derive blocks from activeNote
   const noteBlocks = activeNote?.note_blocks || [];
@@ -139,6 +147,7 @@ export default function DraftingArea({
     setHwSelectedText,
     setHwSelectedSentence,
     segmentsStaleRef,
+    setIsDragging,
   });
 
   useEffect(() => { editorInstRef.current = editor; }, [editor]);
@@ -255,7 +264,12 @@ export default function DraftingArea({
         <div className="hw-editor">
           <EditorContent editor={editor} />
           {editor && (
-            <BubbleMenu editor={editor} shouldShow={bubbleMenuShouldShow}>
+            <BubbleMenu
+              editor={editor}
+              shouldShow={bubbleMenuShouldShow}
+              updateDelay={0}
+              options={{ placement: 'top-end' }}
+            >
               <HomeworkToolbar
                 toolbarRef={hwToolbarRef}
                 style={{}}
@@ -264,7 +278,11 @@ export default function DraftingArea({
                 onAddToList={handleToolbarAddToList}
                 onMoveToList={handleToolbarMoveToList}
                 onCreateNewList={handleToolbarCreateNewList}
-                isVisible
+                onTranslate={translation.handleTranslate}
+                translatedText={translation.translatedText}
+                isTranslating={translation.isTranslating}
+                activeLang={translation.activeLang}
+                isVisible={!isDragging}
               />
             </BubbleMenu>
           )}

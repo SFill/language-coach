@@ -231,4 +231,40 @@ test.describe('Selection toolbar', () => {
     // The sentence should start from the beginning (single-sentence draft)
     expect(sentence?.toLowerCase()).toContain('last');
   });
+
+  test('translate buttons translate the selection and clear on new selection', async ({ page, homeworkNote }) => {
+    // Mock /api/translate so the test doesn't hit Google (deterministic + fast).
+    await page.route('**/api/translate', (route) =>
+      route.fulfill({ json: { text: 'TRANSLATED-RU' } }),
+    );
+
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    const toolbar = page.locator('.hw-selection-toolbar');
+    const translation = page.locator('.hw-selection-toolbar-translation');
+
+    // Select a word in the editor ("went" — unused by the other tests).
+    await selectWordAndShowToolbar(page, 'went');
+    await expect(toolbar).toBeVisible({ timeout: 3000 });
+
+    // Click the Russian translate button.
+    const ruBtn = page.locator('.hw-selection-toolbar-lang', { hasText: '🇷🇺' });
+    await ruBtn.click();
+
+    // The translated text appears in the toolbar display.
+    await expect(translation).toContainText('TRANSLATED-RU', { timeout: 5000 });
+    // The Russian button is highlighted as the active language.
+    await expect(ruBtn).toHaveClass(/hw-selection-toolbar-lang--active/);
+
+    // Change the selection — the translation must clear (no stale text).
+    await selectWordAndShowToolbar(page, 'park');
+    await expect(toolbar).toBeVisible({ timeout: 3000 });
+    await expect(translation).not.toContainText('TRANSLATED-RU');
+    // The display now shows the newly selected word instead.
+    await expect(translation).toContainText('park');
+  });
 });

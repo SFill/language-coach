@@ -16,6 +16,12 @@ export interface UseDraftEditorArgs {
   setHwSelectedText: (text: string) => void;
   setHwSelectedSentence: (sentence: unknown) => void;
   segmentsStaleRef: MutableRefObject<boolean>;
+  // Set true while the mouse button is held in the editor (a drag selection is
+  // in progress) so the selection toolbar hides its content during the drag and
+  // only appears on mouseup. Driven by React state (not the BubbleMenu plugin)
+  // so the show on mouseup is instant — the plugin's shouldShow can't be
+  // re-triggered without a selection change.
+  setIsDragging: (dragging: boolean) => void;
 }
 
 /**
@@ -35,6 +41,7 @@ export function useDraftEditor({
   setHwSelectedText,
   setHwSelectedSentence,
   segmentsStaleRef,
+  setIsDragging,
 }: UseDraftEditorArgs): Editor | null {
   return useEditor({
     extensions: [
@@ -60,6 +67,10 @@ export function useDraftEditor({
         mouseover: (_view, event) => handleHighlightHover(event as MouseEvent, true),
         mouseout: (_view, event) => handleHighlightHover(event as MouseEvent, false),
         click: (_view, event) => handleHighlightClick(event as MouseEvent),
+        // Track drag state so the selection toolbar hides while the button is
+        // held (no following-the-cursor during a drag) and reappears on mouseup.
+        mousedown: () => setIsDragging(true),
+        mouseup: () => setIsDragging(false),
       },
     },
     onTransaction: ({ editor: e, transaction }) => {

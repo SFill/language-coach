@@ -11,6 +11,10 @@ const HomeworkToolbar = ({
   onMoveToList,
   onCreateNewList,
   isVisible,
+  onTranslate,
+  translatedText,
+  isTranslating,
+  activeLang,
 }) => {
   const [showListDropdown, setShowListDropdown] = useState(false);
 
@@ -139,6 +143,33 @@ const HomeworkToolbar = ({
               )}
             </div>
           )}
+
+          {onTranslate && (
+            <div className="hw-selection-toolbar-translate">
+              <button
+                className={`hw-selection-toolbar-lang ${activeLang === 'ru' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                onClick={() => onTranslate('ru')}
+                disabled={isTranslating}
+                title="Translate to Russian"
+              >🇷🇺</button>
+              <button
+                className={`hw-selection-toolbar-lang ${activeLang === 'en' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                onClick={() => onTranslate('en')}
+                disabled={isTranslating}
+                title="Translate to English"
+              >🇺🇸</button>
+              <button
+                className={`hw-selection-toolbar-lang ${activeLang === 'es' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                onClick={() => onTranslate('es')}
+                disabled={isTranslating}
+                title="Translate to Spanish"
+              >🇪🇸</button>
+            </div>
+          )}
+
+          <span className={`hw-selection-toolbar-translation ${translatedText ? 'hw-selection-toolbar-translation--filled' : ''}`}>
+            {isTranslating ? 'Translating…' : (translatedText || plainText)}
+          </span>
         </>
       )}
     </div>

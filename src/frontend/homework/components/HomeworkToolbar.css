@@ -124,3 +124,52 @@
 .hw-selection-toolbar-match-tooltip:hover .hw-selection-toolbar-match-tooltip-text {
   visibility: visible;
 }
+
+/* === Translate (selection → Google Translate) === */
+.hw-selection-toolbar-translate {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  padding-left: 6px;
+  border-left: 1px solid #ddd;
+}
+
+.hw-selection-toolbar-lang {
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 6px !important;
+}
+
+.hw-selection-toolbar-lang--active {
+  background-color: #4CAF50 !important;
+  color: #ffffff !important;
+  border-color: #4CAF50 !important;
+}
+
+.hw-selection-toolbar-lang:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hw-selection-toolbar-translation {
+  display: block;
+  max-height: 240px;
+  margin-top: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #333;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-top: 1px solid #eee;
+}
+
+/* When a translation is present, widen the area (and let it scroll) so long
+   translations are readable instead of wrapped narrowly / truncated. */
+.hw-selection-toolbar-translation--filled {
+  width: 520px;
+  max-width: 560px;
+}
