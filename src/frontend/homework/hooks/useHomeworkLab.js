@@ -95,6 +95,7 @@ export function useHomeworkLab(homeworkListManager) {
     submitDraft: hm?.submitDraft.bind(hm) || (() => null),
     runAICheck: hm?.runAICheck.bind(hm) || (() => null),
     sendQuestion: hm?.sendQuestion.bind(hm) || (() => null),
+    deleteInquiry: hm?.deleteInquiry.bind(hm) || (() => null),
     deleteNote: (id) => homeworkListManager?.deleteNote(id),
     togglePicker: () => homeworkListManager?.togglePicker(),
     loading: false,

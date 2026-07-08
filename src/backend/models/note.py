@@ -16,6 +16,7 @@ class NoteBlock(BaseModel):
     metadata_: Optional[dict] = None  # category, difficulty, targetLength, etc.
     assignment_ref: Optional[str] = None  # UUID of the assignment block this block belongs to
     question_title: Optional[str] = None  # Rephrased question title for Q&A blocks
+    question: Optional[str] = None  # Original user question for Q&A blocks
 
     @computed_field
     @property
@@ -115,7 +116,6 @@ class QuestionCreate(BaseModel):
     """Schema for creating a question about a note."""
     question: str
     assignment_ref: Optional[str] = None  # UUID of the assignment block
-    question_type: Optional[str] = None  # "grammar_check", "vocabulary", "style"
 
 
 class DraftSegment(BaseModel):

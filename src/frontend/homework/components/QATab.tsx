@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import MarkdownContent from '../../notewindow/components/MarkdownContent';
 
 interface QaSegment {
@@ -8,18 +8,21 @@ interface QaSegment {
 interface QaBlock {
   id: string;
   question_title?: string;
+  question?: string;
   content?: string | QaSegment[];
 }
 
 interface QATabProps {
   qaBlocks: QaBlock[];
   onSendQuestion: (question: string) => void;
+  onDeleteInquiry: (blockId: string) => void;
   isSending: boolean;
   noteId: number | string;
 }
 
-export default function QATab({ qaBlocks, onSendQuestion, isSending, noteId }: QATabProps) {
+export default function QATab({ qaBlocks, onSendQuestion, onDeleteInquiry, isSending, noteId }: QATabProps) {
   const [question, setQuestion] = useState('');
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     if (!question.trim() || isSending) return;
@@ -27,11 +30,24 @@ export default function QATab({ qaBlocks, onSendQuestion, isSending, noteId }: Q
     setQuestion('');
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const originalQuestion = (block: QaBlock) => block.question || block.question_title || '';
+
+  const handleCopyQuestion = (block: QaBlock) => {
+    const text = originalQuestion(block);
+    if (!text) return;
+    navigator.clipboard?.writeText(text);
+  };
+
+  const handleEditAgain = (block: QaBlock) => {
+    setQuestion(originalQuestion(block));
+    inputRef.current?.focus();
   };
 
   return (
@@ -52,15 +68,42 @@ export default function QATab({ qaBlocks, onSendQuestion, isSending, noteId }: Q
                   ? block.content.map((seg, i) => <span key={i}>{seg.text || ''}</span>)
                   : '...'}
             </div>
+            <div className="hw-qa-actions">
+              <button
+                type="button"
+                className="hw-qa-action-btn"
+                title="Copy question"
+                onClick={() => handleCopyQuestion(block)}
+              >
+                <span className="hw-material-icon">content_copy</span>
+              </button>
+              <button
+                type="button"
+                className="hw-qa-action-btn"
+                title="Edit and ask again"
+                onClick={() => handleEditAgain(block)}
+              >
+                <span className="hw-material-icon">edit</span>
+              </button>
+              <button
+                type="button"
+                className="hw-qa-action-btn hw-qa-action-btn--danger"
+                title="Delete inquiry"
+                onClick={() => onDeleteInquiry(block.id)}
+              >
+                <span className="hw-material-icon">delete</span>
+              </button>
+            </div>
           </div>
         ))}
       </div>
       <div className="hw-qa-input-row">
-        <input
-          type="text"
+        <textarea
+          ref={inputRef}
           className="hw-qa-input"
-          placeholder="Ask a question about this assignment..."
+          placeholder="Ask a question about this assignment… (Enter to send, Shift+Enter for a new line)"
           value={question}
+          rows={1}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isSending}

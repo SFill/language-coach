@@ -1250,6 +1250,47 @@
   display: flex;
   flex-direction: column;
   gap: var(--hw-unit-xs);
+  position: relative;
+}
+
+.hw-qa-actions {
+  display: flex;
+  gap: 2px;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.hw-qa-item:hover .hw-qa-actions,
+.hw-qa-item:focus-within .hw-qa-actions {
+  opacity: 1;
+}
+
+.hw-qa-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--hw-on-surface-variant);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.hw-qa-action-btn .hw-material-icon {
+  font-size: 18px;
+}
+
+.hw-qa-action-btn:hover {
+  background: var(--hw-surface-container-high);
+  color: var(--hw-on-surface);
+}
+
+.hw-qa-action-btn--danger:hover {
+  color: var(--hw-error);
 }
 
 .hw-qa-question {
@@ -1267,6 +1308,7 @@
 
 .hw-qa-input-row {
   display: flex;
+  align-items: flex-end;
   gap: var(--hw-unit-sm);
   padding: var(--hw-unit-md) var(--hw-unit-lg);
   border-top: 1px solid var(--hw-outline-variant);
@@ -1280,10 +1322,17 @@
   border-radius: 8px;
   font-size: 14px;
   font-family: inherit;
+  line-height: 1.4;
   color: var(--hw-on-surface);
   background: var(--hw-surface-container-lowest);
   outline: none;
   transition: border-color 0.2s;
+  resize: none;
+  min-height: 40px;
+  max-height: 140px;
+  overflow-y: auto;
+  /* Auto-grow to content where supported; falls back to scroll. */
+  field-sizing: content;
 }
 
 .hw-qa-input:focus {

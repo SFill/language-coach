@@ -21,6 +21,7 @@ export default function HomeworkLab({ homeworkListManager }) {
     submitDraft,
     runAICheck,
     sendQuestion,
+    deleteInquiry,
     showPicker,
     togglePicker,
   } = useHomeworkLab(homeworkListManager);
@@ -203,6 +204,7 @@ export default function HomeworkLab({ homeworkListManager }) {
             submitDraft={submitDraft}
             runAICheck={runAICheck}
             sendQuestion={sendQuestion}
+            deleteInquiry={deleteInquiry}
           />
         </main>
 

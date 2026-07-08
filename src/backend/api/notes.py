@@ -18,8 +18,8 @@ from backend.services.notes_service import (
     create_note, get_note_list, get_note,
     delete_note, send_note_block, update_note_block, delete_note_block,
     upload_note_image, get_note_images, delete_note_image, get_note_image_file,
-    send_question,
 )
+from backend.services.question_service import QuestionService
 from backend.services.assignment_service import AssignmentService
 
 # Create router
@@ -64,18 +64,15 @@ def delete_note_endpoint(session: SessionDep, id: int):
 
 
 @router.post('/{id}/block')
-def send_note_block_endpoint(session: SessionDep, id: int, note_block: NoteBlockCreate, test_mode: bool = False):
-    """Send a note block to a note and get a response.
-
-    When test_mode is True, skip AI calls — just persist the block as-is.
-    """
-    return send_note_block(session, id, note_block, test_mode=test_mode)
+def send_note_block_endpoint(session: SessionDep, id: int, note_block: NoteBlockCreate):
+    """Send a note block to a note and get a response."""
+    return send_note_block(session, id, note_block)
 
 
 @router.post('/{id}/question')
 def send_question_endpoint(session: SessionDep, id: int, question_data: QuestionCreate):
     """Send a question about a note block and get a structured Q&A response."""
-    return send_question(session, id, question_data)
+    return QuestionService(session).process_question(id, question_data)
 
 
 @router.post('/{id}/block/{note_block_id}/analyze', response_model=AnalyzeResponse)

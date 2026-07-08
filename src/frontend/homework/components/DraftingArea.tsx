@@ -40,6 +40,7 @@ interface DraftingAreaProps {
   submitDraft: SubmitDraft;
   runAICheck: (noteId: number | string, blockId: string) => Promise<unknown>;
   sendQuestion: (noteId: number | string, question: string, assignmentRef?: string) => Promise<unknown>;
+  deleteInquiry: (noteId: number | string, blockId: string) => Promise<unknown>;
 }
 
 export default function DraftingArea({
@@ -48,6 +49,7 @@ export default function DraftingArea({
   submitDraft,
   runAICheck,
   sendQuestion,
+  deleteInquiry,
 }: DraftingAreaProps) {
   const [activeTab, setActiveTab] = useState<'assignment' | 'qa'>('assignment');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -203,6 +205,11 @@ export default function DraftingArea({
     }
   };
 
+  const handleDeleteInquiry = async (blockId: string) => {
+    if (!activeNote) return;
+    await deleteInquiry(activeNote.id, blockId);
+  };
+
   if (!activeNote) {
     return (
       <section className="hw-draft-section">
@@ -320,6 +327,7 @@ export default function DraftingArea({
         <QATab
           qaBlocks={qaBlocks}
           onSendQuestion={handleSendQuestion}
+          onDeleteInquiry={handleDeleteInquiry}
           isSending={isSendingQuestion}
           noteId={activeNote?.id}
         />

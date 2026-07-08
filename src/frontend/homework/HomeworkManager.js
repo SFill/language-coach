@@ -5,6 +5,7 @@ import {
   sendQuestion as apiSendQuestion,
   sendNoteBlock,
   uploadNoteImage,
+  deleteNoteBlock,
 } from '../api';
 
 /**
@@ -135,6 +136,23 @@ class HomeworkManager {
       return qaBlock;
     } catch (error) {
       console.error('Error sending question:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Delete a Q&A inquiry block from a note's history.
+   * @param {string|number} noteId
+   * @param {string} blockId — UUID of the question block
+   */
+  async deleteInquiry(noteId, blockId) {
+    if (!noteId || !blockId) return null;
+    try {
+      await deleteNoteBlock(noteId, blockId);
+      await this.refreshNote(noteId);
+      return { status: 'ok' };
+    } catch (error) {
+      console.error('Error deleting inquiry:', error);
       return null;
     }
   }

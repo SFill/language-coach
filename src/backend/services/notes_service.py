@@ -15,10 +15,8 @@ from backend.models.note import (
     NoteBlockUpdate,
     NoteImage,
     NoteImageResponse,
-    QuestionCreate,
 )
 from backend.constants import SYSTEM_PROMPT
-from backend.services.question_service import QuestionService
 from backend.services.openai_client import client, DEFAULT_MODEL
 
 def create_note(session: Session, note: Note) -> Note:
@@ -102,11 +100,8 @@ def _ensure_history_content(history: dict) -> List[dict]:
         raise HTTPException(status_code=400, detail="Note history is corrupted")
     return content
 
-def send_note_block(session: Session, id: int, note_block: NoteBlockCreate, *, test_mode: bool = False) -> dict:
-    """Send a note block to a note session and get response.
-
-    When test_mode is True, skip AI calls — just persist the block as-is.
-    """
+def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> dict:
+    """Send a note block to a note session and get response."""
     import re
     import base64
     
@@ -194,10 +189,9 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate, *, t
 
     assistant_response = ''
     assistant_note_block = None
-    # Determine whether to call AI: skip for assignment, simple_note, and ai_feedback blocks
-    skip_ai_types = {"assignment", "simple_note", "ai_feedback"}
-    if test_mode:
-        skip_ai_types.add("question")
+    # Q&A ("question") blocks are handled by QuestionService — never AI-reply to them
+    # here. Skip the AI chat reply for stored/content blocks that don't expect one.
+    skip_ai_types = {"assignment", "simple_note", "ai_feedback", "question"}
     should_call_ai = note_block.block_type not in skip_ai_types
 
     if should_call_ai:
@@ -513,20 +507,3 @@ def get_note_image_file(session: Session, note_id: int, image_id: int) -> FileRe
         media_type=image.mime_type,
         filename=image.original_filename
     )
-
-
-def send_question(session: Session, note_id: int, question_data: QuestionCreate) -> dict:
-    """
-    Send a question about a note and get a structured Q&A response.
-    Uses QuestionService with proper OOP design.
-    
-    Args:
-        session: Database session
-        note_id: ID of the note to ask about
-        question_data: Question data including question text and parent block ID
-        
-    Returns:
-        Dict with status and qa_block
-    """
-    service = QuestionService(session)
-    return service.process_question(note_id, question_data)
