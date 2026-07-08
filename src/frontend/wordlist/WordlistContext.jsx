@@ -7,6 +7,7 @@ import {
   updateWordListsBeforeRefresh
 } from '../api';
 import { normalizePhrase, areCloseMatches, areExactMatches } from './utils';
+import { SyncCoordinator } from '../sync/SyncCoordinator';
 
 // Create the context
 const WordlistContext = createContext();
@@ -34,9 +35,10 @@ export function WordlistProvider({ children }) {
   
   const [loadingWordLists, setLoadingWordLists] = useState(true);
   const [error, setError] = useState(null);
-  const lastSyncTime = useRef(null);
-  const syncInProgress = useRef(false);
-  
+  // Guards concurrent initial fetches (separate from the sync coordinator, which
+  // guards dirty-list syncs).
+  const loadInProgress = useRef(false);
+
   // Track which languages we've loaded
   const loadedLanguages = useRef(new Set());
 
@@ -56,55 +58,53 @@ export function WordlistProvider({ children }) {
 
   // Load wordlists from API - optimized to load all languages
   const loadWordlists = useCallback(async (force = false) => {
-    // Prevent multiple simultaneous sync operations
-    if (syncInProgress.current && !force) return;
+    // Prevent multiple simultaneous fetches
+    if (loadInProgress.current && !force) return;
 
-    syncInProgress.current = true;
+    loadInProgress.current = true;
     setLoadingWordLists(true);
 
     try {
       // First, check if we already have English wordlists
       if (!loadedLanguages.current.has('en') || force) {
         const enWordlists = await fetchWordlists('en');
-        
+
         // Add in-memory flags to each wordlist
         const processedEnWordlists = enWordlists.map(list => ({
           ...list,
           _isDirty: false
         }));
-        
+
         // Update allWordlists, preserving Spanish wordlists if they exist
         setAllWordlists(prevAll => {
           const existingEs = prevAll.filter(list => list.language === 'es');
           return [...existingEs, ...processedEnWordlists];
         });
-        
+
         loadedLanguages.current.add('en');
       }
-      
+
       // Then, check if we already have Spanish wordlists
       if (!loadedLanguages.current.has('es') || force) {
         const esWordlists = await fetchWordlists('es');
-        
+
         // Add in-memory flags to each wordlist
         const processedEsWordlists = esWordlists.map(list => ({
           ...list,
           _isDirty: false
         }));
-        
+
         // Update allWordlists, preserving English wordlists
         setAllWordlists(prevAll => {
           const existingEn = prevAll.filter(list => list.language === 'en');
           return [...existingEn, ...processedEsWordlists];
         });
-        
+
         loadedLanguages.current.add('es');
       }
-      
-      // Update the timestamp of the last successful sync
-      lastSyncTime.current = new Date();
+
       setError(null);
-      
+
       // Filter for the current language
       filterWordlistsByLanguage(currentLanguage);
     } catch (err) {
@@ -112,7 +112,7 @@ export function WordlistProvider({ children }) {
       setError('Failed to load word lists. Please try again later.');
     } finally {
       setLoadingWordLists(false);
-      syncInProgress.current = false;
+      loadInProgress.current = false;
     }
   }, [currentLanguage, filterWordlistsByLanguage]);
 
@@ -129,85 +129,67 @@ export function WordlistProvider({ children }) {
     allWordlistsRef.current = allWordlists;
   }, [allWordlists]);
 
-  // Initial load on component mount and set up sync
+  // Persist one batch of dirty lists (grouped by language) and mark ONLY the
+  // synced lists clean — a list dirtied mid-sync stays dirty for the next tick,
+  // so no edit is lost. This is the persister injected into the sync coordinator.
+  const syncDirtyLists = useCallback(async (dirtyLists) => {
+    if (!dirtyLists || dirtyLists.length === 0) return;
+
+    const toPayload = (list) => ({
+      name: list.name,
+      words: list.words.map(w => ({
+        word: w.word,
+        word_translation: w.word_translation || null,
+        example_phrase: w.example_phrase || null,
+        example_phrase_translation: w.example_phrase_translation || null
+      })),
+      language: list.language
+    });
+
+    const enDirtyLists = dirtyLists.filter(list => list.language === 'en');
+    const esDirtyLists = dirtyLists.filter(list => list.language === 'es');
+
+    if (enDirtyLists.length > 0) {
+      await Promise.all(enDirtyLists.map(list => updateWordlist(list.id, toPayload(list), 'en')));
+    }
+    if (esDirtyLists.length > 0) {
+      await Promise.all(esDirtyLists.map(list => updateWordlist(list.id, toPayload(list), 'es')));
+    }
+
+    const syncedIds = new Set(dirtyLists.map(l => l.id));
+    setAllWordlists(prev =>
+      prev.map(list =>
+        syncedIds.has(list.id)
+          ? { ...list, _isDirty: false, words: list.words.map(word => ({ ...word, _isUpdating: false })) }
+          : list
+      )
+    );
+    console.log(`Synced ${dirtyLists.length} modified wordlists`);
+  }, []);
+
+  // Sync coordinator — the shared executor (same class homework uses for draft
+  // autosave). Wordlist drives it from a 60s interval + flush on language change;
+  // the coordinator owns the in-flight guard and status.
+  const syncCoordinatorRef = useRef(null);
+  if (!syncCoordinatorRef.current) {
+    syncCoordinatorRef.current = new SyncCoordinator({
+      delay: 0, // wordlist is interval-driven, not debounced
+      getPayload: () => {
+        const dirty = allWordlistsRef.current.filter(list => list._isDirty);
+        return dirty.length > 0 ? dirty : null;
+      },
+      persister: syncDirtyLists,
+    });
+  }
+  const syncCoordinator = syncCoordinatorRef.current;
+
+  // Initial load on component mount and set up the periodic dirty-sync interval
   useEffect(() => {
-    // Initial load - get both languages at once
     loadWordlists();
-
-    // Function to check for and sync dirty lists
-    const syncDirtyLists = async () => {
-      if (syncInProgress.current) return;
-
-      const currentLists = allWordlistsRef.current;
-      const dirtyLists = currentLists.filter(list => list._isDirty);
-      if (dirtyLists.length === 0) return;
-
-      syncInProgress.current = true;
-
-      try {
-        // Group dirty lists by language for more efficient updates
-        const enDirtyLists = dirtyLists.filter(list => list.language === 'en');
-        const esDirtyLists = dirtyLists.filter(list => list.language === 'es');
-        
-        // Sync English lists
-        if (enDirtyLists.length > 0) {
-          const enSyncPromises = enDirtyLists.map(list =>
-            updateWordlist(list.id, {
-              name: list.name,
-              words: list.words.map(w => ({
-                word: w.word,
-                word_translation: w.word_translation || null,
-                example_phrase: w.example_phrase || null,
-                example_phrase_translation: w.example_phrase_translation || null
-              })),
-              language: list.language
-            }, 'en')
-          );
-          await Promise.all(enSyncPromises);
-        }
-        
-        // Sync Spanish lists
-        if (esDirtyLists.length > 0) {
-          const esSyncPromises = esDirtyLists.map(list =>
-            updateWordlist(list.id, {
-              name: list.name,
-              words: list.words.map(w => ({
-                word: w.word,
-                word_translation: w.word_translation || null,
-                example_phrase: w.example_phrase || null,
-                example_phrase_translation: w.example_phrase_translation || null
-              })),
-              language: list.language
-            }, 'es')
-          );
-          await Promise.all(esSyncPromises);
-        }
-
-        // Mark lists as clean and remove loading states after successful sync
-        setAllWordlists(prev =>
-          prev.map(list =>
-            list._isDirty ? { 
-              ...list, 
-              _isDirty: false,
-              words: list.words.map(word => ({ ...word, _isUpdating: false }))
-            } : list
-          )
-        );
-
-        console.log(`Synced ${dirtyLists.length} modified wordlists`);
-      } catch (err) {
-        console.error('Failed to sync dirty lists:', err);
-      } finally {
-        syncInProgress.current = false;
-      }
-    };
-
-    // Set up periodic sync for dirty lists (every 1 minute)
-    const syncInterval = setInterval(syncDirtyLists, 60 * 1000);
-
-    // Clean up interval on unmount
+    // Periodic sync of dirty lists every 60s (the coordinator guards concurrency).
+    const syncInterval = setInterval(() => syncCoordinator.flush(), 60 * 1000);
     return () => clearInterval(syncInterval);
-  }, [loadWordlists]); 
+  }, [loadWordlists, syncCoordinator]);
 
   // Save wordlists before window unload
   useEffect(() => {
@@ -226,33 +208,16 @@ export function WordlistProvider({ children }) {
   // Change the current language - optimized to not refetch since we already have both
   const changeLanguage = useCallback((language) => {
     if (language === currentLanguage) return;
-    
-    // Sync any dirty lists before changing language
-    const dirtyLists = allWordlistsRef.current.filter(list => list._isDirty);
-    if (dirtyLists.length > 0) {
-      const syncPromises = dirtyLists.map(list =>
-        updateWordlist(list.id, {
-          name: list.name,
-          words: list.words.map(w => ({
-            word: w.word,
-            word_translation: w.word_translation || null,
-            example_phrase: w.example_phrase || null,
-            example_phrase_translation: w.example_phrase_translation || null
-          })),
-          language: list.language
-        }, list.language) // Use the list's own language
-      );
-      
-      Promise.all(syncPromises).then(() => {
-        setCurrentLanguage(language);
-      }).catch(err => {
-        console.error("Error syncing before language change:", err);
+
+    // Flush any dirty lists before changing language (coordinator guards concurrency).
+    syncCoordinator
+      .flush()
+      .then(() => setCurrentLanguage(language))
+      .catch((err) => {
+        console.error('Error syncing before language change:', err);
         setCurrentLanguage(language); // Change language anyway
       });
-    } else {
-      setCurrentLanguage(language);
-    }
-  }, [currentLanguage]);
+  }, [currentLanguage, syncCoordinator]);
 
   // Find a word in any list (exact or close match)
   const findWordInLists = useCallback((text) => {
@@ -471,61 +436,15 @@ export function WordlistProvider({ children }) {
     }
   }, [currentLanguage]);
 
-  // Force sync with backend - now syncs all languages
+  // Force sync with backend - flushes dirty lists via the coordinator, then refetches.
   const syncWithBackend = useCallback(async () => {
-    if (syncInProgress.current) {
-      return { success: false, message: 'Sync already in progress' };
-    }
-
-    syncInProgress.current = true;
-
     try {
-      // Sync all dirty lists first by language
-      const dirtyLists = allWordlistsRef.current.filter(list => list._isDirty);
-      
-      if (dirtyLists.length > 0) {
-        // Group by language
-        const enDirtyLists = dirtyLists.filter(list => list.language === 'en');
-        const esDirtyLists = dirtyLists.filter(list => list.language === 'es');
-        
-        // Sync English lists
-        if (enDirtyLists.length > 0) {
-          const enSyncPromises = enDirtyLists.map(list =>
-            updateWordlist(list.id, {
-              name: list.name,
-              words: list.words.map(w => ({
-                word: w.word,
-                word_translation: w.word_translation || null,
-                example_phrase: w.example_phrase || null,
-                example_phrase_translation: w.example_phrase_translation || null
-              })),
-              language: 'en'
-            }, 'en')
-          );
-          await Promise.all(enSyncPromises);
-        }
-        
-        // Sync Spanish lists
-        if (esDirtyLists.length > 0) {
-          const esSyncPromises = esDirtyLists.map(list =>
-            updateWordlist(list.id, {
-              name: list.name,
-              words: list.words.map(w => ({
-                word: w.word,
-                word_translation: w.word_translation || null,
-                example_phrase: w.example_phrase || null,
-                example_phrase_translation: w.example_phrase_translation || null
-              })),
-              language: 'es'
-            }, 'es')
-          );
-          await Promise.all(esSyncPromises);
-        }
-      }
+      // Flush any dirty lists first (coordinator guards concurrency).
+      await syncCoordinator.flush();
 
       // Reset the loaded languages to force a fresh fetch
       loadedLanguages.current.clear();
-      
+
       // Reload both languages from backend
       await loadWordlists(true);
 
@@ -533,10 +452,8 @@ export function WordlistProvider({ children }) {
     } catch (err) {
       console.error('Failed to sync with backend:', err);
       return { success: false, message: 'Failed to sync with server' };
-    } finally {
-      syncInProgress.current = false;
     }
-  }, [loadWordlists]);
+  }, [loadWordlists, syncCoordinator]);
 
   // Remove a word from a list
   const removeWordFromList = useCallback((word, listId) => {

@@ -110,6 +110,7 @@ async function deleteNote(noteId: number): Promise<void> {
  */
 export const test = base.extend<{
   homeworkNote: CreatedNote;
+  sparseHomeworkNote: CreatedNote;
 }>({
   homeworkNote: async ({}, use) => {
     let noteId: number | null = null;
@@ -140,6 +141,33 @@ export const test = base.extend<{
             { question: 'How do I structure a weekend narrative paragraph?', answer: 'A good narrative paragraph follows a clear structure: topic sentence → supporting details → conclusion.\n\n### Topic Sentence\nStart with an overview: "Last weekend was full of fun activities."\n\n### Supporting Details\nDescribe 2-3 activities in order:\n1. "First, I went to the park with my friends."\n2. "Then, we played football for two hours."\n3. "After that, we had lunch at a nearby café."\n\n### Concluding Sentence\nWrap up with a reflection: "It was one of the best weekends I have had in a long time."\n\n### Transition Words\nUse sequencing words: "first", "then", "after that", "finally", "meanwhile", "later".\nThese help the reader follow the chronological order of events.', assignmentIndex: 0 },
             { question: 'What vocabulary should I use for outdoor activities?', answer: 'Here are useful vocabulary groups for describing outdoor weekend activities:\n\n### Sports & Games\n- "played football", "kicked a ball around", "went jogging"\n- "rode my bike", "went swimming", "climbed"\n\n### Nature & Parks\n- "strolled through the park", "sat on the grass", "walked along the trail"\n- "picked flowers", "watched the sunset", "had a picnic"\n\n### Weather Expressions\n- "It was sunny and warm", "A gentle breeze was blowing"\n- "The sky was clear", "It was a beautiful day"\n\n### Feelings & Reactions\n- "I felt refreshed", "It was exhilarating", "I had a great time"\n- "I enjoyed every moment", "It was relaxing"', assignmentIndex: 0 },
             { question: 'Should I use contractions in my paragraph?', answer: 'Contractions are fine in informal writing and make your text sound natural.\n\n### Common Contractions\n- "I went" → no contraction needed (already short)\n- "I did not" → "I didn\'t"\n- "It was not" → "It wasn\'t"\n- "I have been" → "I\'ve been"\n- "We were not" → "We weren\'t"\n\n### When to Use Contractions\n- ✅ Informal writing: journal entries, emails to friends, casual essays\n- ✅ Spoken English: always use contractions\n- ❌ Formal writing: academic papers, business reports\n\n### Style Tip\nMix contracted and uncontracted forms for rhythm: "I didn\'t go to the park, but I have been thinking about it." This sounds more natural than using all contractions or all full forms.', assignmentIndex: 0 },
+          ],
+        },
+        (id) => { noteId = id; },
+      );
+      await use(note);
+    } finally {
+      if (noteId !== null) {
+        await deleteNote(noteId).catch(() => {});
+      }
+    }
+  },
+
+  // A note with one assignment and NO student draft — for testing the first
+  // autosave of a fresh draft (draftBlock.id goes undefined -> created UUID),
+  // which is the path that exposed the indicator flicker.
+  sparseHomeworkNote: async ({}, use) => {
+    let noteId: number | null = null;
+
+    try {
+      const note = await createHomeworkNote(
+        {
+          name: `PW sparse ${Date.now()}`,
+          assignments: [
+            {
+              text: 'Write a few sentences about your favorite food.',
+              metadata_: { category: 'Writing', difficulty: 'A2' },
+            },
           ],
         },
         (id) => { noteId = id; },

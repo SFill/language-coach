@@ -95,6 +95,95 @@ test.describe('Drafting area – tab switching', () => {
   });
 });
 
+test.describe('Autosave – debounced draft sync (replaces the Submit button)', () => {
+  test('typing persists the draft after the debounce and updates the indicator', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    // The submit button is gone — the only draft action is the debounced autosave.
+    expect(await page.locator('.hw-submit-btn').count()).toBe(0);
+
+    // Install a fake clock and pause it so the 5s autosave debounce can be
+    // fired deterministically with fastForward, instead of waiting 5s in real
+    // time. fetch/promises are NOT faked, so the PATCH still goes out for real.
+    await page.clock.install();
+    await page.clock.pauseAt(Date.now());
+
+    // Clear the fixture's pre-existing draft and type fresh text.
+    await editor.click();
+    await page.keyboard.press('Control+a');
+    await page.keyboard.press('Backspace');
+    await page.keyboard.type('Autosave this text');
+
+    // While the debounce is pending, the indicator shows "Editing…".
+    const indicator = page.locator('.hw-toolbar-autosave');
+    await expect(indicator).toContainText('Editing…');
+
+    // Fast-forward the 5s debounce so the autosave flushes now. Listen for the
+    // PATCH (targeting the fixture's pre-created draft block) before advancing.
+    const patchUrl = new RegExp(`/api/coach/notes/${homeworkNote.id}/block/`);
+    const patchPromise = page.waitForRequest(
+      (req) => req.method() === 'PATCH' && patchUrl.test(req.url()),
+      { timeout: 10000 },
+    );
+    await page.clock.fastForward(5000);
+    await patchPromise;
+
+    // After the sync completes, the indicator returns to "Saved".
+    await expect(indicator).toContainText('Saved', { timeout: 10000 });
+
+    // Return to real time and reload — the autosaved draft must be the one
+    // loaded back from the server.
+    await page.clock.resume();
+    await page.reload();
+    await page.waitForLoadState('networkidle');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+    const textAfterReload = await editor.innerText();
+    expect(textAfterReload.trim()).toBe('Autosave this text');
+  });
+
+  test('first save of a fresh draft reaches Saved without an Editing flicker', async ({ page, sparseHomeworkNote }) => {
+    // Regression for the indicator flicker: the autosave's own refreshNote ran
+    // the reload effect, whose loadEditorContent fired onTransaction(docChanged)
+    // and re-scheduled a spurious autosave — so the indicator went
+    // Editing -> saving -> Editing -> saved. A suppress flag now keeps
+    // programmatic loads from re-arming the debounce.
+    await page.goto(`/homework/${sparseHomeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+
+    await page.clock.install();
+    await page.clock.pauseAt(Date.now());
+
+    // The sparse fixture has no pre-existing draft, so this is the first save:
+    // draftBlock.id goes undefined -> a freshly created UUID — exactly the reload
+    // path that used to flicker.
+    await editor.click();
+    await page.keyboard.type('Fresh draft text');
+
+    const indicator = page.locator('.hw-toolbar-autosave');
+    await expect(indicator).toContainText('Editing…');
+
+    const patchUrl = new RegExp(`/api/coach/notes/${sparseHomeworkNote.id}/block/`);
+    const patchPromise = page.waitForRequest(
+      (req) => req.method() === 'PATCH' && patchUrl.test(req.url()),
+      { timeout: 10000 },
+    );
+    await page.clock.fastForward(5000);
+    await patchPromise;
+
+    // After the first save the indicator MUST be "Saved" — NOT "Editing…", which
+    // would mean the editor reload re-armed a spurious autosave. The fake clock is
+    // paused, so a spurious 5s re-arm would never fire and this would time out.
+    await expect(indicator).toContainText('Saved', { timeout: 10000 });
+  });
+});
+
 test.describe('Scrolling – viewport containment and no clipping', () => {
   test('Q&A panel stays within viewport and scrolls without clipping', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);

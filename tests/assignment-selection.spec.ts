@@ -72,18 +72,27 @@ test.describe('Assignment selection', () => {
       await expect(page.locator('.hw-assignment-prompt-text')).toContainText('favorite holiday destination');
       expect((await editor.innerText()).trim()).toBe('');
 
-      // Type and submit draft for assignment 2
+      // Type a draft for assignment 2 (autosave schedules a 5s debounced sync).
       await editor.click();
       await page.keyboard.type('My favorite holiday destination is Barcelona.');
-      await page.locator('.hw-submit-btn').click();
-      await page.waitForTimeout(500);
 
-      // Switch back to first — its draft should still be there
+      // Switching back to assignment 1 flushes assignment 2's pending edit
+      // immediately (the autosave coordinator's flush-on-context-switch). Capture
+      // the PATCH promise before the switch so we can await its persistence.
+      const patchUrl = new RegExp(`/api/coach/notes/${noteId}/block/`);
+      const flushPatch = page.waitForRequest(
+        (req) => req.method() === 'PATCH' && patchUrl.test(req.url()),
+        { timeout: 12000 },
+      );
+
+      // Switch back to first — its draft should still be there, and the switch
+      // flushes assignment 2's draft to the server.
       await cards.nth(0).locator('.hw-select-btn').click();
+      await flushPatch;
       await expect(page.locator('.hw-assignment-prompt-text')).toContainText('Write about your weekend');
       await expect(editor).toContainText('Last Saturday I went hiking');
 
-      // Switch to second again — its draft persisted
+      // Switch to second again — its draft persisted via the flush above
       await cards.nth(1).locator('.hw-select-btn').click();
       await expect(editor).toContainText('Barcelona');
     } finally {

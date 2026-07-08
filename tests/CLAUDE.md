@@ -123,6 +123,33 @@ expect(cs.flex).toContain('1');
 expect(cs.minHeight).toBe('0px');
 ```
 
+### Autosave (debounced draft sync)
+
+The Submit button was replaced by a 5s debounced autosave (`SyncCoordinator`).
+Tests must NOT wait out the 5s debounce in real time — drive it with Playwright's
+fake clock instead. Install + pause BEFORE the edit (so the autosave `setTimeout`
+is faked, not native), then `fastForward` to fire it. `fetch`/promises are not
+faked, so the PATCH still goes out and `waitForRequest` catches it.
+
+```ts
+await page.clock.install();
+await page.clock.pauseAt(Date.now());
+// ...type/edit (schedules the debounced autosave under the fake clock)...
+const patchPromise = page.waitForRequest(
+  (req) => req.method() === 'PATCH' && /\/api\/coach\/notes\/<id>\/block\//.test(req.url()),
+  { timeout: 10000 },
+);
+await page.clock.fastForward(5000);   // fire the debounce now
+await patchPromise;
+await expect(page.locator('.hw-toolbar-autosave')).toContainText('Saved');
+// resume() before any real-time step like page.reload()
+await page.clock.resume();
+```
+
+Switching assignments also flushes the pending edit immediately (the coordinator's
+flush-on-context-switch), so multi-assignment tests can `waitForRequest` around a
+card switch instead of using the clock.
+
 ## Highlight Reconciliation Tests (`highlight-reconciliation.spec.ts`)
 
 Tests the Grammarly-style inline feedback feature — highlight rendering, per-span staleness, and LCS-based diff reconciliation after page reload.
@@ -150,7 +177,7 @@ function injectFeedbackRoute(page, noteId, assignmentId, draftBlockId, segments)
 | `editing one highlight strips only that highlight` | Per-span staleness: editing "va" → "va a" strips only the "va" span; "quedamos" remains highlighted |
 | `reconciliation preserves unchanged highlights after reload` | After reload with edited draft text, reconciliation keeps "quedamos" highlight and drops "va" highlight |
 | `reconciliation with all highlights unchanged` | When draft text matches segments text, all highlights render normally (no reconciliation needed) |
-| `submit after editing preserves edits` | After editing and submitting, stale highlights are not re-applied; unchanged highlight persists |
+| `autosave after editing preserves edits` | After editing, the 5s debounced autosave persists the draft (PATCH waited on via `page.waitForRequest`); stale highlights are not re-applied; unchanged highlight persists |
 
 ### Key Assertions
 

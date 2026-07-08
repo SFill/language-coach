@@ -894,6 +894,25 @@
   height: 8px;
   border-radius: 50%;
   background: var(--hw-secondary);
+  flex-shrink: 0;
+}
+
+.hw-autosave--idle .hw-autosave-dot {
+  background: var(--hw-secondary);
+}
+
+.hw-autosave--pending .hw-autosave-dot {
+  background: var(--hw-outline);
+}
+
+.hw-autosave--saving .hw-autosave-dot {
+  background: var(--hw-primary);
+  animation: hw-autosave-pulse 1s ease-in-out infinite;
+}
+
+@keyframes hw-autosave-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
 /* === Editor === */
@@ -1102,29 +1121,6 @@
   background: rgba(79, 70, 229, 0.05);
 }
 
-.hw-submit-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 24px;
-  background: var(--hw-primary);
-  color: var(--hw-on-primary);
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: 0.01em;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s;
-}
-
-.hw-submit-btn:hover {
-  background: var(--hw-primary-fixed-variant);
-}
-
-.hw-submit-btn:disabled,
 .hw-ai-check-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;

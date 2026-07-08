@@ -95,6 +95,62 @@ scripts/
 └── iterate.sh                   # Edit → build → test → report loop
 ```
 
+## TypeScript
+
+The frontend is being migrated from JSX → TSX. `tsconfig.json` (project root, scoped to
+`src/frontend`) is permissive on purpose: `allowJs: true`, `checkJs: false`, `strict: false`,
+`noImplicitAny: false`, `jsx: react-jsx`. Existing `.jsx` files stay JS until individually
+migrated; do NOT mass-convert.
+
+### Validate with `tsc`, not the IDE
+
+**The source of truth for TypeScript validity is `npx tsc --noEmit`, NOT the editor's
+`getDiagnostics`/IDE diagnostics.** The IDE only type-checks open files against a bounded
+program and routinely reports "no diagnostics" while real `tsc` fails. After touching any
+`.ts`/`.tsx`, run:
+
+```bash
+npx tsc --noEmit   # ground truth — must be 0 errors
+npm run build      # Vite/esbuild strips types; it passes even when tsc fails, so it is NOT a typecheck
+```
+
+A green `npm run build` does NOT mean the TS type-checks. Always run `tsc --noEmit`.
+
+### Gotchas found during the migration
+
+1. **`RefObject` (readonly) vs `MutableRefObject` (writable).** In the installed `@types/react`,
+   `RefObject<T>.current` is `readonly`. Type any ref a hook *writes* to (`.current = …`) as
+   `MutableRefObject<T>`; use `RefObject<T>` only for refs the consumer/hook purely reads. A
+   `useRef(false)`/`useRef('')`/`useRef(0)` returns `MutableRefObject` at runtime so the bug is
+   invisible at runtime and to `vite build` — `tsc` is the only thing that catches it
+   (`TS2540: Cannot assign to 'current'`).
+
+2. **JS/TS boundary — untyped `.jsx` imported from `.tsx`.** An imported `.jsx` component
+   gets inferred props (often `object`/wrong), causing `TS2322` at the call site. Fix with a
+   sibling `.d.ts` (typed default export) **and** import it extensionless — TS resolves
+   `.d.ts` ahead of `.jsx`, so `import X from './X'` picks up the declaration while
+   `import X from './X.jsx'` bypasses it. (Vite resolves extensionless to the `.jsx` at build,
+   so runtime is unchanged.) See `src/frontend/notewindow/components/MarkdownContent.d.ts`.
+
+3. **Vite dev server caches resolved module IDs.** After renaming a file (e.g.
+   `DraftingArea.jsx` → `DraftingArea.tsx`), the running dev server keeps resolving the old
+   path and Playwright tests hang with a "Failed to load url …DraftingArea.jsx" pre-transform
+   error. `npm run build` (Rollup) re-resolves fine, so this is a dev-server-only stale cache.
+   Fix: kill the Vite process on :5173 (`lsof -ti tcp:5173 | xargs kill`) and let Playwright
+   boot a fresh one. Re-run the suite after.
+
+4. **Hook-call-order invariant (React).** All hooks must run before any early `return` in a
+   component. When extracting logic into hooks, keep the hook calls above the
+   `if (!prop) return <Empty/>` guard — a hook after it crashes the component whenever the
+   guard is taken on the first render.
+
+5. **Tiptap `setContent` fires `onTransaction` with `docChanged=true` even when the content is
+   identical.** A programmatic editor load (e.g. the autosave's own refresh re-running the
+   content-load effect) will re-schedule a debounced autosave and flip the indicator back to
+   "Editing" — the "Editing → saving → Editing → saved" flicker. Guard with a
+   `suppressAutosaveRef` set `true` around the `loadEditorContent` call and read in
+   `onTransaction` to skip the schedule. See `useDraftContentLoader` / `useDraftEditor`.
+
 ## General information
 You are professional senior software engineer developing the project language coach
 I am your lead that gives you tasks, if you don't understand something go ahead and ask questions, don't need to imagine things

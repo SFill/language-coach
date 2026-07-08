@@ -304,8 +304,9 @@ test.describe('Grammarly-style highlights', () => {
     }
   });
 
-  test('submit after editing preserves edits and stale highlights are not re-applied', async ({ page }) => {
-    // Full UC: load → see highlights → edit one → submit → verify stale not re-applied
+  test('autosave after editing preserves edits and stale highlights are not re-applied', async ({ page }) => {
+    // Full UC: load → see highlights → edit one → autosave persists the edit →
+    // verify the stale "va" highlight is not re-applied after the sync.
     const { noteId, assignmentId, draftBlockId } = await createNoteWithDraft();
     try {
       injectFeedbackRoute(page, noteId, assignmentId, draftBlockId);
@@ -319,6 +320,14 @@ test.describe('Grammarly-style highlights', () => {
       // Wait for highlights
       const highlights = editor.locator('.hw-highlight-suggestion');
       await expect(highlights).toHaveCount(2, { timeout: 5000 });
+
+      // Install a fake clock and pause it BEFORE editing, so the 5s autosave
+      // debounce (scheduled by the edit below) can be fired with fastForward
+      // instead of waiting 5s in real time. fetch/promises are NOT faked, so the
+      // PATCH still goes out for real. Staleness stripping is synchronous
+      // (appendTransaction), so it still works under a paused clock.
+      await page.clock.install();
+      await page.clock.pauseAt(Date.now());
 
       // Edit inside the "va" highlight via keyboard (Tiptap owns the DOM).
       await page.evaluate(() => {
@@ -341,19 +350,23 @@ test.describe('Grammarly-style highlights', () => {
       await expect(remainingHighlights).toHaveCount(1);
       await expect(remainingHighlights.first()).toHaveAttribute('data-original', 'quedamos');
 
-      // Submit the draft
-      const submitBtn = page.locator('.hw-submit-btn');
-      await submitBtn.click();
+      // Fast-forward the 5s debounce so the autosave flushes now.
+      const patchUrl = new RegExp(`/api/coach/notes/${noteId}/block/${draftBlockId}`);
+      const patchPromise = page.waitForRequest(
+        (req) => req.method() === 'PATCH' && patchUrl.test(req.url()),
+        { timeout: 10000 },
+      );
+      await page.clock.fastForward(5000);
+      await patchPromise;
 
-      // Wait for the submit to complete (the button should re-enable)
-      await expect(submitBtn).toBeEnabled({ timeout: 10000 });
+      // Autosave completes -> the indicator returns to "Saved".
+      await expect(page.locator('.hw-toolbar-autosave')).toContainText('Saved', { timeout: 10000 });
 
-      // After submit, the "quedamos" highlight should still be present
-      // (segmentsStaleRef is true, so the useEffect renders draft content,
-      //  but the DOM still has the stripped "va" span and the "quedamos" span)
-      const highlightAfterSubmit = editor.locator('.hw-highlight-suggestion');
-      await expect(highlightAfterSubmit).toHaveCount(1);
-      await expect(highlightAfterSubmit.first()).toHaveAttribute('data-original', 'quedamos');
+      // After autosave, the "quedamos" highlight should still be present and the
+      // stale "va" highlight must not be re-applied.
+      const highlightAfterSave = editor.locator('.hw-highlight-suggestion');
+      await expect(highlightAfterSave).toHaveCount(1);
+      await expect(highlightAfterSave.first()).toHaveAttribute('data-original', 'quedamos');
     } finally {
       await deleteNote(noteId);
     }

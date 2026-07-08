@@ -2,13 +2,19 @@
 
 ## Button → API Mapping
 
-| UI Button | Hook Function | API Endpoint(s) |
+| UI Action | Function | API Endpoint(s) |
 |---|---|---|
-| **Submit** | `submitDraft(noteId, text, blockId, assignmentRef)` | `PATCH /coach/notes/{noteId}/block/{blockId}` → `GET /coach/notes/{noteId}` |
-| **AI Check** | `runAICheck(noteId, blockId)` *(auto-saves draft first if needed)* | (optional) `PATCH .../block/{blockId}` → `POST /coach/notes/{noteId}/block/{blockId}/analyze` → `GET /coach/notes/{noteId}` |
+| **Autosave** (replaces the old Submit button) | `SyncCoordinator` persister → `submitDraft(noteId, text, blockId, assignmentRef)` | `PATCH /coach/notes/{noteId}/block/{blockId}` → `GET /coach/notes/{noteId}` |
+| **AI Check** | `runAICheck(noteId, blockId)` *(flushes pending autosave first via `coordinator.flush()`)* | `PATCH .../block/{blockId}` (if dirty) → `POST /coach/notes/{noteId}/block/{blockId}/analyze` → `GET /coach/notes/{noteId}` |
 | **Q&A Send** | `sendQuestion(noteId, question, assignmentRef)` | `POST /coach/notes/{noteId}/question` → `GET /coach/notes/{noteId}` |
 | **Select assignment** | `selectNote(id)` (route change) | `GET /coach/notes/{noteId}` |
 | **Page load** | `fetchAssignments()` (auto) | `GET /coach/notes/?block_type=assignment` |
+
+The Submit button was **removed** — the draft now syncs via a debounced autosave (5s after
+the user stops typing) through the shared `SyncCoordinator` (see `sync/SyncCoordinator.js`,
+also used by wordlist). Autosave also flushes immediately on context switch (assignment
+change) and unmount (navigate-away). The AI Check button is disabled while a save is in
+flight (`autosaveStatus === 'saving'`).
 
 All endpoints are prefixed with `API_BASE_URL` (`http://localhost:8000/api/` in dev).
 
@@ -20,7 +26,13 @@ All endpoints are prefixed with `API_BASE_URL` (`http://localhost:8000/api/` in 
 | `HomeworkManager.js` | Singleton class per active note: loadNote, submitDraft, runAICheck, sendQuestion, reset. |
 | `hooks/useHomeworkLab.js` | React adapter: `useSyncExternalStore` on the manager. Returns activeNote + action callbacks. |
 | `HomeworkLab.jsx` | Page shell. Shows `NoteListView` picker when no noteId; split-pane view (cards + drafting area) when one is selected. |
-| `components/DraftingArea.jsx` | Editor + AI Check + Q&A tabs. Reads `activeNote` only. |
+| `components/DraftingArea.tsx` | Thin orchestrator: derives blocks, wires the 5 hooks below, renders tabs + editor + footer. Reads `activeNote` only. |
+| `hooks/useDraftEditor.ts` | Owns the Tiptap `useEditor` instance + extension config; wires onTransaction/onSelectionUpdate/handleDOMEvents to stable refs+setters from the other hooks. |
+| `hooks/useDraftAutosave.ts` | Debounced draft autosave: owns the `SyncCoordinator` (created once), `scheduleAutosave`, context/submitDraft sync effects, unmount flush. Returns `coordinator`, `scheduleAutosaveRef`, `autosaveStatus`, `lastSavedTextRef`. |
+| `hooks/useDraftContentLoader.ts` | The content-load effect (clobber guard + suppress flag + `reconcileHighlights` + context-switch flush). Owns `prevDepsRef`/`renderedFeedbackIdRef`. |
+| `hooks/useDraftTooltip.ts` | Feedback-highlight tooltip interaction: hover/click handlers, `useFloating` positioning, hints toggle. Owns `getFeedbackMarkAt`. |
+| `hooks/useDraftSelectionToolbar.ts` | Selection-toolbar state + wordlist add/move/create handlers (calls `useWordlist()`). |
+| `components/FeedbackTooltip.tsx`, `components/QATab.tsx` | Presentational sub-components extracted from DraftingArea. |
 | `components/AssignmentCard.jsx` | Assignment card in the feed (one per assignment block). |
 | `components/SideNavBar.jsx` | Left sidebar with inquiries. |
 | `components/TopNavBar.jsx` | Top bar with user info. |
@@ -223,7 +235,7 @@ segmentsStaleRef tracks in-session edits (ref resets on reload):
 
   AI Check runs        → feedbackBlock.id changes → segmentsStaleRef = false  (fresh)
   User edits highlight → span.textContent ≠ data-original   → segmentsStaleRef = true   (stale)
-  Submit after edits   → useEffect sees stale=true → renders draft, NOT segments
+  Submit after edits   → autosave fires, refresh re-runs the content-load effect; segmentsStaleRef=true → renders draft, NOT segments
   Re-run AI Check      → feedbackBlock.id changes → segmentsStaleRef = false  (fresh)
   Switch assignment    → no feedbackBlock          → segmentsStaleRef = false  (clean slate)
   Page reload          → segmentsStaleRef = false, BUT segmentsText ≠ draftText
