@@ -18,6 +18,13 @@
   cursor: pointer;
 }
 
+/* Row holding the word button (add/move) and the translate lang buttons.
+   Keeps them on one line regardless of the narrow toolbar min-width. */
+.hw-selection-toolbar-row {
+  display: flex;
+  align-items: center;
+}
+
 .hw-selection-toolbar button:hover {
   background-color: #e8e8e8;
 }

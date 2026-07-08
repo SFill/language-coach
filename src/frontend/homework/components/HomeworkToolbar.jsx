@@ -85,15 +85,40 @@ const HomeworkToolbar = ({
     <div className="hw-selection-toolbar" style={style} ref={toolbarRef}>
       {plainText && (
         <>
-          {isInList ? (
-            <button onClick={toggleDropdown} className="hw-selection-toolbar-move">
-              m
-            </button>
-          ) : (
-            <button onClick={toggleDropdown} className="hw-selection-toolbar-add">
-              a
-            </button>
-          )}
+          <div className="hw-selection-toolbar-row">
+            {isInList ? (
+              <button onClick={toggleDropdown} className="hw-selection-toolbar-move">
+                m
+              </button>
+            ) : (
+              <button onClick={toggleDropdown} className="hw-selection-toolbar-add">
+                a
+              </button>
+            )}
+
+            {onTranslate && (
+              <div className="hw-selection-toolbar-translate">
+                <button
+                  className={`hw-selection-toolbar-lang ${activeLang === 'ru' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                  onClick={() => onTranslate('ru')}
+                  disabled={isTranslating}
+                  title="Translate to Russian"
+                >🇷🇺</button>
+                <button
+                  className={`hw-selection-toolbar-lang ${activeLang === 'en' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                  onClick={() => onTranslate('en')}
+                  disabled={isTranslating}
+                  title="Translate to English"
+                >🇺🇸</button>
+                <button
+                  className={`hw-selection-toolbar-lang ${activeLang === 'es' ? 'hw-selection-toolbar-lang--active' : ''}`}
+                  onClick={() => onTranslate('es')}
+                  disabled={isTranslating}
+                  title="Translate to Spanish"
+                >🇪🇸</button>
+              </div>
+            )}
+          </div>
 
           {showListDropdown && (
             <div className="hw-selection-toolbar-dropdown">
@@ -141,29 +166,6 @@ const HomeworkToolbar = ({
                   Create new list
                 </div>
               )}
-            </div>
-          )}
-
-          {onTranslate && (
-            <div className="hw-selection-toolbar-translate">
-              <button
-                className={`hw-selection-toolbar-lang ${activeLang === 'ru' ? 'hw-selection-toolbar-lang--active' : ''}`}
-                onClick={() => onTranslate('ru')}
-                disabled={isTranslating}
-                title="Translate to Russian"
-              >🇷🇺</button>
-              <button
-                className={`hw-selection-toolbar-lang ${activeLang === 'en' ? 'hw-selection-toolbar-lang--active' : ''}`}
-                onClick={() => onTranslate('en')}
-                disabled={isTranslating}
-                title="Translate to English"
-              >🇺🇸</button>
-              <button
-                className={`hw-selection-toolbar-lang ${activeLang === 'es' ? 'hw-selection-toolbar-lang--active' : ''}`}
-                onClick={() => onTranslate('es')}
-                disabled={isTranslating}
-                title="Translate to Spanish"
-              >🇪🇸</button>
             </div>
           )}
 
