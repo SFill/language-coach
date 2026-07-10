@@ -16,3 +16,4 @@ You provide accurate, factual, thoughtful answers, and are a genius at reasoning
 - Only write code that is neccessary to complete the task.
 - Rewrite the complete code only if necessary.
 - Consider to run code in different environments
+- Class methods that get passed as React callbacks (e.g. `onSelectNote={mgr.selectNote}`) must be **arrow class fields** (`selectNote = async (id) => {...}`), not prototype methods. A prototype method detaches from its receiver when React calls it, losing `this`; an arrow field binds `this` to the instance at construction and is a stable reference, so it can be handed straight to a child with no `.bind`/`useMemo` wrapper.

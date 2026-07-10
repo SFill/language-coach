@@ -2,54 +2,46 @@ import { fetchAssignments, deleteNote as deleteNoteAPI } from '../api';
 import HomeworkManager from './HomeworkManager';
 
 /**
- * HomeworkListManager - Manages the list of homework notes and the active note.
- * Mirrors NoteListManager: owns a HomeworkManager instance, exposes subscribe/notify,
- * handles route-driven note selection and deletion.
+ * HomeworkListManager — plain domain class: the list of homework notes, the
+ * active note, and route-driven selection. Knows nothing about React. Methods
+ * are arrow class fields so `this` is bound to the instance — they can be
+ * passed straight as React callbacks without detaching the receiver. After
+ * any mutation (or a nested HomeworkManager mutation) it pokes `onChange`,
+ * which a reactive store wires up to broadcast to subscribers.
  */
 class HomeworkListManager {
+  noteList = [];
+  currentNoteId = null;
+  currentNoteName = null;
+  homeworkManager = new HomeworkManager();
+  navigateCallback = null;
+  showPicker = false;
+  onChange = null;
+
   constructor() {
-    this.noteList = [];
-    this.currentNoteId = null;
-    this.currentNoteName = null;
-    this.homeworkManager = new HomeworkManager();
-    this.listeners = [];
-    this.navigateCallback = null;
-    this.showPicker = false;
     // Propagate HomeworkManager state changes (e.g. loadNote completing)
-    // so useSyncExternalStore detects the update and re-renders.
-    this.homeworkManager.subscribe(() => this.notifyListeners());
+    // upward so a single onChange listener covers both levels.
+    this.homeworkManager.onChange = () => this.onChange?.();
   }
 
-  setNavigateCallback(callback) {
+  setNavigateCallback = (callback) => {
     this.navigateCallback = callback;
-  }
-
-  subscribe(listener) {
-    this.listeners.push(listener);
-    return () => {
-      this.listeners = this.listeners.filter((l) => l !== listener);
-    };
-  }
-
-  notifyListeners() {
-    const state = this.getState();
-    this.listeners.forEach((listener) => listener(state));
-  }
+  };
 
   /**
    * Load the list of homework notes.
    */
-  async loadNotes() {
+  loadNotes = async () => {
     try {
       this.noteList = await fetchAssignments();
       this.updateCurrentNoteName();
-      this.notifyListeners();
+      this.onChange?.();
     } catch (error) {
       console.error('Error loading homework notes:', error);
     }
-  }
+  };
 
-  updateCurrentNoteName() {
+  updateCurrentNoteName = () => {
     let found = null;
     if (this.noteList.length > 0 && this.currentNoteId != null) {
       const current = this.noteList.find(
@@ -58,13 +50,13 @@ class HomeworkListManager {
       if (current) found = current.name;
     }
     this.currentNoteName = found;
-  }
+  };
 
   /**
    * Sync the current note from the URL path.
    * @param {string} pathname
    */
-  async setCurrentNoteFromPath(pathname) {
+  setCurrentNoteFromPath = async (pathname) => {
     const match = pathname.match(/\/homework\/(\d+)/);
     const noteIdFromPath = match ? match[1] : null;
 
@@ -78,14 +70,14 @@ class HomeworkListManager {
       await this.homeworkManager.loadNote(this.currentNoteId);
     }
 
-    this.notifyListeners();
-  }
+    this.onChange?.();
+  };
 
   /**
    * Click a note in the picker — navigates and loads it.
    * @param {string|number} noteId
    */
-  async selectNote(noteId) {
+  selectNote = async (noteId) => {
     const id = String(noteId);
     this.currentNoteId = id;
     this.updateCurrentNoteName();
@@ -97,14 +89,14 @@ class HomeworkListManager {
     this.homeworkManager.reset();
     await this.homeworkManager.loadNote(id);
 
-    this.notifyListeners();
-  }
+    this.onChange?.();
+  };
 
   /**
    * Delete a homework note and remove it from the list.
    * @param {string|number} noteId
    */
-  async deleteNote(noteId) {
+  deleteNote = async (noteId) => {
     if (!noteId) return;
     const id = String(noteId);
     try {
@@ -120,31 +112,29 @@ class HomeworkListManager {
         this.homeworkManager.reset();
       }
 
-      this.notifyListeners();
+      this.onChange?.();
     } catch (error) {
       console.error('Error deleting homework note:', error);
     }
-  }
-
-  getHomeworkManager() {
-    return this.homeworkManager;
-  }
+  };
 
   /** Toggle between ImportWorkspace and NoteListView on /homework. */
-  togglePicker() {
+  togglePicker = () => {
     this.showPicker = !this.showPicker;
-    this.notifyListeners();
-  }
+    this.onChange?.();
+  };
 
-  getState() {
-    return {
-      noteList: this.noteList,
-      currentNoteId: this.currentNoteId,
-      currentNoteName: this.currentNoteName,
-      homeworkManager: this.homeworkManager,
-      showPicker: this.showPicker,
-    };
-  }
+  /**
+   * Plain snapshot of the current state. Note blocks are flattened up from the
+   * owned HomeworkManager so consumers never reach across class boundaries.
+   */
+  getState = () => ({
+    noteList: this.noteList,
+    currentNoteId: this.currentNoteId,
+    currentNoteName: this.currentNoteName,
+    noteBlocks: this.homeworkManager.noteBlocks,
+    showPicker: this.showPicker,
+  });
 }
 
 export default HomeworkListManager;

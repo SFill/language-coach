@@ -6,7 +6,7 @@ import WordListPage from './wordlist/WordListPage';
 import WordlistProvider from './wordlist/WordlistContext';
 import NoteListManager from './notewindow/NoteListManager';
 import HomeworkLab from './homework/HomeworkLab';
-import HomeworkListManager from './homework/HomeworkListManager';
+import HomeworkListStore from './homework/HomeworkListStore';
 import TopNavBar from './homework/components/TopNavBar';
 import './App.css';
 
@@ -45,8 +45,8 @@ function AppContent() {
     return manager;
   }, []);
 
-  // Create HomeworkListManager instance (singleton, sibling of noteListManager)
-  const homeworkListManager = useMemo(() => new HomeworkListManager(), []);
+  // Create HomeworkListStore instance (singleton, sibling of noteListManager)
+  const homeworkStore = useMemo(() => new HomeworkListStore(), []);
 
   // Load notes on mount
   useEffect(() => {
@@ -60,16 +60,16 @@ function AppContent() {
     console.log('[location.pathname])');
   }, [location.pathname, noteListManager]);
 
-  // Wire HomeworkListManager navigate callback + initial load
+  // Wire HomeworkListStore navigate callback + initial load
   useEffect(() => {
-    homeworkListManager.setNavigateCallback((path, options) => navigate(path, options));
-    homeworkListManager.loadNotes();
-  }, [homeworkListManager, navigate]);
+    homeworkStore.mgr.setNavigateCallback((path, options) => navigate(path, options));
+    homeworkStore.mgr.loadNotes();
+  }, [homeworkStore, navigate]);
 
-  // Sync HomeworkListManager to URL on every path change
+  // Sync HomeworkListStore to URL on every path change
   useEffect(() => {
-    homeworkListManager.setCurrentNoteFromPath(location.pathname);
-  }, [location.pathname, homeworkListManager]);
+    homeworkStore.mgr.setCurrentNoteFromPath(location.pathname);
+  }, [location.pathname, homeworkStore]);
 
   return (
     <div className="main-container">
@@ -77,7 +77,7 @@ function AppContent() {
       <TopNavBar
         currentNoteName={currentNoteName}
         onNoteNameClick={() => noteListManager.handleNoteNameClick(location.pathname)}
-        onHomeworkClick={() => homeworkListManager.togglePicker()}
+        onHomeworkClick={() => homeworkStore.mgr.togglePicker()}
       />
       <div className="main-block">
         <Routes>
@@ -101,8 +101,8 @@ function AppContent() {
               />
             }
           />
-          <Route path="/homework" element={<HomeworkLab homeworkListManager={homeworkListManager} />} />
-          <Route path="/homework/:noteId" element={<HomeworkLab homeworkListManager={homeworkListManager} />} />
+          <Route path="/homework" element={<HomeworkLab homeworkStore={homeworkStore} />} />
+          <Route path="/homework/:noteId" element={<HomeworkLab homeworkStore={homeworkStore} />} />
         </Routes>
       </div>
     </div>

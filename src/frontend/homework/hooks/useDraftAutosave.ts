@@ -26,8 +26,9 @@ interface ContextSnapshot {
   draftId: string | undefined;
 }
 
-// submitDraft is re-bound every render by useHomeworkLab; the hook keeps a ref so
-// the once-created coordinator's persister always calls the latest bound fn.
+// submitDraft comes from HomeworkListStore (a stable class-method reference); the
+// hook still keeps a ref so the once-created coordinator's persister is decoupled
+// from the render lifecycle.
 type SubmitDraft = (
   noteId: number | string,
   text: string,

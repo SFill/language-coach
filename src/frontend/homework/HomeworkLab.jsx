@@ -1,30 +1,34 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useSyncExternalStore } from 'react';
 import ReactDOM from 'react-dom';
 import './HomeworkLab.css';
-import { useHomeworkLab } from './hooks/useHomeworkLab';
 import { parseClipboardHTML } from './utils/importPaste';
+import { buildCards } from './viewModel';
 import SideNavBar from './components/SideNavBar';
 import AssignmentCard from './components/AssignmentCard';
 import DraftingArea from './components/DraftingArea';
 import ImportWorkspace from './components/ImportWorkspace';
 import NoteListView from '../NoteListView';
 
-export default function HomeworkLab({ homeworkListManager }) {
-  const {
-    notes,
-    cards,
-    noteId,
-    activeNote,
-    selectNote,
-    deleteNote,
-    addAssignment,
-    submitDraft,
-    runAICheck,
-    sendQuestion,
-    deleteInquiry,
-    showPicker,
-    togglePicker,
-  } = useHomeworkLab(homeworkListManager);
+export default function HomeworkLab({ homeworkStore }) {
+  // Subscribe to the store; URL→manager sync is handled in App.jsx.
+  const state = useSyncExternalStore(
+    homeworkStore.subscribe,
+    homeworkStore.getSnapshot,
+    homeworkStore.getSnapshot,
+  );
+  const { mgr } = homeworkStore;
+  const hm = mgr.homeworkManager;
+
+  const notes = state.noteList;
+  const noteId = state.currentNoteId;
+  const showPicker = state.showPicker;
+
+  // DraftingArea expects { id, note_blocks }; cards are the pure view model.
+  const activeNote = useMemo(
+    () => (noteId ? { id: noteId, note_blocks: state.noteBlocks } : null),
+    [noteId, state.noteBlocks],
+  );
+  const cards = useMemo(() => buildCards(noteId, state.noteBlocks), [noteId, state.noteBlocks]);
 
   const [activeAssignmentId, setActiveAssignmentId] = useState(null);
   const [expandedCardId, setExpandedCardId] = useState(null);
@@ -104,19 +108,19 @@ export default function HomeworkLab({ homeworkListManager }) {
     if (addSegments.length === 0 || isAddingAssignment) return;
     setIsAddingAssignment(true);
     try {
-      await addAssignment(noteId, addSegments);
+      await hm.addAssignment(noteId, addSegments);
       setAddSegments([]);
       setShowAddModal(false);
     } finally {
       setIsAddingAssignment(false);
     }
-  }, [noteId, addSegments, isAddingAssignment, addAssignment]);
+  }, [noteId, addSegments, isAddingAssignment, hm]);
 
   // After importing assignments, refresh list and navigate to the new note
   const handleImportComplete = useCallback(async (newNoteId) => {
-    await homeworkListManager.loadNotes();
-    homeworkListManager.selectNote(String(newNoteId));
-  }, [homeworkListManager]);
+    await homeworkStore.mgr.loadNotes();
+    homeworkStore.mgr.selectNote(String(newNoteId));
+  }, [homeworkStore]);
 
   // Derive inquiries from activeNote's question blocks
   const inquiries = (activeNote?.note_blocks || [])
@@ -140,8 +144,8 @@ export default function HomeworkLab({ homeworkListManager }) {
                 <NoteListView
                   noteList={notes}
                   currentNoteId={null}
-                  onSelectNote={selectNote}
-                  onDeleteNote={deleteNote}
+                  onSelectNote={mgr.selectNote}
+                  onDeleteNote={mgr.deleteNote}
                 />
               </div>
             ) : (
@@ -201,10 +205,10 @@ export default function HomeworkLab({ homeworkListManager }) {
           <DraftingArea
             activeNote={activeNote}
             activeAssignmentId={activeAssignmentId}
-            submitDraft={submitDraft}
-            runAICheck={runAICheck}
-            sendQuestion={sendQuestion}
-            deleteInquiry={deleteInquiry}
+            submitDraft={hm.submitDraft}
+            runAICheck={hm.runAICheck}
+            sendQuestion={hm.sendQuestion}
+            deleteInquiry={hm.deleteInquiry}
           />
         </main>
 

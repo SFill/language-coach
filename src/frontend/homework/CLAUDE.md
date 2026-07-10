@@ -22,10 +22,11 @@ All endpoints are prefixed with `API_BASE_URL` (`http://localhost:8000/api/` in 
 
 | File | Purpose |
 |---|---|
-| `HomeworkListManager.js` | Singleton class: list, current note, route sync, delete. Owns a HomeworkManager. |
-| `HomeworkManager.js` | Singleton class per active note: loadNote, submitDraft, runAICheck, sendQuestion, reset. |
-| `hooks/useHomeworkLab.js` | React adapter: `useSyncExternalStore` on the manager. Returns activeNote + action callbacks. |
-| `HomeworkLab.jsx` | Page shell. Shows `NoteListView` picker when no noteId; split-pane view (cards + drafting area) when one is selected. |
+| `HomeworkListManager.js` | Plain domain class: list, current note, route sync, delete. Owns a HomeworkManager. No React code — pokes `onChange` after each mutation (and propagates `HomeworkManager.onChange` upward). Methods are arrow class fields so they can be passed straight as React callbacks. |
+| `HomeworkManager.js` | Plain domain class for the active note: loadNote, submitDraft, runAICheck, sendQuestion, reset. Pokes `onChange` after each mutation. No React code. Methods are arrow class fields. |
+| `HomeworkListStore.js` | The only React-facing piece. Owns a `HomeworkListManager`, caches one stable snapshot, exposes `subscribe`/`getSnapshot` for `useSyncExternalStore`. Actions are called directly on `store.mgr` / `store.mgr.homeworkManager` (stable prototype methods) — no delegation layer. |
+| `viewModel.js` | Pure `buildCards(currentNoteId, noteBlocks)` — the assignment-card view model. |
+| `HomeworkLab.jsx` | Page shell. Subscribes to the store via `useSyncExternalStore` inline, derives `activeNote` + `cards` (`buildCards`), and calls domain actions on `store.mgr` / `store.mgr.homeworkManager` directly. Shows `NoteListView` picker when no noteId; split-pane view (cards + drafting area) when one is selected. |
 | `components/DraftingArea.tsx` | Thin orchestrator: derives blocks, wires the 5 hooks below, renders tabs + editor + footer. Reads `activeNote` only. |
 | `hooks/useDraftEditor.ts` | Owns the Tiptap `useEditor` instance + extension config; wires onTransaction/onSelectionUpdate/handleDOMEvents to stable refs+setters from the other hooks. |
 | `hooks/useDraftAutosave.ts` | Debounced draft autosave: owns the `SyncCoordinator` (created once), `scheduleAutosave`, context/submitDraft sync effects, unmount flush. Returns `coordinator`, `scheduleAutosaveRef`, `autosaveStatus`, `lastSavedTextRef`. |
@@ -40,11 +41,12 @@ All endpoints are prefixed with `API_BASE_URL` (`http://localhost:8000/api/` in 
 
 ## State Management Pattern
 
-Mirrors the notewindow `NoteListManager` + `NoteManager` pair:
+Domain/reactivity split (intentionally diverges from the notewindow `NoteListManager` + `NoteManager` pair, which still bakes `subscribe`/`notifyListeners` into the domain classes):
 
-- `App.jsx` creates the `HomeworkListManager` once via `useMemo`, wires `setNavigateCallback(navigate)`, calls `loadNotes()` on mount, and re-runs `setCurrentNoteFromPath(location.pathname)` on every route change.
-- `useHomeworkLab` subscribes via `useSyncExternalStore` — the snapshot is cached so React doesn't infinite-loop.
-- The hook syncs the manager to the URL on `noteId` change via a `useEffect`, then derives `activeNote` from `currentNoteId` + `homeworkManager.getState().noteBlocks`.
+- **`HomeworkListManager` / `HomeworkManager`** — plain domain classes. Hold state, run operations, poke a single `onChange` callback after each mutation. `HomeworkListManager` propagates `HomeworkManager.onChange` upward, so one listener covers both levels. No `listeners` array, no `subscribe`, no `revision` counter.
+- **`HomeworkListStore`** — the only React-facing piece. Owns the manager, caches one stable snapshot, and rebuilds it inside `#commit` (wired to `mgr.onChange`). Exposes `subscribe`/`getSnapshot` for `useSyncExternalStore`. No action delegation — consumers call `store.mgr` / `store.mgr.homeworkManager` directly.
+- `App.jsx` creates the `HomeworkListStore` once via `useMemo`, wires `setNavigateCallback(navigate)`, calls `loadNotes()` on mount, and re-runs `setCurrentNoteFromPath(location.pathname)` on every route change — this is the single URL→manager sync (no per-component route effect).
+- `HomeworkLab` subscribes inline via `useSyncExternalStore` and derives `activeNote`/`cards` from the snapshot (`cards` via the pure `buildCards`). `noteBlocks` is flattened up from `HomeworkManager` in `getState`, so no component reaches across class boundaries.
 - The route `/homework` shows `NoteListView` (same component as `/notelist`); `/homework/:noteId` shows the split-pane view.
 
 ## URL → Entity Mapping

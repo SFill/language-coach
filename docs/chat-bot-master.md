@@ -132,19 +132,12 @@ A green `npm run build` does NOT mean the TS type-checks. Always run `tsc --noEm
    `import X from './X.jsx'` bypasses it. (Vite resolves extensionless to the `.jsx` at build,
    so runtime is unchanged.) See `src/frontend/notewindow/components/MarkdownContent.d.ts`.
 
-3. **Vite dev server caches resolved module IDs.** After renaming a file (e.g.
-   `DraftingArea.jsx` → `DraftingArea.tsx`), the running dev server keeps resolving the old
-   path and Playwright tests hang with a "Failed to load url …DraftingArea.jsx" pre-transform
-   error. `npm run build` (Rollup) re-resolves fine, so this is a dev-server-only stale cache.
-   Fix: kill the Vite process on :5173 (`lsof -ti tcp:5173 | xargs kill`) and let Playwright
-   boot a fresh one. Re-run the suite after.
-
-4. **Hook-call-order invariant (React).** All hooks must run before any early `return` in a
+3. **Hook-call-order invariant (React).** All hooks must run before any early `return` in a
    component. When extracting logic into hooks, keep the hook calls above the
    `if (!prop) return <Empty/>` guard — a hook after it crashes the component whenever the
    guard is taken on the first render.
 
-5. **Tiptap `setContent` fires `onTransaction` with `docChanged=true` even when the content is
+4. **Tiptap `setContent` fires `onTransaction` with `docChanged=true` even when the content is
    identical.** A programmatic editor load (e.g. the autosave's own refresh re-running the
    content-load effect) will re-schedule a debounced autosave and flip the indicator back to
    "Editing" — the "Editing → saving → Editing → saved" flicker. Guard with a
