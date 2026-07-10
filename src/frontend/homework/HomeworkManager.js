@@ -139,41 +139,50 @@ class HomeworkManager {
   };
 
   /**
-   * Add a new assignment block to an existing note.
-   * Accepts either plain text, or an array of parsed segments
-   * (text + image) from the paste modal.
+   * Add assignment blocks to an existing note — one per exercise. Accepts
+   * either plain text (a single text-only exercise) or an array of parsed
+   * exercises from the paste modal.
    * @param {string|number} noteId
-   * @param {string|Array<{ type: 'text'|'image', content: string, src?: string }>} input
+   * @param {string|Array<{ type: 'exercise', text: string, images: string[] }>} input
    * @param {object} [metadata]
    */
   addAssignment = async (noteId, input, metadata = {}) => {
     if (!noteId) return null;
 
-    const segments = Array.isArray(input) ? input : (input?.trim() ? [{ type: 'text', content: input.trim() }] : []);
-    if (segments.length === 0) return null;
+    const exercises = Array.isArray(input)
+      ? input
+      : (input?.trim() ? [{ type: 'exercise', text: input.trim(), images: [] }] : []);
+    if (exercises.length === 0) return null;
 
     try {
       const { imageSrcToFile } = await import('./utils/importPaste');
 
-      for (const segment of segments) {
-        if (segment.type === 'text' && segment.content?.trim()) {
-          const text = segment.content.trim();
+      for (const exercise of exercises) {
+        const text = exercise.text?.trim() || '';
+
+        if (exercise.images.length > 0) {
+          const imageIds = [];
+          for (const src of exercise.images) {
+            const file = await imageSrcToFile(src);
+            if (!file) continue;
+            const uploaded = await uploadNoteImage(noteId, file);
+            if (uploaded) imageIds.push(uploaded.id);
+          }
+          if (imageIds.length === 0) continue;
+
+          const description = text.length > 120 ? text.slice(0, 120) + '…' : (text || 'Image assignment');
+          await sendNoteBlock(noteId, {
+            block: text,
+            block_type: 'assignment',
+            image_ids: imageIds,
+            metadata_: { description, category: 'Visual', ...metadata },
+          });
+        } else if (text) {
           const description = text.length > 120 ? text.slice(0, 120) + '…' : text;
           await sendNoteBlock(noteId, {
             block: text,
             block_type: 'assignment',
             metadata_: { description, category: 'Writing', ...metadata },
-          });
-        } else if (segment.type === 'image' && segment.src) {
-          const file = await imageSrcToFile(segment.src);
-          if (!file) continue;
-          const uploaded = await uploadNoteImage(noteId, file);
-          if (!uploaded) continue;
-          await sendNoteBlock(noteId, {
-            block: `@image:${uploaded.id}`,
-            block_type: 'assignment',
-            image_ids: [uploaded.id],
-            metadata_: { description: 'Image assignment', category: 'Visual', ...metadata },
           });
         }
       }

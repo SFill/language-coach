@@ -85,8 +85,8 @@ test.describe('Add Assignment modal', () => {
     const cancelBtn = page.getByRole('button', { name: 'Cancel' });
     await expect(cancelBtn).toBeVisible();
 
-    // Add button should NOT be visible yet (no segments pasted)
-    await expect(page.getByRole('button', { name: /Add \d+ segment/ })).not.toBeVisible();
+    // Add button should NOT be visible yet (no exercises pasted)
+    await expect(page.getByRole('button', { name: /Add \d+ exercise/ })).not.toBeVisible();
 
     // Click Cancel
     await cancelBtn.click();
@@ -122,7 +122,7 @@ test.describe('Add Assignment modal', () => {
     await expect(page.locator('.hw-paste-modal-overlay')).not.toBeVisible({ timeout: 3000 });
   });
 
-  test('pasting plain text shows segment preview and adds assignment', async ({ page, homeworkNote }) => {
+  test('pasting plain text shows exercise preview and adds assignment', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
@@ -137,12 +137,12 @@ test.describe('Add Assignment modal', () => {
     const testText = 'Describe a memorable trip you took recently and what made it special.';
     await pasteTextIntoModal(page, testText);
 
-    // Segment preview should appear
-    await expect(page.getByText('Detected 1 segment')).toBeVisible({ timeout: 3000 });
-    await expect(page.locator('.hw-import-preview-item--text')).toBeVisible();
+    // Exercise preview should appear
+    await expect(page.getByText('Detected 1 exercise')).toBeVisible({ timeout: 3000 });
+    await expect(page.locator('.hw-import-preview-item--exercise')).toBeVisible();
 
     // Add button should now be visible
-    const importBtn = page.getByRole('button', { name: 'Add 1 segment' });
+    const importBtn = page.getByRole('button', { name: 'Add 1 exercise' });
     await expect(importBtn).toBeVisible({ timeout: 3000 });
 
     // Click Add
@@ -176,7 +176,7 @@ test.describe('Add Assignment modal', () => {
     const testText = 'Write about a traditional dish from your country.';
     await pasteTextIntoModal(page, testText);
 
-    const importBtn = page.getByRole('button', { name: 'Add 1 segment' });
+    const importBtn = page.getByRole('button', { name: 'Add 1 exercise' });
     await expect(importBtn).toBeVisible({ timeout: 3000 });
     await importBtn.click();
 
@@ -198,7 +198,7 @@ test.describe('Add Assignment modal', () => {
     expect(newBlock.metadata_?.category).toBe('Writing');
   });
 
-  test('pasting HTML with text and image shows both segments', async ({ page, homeworkNote }) => {
+  test('pasting HTML with text and image combines them into one exercise', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
@@ -206,19 +206,20 @@ test.describe('Add Assignment modal', () => {
     await addBtn.click();
     await expect(page.locator('.hw-paste-modal-overlay')).toBeVisible({ timeout: 3000 });
 
-    // Paste HTML containing text + image
+    // Paste HTML containing text + image (no exercise marker)
     const html = `<p>Explain the water cycle in your own words.</p><img src="${TEST_IMAGE_DATA_URI}" alt="diagram" />`;
     await pasteHTMLIntoModal(page, html);
 
-    // Should detect 2 segments
-    await expect(page.getByText('Detected 2 segments')).toBeVisible({ timeout: 3000 });
+    // Text + image merge into a single exercise
+    await expect(page.getByText('Detected 1 exercise')).toBeVisible({ timeout: 3000 });
+    const exerciseItem = page.locator('.hw-import-preview-item--exercise');
+    await expect(exerciseItem).toHaveCount(1);
+    // The single exercise carries both the text and the image thumbnail
+    await expect(exerciseItem.locator('.hw-import-preview-content')).toContainText('water cycle');
+    await expect(exerciseItem.locator('.hw-import-preview-thumb')).toBeVisible();
 
-    // Both segment types should appear in preview
-    await expect(page.locator('.hw-import-preview-item--text')).toBeVisible();
-    await expect(page.locator('.hw-import-preview-item--image')).toBeVisible();
-
-    // Add button should show 2 segments
-    const importBtn = page.getByRole('button', { name: 'Add 2 segments' });
+    // Add button should show 1 exercise
+    const importBtn = page.getByRole('button', { name: 'Add 1 exercise' });
     await expect(importBtn).toBeVisible({ timeout: 3000 });
 
     // Click Add
@@ -227,10 +228,42 @@ test.describe('Add Assignment modal', () => {
     // Modal should close
     await expect(page.locator('.hw-paste-modal-overlay')).not.toBeVisible({ timeout: 3000 });
 
-    // New assignment cards should appear
+    // One new assignment card appears (the combined exercise)
     const cards = page.locator('.hw-task-card');
     const count = await cards.count();
-    expect(count).toBeGreaterThanOrEqual(3); // original + text + image
+    expect(count).toBeGreaterThanOrEqual(2); // original + 1 combined exercise
+  });
+
+  test('pasting ej.N markers with multiple images splits into sub-exercises', async ({ page, homeworkNote }) => {
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const initialCount = await page.locator('.hw-task-card').count();
+
+    const addBtn = page.getByRole('button', { name: 'add Add' });
+    await addBtn.click();
+    await expect(page.locator('.hw-paste-modal-overlay')).toBeVisible({ timeout: 3000 });
+
+    // ej.1 + 1 image, ej.2 + 2 images → ej.1, ej.2(1), ej.2(2) = 3 exercises
+    const html =
+      `<p>ej.1</p><img src="${TEST_IMAGE_DATA_URI}" alt="a" />` +
+      `<p>ej.2</p><img src="${TEST_IMAGE_DATA_URI}" alt="b" /><img src="${TEST_IMAGE_DATA_URI}" alt="c" />`;
+    await pasteHTMLIntoModal(page, html);
+
+    await expect(page.getByText('Detected 3 exercises')).toBeVisible({ timeout: 3000 });
+    const items = page.locator('.hw-import-preview-item--exercise');
+    await expect(items).toHaveCount(3);
+    await expect(items.nth(0).locator('.hw-import-preview-content')).toHaveText('ej.1');
+    await expect(items.nth(1).locator('.hw-import-preview-content')).toHaveText('ej.2(1)');
+    await expect(items.nth(2).locator('.hw-import-preview-content')).toHaveText('ej.2(2)');
+
+    const importBtn = page.getByRole('button', { name: 'Add 3 exercises' });
+    await expect(importBtn).toBeVisible({ timeout: 3000 });
+    await importBtn.click();
+
+    await expect(page.locator('.hw-paste-modal-overlay')).not.toBeVisible({ timeout: 3000 });
+    // 3 new cards (one per exercise)
+    await expect(page.locator('.hw-task-card')).toHaveCount(initialCount + 3, { timeout: 5000 });
   });
 
   test('newly added assignment card can be selected', async ({ page, homeworkNote }) => {
@@ -244,7 +277,7 @@ test.describe('Add Assignment modal', () => {
     const testText = 'Describe the benefits of learning a second language.';
     await pasteTextIntoModal(page, testText);
 
-    const importBtn = page.getByRole('button', { name: 'Add 1 segment' });
+    const importBtn = page.getByRole('button', { name: 'Add 1 exercise' });
     await expect(importBtn).toBeVisible({ timeout: 3000 });
     await importBtn.click();
 
@@ -262,7 +295,7 @@ test.describe('Add Assignment modal', () => {
     expect(promptContent).toContain('learning a second language');
   });
 
-  test('modal resets segments when reopened', async ({ page, homeworkNote }) => {
+  test('modal resets exercises when reopened', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
@@ -273,12 +306,12 @@ test.describe('Add Assignment modal', () => {
     await expect(page.locator('.hw-paste-modal-overlay')).toBeVisible({ timeout: 3000 });
 
     await pasteTextIntoModal(page, 'Some assignment text');
-    await expect(page.getByText('Detected 1 segment')).toBeVisible({ timeout: 3000 });
+    await expect(page.getByText('Detected 1 exercise')).toBeVisible({ timeout: 3000 });
 
     await page.getByRole('button', { name: 'Cancel' }).click();
     await expect(page.locator('.hw-paste-modal-overlay')).not.toBeVisible({ timeout: 3000 });
 
-    // Reopen modal — should start fresh (no previous segments)
+    // Reopen modal — should start fresh (no previous exercises)
     await addBtn.click();
     await expect(page.locator('.hw-paste-modal-overlay')).toBeVisible({ timeout: 3000 });
 
@@ -286,8 +319,8 @@ test.describe('Add Assignment modal', () => {
     const pasteArea = page.locator('.hw-paste-area');
     await expect(pasteArea).toBeVisible({ timeout: 3000 });
 
-    // No segment preview should be visible
-    await expect(page.getByText(/Detected \d+ segment/)).not.toBeVisible();
+    // No exercise preview should be visible
+    await expect(page.getByText(/Detected \d+ exercise/)).not.toBeVisible();
   });
 });
 

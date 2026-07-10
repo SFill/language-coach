@@ -49,28 +49,9 @@ def get_note_list(session: Session, offset: int = 0, limit: int = 100, block_typ
 
 def get_note(session: Session, id: int) -> Note:
     """Get a specific note session by ID."""
-    import re
-    
     note = session.get(Note, id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
-    
-    # Populate image_ids for existing note blocks by scanning content
-    history = note.history or {}
-    content = _ensure_history_content(history)
-    
-    for block_dict in content:
-        # Check if image_ids is missing or empty
-        if 'image_ids' not in block_dict or not block_dict['image_ids']:
-            # Scan content for @image:X references (only for string content)
-            block_content = block_dict.get('content', '')
-            if isinstance(block_content, list):
-                # Segmented content has no @image: refs
-                continue
-            image_refs = re.findall(r'@image:(\d+)', block_content)
-            if image_refs:
-                block_dict['image_ids'] = [int(img_id) for img_id in image_refs]
-    
     return note
 
 def delete_note(session: Session, id: int) -> dict:
@@ -117,13 +98,11 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
     # Parse image references in the note block
     processed_message = note_block.block
     image_contents = []
-    
-    # Find all image references in format @image:id
+
+    # Find all image references in format @image:id (used to attach image bytes
+    # to the AI message; image_ids for storage come from the request payload).
     image_refs = re.findall(r'@image:(\d+)', note_block.block)
-    
-    # Extract image IDs from content
-    extracted_image_ids = [int(img_id) for img_id in image_refs]
-    
+
     if image_refs:
         # Get referenced images
         for img_id in image_refs:
@@ -173,7 +152,7 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         metadata_=note_block.metadata_,
         assignment_ref=note_block.assignment_ref,
         question_title=note_block.question_title,
-        image_ids=extracted_image_ids,
+        image_ids=note_block.image_ids,
     )
 
     # Append the user's note block to history
@@ -285,8 +264,6 @@ def update_note_block(
     payload: NoteBlockUpdate,
 ) -> dict:
     """Upsert a note block: update if exists, create if not found (idempotent)."""
-    import re
-
     note = session.get(Note, note_id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
@@ -303,7 +280,6 @@ def update_note_block(
         if payload.block is None:
             raise HTTPException(status_code=400, detail="Cannot create block without content")
 
-        image_refs = re.findall(r'@image:(\d+)', payload.block) if isinstance(payload.block, str) else []
         new_block = NoteBlock(
             id=note_block_id,
             role=payload.role or "user",
@@ -313,19 +289,13 @@ def update_note_block(
             block_type=payload.block_type,
             metadata_=payload.metadata_,
             assignment_ref=payload.assignment_ref,
-            image_ids=[int(img_id) for img_id in image_refs],
         )
         content.append(new_block.model_dump(mode="json"))
     else:
-        # Block exists — update it
+        # Block exists — update it. image_ids is a stored field, left untouched
+        # here (NoteBlockUpdate doesn't carry images).
         if payload.block is not None:
             target_note_block['content'] = payload.block
-            # Rescan for image references (only for string content)
-            if isinstance(payload.block, str):
-                image_refs = re.findall(r'@image:(\d+)', payload.block)
-                target_note_block['image_ids'] = [int(img_id) for img_id in image_refs]
-            else:
-                target_note_block['image_ids'] = []
             target_note_block['updated_at'] = now
 
         if payload.role is not None:

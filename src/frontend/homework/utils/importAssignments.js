@@ -2,13 +2,15 @@ import { createNewNote, sendNoteBlock, uploadNoteImage } from '../../api';
 import { imageSrcToFile } from './importPaste';
 
 /**
- * Import parsed clipboard segments as assignment blocks in a new Note.
+ * Import parsed clipboard exercises as assignment blocks in a new Note — one
+ * block per exercise. An exercise's images are uploaded and attached via
+ * `image_ids`; its text becomes the block content (and the card description).
  *
- * @param {Array<{ type: 'text'|'image', content: string, src?: string }>} segments
+ * @param {Array<{ type: 'exercise', text: string, images: string[] }>} exercises
  * @param {string} [noteName] — name for the new note
  * @returns {Promise<{ noteId: number, note: object }>} — the created note
  */
-export async function importAssignments(segments, noteName = 'Imported Homework') {
+export async function importAssignments(exercises, noteName = 'Imported Homework') {
   // 1. Create a new Note
   const note = await createNewNote({ name: noteName });
   if (!note) {
@@ -16,31 +18,33 @@ export async function importAssignments(segments, noteName = 'Imported Homework'
   }
   const noteId = note.id;
 
-  // 2. For each segment, create an assignment block
-  for (const segment of segments) {
-    if (segment.type === 'text') {
-      const truncated = segment.content.length > 120
-        ? segment.content.slice(0, 120) + '…'
-        : segment.content;
+  // 2. One assignment block per exercise
+  for (const exercise of exercises) {
+    const text = exercise.text?.trim() || '';
+
+    if (exercise.images.length > 0) {
+      const imageIds = [];
+      for (const src of exercise.images) {
+        const file = await imageSrcToFile(src);
+        if (!file) continue;
+        const uploaded = await uploadNoteImage(noteId, file);
+        if (uploaded) imageIds.push(uploaded.id);
+      }
+      if (imageIds.length === 0) continue; // all image uploads failed — skip
+
+      const description = text.length > 120 ? text.slice(0, 120) + '…' : (text || 'Image assignment');
       await sendNoteBlock(noteId, {
-        block: segment.content,
+        block: text,
         block_type: 'assignment',
-        metadata_: { description: truncated, category: 'Writing' },
+        image_ids: imageIds,
+        metadata_: { description, category: 'Visual' },
       });
-    } else if (segment.type === 'image' && segment.src) {
-      // Upload image first
-      const file = await imageSrcToFile(segment.src);
-      if (!file) continue; // skip failed image fetches
-
-      const uploaded = await uploadNoteImage(noteId, file);
-      if (!uploaded) continue;
-
-      // Create assignment block referencing the image
+    } else if (text) {
+      const description = text.length > 120 ? text.slice(0, 120) + '…' : text;
       await sendNoteBlock(noteId, {
-        block: `@image:${uploaded.id}`,
+        block: text,
         block_type: 'assignment',
-        image_ids: [uploaded.id],
-        metadata_: { description: 'Image assignment', category: 'Visual' },
+        metadata_: { description, category: 'Writing' },
       });
     }
   }

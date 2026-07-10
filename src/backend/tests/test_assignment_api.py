@@ -131,9 +131,16 @@ class TestNoteBlockContent:
         block = NoteBlock(id="550e8400-e29b-41d4-a716-446655440002", role="user", content=segments)
         assert block.image_ids == []
 
-    def test_note_block_string_content_image_ids(self):
-        block = NoteBlock(id="550e8400-e29b-41d4-a716-446655440003", role="user", content="See @image:3 and @image:7")
+    def test_note_block_image_ids_stored(self):
+        """image_ids is a stored field, not derived from @image refs in content."""
+        block = NoteBlock(
+            id="550e8400-e29b-41d4-a716-446655440003", role="user",
+            content="See @image:3 and @image:7", image_ids=[3, 7],
+        )
         assert block.image_ids == [3, 7]
+        # @image refs in content alone do NOT populate image_ids
+        bare = NoteBlock(id="550e8400-e29b-41d4-a716-446655440003", role="user", content="See @image:3 and @image:7")
+        assert bare.image_ids == []
 
     def test_note_block_metadata_field(self):
         block = NoteBlock(

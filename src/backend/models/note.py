@@ -2,7 +2,6 @@ from sqlmodel import SQLModel, Field, Column, JSON, Relationship
 from pydantic import BaseModel, Field as PydanticField, computed_field
 from datetime import datetime
 from typing import List, Literal, Optional, Union
-import re
 
 
 class NoteBlock(BaseModel):
@@ -17,14 +16,7 @@ class NoteBlock(BaseModel):
     assignment_ref: Optional[str] = None  # UUID of the assignment block this block belongs to
     question_title: Optional[str] = None  # Rephrased question title for Q&A blocks
     question: Optional[str] = None  # Original user question for Q&A blocks
-
-    @computed_field
-    @property
-    def image_ids(self) -> List[int]:
-        """Parse image IDs from content dynamically - no storage needed."""
-        if isinstance(self.content, list):
-            return []
-        return [int(img_id) for img_id in re.findall(r'@image:(\d+)', self.content)]
+    image_ids: List[int] = PydanticField(default_factory=list)  # stored, set when the block is created
 
 
 class Note(SQLModel, table=True):

@@ -97,7 +97,7 @@ export default function HomeworkLab({ homeworkStore }) {
       parsed = parseClipboardHTML(html);
     }
     if (parsed.length === 0 && text?.trim()) {
-      parsed = [{ type: 'text', content: text.trim() }];
+      parsed = [{ type: 'exercise', text: text.trim(), images: [] }];
     }
     if (parsed.length > 0) {
       setAddSegments(parsed);
@@ -250,21 +250,21 @@ export default function HomeworkLab({ homeworkStore }) {
               ) : (
                 <div className="hw-import-preview">
                   <h4 className="hw-import-preview-title">
-                    Detected {addSegments.length} segment{addSegments.length !== 1 ? 's' : ''}
+                    Detected {addSegments.length} exercise{addSegments.length !== 1 ? 's' : ''}
                   </h4>
                   <div className="hw-import-preview-list">
-                    {addSegments.map((seg, i) => (
-                      <div key={i} className={`hw-import-preview-item hw-import-preview-item--${seg.type}`}>
+                    {addSegments.map((ex, i) => (
+                      <div key={i} className="hw-import-preview-item hw-import-preview-item--exercise">
                         <span className="hw-import-preview-type">
-                          {seg.type === 'image' ? '🖼 Image' : '📝 Text'}
+                          {ex.images.length ? '🖼 Exercise' : '📝 Exercise'}
                         </span>
-                        {seg.type === 'text' && (
+                        {ex.text && (
                           <p className="hw-import-preview-content">
-                            {seg.content.length > 120 ? seg.content.slice(0, 120) + '…' : seg.content}
+                            {ex.text.length > 120 ? ex.text.slice(0, 120) + '…' : ex.text}
                           </p>
                         )}
-                        {seg.type === 'image' && (
-                          <img src={seg.src} alt="" className="hw-import-preview-thumb" />
+                        {ex.images[0] && (
+                          <img src={ex.images[0]} alt="" className="hw-import-preview-thumb" />
                         )}
                       </div>
                     ))}
@@ -286,7 +286,7 @@ export default function HomeworkLab({ homeworkStore }) {
                     disabled={isAddingAssignment}
                     onClick={handleAddAssignment}
                   >
-                    {isAddingAssignment ? 'Adding…' : `Add ${addSegments.length} segment${addSegments.length !== 1 ? 's' : ''}`}
+                    {isAddingAssignment ? 'Adding…' : `Add ${addSegments.length} exercise${addSegments.length !== 1 ? 's' : ''}`}
                   </button>
                 )}
               </div>

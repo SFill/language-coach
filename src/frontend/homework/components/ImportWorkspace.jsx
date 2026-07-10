@@ -21,7 +21,7 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
     }
     // Fallback: if no HTML segments found, use plain text
     if (parsed.length === 0 && text?.trim()) {
-      parsed = [{ type: 'text', content: text.trim() }];
+      parsed = [{ type: 'exercise', text: text.trim(), images: [] }];
     }
 
     if (parsed.length > 0) {
@@ -56,8 +56,8 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
       onPasteText(text);
       return;
     }
-    // Otherwise, set as a text segment for the modal flow
-    setSegments([{ type: 'text', content: text.trim() }]);
+    // Otherwise, set as a text exercise for the modal flow
+    setSegments([{ type: 'exercise', text: text.trim(), images: [] }]);
   }, [onPasteText]);
 
   const handleCancel = () => {
@@ -105,7 +105,7 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
         reader.onload = (event) => {
           const src = event.target?.result;
           if (typeof src === 'string') {
-            setSegments(prev => [...prev, { type: 'image', content: '', src }]);
+            setSegments(prev => [...prev, { type: 'exercise', text: '', images: [src] }]);
           }
         };
         reader.readAsDataURL(file);
@@ -117,20 +117,20 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
   // Preview of parsed segments
   const renderPreview = () => (
     <div className="hw-import-preview">
-      <h4 className="hw-import-preview-title">Detected {segments.length} segment{segments.length !== 1 ? 's' : ''}</h4>
+      <h4 className="hw-import-preview-title">Detected {segments.length} exercise{segments.length !== 1 ? 's' : ''}</h4>
       <div className="hw-import-preview-list">
-        {segments.map((seg, i) => (
-          <div key={i} className={`hw-import-preview-item hw-import-preview-item--${seg.type}`}>
+        {segments.map((ex, i) => (
+          <div key={i} className="hw-import-preview-item hw-import-preview-item--exercise">
             <span className="hw-import-preview-type">
-              {seg.type === 'image' ? '🖼 Image' : '📝 Text'}
+              {ex.images.length ? '🖼 Exercise' : '📝 Exercise'}
             </span>
-            {seg.type === 'text' && (
+            {ex.text && (
               <p className="hw-import-preview-content">
-                {seg.content.length > 120 ? seg.content.slice(0, 120) + '…' : seg.content}
+                {ex.text.length > 120 ? ex.text.slice(0, 120) + '…' : ex.text}
               </p>
             )}
-            {seg.type === 'image' && (
-              <img src={seg.src} alt="" className="hw-import-preview-thumb" />
+            {ex.images[0] && (
+              <img src={ex.images[0]} alt="" className="hw-import-preview-thumb" />
             )}
           </div>
         ))}
@@ -200,7 +200,7 @@ export default function ImportWorkspace({ onPasteText, onImportComplete }) {
               </button>
               {segments.length > 0 && (
                 <button className="hw-paste-import-btn" onClick={handleImport} disabled={isImporting}>
-                  {isImporting ? 'Importing…' : `Import ${segments.length} segment${segments.length !== 1 ? 's' : ''}`}
+                  {isImporting ? 'Importing…' : `Import ${segments.length} exercise${segments.length !== 1 ? 's' : ''}`}
                 </button>
               )}
             </div>

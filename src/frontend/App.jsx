@@ -78,6 +78,7 @@ function AppContent() {
         currentNoteName={currentNoteName}
         onNoteNameClick={() => noteListManager.handleNoteNameClick(location.pathname)}
         onHomeworkClick={() => homeworkStore.mgr.togglePicker()}
+        homeworkStore={homeworkStore}
       />
       <div className="main-block">
         <Routes>
