@@ -7,6 +7,8 @@ SYSTEM_PROMPT = '''
 - **Bold text** for emphasis (e.g., key rules, exceptions, or important notes)
 - **Inline code formatting** (`like this`) for short language examples or phrases
 
+**Do not use LaTeX or math notation.** The output is rendered as plain markdown — `$...$`, `\\rightarrow`, `\\times`, and similar LaTeX syntax show up as literal text. Use plain unicode instead: `→` `←` `↔` `×` `÷`, etc.
+
 ---
 
 **Tone and Style Guidelines:**

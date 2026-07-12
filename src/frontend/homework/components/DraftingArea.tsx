@@ -39,7 +39,7 @@ interface DraftingAreaProps {
   activeAssignmentId: string | undefined;
   submitDraft: SubmitDraft;
   runAICheck: (noteId: number | string, blockId: string) => Promise<unknown>;
-  sendQuestion: (noteId: number | string, question: string, assignmentRef?: string) => Promise<unknown>;
+  sendQuestion: (noteId: number | string, question: string, assignmentRef?: string, priorQaId?: string) => Promise<unknown>;
   deleteInquiry: (noteId: number | string, blockId: string) => Promise<unknown>;
 }
 
@@ -195,11 +195,11 @@ export default function DraftingArea({
     }
   };
 
-  const handleSendQuestion = async (question: string) => {
+  const handleSendQuestion = async (question: string, priorQaId?: string) => {
     if (!activeNote) return;
     setIsSendingQuestion(true);
     try {
-      await sendQuestion(activeNote.id, question, assignmentId);
+      await sendQuestion(activeNote.id, question, assignmentId, priorQaId);
     } finally {
       setIsSendingQuestion(false);
     }

@@ -26,6 +26,7 @@ Rules:
 - Be concise. Aim for a few short lines, not a long report.
 - Answer the language of the question (Russian, English, Spanish) as appropriate.
 - Use markdown sparingly: short bullet points, bold for a key rule, `inline code` for a short Spanish phrase. No section headings unless the question clearly asks for a structured breakdown.
+- Do not use LaTeX or math notation. The output is rendered as plain markdown, so `$...$`, `\\rightarrow`, `\\times`, and similar syntax show up as literal text. Use plain unicode instead: `→` `←` `↔` `×` `÷`, etc.
 
 Structure the body (only the parts that are relevant to this question):
 1. Direct answer.
@@ -80,7 +81,7 @@ class QuestionService:
 
         # 3. Build the minimal, labeled supporting context (assignment + draft +
         # previous Q&A), then the prompt messages.
-        context_text = self._build_context(note, question_data.assignment_ref)
+        context_text = self._build_context(note, question_data.assignment_ref, question_data.prior_qa_id)
         messages = self._build_prompt_messages(
             context=context_text,
             question=processed_content.text,
@@ -135,12 +136,13 @@ class QuestionService:
             return "".join(seg.get("text", "") for seg in content)
         return content or ""
 
-    def _build_context(self, note: Note, assignment_ref: Optional[str]) -> str:
+    def _build_context(self, note: Note, assignment_ref: Optional[str], prior_qa_id: Optional[str]) -> str:
         """
         Assemble the minimal labeled context for the question: the assignment,
-        the student's draft for that assignment, and the previous Q&A pair (as a
-        follow-up reference). Everything is optional and labeled so the model
-        treats it as support, not as the subject to review.
+        the student's draft for that assignment, and a specific previous Q&A pair
+        (as a follow-up reference) when the user references one. Everything is
+        optional and labeled so the model treats it as support, not as the
+        subject to review.
         """
         history = note.history or {}
         content = history.get('content', [])
@@ -170,21 +172,17 @@ class QuestionService:
                     f"Student draft:\n{self._flatten_content(draft.get('content'))}"
                 )
 
-        # Most recent prior Q&A — reference only, supports follow-ups.
-        prior_qa = next(
-            (
-                b for b in reversed(content)
-                if b.get("block_type") == "question"
-            ),
-            None,
-        )
-        if prior_qa:
-            prev_question = prior_qa.get("question") or prior_qa.get("question_title") or ""
-            prev_answer = self._flatten_content(prior_qa.get("content"))
-            parts.append(
-                "Previous Q&A (reference only — use only if this is a follow-up):\n"
-                f"Q: {prev_question}\nA: {prev_answer}"
-            )
+        # The specific prior Q&A the user referenced (e.g. "edit and ask again"
+        # on a Q&A item). No fallback to the most recent — only the one picked.
+        if prior_qa_id:
+            prior_qa = self._get_note_block(note, prior_qa_id)
+            if prior_qa and prior_qa.get("block_type") == "question":
+                prev_question = prior_qa.get("question") or prior_qa.get("question_title") or ""
+                prev_answer = self._flatten_content(prior_qa.get("content"))
+                parts.append(
+                    "Previous Q&A (reference only — use only if this is a follow-up):\n"
+                    f"Q: {prev_question}\nA: {prev_answer}"
+                )
 
         return "\n\n".join(parts)
 

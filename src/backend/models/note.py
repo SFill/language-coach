@@ -108,6 +108,7 @@ class QuestionCreate(BaseModel):
     """Schema for creating a question about a note."""
     question: str
     assignment_ref: Optional[str] = None  # UUID of the assignment block
+    prior_qa_id: Optional[str] = None  # UUID of a prior Q&A block this is a follow-up to
 
 
 class DraftSegment(BaseModel):

@@ -14,7 +14,7 @@ interface QaBlock {
 
 interface QATabProps {
   qaBlocks: QaBlock[];
-  onSendQuestion: (question: string) => void;
+  onSendQuestion: (question: string, priorQaId?: string) => void;
   onDeleteInquiry: (blockId: string) => void;
   isSending: boolean;
   noteId: number | string;
@@ -22,12 +22,16 @@ interface QATabProps {
 
 export default function QATab({ qaBlocks, onSendQuestion, onDeleteInquiry, isSending, noteId }: QATabProps) {
   const [question, setQuestion] = useState('');
+  // UUID of the Q&A block the user is "editing" (pencil) — sent as prior_qa_id so
+  // the backend uses that specific Q&A as follow-up context, not just the last one.
+  const [followUpBlockId, setFollowUpBlockId] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSend = () => {
     if (!question.trim() || isSending) return;
-    onSendQuestion(question.trim());
+    onSendQuestion(question.trim(), followUpBlockId ?? undefined);
     setQuestion('');
+    setFollowUpBlockId(null);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -47,6 +51,7 @@ export default function QATab({ qaBlocks, onSendQuestion, onDeleteInquiry, isSen
 
   const handleEditAgain = (block: QaBlock) => {
     setQuestion(originalQuestion(block));
+    setFollowUpBlockId(block.id);
     inputRef.current?.focus();
   };
 

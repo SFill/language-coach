@@ -105,13 +105,15 @@ class HomeworkManager {
    * @param {string|number} noteId
    * @param {string} question
    * @param {string|undefined} assignmentRef
+   * @param {string|undefined} priorQaId — UUID of a prior Q&A block this is a follow-up to
    */
-  sendQuestion = async (noteId, question, assignmentRef) => {
+  sendQuestion = async (noteId, question, assignmentRef, priorQaId) => {
     if (!noteId || !question?.trim()) return null;
     try {
       const qaBlock = await apiSendQuestion(noteId, {
         question,
         assignment_ref: assignmentRef,
+        prior_qa_id: priorQaId,
       });
       await this.refreshNote(noteId);
       return qaBlock;
