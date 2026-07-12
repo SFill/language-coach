@@ -257,8 +257,15 @@
 }
 
 @keyframes hw-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .hw-inquiry-header {
@@ -291,8 +298,13 @@
 }
 
 @keyframes hw-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hw-inquiry-meta {
@@ -585,7 +597,7 @@
   font-size: 14px;
   opacity: 0;
   transition: all 0.2s;
-  z-index: 10;
+  z-index: 20000;
 }
 
 .hw-task-card:hover .hw-card-expand-btn {
@@ -601,7 +613,8 @@
 .hw-card-expanded-overlay {
   position: fixed;
   /* Cover sidebar + task pane for maximum image width */
-  top: 72px; /* below topbar */
+  top: 72px;
+  /* below topbar */
   left: 0;
   width: calc(var(--hw-sidebar-width) + (100vw - var(--hw-sidebar-width)) * 0.35);
   bottom: 0;
@@ -854,7 +867,7 @@
   border-right: 1px solid var(--hw-outline-variant);
 }
 
-.hw-toolbar-group + .hw-toolbar-group {
+.hw-toolbar-group+.hw-toolbar-group {
   padding-left: var(--hw-unit-sm);
   border-right: none;
 }
@@ -911,8 +924,15 @@
 }
 
 @keyframes hw-autosave-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* === Editor === */
@@ -974,7 +994,7 @@
 /* === Feedback Tooltip === */
 .hw-feedback-tooltip {
   position: absolute;
-  z-index: 10;
+  z-index: 20000;
   min-width: 180px;
   max-width: 280px;
   padding: 8px 12px;
@@ -989,8 +1009,15 @@
 }
 
 @keyframes hw-tooltip-fade-in {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hw-feedback-tooltip--suggestion {
@@ -1128,7 +1155,9 @@
 
 /* === AI Spinner === */
 @keyframes hw-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .hw-spinner {
