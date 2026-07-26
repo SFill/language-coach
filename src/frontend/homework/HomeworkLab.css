@@ -11,6 +11,7 @@
   --hw-on-secondary-container: #00714d;
   --hw-secondary-fixed: #6ffbbe;
   --hw-secondary-fixed-dim: #4edea3;
+  --hw-grammar: #0b6bcb;
   --hw-tertiary: #684000;
   --hw-tertiary-container: #885500;
   --hw-on-tertiary-container: #ffd4a4;
@@ -978,14 +979,19 @@
   background: rgba(79, 70, 229, 0.3);
 }
 
-/* === Simple Highlights === */
-.hw-highlight-correct {
-  background: rgba(108, 248, 187, 0.3);
-  border-bottom: 2px solid var(--hw-secondary);
+/* === Grammar Highlight (the structure being practiced) === */
+.hw-grammar-highlight {
+  background: rgba(11, 107, 203, 0.18);
+  border-bottom: 2px solid var(--hw-grammar);
   position: relative;
   cursor: pointer;
 }
 
+.hw-grammar-highlight:hover {
+  background: rgba(11, 107, 203, 0.28);
+}
+
+/* === Simple Highlights === */
 .hw-highlight-suggestion {
   background: rgba(255, 218, 214, 0.6);
   border-bottom: 2px dashed var(--hw-error);
@@ -1030,8 +1036,8 @@
   border-left: 3px solid var(--hw-primary);
 }
 
-.hw-feedback-tooltip--correct {
-  border-left: 3px solid var(--hw-secondary);
+.hw-feedback-tooltip--grammar {
+  border-left: 3px solid var(--hw-grammar);
 }
 
 .hw-feedback-tooltip-label {
@@ -1051,8 +1057,8 @@
   color: var(--hw-primary);
 }
 
-.hw-feedback-tooltip--correct .hw-feedback-tooltip-label {
-  color: var(--hw-secondary);
+.hw-feedback-tooltip--grammar .hw-feedback-tooltip-label {
+  color: var(--hw-grammar);
 }
 
 .hw-feedback-tooltip-body {

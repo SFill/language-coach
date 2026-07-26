@@ -114,7 +114,7 @@ class QuestionCreate(BaseModel):
 class DraftSegment(BaseModel):
     """A single segment in an annotated draft."""
     text: str
-    type: str  # "plain", "vocab", "correct", "suggestion"
+    type: str  # AI-emitted: "plain", "grammar", "suggestion"; manual: "vocab"
     word: Optional[str] = None
     phonetic: Optional[str] = None
     annotation: Optional[str] = None

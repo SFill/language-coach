@@ -7,10 +7,17 @@ import { imageSrcToFile } from './importPaste';
  * `image_ids`; its text becomes the block content (and the card description).
  *
  * @param {Array<{ type: 'exercise', text: string, images: string[] }>} exercises
- * @param {string} [noteName] — name for the new note
+ * @param {string} [noteName] — name for the new note (defaults to `homework YYYY-MM-DD`)
  * @returns {Promise<{ noteId: number, note: object }>} — the created note
  */
-export async function importAssignments(exercises, noteName = 'Imported Homework') {
+export async function importAssignments(exercises, noteName) {
+  if (!noteName) {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    noteName = `homework ${yyyy}-${mm}-${dd}`;
+  }
   // 1. Create a new Note
   const note = await createNewNote({ name: noteName });
   if (!note) {

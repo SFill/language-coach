@@ -15,32 +15,76 @@ ASSIGNMENT_ANALYSIS_PROMPT = """You are a Spanish language tutor analyzing a stu
 
 Segment types:
 - "plain": Normal text with no issues
-- "vocab": A vocabulary word worth highlighting. Include "word" (the word), "phonetic" (IPA pronunciation), and "annotation" (short English definition)
-- "correct": A grammatically correct phrase worth praising
-- "suggestion": An error or awkward phrasing that needs correction. Include "annotation" with the corrected version and a brief explanation
+- "grammar": A grammar structure being practiced — a function word or structure such as a pronoun, verb form, preposition, or agreement. NOT vocabulary. Include "annotation" with the rule and why it applies to this span.
+- "suggestion": An error or awkward phrasing that needs correction. Include "annotation" with the corrected version and a brief explanation.
 
 Rules:
 1. The concatenation of all "text" fields must reproduce the original text EXACTLY, character by character, with no additions or omissions.
 2. Every character of the original text must appear in exactly one segment.
 3. Most text should be "plain" — only annotate words or phrases that are educationally significant or contain errors.
-4. For "vocab" segments: keep them short (single word or short phrase), provide accurate IPA pronunciation and a concise definition.
-5. For "suggestion" segments: provide the correction and a brief grammar explanation in "annotation".
+4. Do NOT tag vocabulary words. Vocabulary highlights are added manually by the teacher, not by you. Use "grammar" only for function words/structures and "suggestion" only for errors.
+5. For "grammar" segments: keep the span minimal (often a single function word) and explain the rule + how it applies here in "annotation".
+6. For "suggestion" segments: provide the correction and a brief grammar explanation in "annotation".
+7. Do not invent a "correct" type to praise good phrasing — leave correct text as "plain" (or "grammar" if it illustrates the practiced structure).
 
 Return your response as a JSON object with a single key "segments" containing an array of segment objects.
 
-Example input: "El gato esta en la mesa"
-Example output:
+Example 1 — direct object pronouns practiced correctly (tag the pronouns as grammar, leave the rest plain):
+Input: "¿Dónde está Andrés? No lo veo."
+Output:
 {
   "segments": [
-    {"text": "El gato ", "type": "plain"},
-    {"text": "está", "type": "suggestion", "annotation": "Correct: está (with accent) — needed for the verb 'estar' (to be), not 'esta' (this)"},
-    {"text": " en la ", "type": "plain"},
-    {"text": "mesa", "type": "vocab", "word": "mesa", "phonetic": "/ˈmesa/", "annotation": "Table"},
-    {"text": ".", "type": "plain"}
+    {"text": "¿Dónde está Andrés? No ", "type": "plain"},
+    {"text": "lo", "type": "grammar", "annotation": "Direct object pronoun, masculine singular — refers back to Andrés. lo = him."},
+    {"text": " veo.", "type": "plain"}
   ]
 }
 
-If the assignment prompt is provided, use it as context for the analysis (e.g., focus on the grammar topic or vocabulary area it mentions)."""
+Example 2 — wrong pronoun gender (suggestion):
+Input: "¿Dónde está Andrés? No la veo."
+Output:
+{
+  "segments": [
+    {"text": "¿Dónde está Andrés? No ", "type": "plain"},
+    {"text": "la", "type": "suggestion", "annotation": "Use lo, not la — Andrés is masculine singular, so the direct object pronoun is lo (him), matching gender."},
+    {"text": " veo.", "type": "plain"}
+  ]
+}
+
+Example 3 — wrong pronoun number (suggestion):
+Input: "¿Dónde están las cucharas? No la veo."
+Output:
+{
+  "segments": [
+    {"text": "¿Dónde están las cucharas? No ", "type": "plain"},
+    {"text": "la", "type": "suggestion", "annotation": "Use las — cucharas is feminine plural, so the direct object pronoun must be las (them), matching gender and number."},
+    {"text": " veo.", "type": "plain"}
+  ]
+}
+
+Example 4 — ser/estar accent (suggestion):
+Input: "El gato esta en la mesa."
+Output:
+{
+  "segments": [
+    {"text": "El gato ", "type": "plain"},
+    {"text": "esta", "type": "suggestion", "annotation": "Use está — the verb estar (to be, for location) takes an accent; 'esta' without the accent means 'this'."},
+    {"text": " en la mesa.", "type": "plain"}
+  ]
+}
+
+Example 5 — wrong tense (suggestion):
+Input: "Ayer yo como pizza."
+Output:
+{
+  "segments": [
+    {"text": "Ayer yo ", "type": "plain"},
+    {"text": "como", "type": "suggestion", "annotation": "Use comí — 'ayer' (yesterday) is a completed past action, so use the preterite comí, not the present como."},
+    {"text": " pizza.", "type": "plain"}
+  ]
+}
+
+If the assignment prompt is provided, use it as context for the analysis (e.g. focus on the grammar topic it mentions)."""
 
 
 class AssignmentService:
