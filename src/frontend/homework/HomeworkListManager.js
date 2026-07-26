@@ -107,7 +107,7 @@ class HomeworkListManager {
         this.currentNoteId = null;
         this.currentNoteName = null;
         if (this.navigateCallback) {
-          this.navigateCallback('/homework');
+          this.navigateCallback('/');
         }
         this.homeworkManager.reset();
       }
@@ -118,7 +118,7 @@ class HomeworkListManager {
     }
   };
 
-  /** Toggle between ImportWorkspace and NoteListView on /homework. */
+  /** Toggle between ImportWorkspace and NoteListView on /. */
   togglePicker = () => {
     this.showPicker = !this.showPicker;
     this.onChange?.();

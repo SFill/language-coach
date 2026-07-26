@@ -110,11 +110,11 @@ test.describe('Assignment selection', () => {
 
     try {
       // Start at /homework (ImportWorkspace)
-      await page.goto('/homework');
+      await page.goto('/');
       await page.waitForLoadState('networkidle');
 
       // Toggle to NoteListView
-      await page.locator('.hw-topbar-nav .hw-topbar-link[href="/homework"]').click();
+      await page.locator('.hw-topbar-nav .hw-topbar-link[href="/"]').click();
       await expect(page.locator('.hw-pick-container')).toBeVisible();
 
       // Click THIS test's note (the list is shared across parallel tests, so

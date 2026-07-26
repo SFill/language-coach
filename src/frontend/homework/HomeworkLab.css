@@ -788,7 +788,8 @@
   transition: background 0.2s;
 }
 
-.hw-drag-handle:hover {
+.hw-drag-handle:hover,
+.hw-drag-handle:active {
   background: var(--hw-surface-container-high);
 }
 
@@ -800,7 +801,8 @@
   transition: background 0.2s;
 }
 
-.hw-drag-handle:hover .hw-drag-handle-dot {
+.hw-drag-handle:hover .hw-drag-handle-dot,
+.hw-drag-handle:active .hw-drag-handle-dot {
   background: var(--hw-primary);
 }
 

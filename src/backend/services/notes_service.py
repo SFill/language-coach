@@ -16,8 +16,6 @@ from backend.models.note import (
     NoteImage,
     NoteImageResponse,
 )
-from backend.constants import SYSTEM_PROMPT
-from backend.services.openai_client import client, DEFAULT_MODEL
 
 def create_note(session: Session, note: Note) -> Note:
     """Create a new note session."""
@@ -82,70 +80,19 @@ def _ensure_history_content(history: dict) -> List[dict]:
     return content
 
 def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> dict:
-    """Send a note block to a note session and get response."""
-    import re
-    import base64
-    
-    # Retrieve the note object
+    """Append a user note block to the note history. No AI reply."""
     note = session.get(Note, id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
 
-    # Ensure that history has a 'content' key which is a list
     history = note.history or {}
     content = _ensure_history_content(history)
-
-    # Parse image references in the note block
-    processed_message = note_block.block
-    image_contents = []
-
-    # Find all image references in format @image:id (used to attach image bytes
-    # to the AI message; image_ids for storage come from the request payload).
-    image_refs = re.findall(r'@image:(\d+)', note_block.block)
-
-    if image_refs:
-        # Get referenced images
-        for img_id in image_refs:
-            try:
-                image = session.exec(
-                    select(NoteImage).where(NoteImage.id == int(img_id), NoteImage.note_id == id)
-                ).first()
-                
-                if image and os.path.exists(image.file_path):
-                    # Read and encode image
-                    with open(image.file_path, 'rb') as f:
-                        image_data = base64.b64encode(f.read()).decode()
-                    
-                    image_contents.append({
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:{image.mime_type};base64,{image_data}"
-                        }
-                    })
-                    
-                    # Replace reference with description in text
-                    processed_message = processed_message.replace(
-                        f"@image:{img_id}", 
-                        f"[Image: {image.original_filename}]"
-                    )
-            except (ValueError, TypeError):
-                continue
-
-    # Create note block content for note history and OpenAI
-    if image_contents:
-        # For OpenAI API with images
-        user_content = [{"type": "text", "text": processed_message}] + image_contents
-        # For note history - keep original note block with @image:id references for frontend
-        history_content = note_block.block
-    else:
-        user_content = processed_message
-        history_content = note_block.block
 
     timestamp = datetime.utcnow()
     user_note_block = NoteBlock(
         id=note_block.id or str(uuid.uuid4()),
         role="user",
-        content=history_content,
+        content=note_block.block,
         created_at=timestamp,
         updated_at=timestamp,
         block_type=note_block.block_type,
@@ -155,10 +102,8 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
         image_ids=note_block.image_ids,
     )
 
-    # Append the user's note block to history
     content.append(user_note_block.model_dump(mode="json"))
 
-    # Update DB with user's note block
     session.exec(
         update(Note)
         .where(Note.id == id)
@@ -166,82 +111,10 @@ def send_note_block(session: Session, id: int, note_block: NoteBlockCreate) -> d
     )
     session.commit()
 
-    assistant_response = ''
-    assistant_note_block = None
-    # Q&A ("question") blocks are handled by QuestionService — never AI-reply to them
-    # here. Skip the AI chat reply for stored/content blocks that don't expect one.
-    skip_ai_types = {"assignment", "simple_note", "ai_feedback", "question"}
-    should_call_ai = note_block.block_type not in skip_ai_types
-
-    if should_call_ai:
-        # Prepare messages for OpenAI API
-        api_messages = [
-            {
-                "role": "developer",
-                "content": SYSTEM_PROMPT,
-            }
-        ]
-
-        # Add note history (text only for previous note blocks)
-        for hist_msg in content[:-1]:  # Exclude the current note block
-            role = hist_msg.get("role")
-            msg_content = hist_msg.get("content")
-            # Flatten segmented content to plain text for OpenAI
-            if isinstance(msg_content, list):
-                msg_content = "".join(seg.get("text", "") for seg in msg_content)
-            api_messages.append({
-                "role": role,
-                "content": msg_content,
-            })
-        
-        # Add current note block with potential images
-        api_messages.append({
-            "role": "user",
-            "content": user_content
-        })
-
-        # Call GPT with support for images
-        response_stream = client.chat.completions.create(
-            messages=api_messages,
-            model=DEFAULT_MODEL,
-            stream=True,
-        )
-
-        # Collect assistant's response
-        for chunk in response_stream:
-            delta = chunk.choices[0].delta.content
-            if delta:
-                assistant_response += delta
-
-        if assistant_response:
-            assistant_timestamp = datetime.utcnow()
-            assistant_note_block = NoteBlock(
-                id=str(uuid.uuid4()),
-                role="assistant",
-                content=assistant_response,
-                created_at=assistant_timestamp,
-                updated_at=assistant_timestamp,
-            )
-
-            # Append the assistant's note block
-            content.append(assistant_note_block.model_dump(mode="json"))
-
-        # Update DB with assistant's response
-        session.exec(
-            update(Note)
-            .where(Note.id == id)
-            .values(history=history)
-        )
-        session.commit()
-
-    new_note_blocks = [user_note_block.model_dump(mode="json")]
-    if assistant_note_block is not None:
-        new_note_blocks.append(assistant_note_block.model_dump(mode="json"))
     return {
         'status': 'ok',
-        'new_note_blocks': new_note_blocks
+        'new_note_blocks': [user_note_block.model_dump(mode='json')],
     }
-
 
 def get_first(iterable, value=None, key=None, default=None):
     match value is None, callable(key):

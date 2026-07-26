@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useSyncExternalStore } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef, useSyncExternalStore } from 'react';
 import ReactDOM from 'react-dom';
 import './HomeworkLab.css';
 import { parseClipboardHTML } from './utils/importPaste';
@@ -35,6 +35,45 @@ export default function HomeworkLab({ homeworkStore }) {
   const [showAddModal, setShowAddModal] = useState(false);
   const [addSegments, setAddSegments] = useState([]);
   const [isAddingAssignment, setIsAddingAssignment] = useState(false);
+
+  // Resizable split: task-pane width in px. null → fall back to CSS (35%).
+  const splitRef = useRef(null);
+  const [taskPaneWidth, setTaskPaneWidth] = useState(null);
+  const dragStateRef = useRef(null);
+
+  const onResize = useCallback((e) => {
+    const st = dragStateRef.current;
+    if (!st) return;
+    const next = st.startWidth + (e.clientX - st.startX);
+    setTaskPaneWidth(Math.max(st.minWidth, Math.min(next, st.maxWidth)));
+  }, []);
+
+  const stopResize = useCallback(() => {
+    dragStateRef.current = null;
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    window.removeEventListener('mousemove', onResize);
+    window.removeEventListener('mouseup', stopResize);
+  }, [onResize]);
+
+  const startResize = useCallback((e) => {
+    const split = splitRef.current;
+    const pane = split?.querySelector('.hw-task-pane');
+    if (!split || !pane) return;
+    e.preventDefault();
+    dragStateRef.current = {
+      startX: e.clientX,
+      startWidth: pane.getBoundingClientRect().width,
+      minWidth: 240,
+      maxWidth: split.getBoundingClientRect().width - 420, // keep draft ≥ 420px
+    };
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+    window.addEventListener('mousemove', onResize);
+    window.addEventListener('mouseup', stopResize);
+  }, [onResize, stopResize]);
+
+  useEffect(() => () => stopResize(), [stopResize]);
 
   const handleCloseAddModal = useCallback(() => {
     setShowAddModal(false);
@@ -163,9 +202,9 @@ export default function HomeworkLab({ homeworkStore }) {
 
       <div className="hw-content-wrapper">
 
-        <main className="hw-split-layout">
+        <main className="hw-split-layout" ref={splitRef}>
           {/* Left Pane: Assignment cards (one per assignment block in the active note) */}
-          <section className="hw-task-pane">
+          <section className="hw-task-pane" style={taskPaneWidth ? { width: taskPaneWidth } : undefined}>
             <div className="hw-task-pane-header">
               <h2 className="hw-pane-title">Assignments</h2>
               <div className="hw-pane-header-actions">
@@ -197,7 +236,13 @@ export default function HomeworkLab({ homeworkStore }) {
           </section>
 
           {/* Drag Handle Divider */}
-          <div className="hw-drag-handle">
+          <div
+            className="hw-drag-handle"
+            onMouseDown={startResize}
+            role="separator"
+            aria-orientation="vertical"
+            aria-label="Resize assignment and drafting panes"
+          >
             <div className="hw-drag-handle-dot" />
           </div>
 
@@ -214,7 +259,11 @@ export default function HomeworkLab({ homeworkStore }) {
 
         {/* Expanded card image — portal overlays the task pane column only */}
         {expandedCardId && ReactDOM.createPortal(
-          <div className="hw-card-expanded-overlay" onClick={handleCloseExpanded}>
+          <div
+            className="hw-card-expanded-overlay"
+            style={taskPaneWidth ? { width: `calc(var(--hw-sidebar-width) + ${taskPaneWidth}px)` } : undefined}
+            onClick={handleCloseExpanded}
+          >
             <div className="hw-card-expanded-container" onClick={(e) => e.stopPropagation()}>
               <img
                 src={cards.find((c) => c.blockId === expandedCardId)?.image}

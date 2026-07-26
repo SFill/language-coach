@@ -11,11 +11,11 @@ const MarkdownContent = React.memo(({ content, noteId }) => {
   // Process content to replace image references with text badges
   const processedContent = React.useMemo(() => {
     if (!noteId) return content;
-    
+
     // Replace @image:id references with text badge instead of rendering images
     // Images are now displayed in the left column, so we just show a reference badge
     let processed = content;
-    
+
     // Convert @image:id to a text badge "📎 Image"
     processed = processed.replace(/@image:(\d+)/g, (match,imageId) => {
       return `📎 Image ${1}`;
@@ -25,7 +25,7 @@ const MarkdownContent = React.memo(({ content, noteId }) => {
   }, [content, noteId]);
 
   return (
-    <ReactMarkdown 
+    <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkBreaks]}
       components={{
         img: ({ src, alt, title, ...props }) => (

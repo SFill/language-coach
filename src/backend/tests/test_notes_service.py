@@ -1,6 +1,5 @@
 import os
 import pytest
-from unittest.mock import patch
 from fastapi import HTTPException
 from datetime import datetime, timezone
 
@@ -192,54 +191,31 @@ class TestNotesService:
         assert not os.path.exists(img1_path)
         assert not os.path.exists(img2_path)
     
-    @patch('backend.services.notes_service.client')
-    def test_send_note_block_regular_message_success(self, mock_client, test_session, sample_notes):
-        """Test sending regular message and getting AI response."""
+    def test_send_note_block_regular_message_success(self, test_session, sample_notes):
+        """Test sending a block appends the user block (no AI reply)."""
         # Add a note to database
         note = sample_notes[2]  # Empty note
         test_session.add(note)
         test_session.commit()
         test_session.refresh(note)
 
-        # Mock AI client response
-        class MockChunk:
-            def __init__(self, content):
-                self.choices = [type('obj', (object,), {
-                    'delta': type('obj', (object,), {'content': content})()
-                })()]
-
-        mock_client.chat.completions.create.return_value = [
-            MockChunk("Hello! "),
-            MockChunk("How can I "),
-            MockChunk("help you today?")
-        ]
-
         message = NoteBlockCreate(block="Hello there")
         result = send_note_block(test_session, note.id, message)
 
-        # Verify response structure
+        # Verify response structure: only the user block is returned
         assert result['status'] == 'ok'
-        assert len(result['new_note_blocks']) == 2
-        assert result['new_note_blocks'][1]['content'] == "Hello! How can I help you today?"
-
-        # Verify AI client was called
-        mock_client.chat.completions.create.assert_called_once()
-        call_args = mock_client.chat.completions.create.call_args
-        assert call_args[1]['stream'] == True
+        assert len(result['new_note_blocks']) == 1
+        assert result['new_note_blocks'][0]['role'] == "user"
+        assert result['new_note_blocks'][0]['content'] == "Hello there"
 
         # Verify note history was updated in database
         updated_note = test_session.get(Note, note.id)
-        assert len(updated_note.history["content"]) == 2
+        assert len(updated_note.history["content"]) == 1
         first_message = updated_note.history["content"][0]
-        second_message = updated_note.history["content"][1]
 
         assert first_message["role"] == "user"
         assert first_message["content"] == "Hello there"
         assert isinstance(first_message["id"], str)  # UUID string
-
-        assert second_message["role"] == "assistant"
-        assert second_message["content"] == "Hello! How can I help you today?"
-        assert isinstance(second_message["id"], str)  # UUID string
     
     def test_send_note_block_note_message(self, test_session, sample_notes):
         """Test sending note message (no AI response when block_type='simple_note')."""
@@ -295,63 +271,29 @@ class TestNotesService:
         assert first_entry["content"] == "First message"
         assert isinstance(first_entry["id"], str)  # UUID string
     
-    @patch('backend.services.notes_service.client')
-    def test_send_note_block_ai_error_handling(self, mock_client, test_session, sample_notes):
-        """Test handling of AI client errors."""
-        # Add a note to database
-        note = sample_notes[0]
-        test_session.add(note)
-        test_session.commit()
-        test_session.refresh(note)
-        
-        # Mock AI client to raise an error
-        mock_client.chat.completions.create.side_effect = Exception("AI Service Error")
-        
-        message = NoteBlockCreate(block="Hello")
-        
-        # Service should handle AI errors gracefully
-        with pytest.raises(Exception) as exc_info:
-            send_note_block(test_session, note.id, message)
-        
-        assert "AI Service Error" in str(exc_info.value)
-    
-    @patch('backend.services.notes_service.client')
-    def test_send_note_block_appends_to_existing_history(self, mock_client, test_session, sample_notes):
-        """Test that new messages are appended to existing note history."""
+    def test_send_note_block_appends_to_existing_history(self, test_session, sample_notes):
+        """Test that a new block is appended to existing note history."""
         # Add a note with existing history
         note = sample_notes[0]  # Has 2 messages already
         test_session.add(note)
         test_session.commit()
         test_session.refresh(note)
-        
+
         initial_length = len(note.history["content"])
-        
-        # Mock AI response
-        class MockChunk:
-            def __init__(self, content):
-                self.choices = [type('obj', (object,), {
-                    'delta': type('obj', (object,), {'content': content})()
-                })()]
-        
-        mock_client.chat.completions.create.return_value = [MockChunk("Great question!")]
-        
+
         message = NoteBlockCreate(block="Can you help me?")
         send_note_block(test_session, note.id, message)
-        
-        # Verify new messages were appended
+
+        # Verify the user block was appended (no AI reply)
         updated_note = test_session.get(Note, note.id)
-        assert len(updated_note.history["content"]) == initial_length + 2  # user + assistant
-        
-        # Verify the new messages
-        new_user_msg = updated_note.history["content"][-2]
-        new_ai_msg = updated_note.history["content"][-1]
-        
+        assert len(updated_note.history["content"]) == initial_length + 1  # user only
+
+        # Verify the new message
+        new_user_msg = updated_note.history["content"][-1]
+
         assert new_user_msg["role"] == "user"
         assert new_user_msg["content"] == "Can you help me?"
         assert isinstance(new_user_msg["id"], str)  # UUID string
-        assert new_ai_msg["role"] == "assistant"
-        assert new_ai_msg["content"] == "Great question!"
-        assert isinstance(new_ai_msg["id"], str)  # UUID string
     
     def test_create_multiple_notes(self, test_session):
         """Test creating multiple notes in the same session."""

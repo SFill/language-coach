@@ -19,7 +19,7 @@ test.describe('Layout checks', () => {
   });
 
   test('main content area renders', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
     const main = page.locator('.hw-page').first();
     await expect(main).toBeVisible();

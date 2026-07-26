@@ -48,13 +48,11 @@ When using Playwright MCP to verify UI changes:
 
 ### App Routes
 
-| Path            | Component        | Notes              |
-| --------------- | ---------------- | ------------------ |
-| `/`             | `NoteWindowPage` | Home — note editor |
-| `/note/:noteId` | `NoteWindowPage` | Individual note    |
-| `/notelist`     | `NoteListPage`   | Saved notes list   |
-| `/wordlist`     | `WordListPage`   | Word collections   |
-| `/homework`     | `HomeworkLab`    | Writing exercises  |
+| Path              | Component      | Notes                                        |
+| ----------------- | -------------- | -------------------------------------------- |
+| `/`               | `HomeworkLab`  | Homework picker (ImportWorkspace / NoteListView) |
+| `/wordlist`       | `WordListPage` | Word collections                             |
+| `/homework/:noteId` | `HomeworkLab` | Homework split-pane (assignment cards + drafting area) |
 
 ### Key Config
 
@@ -130,7 +128,7 @@ A green `npm run build` does NOT mean the TS type-checks. Always run `tsc --noEm
    sibling `.d.ts` (typed default export) **and** import it extensionless — TS resolves
    `.d.ts` ahead of `.jsx`, so `import X from './X'` picks up the declaration while
    `import X from './X.jsx'` bypasses it. (Vite resolves extensionless to the `.jsx` at build,
-   so runtime is unchanged.) See `src/frontend/notewindow/components/MarkdownContent.d.ts`.
+   so runtime is unchanged.) See `src/frontend/components/MarkdownContent.d.ts`.
 
 3. **Hook-call-order invariant (React).** All hooks must run before any early `return` in a
    component. When extracting logic into hooks, keep the hook calls above the
@@ -209,14 +207,10 @@ src/
 │   ├── database.py             # Database connection setup
 │   └── main.py                 # FastAPI main application
 ├── frontend/
-│   ├── assets/
-│   │   └── react.svg
-│   ├── notewindow/             # Note interface components
-│   │   ├── components/         # Reusable note components
-│   │   ├── NoteBlock.jsx    # Note message component
-│   │   ├── NoteToolbar.jsx     # Selection toolbar component
-│   │   ├── NoteWindow.jsx      # Main note window component
-│   │   └── NoteWindowPage.jsx  # Note page container
+│   ├── assets/                 # Icons (dictionary, toolbar match indicators)
+│   ├── components/             # Shared presentational components
+│   │   └── MarkdownContent.jsx # Markdown renderer (used by homework)
+│   ├── homework/               # Homework lab (picker + split-pane drafting)
 │   ├── MessageInput/           # Advanced text input component
 │   │   ├── hooks/              # Custom hooks for input behavior
 │   │   ├── index.jsx           # Main component export
@@ -229,7 +223,6 @@ src/
 │   │   ├── WordLists.jsx       # List of word collections
 │   │   ├── WordlistContext.jsx # State management for wordlists
 │   │   └── utils.js            # Wordlist helper functions
-│   ├── hooks/                  # App-wide custom hooks
 │   ├── App.jsx                 # Main React app component
 │   ├── api.js                  # API client functions
 │   ├── main.jsx                # React entry point

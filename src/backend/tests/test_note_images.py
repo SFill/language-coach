@@ -1,11 +1,9 @@
 import io
 import os
-import base64
 import asyncio
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from unittest.mock import patch
 
 from fastapi import HTTPException, UploadFile
 from starlette.datastructures import Headers
@@ -17,10 +15,7 @@ from backend.services.notes_service import (
     get_note_images,
     delete_note_image,
     get_note_image_file,
-    send_note_block,
 )
-
-    
 
 
 @pytest.mark.asyncio
@@ -171,63 +166,3 @@ def test_get_note_image_file_returns_fileresponse(test_session, temp_directory):
     # Verify basic attributes
     assert resp.path == str(img_path)
     assert resp.media_type == "image/png"
-
-
-@patch("backend.services.notes_service.client")
-def test_send_note_block_with_image_refs_embeds_and_keeps_original(mock_client, test_session, temp_directory):
-    # Prepare note and image on disk
-    note = Note(name="Image Note", history={"content": []})
-    test_session.add(note)
-    test_session.commit()
-    test_session.refresh(note)
-
-    # Create a real small file for base64
-    img_bytes = b"abc123"
-    img_path = temp_directory / "upl.png"
-    img_path.write_bytes(img_bytes)
-
-    image = NoteImage(
-        note_id=note.id,
-        filename="upl.png",
-        original_filename="upl.png",
-        file_path=str(img_path),
-        mime_type="image/png",
-        file_size=len(img_bytes),
-    )
-    test_session.add(image)
-    test_session.commit()
-    test_session.refresh(image)
-
-    # Mock streaming response
-    class MockChunk:
-        def __init__(self, content):
-            self.choices = [type("obj", (object,), {
-                "delta": type("obj", (object,), {"content": content})()
-            })()]
-
-    mock_client.chat.completions.create.return_value = [MockChunk("OK")] 
-
-    msg = NoteBlockCreate(block=f"Here is an image @image:{image.id}")
-    result = send_note_block(test_session, note.id, msg)
-
-    # Verify OpenAI call contains image_url with data: URL
-    mock_client.chat.completions.create.assert_called_once()
-    called_kwargs = mock_client.chat.completions.create.call_args[1]
-    assert called_kwargs["stream"] is True
-
-    # Inspect the last user message payload
-    messages = called_kwargs["messages"]
-    last = messages[-1]
-    assert last["role"] == "user"
-    # First item is text, followed by image_url
-    assert isinstance(last["content"], list)
-    types = [part.get("type") for part in last["content"]]
-    assert types[0] == "text"
-    assert "image_url" in last["content"][1]
-    url = last["content"][1]["image_url"]["url"]
-    assert url.startswith("data:image/png;base64,")
-    assert url.endswith(base64.b64encode(img_bytes).decode())
-
-    # History keeps the original message with @image:id
-    updated = test_session.get(Note, note.id)
-    assert updated.history["content"][0]["content"] == msg.block

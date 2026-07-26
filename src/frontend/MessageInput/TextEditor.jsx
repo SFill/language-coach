@@ -65,7 +65,7 @@ const TextEditor = ({
     event.preventDefault();
   };
 
-  // Paste handling moved to NoteWindow (single source of truth)
+  // Paste handling is owned by the consumer (homework drafting area), not this textarea.
 
   return (
     <textarea
@@ -82,7 +82,7 @@ const TextEditor = ({
       onBlur={onBlur}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      // onPaste handled globally in NoteWindow
+      // onPaste handled by the consumer, not here
       placeholder="Type your message... (Ctrl+B for bold, Ctrl+I for italic)"
       className="vs-code-textarea"
       autoFocus

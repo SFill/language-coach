@@ -1,8 +1,8 @@
 import { test, expect } from './fixtures';
 
 test.describe('Import workspace', () => {
-  test('/homework shows ImportWorkspace by default', async ({ page }) => {
-    await page.goto('/homework');
+  test('/ shows ImportWorkspace by default', async ({ page }) => {
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     const importWorkspace = page.locator('.hw-import-workspace');
@@ -14,14 +14,14 @@ test.describe('Import workspace', () => {
   });
 
   test('clicking Homework nav link toggles to NoteListView', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Start at ImportWorkspace
     await expect(page.locator('.hw-import-workspace')).toBeVisible();
 
     // Click Homework in top navbar
-    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/homework"]').click();
+    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/"]').click();
 
     // Should now show NoteListView
     await expect(page.locator('.hw-pick-container')).toBeVisible();
@@ -30,10 +30,10 @@ test.describe('Import workspace', () => {
   });
 
   test('clicking Homework nav link again toggles back to ImportWorkspace', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    const hwLink = page.locator('.hw-topbar-nav .hw-topbar-link[href="/homework"]');
+    const hwLink = page.locator('.hw-topbar-nav .hw-topbar-link[href="/"]');
 
     // Toggle to NoteListView
     await hwLink.click();
@@ -48,7 +48,7 @@ test.describe('Import workspace', () => {
 
 test.describe('Import workspace UI elements', () => {
   test('shows cloud upload icon, title, description, paste button, and drop zone', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     const workspace = page.locator('.hw-import-workspace');
@@ -72,7 +72,7 @@ test.describe('Import workspace UI elements', () => {
   });
 
   test('Paste Text button opens paste modal with contentEditable area', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Click Paste Text
@@ -85,7 +85,7 @@ test.describe('Import workspace UI elements', () => {
   });
 
   test('pasting plain text shows an exercise in preview', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Open paste modal
@@ -116,7 +116,7 @@ test.describe('Import workspace UI elements', () => {
   });
 
   test('closing paste modal without importing keeps ImportWorkspace visible', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Open paste modal
@@ -137,11 +137,11 @@ test.describe('Import workspace UI elements', () => {
 
 test.describe('Import workspace — navigation from NoteListView', () => {
   test('selecting a note from NoteListView navigates to split-pane view', async ({ page }) => {
-    await page.goto('/homework');
+    await page.goto('/');
     await page.waitForLoadState('networkidle');
 
     // Toggle to NoteListView
-    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/homework"]').click();
+    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/"]').click();
     await expect(page.locator('.hw-pick-container')).toBeVisible();
 
     // Select a note
@@ -152,7 +152,7 @@ test.describe('Import workspace — navigation from NoteListView', () => {
     await expect(page.locator('.hw-split-layout')).toBeVisible();
   });
 
-  test('clicking Homework from /homework/:id navigates back to /homework ImportWorkspace', async ({ page, homeworkNote }) => {
+  test('clicking Homework from /homework/:id navigates back to / ImportWorkspace', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
 
@@ -160,10 +160,10 @@ test.describe('Import workspace — navigation from NoteListView', () => {
     await expect(page.locator('.hw-split-layout')).toBeVisible();
 
     // Click Homework in top navbar
-    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/homework"]').click();
+    await page.locator('.hw-topbar-nav .hw-topbar-link[href="/"]').click();
 
     // Should navigate to /homework and show ImportWorkspace
-    await expect(page).toHaveURL('/homework');
+    await expect(page).toHaveURL('/');
     await expect(page.locator('.hw-import-workspace')).toBeVisible();
   });
 });

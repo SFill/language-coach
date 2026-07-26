@@ -9,16 +9,6 @@ const api = axios.create({
 });
 
 // Get Notes List from GET /api/coach/notes/
-export const fetchNotes = async () => {
-  try {
-    const response = await api.get(`coach/notes/`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching notes:', error);
-    return [];
-  }
-};
-
 // ===== Notes API =====
 export const updateNoteBlock = async (noteId, noteBlockId, data) => {
   if (noteBlockId === undefined) throw new Error('Missing note block identifier');
@@ -233,28 +223,6 @@ export const uploadNoteImage = async (noteId, file) => {
     return response.data;
   } catch (error) {
     console.error('Error uploading image:', error);
-    throw error;
-  }
-};
-
-// Get all images for a note
-export const fetchNoteImages = async (noteId) => {
-  try {
-    const response = await api.get(`coach/notes/${noteId}/images`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching note images:', error);
-    return [];
-  }
-};
-
-// Delete an image from a note
-export const deleteNoteImage = async (noteId, imageId) => {
-  try {
-    const response = await api.delete(`coach/notes/${noteId}/images/${imageId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error deleting image:', error);
     throw error;
   }
 };

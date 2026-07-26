@@ -4,12 +4,11 @@ import { USER } from '../data/mockData';
 import LanguagePicker from '../../LanguagePicker';
 
 const NAV_LINKS = [
-  { to: '/', label: 'New note' },
   { to: '/wordlist', label: 'My words' },
-  { to: '/homework', label: 'Homework' },
+  { to: '/', label: 'Homework' },
 ];
 
-export default function TopNavBar({ currentNoteName, onNoteNameClick, onHomeworkClick, homeworkStore, user = USER }) {
+export default function TopNavBar({ onHomeworkClick, homeworkStore, user = USER }) {
   const location = useLocation();
   // Only the picker flag is needed here; subscribe to just that boolean so the
   // topbar re-renders only when it flips (not on every draft/note change).
@@ -19,37 +18,28 @@ export default function TopNavBar({ currentNoteName, onNoteNameClick, onHomework
     () => homeworkStore.getSnapshot().showPicker,
   );
 
-  // On a homework workspace view (ImportWorkspace on /homework, or a selected
-  // note's split-pane on /homework/:id) the link reads "All homeworks". The
-  // NoteListView picker is not a workspace view, so the label stays "Homework"
-  // there (clicking it toggles back to the workspace).
-  const onHomeworkRoute = location.pathname === '/homework' || location.pathname.startsWith('/homework/');
-  const inPicker = location.pathname === '/homework' && showPicker;
+  // Homework lives at "/" (picker: ImportWorkspace / NoteListView) and at
+  // "/homework/:noteId" (selected note split-pane). On "/" the Homework link
+  // toggles between ImportWorkspace and NoteListView instead of navigating.
+  // On "/homework/:noteId" it navigates back to "/".
+  const onHomeworkRoute = location.pathname === '/' || location.pathname.startsWith('/homework/');
+  const inPicker = location.pathname === '/' && showPicker;
   const homeworkLabel = onHomeworkRoute && !inPicker ? 'All homeworks' : 'Homework';
 
   return (
     <header className="hw-topbar">
-      <div className="hw-topbar-title">
-        {currentNoteName && (
-          <h3
-            className="hw-topbar-note-name"
-            onClick={onNoteNameClick}
-          >
-            {currentNoteName}
-          </h3>
-        )}
-      </div>
+      <div className="hw-topbar-title" />
 
       <nav className="hw-topbar-nav">
         {NAV_LINKS.map((link) => {
-          const isActive = location.pathname === link.to ||
-            (link.to !== '/' && location.pathname.startsWith(link.to));
-          // When on /homework exactly, clicking the Homework link toggles between
+          const isActive = link.to === '/'
+            ? onHomeworkRoute
+            : location.pathname === link.to || location.pathname.startsWith(link.to);
+          // When on "/" exactly, clicking the Homework link toggles between
           // ImportWorkspace and NoteListView instead of navigating.
-          // On /homework/:id, it navigates normally back to /homework.
-          const isHomeworkToggle = link.to === '/homework' && onHomeworkClick &&
-            location.pathname === '/homework';
-          const label = link.to === '/homework' ? homeworkLabel : link.label;
+          const isHomeworkToggle = link.to === '/' && onHomeworkClick &&
+            location.pathname === '/';
+          const label = link.to === '/' ? homeworkLabel : link.label;
           return (
             <Link
               key={link.to}

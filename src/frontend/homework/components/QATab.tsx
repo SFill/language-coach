@@ -1,5 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from 'react';
-import MarkdownContent from '../../notewindow/components/MarkdownContent';
+import MarkdownContent from '../../components/MarkdownContent';
 
 interface QaSegment {
   text?: string;

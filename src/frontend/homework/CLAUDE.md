@@ -47,7 +47,7 @@ Domain/reactivity split (intentionally diverges from the notewindow `NoteListMan
 - **`HomeworkListStore`** — the only React-facing piece. Owns the manager, caches one stable snapshot, and rebuilds it inside `#commit` (wired to `mgr.onChange`). Exposes `subscribe`/`getSnapshot` for `useSyncExternalStore`. No action delegation — consumers call `store.mgr` / `store.mgr.homeworkManager` directly.
 - `App.jsx` creates the `HomeworkListStore` once via `useMemo`, wires `setNavigateCallback(navigate)`, calls `loadNotes()` on mount, and re-runs `setCurrentNoteFromPath(location.pathname)` on every route change — this is the single URL→manager sync (no per-component route effect).
 - `HomeworkLab` subscribes inline via `useSyncExternalStore` and derives `activeNote`/`cards` from the snapshot (`cards` via the pure `buildCards`). `noteBlocks` is flattened up from `HomeworkManager` in `getState`, so no component reaches across class boundaries.
-- The route `/homework` shows `NoteListView` (same component as `/notelist`); `/homework/:noteId` shows the split-pane view.
+- The route `/` shows the homework picker — `ImportWorkspace` by default, toggled to `NoteListView` via the TopNavBar "Homework" link; `/homework/:noteId` shows the split-pane view. (The standalone notes editor and `/notelist` route have been removed; `NoteListView` is now used only by the homework picker.)
 
 ## URL → Entity Mapping
 

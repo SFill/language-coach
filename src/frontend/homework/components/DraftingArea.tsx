@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { EditorContent, type Editor } from '@tiptap/react';
 import { BubbleMenu } from '@tiptap/react/menus';
-import MarkdownContent from '../../notewindow/components/MarkdownContent';
+import MarkdownContent from '../../components/MarkdownContent';
 import HomeworkToolbar from './HomeworkToolbar.jsx';
 import FeedbackTooltip from './FeedbackTooltip';
 import QATab from './QATab';
