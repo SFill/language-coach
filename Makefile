@@ -15,3 +15,9 @@ test:
 
 run_claude_dashboard:
 	uvx sniffly init
+
+# Start backend + frontend together in a Zellij session.
+# Reattaches to an existing 'language-coach' session if one is running.
+# Requires zellij on PATH (install: https://zellij.dev, or ~/.local/bin/zellij).
+dev:
+	bash scripts/dev.sh
