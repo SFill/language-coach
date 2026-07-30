@@ -37,6 +37,7 @@ const HomeworkToolbar = ({
           matches.push({
             matchType: 'exact',
             word: w.word,
+            wordId: w.id,
             listId: list.id,
             listName: list.name,
           });
@@ -45,6 +46,7 @@ const HomeworkToolbar = ({
           matches.push({
             matchType: 'close',
             word: w.word,
+            wordId: w.id,
             listId: list.id,
             listName: list.name,
           });
@@ -71,7 +73,7 @@ const HomeworkToolbar = ({
 
   const handleMoveToList = async (targetListId) => {
     if (!onMoveToList || !exactMatch) return;
-    const result = await onMoveToList(plainText, exactMatch.listId, targetListId);
+    const result = await onMoveToList(exactMatch.wordId, exactMatch.listId, targetListId);
     if (result?.message) console.log(result.message);
   };
 
@@ -170,7 +172,7 @@ const HomeworkToolbar = ({
           )}
 
           <span className={`hw-selection-toolbar-translation ${translatedText ? 'hw-selection-toolbar-translation--filled' : ''}`}>
-            {isTranslating ? 'Translating…' : (translatedText || plainText)}
+            {isTranslating ? 'Translating…' : translatedText}
           </span>
         </>
       )}

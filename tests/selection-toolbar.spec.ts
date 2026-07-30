@@ -88,6 +88,47 @@ test.describe('Selection toolbar', () => {
     await expect(addOrMoveBtn).toBeVisible({ timeout: 3000 });
   });
 
+  test('toolbar appears when a drag selection ends outside the editor', async ({ page, homeworkNote }) => {
+    // Regression: the editor's own mouseup handler only fires when the release
+    // happens inside the editor. A drag that ends outside .hw-editor used to
+    // leave isDragging stuck true, so the toolbar never appeared. The window-
+    // level mouseup listener must reset the drag state wherever the mouse is
+    // released.
+    await page.goto(`/homework/${homeworkNote.id}`);
+    await page.waitForLoadState('networkidle');
+
+    const editor = page.locator('.hw-editor-content');
+    await expect(editor).toBeVisible({ timeout: 10000 });
+    // Make sure the draft text has loaded before dragging over it.
+    await page.waitForFunction(
+      () => (document.querySelector('.hw-editor-content')?.textContent?.length ?? 0) > 0,
+      { timeout: 10000 },
+    );
+
+    const box = await editor.boundingBox();
+    expect(box).toBeTruthy();
+    if (!box) return;
+    // Start inside the editor on the first line of text; end to the LEFT of the
+    // editor (in the other pane) — outside .hw-editor.
+    const startX = box.x + 40;
+    const startY = box.y + 16;
+    const endX = Math.max(10, box.x - 100);
+    const endY = startY;
+
+    await page.mouse.move(startX, startY);
+    await page.mouse.down();
+    await page.mouse.move(endX, endY, { steps: 10 });
+    // Release OUTSIDE the editor.
+    await page.mouse.up();
+
+    const toolbar = page.locator('.hw-selection-toolbar');
+    await expect(toolbar).toBeVisible({ timeout: 3000 });
+
+    // The drag produced a non-empty selection.
+    const selText = await page.evaluate(() => window.getSelection()?.toString() ?? '');
+    expect(selText.length).toBeGreaterThan(0);
+  });
+
   test('toolbar hides when clicking outside the editor', async ({ page, homeworkNote }) => {
     await page.goto(`/homework/${homeworkNote.id}`);
     await page.waitForLoadState('networkidle');
@@ -260,11 +301,12 @@ test.describe('Selection toolbar', () => {
     // The Russian button is highlighted as the active language.
     await expect(ruBtn).toHaveClass(/hw-selection-toolbar-lang--active/);
 
-    // Change the selection — the translation must clear (no stale text).
+    // Change the selection — the translation must clear (no stale text). The
+    // pane stays empty until a translate button is clicked again (it does NOT
+    // echo the selected text as a fallback).
     await selectWordAndShowToolbar(page, 'park');
     await expect(toolbar).toBeVisible({ timeout: 3000 });
     await expect(translation).not.toContainText('TRANSLATED-RU');
-    // The display now shows the newly selected word instead.
-    await expect(translation).toContainText('park');
+    await expect(translation).toHaveText('');
   });
 });

@@ -24,6 +24,7 @@ interface NoteBlock {
 
 interface ActiveNote {
   id: number | string;
+  name?: string | null;
   note_blocks?: NoteBlock[];
 }
 
@@ -67,7 +68,7 @@ export default function DraftingArea({
     handleToolbarMoveToList,
     handleToolbarCreateNewList,
     wordlists,
-  } = useDraftSelectionToolbar();
+  } = useDraftSelectionToolbar(activeNote?.name ?? null);
 
   // Translate the current editor selection (ru/en/es) for the selection toolbar.
   const translation = useDraftTranslation({ selectedText: hwSelectedText });
@@ -104,6 +105,17 @@ export default function DraftingArea({
   // progress) — hides the selection toolbar's content during the drag; flipped
   // back on mouseup so the toolbar appears the instant the drag ends.
   const [isDragging, setIsDragging] = useState(false);
+
+  // The editor's own mouseup handler only fires when the release happens inside
+  // the editor. A drag selection that ends outside the editor (the cursor leaves
+  // .hw-editor while the button is held) would otherwise leave isDragging stuck
+  // true and the toolbar never appears. Listen at the window level so the drag
+  // always ends on mouseup, wherever the cursor is released.
+  useEffect(() => {
+    const onWindowMouseUp = () => setIsDragging(false);
+    window.addEventListener('mouseup', onWindowMouseUp);
+    return () => window.removeEventListener('mouseup', onWindowMouseUp);
+  }, []);
 
   // Derive blocks from activeNote
   const noteBlocks = activeNote?.note_blocks || [];
@@ -275,7 +287,7 @@ export default function DraftingArea({
               editor={editor}
               shouldShow={bubbleMenuShouldShow}
               updateDelay={0}
-              options={{ placement: 'top-end' }}
+              options={{ placement: 'bottom-start' }}
             >
               <HomeworkToolbar
                 toolbarRef={hwToolbarRef}
