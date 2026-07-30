@@ -166,7 +166,17 @@ export const updateWordListsBeforeRefresh = (dirtyLists) => {
   dirtyLists.forEach(list => {
     const updateData = {
       name: list.name,
-      words: list.words.map(w => w.word),
+      // Translations are intentionally empty: the backend keeps stored
+      // translations for unchanged words (matched by id + version) and
+      // regenerates them only when the version changed.
+      words: list.words.map(w => ({
+        id: w.id,
+        word: w.word,
+        version: w.version,
+        example_phrase: w.example_phrase ?? null,
+        word_translation: null,
+        example_phrase_translation: null,
+      })),
       language: list.language,
     };
 
@@ -179,7 +189,6 @@ export const updateWordListsBeforeRefresh = (dirtyLists) => {
     // Use sendBeacon which is designed for page unload scenarios
     const endpoint = `${API_BASE_URL}wordlist/${list.id}`;
     navigator.sendBeacon(endpoint, blob);
-    console.log("updates " + list)
   });
 
   console.log(`Synced ${dirtyLists.length} lists on page unload`);

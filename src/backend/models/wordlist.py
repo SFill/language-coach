@@ -12,7 +12,9 @@ class Language(str, Enum):
 
 class WordInList(BaseModel):
     """Model for individual words in a wordlist."""
+    id: Optional[str] = None
     word: str
+    version: int = 0
     word_translation: Optional[str] = None
     example_phrase: Optional[str] = None
     example_phrase_translation: Optional[str] = None

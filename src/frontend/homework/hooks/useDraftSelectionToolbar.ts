@@ -18,8 +18,13 @@ export interface UseDraftSelectionToolbarResult {
  *
  * The setters are stable useState setters, so they can be passed into
  * useEditor's onSelectionUpdate (whose config is read once on first render).
+ *
+ * `noteName` is the active homework's title (Note.name); it is used as the
+ * name of any wordlist created from this homework via the toolbar.
  */
-export function useDraftSelectionToolbar(): UseDraftSelectionToolbarResult {
+export function useDraftSelectionToolbar(
+  noteName: string | null = null,
+): UseDraftSelectionToolbarResult {
   const hwToolbarRef = useRef<HTMLDivElement | null>(null);
   const [hwSelectedText, setHwSelectedText] = useState('');
   const [hwSelectedSentence, setHwSelectedSentence] = useState<unknown>(null);
@@ -37,15 +42,15 @@ export function useDraftSelectionToolbar(): UseDraftSelectionToolbarResult {
     return addWordToList(text, listId, hwSelectedSentence);
   }, [addWordToList, hwSelectedSentence]);
 
-  const handleToolbarMoveToList = useCallback(async (text: string, sourceListId: string, targetListId: string) => {
-    if (!text.trim() || sourceListId === targetListId) return null;
-    return moveWordBetweenLists(text, sourceListId, targetListId);
+  const handleToolbarMoveToList = useCallback(async (wordId: string, sourceListId: string, targetListId: string) => {
+    if (!wordId || sourceListId === targetListId) return null;
+    return moveWordBetweenLists(wordId, sourceListId, targetListId);
   }, [moveWordBetweenLists]);
 
   const handleToolbarCreateNewList = useCallback(async (text: string) => {
     if (!text.trim()) return null;
-    return createNewListWithWord(text, null, hwSelectedSentence);
-  }, [createNewListWithWord, hwSelectedSentence]);
+    return createNewListWithWord(text, noteName || null, hwSelectedSentence);
+  }, [createNewListWithWord, hwSelectedSentence, noteName]);
 
   return {
     hwToolbarRef,

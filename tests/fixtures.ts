@@ -28,6 +28,61 @@ interface CreatedNote {
 
 const api = axios.create({ baseURL: API_BASE });
 
+// Wordlist API lives under /api/wordlist (not /api/coach). test_mode=true skips
+// AI translation so tests can create/edit wordlists hermetically.
+const WORDLIST_API = 'http://localhost:8000/api';
+const wordlistApi = axios.create({ baseURL: WORDLIST_API });
+
+export interface WordlistWord {
+  id: string;
+  word: string;
+  version?: number;
+  word_translation?: string | null;
+  example_phrase?: string | null;
+  example_phrase_translation?: string | null;
+}
+
+export interface CreatedWordlist {
+  id: number;
+  name: string;
+  language: string;
+  words: WordlistWord[];
+}
+
+/**
+ * Create a wordlist via the backend API with test_mode=true (no AI translation).
+ * Words get deterministic fake translations server-side. The `onCreated` hook
+ * exposes the id immediately so cleanup can run even if later setup fails.
+ */
+async function createWordlist(
+  opts: {
+    name?: string;
+    language?: string;
+    words: Array<{ word: string; example_phrase?: string }>;
+  },
+  onCreated?: (id: number) => void,
+): Promise<CreatedWordlist> {
+  const name = opts.name ?? `PW wordlist ${Date.now()}`;
+  const language = opts.language ?? 'es';
+  const stamp = Date.now();
+  const words: WordlistWord[] = opts.words.map((w, i) => ({
+    id: `pw-${stamp}-${i}`,
+    word: w.word,
+    version: 0,
+    example_phrase: w.example_phrase ?? null,
+    word_translation: null,
+    example_phrase_translation: null,
+  }));
+  const { data } = await wordlistApi.post('/wordlist/?test_mode=true', { name, language, words });
+  onCreated?.(data.id);
+  return data;
+}
+
+/** Delete a wordlist via the backend API. */
+async function deleteWordlist(id: number): Promise<void> {
+  await wordlistApi.delete(`/wordlist/${id}`);
+}
+
 /**
  * Create a homework note via the backend API.
  * Optionally adds assignment blocks, student drafts, and Q&A pairs.
@@ -111,6 +166,7 @@ async function deleteNote(noteId: number): Promise<void> {
 export const test = base.extend<{
   homeworkNote: CreatedNote;
   sparseHomeworkNote: CreatedNote;
+  wordlist: CreatedWordlist;
 }>({
   homeworkNote: async ({}, use) => {
     let noteId: number | null = null;
@@ -176,6 +232,29 @@ export const test = base.extend<{
     } finally {
       if (noteId !== null) {
         await deleteNote(noteId).catch(() => {});
+      }
+    }
+  },
+
+  // A wordlist with two Spanish words (gato/perro), created with test_mode so
+  // the backend fills deterministic fake translations without calling AI.
+  // Destroyed after the test. Used by the wordlist-editing UI tests.
+  wordlist: async ({}, use) => {
+    let wlId: number | null = null;
+    try {
+      const wl = await createWordlist(
+        {
+          words: [
+            { word: 'gato', example_phrase: 'El gato duerme en el sofá.' },
+            { word: 'perro', example_phrase: 'El perro corre rápido.' },
+          ],
+        },
+        (id) => { wlId = id; },
+      );
+      await use(wl);
+    } finally {
+      if (wlId !== null) {
+        await deleteWordlist(wlId).catch(() => {});
       }
     }
   },

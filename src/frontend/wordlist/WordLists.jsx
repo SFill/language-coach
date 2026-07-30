@@ -17,72 +17,76 @@ function WordLists() {
     loading,
     error,
     removeWordFromList,
-    updateWordInList,
+    updateWordField,
     currentLanguage,
-    syncWithBackend,
   } = useWordlist();
 
-  const [flippedCards, setFlippedCards] = useState(new Set()); // Set of flipped card IDs
-  const [editingWord, setEditingWord] = useState(null); // { listId, wordIndex, originalWord, newWord }
-  const [isEditing, setIsEditing] = useState(false)
+  // Which cards are showing their back face. Keyed by `${listId}-${wordId}` so
+  // identity is stable across edits/removes (never by position).
+  const [flippedCards, setFlippedCards] = useState(new Set());
+  // editing = { listId, wordId, field: 'word' | 'example_phrase', original, value }
+  const [editing, setEditing] = useState(null);
   const editInputRef = useRef(null);
 
-  // Focus the edit input when editing starts
+  // Focus + select only when a NEW field edit begins. Keying on the target
+  // (list/word/field) — NOT on `editing` itself — means typing (which updates
+  // editing.value) does NOT re-run this effect; otherwise every keystroke would
+  // re-select the whole text and the next key would replace it.
+  const editTargetKey = editing ? `${editing.listId}:${editing.wordId}:${editing.field}` : null;
   useEffect(() => {
-    if (isEditing && editInputRef.current) {
+    if (editTargetKey && editInputRef.current) {
       editInputRef.current.focus();
-      editInputRef.current.select();
-      console.log(isEditing)
+      editInputRef.current.select?.();
     }
-  }, [isEditing]);
+  }, [editTargetKey]);
 
-  // Handle card flip when clicking on card (but not on word or buttons)
-  const handleCardClick = (e, listId, wordIndex) => {
-    // Don't flip if we're editing or clicking on buttons/word
-    if (editingWord || e.target.closest(`.${styles.cardActions}`) || e.target.closest(`.${styles.wordTitle}`) || e.target.closest(`.${styles.wordEditInput}`)) {
+  // Flip a card (but not when interacting with the word, phrase, or buttons)
+  const handleCardClick = (e, listId, wordId) => {
+    if (
+      editing ||
+      e.target.closest(`.${styles.cardActions}`) ||
+      e.target.closest(`.${styles.wordTitle}`) ||
+      e.target.closest(`.${styles.examplePhrase}`) ||
+      e.target.closest(`.${styles.wordEditInput}`)
+    ) {
       return;
     }
-
-    const cardId = `${listId}-${wordIndex}`;
-
+    const cardId = `${listId}-${wordId}`;
     setFlippedCards(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(cardId)) {
-        newSet.delete(cardId); // Flip back to front
-      } else {
-        newSet.add(cardId); // Flip to back
-      }
-      return newSet;
+      const next = new Set(prev);
+      if (next.has(cardId)) next.delete(cardId);
+      else next.add(cardId);
+      return next;
     });
   };
 
-  const handleWordClick = (e, listId, wordItem, wordIndex) => {
+  const startEdit = (e, listId, wordItem, field) => {
     e.stopPropagation();
-    if (editingWord) {
-      handleEditSave()
-    }; // Don't start editing if already editing
-
-    setEditingWord({
+    // Commit any other in-flight edit before starting a new one.
+    if (editing) handleEditSave();
+    setEditing({
       listId,
-      wordIndex,
-      originalWord: wordItem.word,
-      newWord: wordItem.word
+      wordId: wordItem.id,
+      field,
+      original: wordItem[field] ?? "",
+      value: wordItem[field] ?? "",
     });
-    setIsEditing(true)
   };
 
   const handleEditChange = (e) => {
-    setEditingWord(prev => ({
-      ...prev,
-      newWord: e.target.value
-    }));
+    setEditing(prev => (prev ? { ...prev, value: e.target.value } : prev));
   };
 
   const handleEditKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && editing?.field === 'word') {
+      e.preventDefault();
+      handleEditSave();
+    } else if (e.key === 'Enter' && e.ctrlKey) {
+      e.preventDefault();
       handleEditSave();
     } else if (e.key === 'Escape') {
-      handleEditCancel();
+      e.preventDefault();
+      setEditing(null);
     }
   };
 
@@ -90,102 +94,44 @@ function WordLists() {
     handleEditSave();
   };
 
-  const handleEditCancel = () => {
-    setIsEditing(false);
-    setEditingWord(null);
+  const handleEditSave = () => {
+    if (!editing) return;
+    const { listId, wordId, field, original, value } = editing;
+    const trimmed = value.trim();
+    setEditing(null);
+    // Empty or unchanged → nothing to sync.
+    if (!trimmed || trimmed === original) return;
+    updateWordField(wordId, field, listId, trimmed);
   };
 
-  const handleEditSave = async () => {
-    if (!editingWord) return;
-
-    const { listId, wordIndex, originalWord, newWord } = editingWord;
-    const trimmedNewWord = newWord.trim();
-
-    // If word hasn't changed or is empty, just cancel
-    if (!trimmedNewWord || trimmedNewWord === originalWord) {
-      setEditingWord(null);
-      setIsEditing(false);
-      return;
-    }
-
-    // Use the context method to update the word by index
-    const result = updateWordInList(wordIndex, trimmedNewWord, listId);
-    setTimeout(async () => {
-      await syncWithBackend()
-    }, 5)
-
-
-    if (!result.success) {
-      // Handle error - you could show a toast or alert here
-      console.error('Failed to update word:', result.message);
-      // For now, just keep editing mode active on error
-      return;
-    }
-
-    setEditingWord(null);
-    setIsEditing(false);
-  };
-
-  const playSound = (e, wordItem) => {
+  const handleDeleteWord = (e, listId, wordItem) => {
     e.stopPropagation();
-
-    let audioUrl = null;
-
-    // Determine audio URL based on language and definition structure
-    if (currentLanguage === "en" && wordItem?.audio?.audio_url) {
-      audioUrl = wordItem.audio.audio_url;
-    } else if (currentLanguage === "es") {
-      // Prefer Spanish audio if available, fall back to English
-      if (wordItem?.spanish_audio?.audio_url) {
-        audioUrl = wordItem.spanish_audio.audio_url;
-      } else if (wordItem?.english_audio?.audio_url) {
-        audioUrl = wordItem.english_audio.audio_url;
-      }
-    }
-
-    if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audio.play();
+    removeWordFromList(wordItem.id, listId);
+    const cardId = `${listId}-${wordItem.id}`;
+    setFlippedCards(prev => {
+      const next = new Set(prev);
+      next.delete(cardId);
+      return next;
+    });
+    if (editing && editing.wordId === wordItem.id && editing.listId === listId) {
+      setEditing(null);
     }
   };
 
-  const handleDeleteWord = (e, listId, word) => {
-    e.stopPropagation(); // Prevent card flip when clicking delete
+  const isWordBeingEdited = (listId, wordItem, field) =>
+    editing &&
+    editing.listId === listId &&
+    editing.wordId === wordItem.id &&
+    editing.field === field;
 
-    // Call the removeWordFromList function from context
-    const result = removeWordFromList(word, listId);
-
-    // If the deleted word was flipped, remove it from flipped set
-    if (result && result.success) {
-      const cardId = `${listId}-${word}`;
-      setFlippedCards(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(cardId);
-        return newSet;
-      });
-    }
-
-    // If the deleted word was being edited, cancel editing
-    if (editingWord && editingWord.originalWord === word && editingWord.listId === listId) {
-      setEditingWord(null);
-    }
-  };
-
-
-  const isWordBeingEdited = (listId, wordIndex) => {
-    return editingWord && editingWord.listId === listId && editingWord.wordIndex === wordIndex;
-  };
-
-  const isCardFlipped = (cardId) => {
-    return flippedCards.has(cardId);
-  };
+  const isCardFlipped = (cardId) => flippedCards.has(cardId);
 
   // Export wordlist to markdown format
   const exportToMarkdown = (list) => {
     let markdown = `# ${list.name}\n\n`;
 
     if (list.words && list.words.length > 0) {
-      list.words.forEach((wordItem, index) => {
+      list.words.forEach((wordItem) => {
         markdown += `${wordItem.word},`;
 
         // Add example phrase if available
@@ -193,7 +139,7 @@ function WordLists() {
           markdown += ` ${wordItem.example_phrase}`;
         }
 
-        markdown += " :: "
+        markdown += " :: ";
 
         // Add word translation if available
         if (wordItem.word_translation) {
@@ -214,7 +160,6 @@ function WordLists() {
     // Copy to clipboard
     navigator.clipboard.writeText(markdown).then(() => {
       console.log('Markdown copied to clipboard');
-      // You could show a toast notification here
     }).catch(err => {
       console.error('Failed to copy to clipboard:', err);
     });
@@ -262,15 +207,14 @@ function WordLists() {
             </div>
             {rows.map((row, rowIndex) => (
               <div key={rowIndex} className={styles.cardRow}>
-                {row.map((wordItem, cardIndex) => {
-                  const wordIndex = rowIndex * 3 + cardIndex
-                  const cardId = `${list.id}-${wordIndex}`;
+                {row.map((wordItem) => {
+                  const cardId = `${list.id}-${wordItem.id}`;
                   const isFlipped = isCardFlipped(cardId);
 
                   return (
                     <div
-                      // key={wordItem.word}
-                      onClick={(e) => handleCardClick(e, list.id, wordIndex)}
+                      key={cardId}
+                      onClick={(e) => handleCardClick(e, list.id, wordItem.id)}
                       className={`${styles.wordCard} ${isFlipped ? styles.flipped : ''}`}
                     >
                       <div className={styles.cardInner}>
@@ -279,11 +223,11 @@ function WordLists() {
                           <div className={styles.cardContent}>
                             {/* Editable word title */}
                             <div className={styles.wordTitleContainer}>
-                              {isWordBeingEdited(list.id, rowIndex * 3 + cardIndex) ? (
+                              {isWordBeingEdited(list.id, wordItem, 'word') ? (
                                 <input
                                   ref={editInputRef}
                                   type="text"
-                                  value={editingWord.newWord}
+                                  value={editing.value}
                                   onChange={handleEditChange}
                                   onKeyDown={handleEditKeyDown}
                                   onBlur={handleEditBlur}
@@ -292,7 +236,7 @@ function WordLists() {
                               ) : (
                                 <h3
                                   className={`${styles.wordTitle} ${wordItem._isUpdating ? styles.updating : ''}`}
-                                  onClick={(e) => handleWordClick(e, list.id, wordItem, wordIndex)}
+                                  onClick={(e) => startEdit(e, list.id, wordItem, 'word')}
                                   title="Click to edit"
                                 >
                                   {wordItem._isUpdating ? (
@@ -307,30 +251,38 @@ function WordLists() {
                               )}
                             </div>
 
-                            {/* Example phrase */}
-                            {wordItem.example_phrase && (
-                              <div className={styles.examplePhrase}>
-                                <p>{wordItem.example_phrase}</p>
+                            {/* Editable example phrase */}
+                            {isWordBeingEdited(list.id, wordItem, 'example_phrase') ? (
+                              <textarea
+                                ref={editInputRef}
+                                value={editing.value}
+                                onChange={handleEditChange}
+                                onKeyDown={handleEditKeyDown}
+                                onBlur={handleEditBlur}
+                                className={styles.exampleEditInput}
+                                rows={2}
+                              />
+                            ) : (
+                              <div
+                                className={styles.examplePhrase}
+                                onClick={(e) => startEdit(e, list.id, wordItem, 'example_phrase')}
+                                title="Click to edit"
+                              >
+                                {wordItem.example_phrase ? (
+                                  <p>{wordItem.example_phrase}</p>
+                                ) : (
+                                  <p className={styles.examplePhrasePlaceholder}>
+                                    Click to add an example phrase
+                                  </p>
+                                )}
                               </div>
                             )}
 
                             {/* Card actions */}
                             <div className={styles.cardActions}>
-                              {/* Audio button based on unified dictionary structure */}
-                              {(currentLanguage === "en" && wordItem?.audio?.audio_url) ||
-                                (currentLanguage === "es" && (wordItem?.spanish_audio?.audio_url || wordItem?.english_audio?.audio_url)) ? (
-                                <button
-                                  onClick={(e) => playSound(e, wordItem)}
-                                  className={styles.audioButton}
-                                  title="Play pronunciation"
-                                >
-                                  🔊
-                                </button>
-                              ) : null}
-
                               {/* Delete button */}
                               <button
-                                onClick={(e) => handleDeleteWord(e, list.id, wordItem.word)}
+                                onClick={(e) => handleDeleteWord(e, list.id, wordItem)}
                                 className={styles.deleteButton}
                                 title="Delete word"
                               >

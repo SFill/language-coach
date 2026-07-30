@@ -553,6 +553,7 @@
   background-color: rgba(74, 144, 226, 0.1);
   border-radius: 6px;
   border-left: 3px solid #4a90e2;
+  cursor: pointer;
 }
 
 .examplePhrase p {
@@ -561,6 +562,29 @@
   color: #2c3e50;
   font-size: 0.9rem;
   line-height: 1.4;
+}
+
+.examplePhrasePlaceholder {
+  font-style: italic;
+  color: #95a5a6;
+  opacity: 0.7;
+}
+
+.exampleEditInput {
+  width: 100%;
+  margin-top: 0.5rem;
+  background: #fff;
+  border: 2px solid #4a90e2;
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #2c3e50;
+  line-height: 1.4;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  resize: vertical;
+  font-family: inherit;
 }
 
 .translationSection {

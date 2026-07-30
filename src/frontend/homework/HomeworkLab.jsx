@@ -23,10 +23,12 @@ export default function HomeworkLab({ homeworkStore }) {
   const noteId = state.currentNoteId;
   const showPicker = state.showPicker;
 
-  // DraftingArea expects { id, note_blocks }; cards are the pure view model.
+  // DraftingArea expects { id, name, note_blocks }; cards are the pure view model.
+  // `name` is the homework title (Note.name) — used to name wordlists created
+  // from this homework via the selection toolbar.
   const activeNote = useMemo(
-    () => (noteId ? { id: noteId, note_blocks: state.noteBlocks } : null),
-    [noteId, state.noteBlocks],
+    () => (noteId ? { id: noteId, name: state.currentNoteName, note_blocks: state.noteBlocks } : null),
+    [noteId, state.currentNoteName, state.noteBlocks],
   );
   const cards = useMemo(() => buildCards(noteId, state.noteBlocks), [noteId, state.noteBlocks]);
 
