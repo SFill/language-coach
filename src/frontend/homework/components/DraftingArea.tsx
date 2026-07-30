@@ -12,6 +12,7 @@ import { useDraftSelectionToolbar } from '../hooks/useDraftSelectionToolbar';
 import { useDraftTranslation } from '../hooks/useDraftTranslation';
 import { useDraftEditor } from '../hooks/useDraftEditor';
 import { useDraftContentLoader } from '../hooks/useDraftContentLoader';
+import { setWordlistWords } from '../extensions/WordlistDecorations';
 
 interface NoteBlock {
   id: string;
@@ -184,6 +185,25 @@ export default function DraftingArea({
     segmentsStaleRef,
     suppressAutosaveRef,
   });
+
+  // Wordlist-word highlights: build the current-language word list and push it
+  // into the editor's decoration plugin. Re-scans (decorates) on editor ready,
+  // when the wordlist changes (so a toolbar add lights up immediately), and when
+  // content reloads (page load / context switch). Typing transactions only map
+  // the existing decorations — they do NOT re-scan, so typed occurrences are not
+  // highlighted live.
+  const wlWords = useMemo(
+    () =>
+      ((wordlists as Array<{ words?: Array<{ word: string; word_translation: string | null; example_phrase: string | null }> }> | null | undefined) ?? [])
+        .flatMap((l) =>
+          (l.words ?? []).map((w) => ({ word: w.word, translation: w.word_translation, example: w.example_phrase })),
+        ),
+    [wordlists],
+  );
+  useEffect(() => {
+    if (!editor) return;
+    setWordlistWords(editor, wlWords);
+  }, [editor, wlWords, draftBlock?.id, feedbackBlock?.id, activeNote?.id]);
 
   const handleAICheck = async () => {
     if (!activeNote || !editor) return;

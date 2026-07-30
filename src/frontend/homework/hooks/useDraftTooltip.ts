@@ -12,7 +12,7 @@ import { useFloating, autoUpdate, offset, flip, shift } from '@floating-ui/react
 import type { Editor } from '@tiptap/react';
 import type { FeedbackTooltipData } from '../components/FeedbackTooltip';
 
-export const FEEDBACK_HIGHLIGHT_SELECTOR = '[data-feedback]';
+export const FEEDBACK_HIGHLIGHT_SELECTOR = '[data-feedback],[data-wordlist]';
 
 interface FeedbackAttrs {
   type: string;
@@ -97,6 +97,27 @@ export function useDraftTooltip({
     };
   };
 
+  // Wordlist-word highlights are ProseMirror decorations (overlay spans carrying
+  // data-* attributes), not document marks — read their payload straight from
+  // the DOM element.
+  const readWordlistAttrs = (target: HTMLElement): FeedbackTooltipData => {
+    const ds = target.dataset;
+    return {
+      type: 'wordlist',
+      word: ds.word || '',
+      translation: ds.translation || '',
+      examplePhrase: ds.examplePhrase || '',
+    };
+  };
+
+  // Resolve a highlight target to tooltip data: wordlist decoration → dataset;
+  // otherwise the `feedback` mark at the position.
+  const resolveTooltipData = (target: HTMLElement): FeedbackTooltipData | null => {
+    if (target.hasAttribute('data-wordlist')) return readWordlistAttrs(target);
+    const mark = getFeedbackMarkAt(editorInstRef.current, target);
+    return mark ? readAttrs(mark) : null;
+  };
+
   // Tooltip hover/click handlers — stable, read state via refs so the DOM event
   // listeners bound once by ProseMirror keep working.
   const handleHighlightHover = useCallback((event: MouseEvent, isOver: boolean) => {
@@ -105,9 +126,9 @@ export function useDraftTooltip({
     if (isOver) {
       if (!hintsEnabledRef.current) return;
       if (tooltipHideTimerRef.current) clearTimeout(tooltipHideTimerRef.current);
-      const mark = getFeedbackMarkAt(editorInstRef.current, target);
-      if (!mark) return;
-      setTooltip({ anchorEl: target, data: readAttrs(mark) });
+      const data = resolveTooltipData(target);
+      if (!data) return;
+      setTooltip({ anchorEl: target, data });
     } else {
       tooltipHideTimerRef.current = setTimeout(() => setTooltip({ anchorEl: null, data: null }), 200);
     }
@@ -120,11 +141,11 @@ export function useDraftTooltip({
       return;
     }
     if (!hintsEnabledRef.current) return;
-    const mark = getFeedbackMarkAt(editorInstRef.current, target);
-    if (!mark) return;
+    const data = resolveTooltipData(target);
+    if (!data) return;
     setTooltip((prev) => prev.anchorEl === target
       ? { anchorEl: null, data: null }
-      : { anchorEl: target, data: readAttrs(mark) });
+      : { anchorEl: target, data });
   }, []);
 
   // Toggle hints on/off; clear any visible tooltip when turning hints OFF.

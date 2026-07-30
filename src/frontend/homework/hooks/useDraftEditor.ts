@@ -4,6 +4,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { FeedbackMark } from '../extensions/FeedbackMark';
 import { PlainTextPaste } from '../extensions/PlainTextPaste';
 import { FeedbackStaleness } from '../extensions/FeedbackStaleness';
+import { WordlistDecorations } from '../extensions/WordlistDecorations';
 import { countWords, sentenceAtPos } from '../utils/draftDoc';
 
 export interface UseDraftEditorArgs {
@@ -59,6 +60,7 @@ export function useDraftEditor({
         onStale: () => { segmentsStaleRef.current = true; },
       }),
       PlainTextPaste,
+      WordlistDecorations,
     ],
     content: '<p></p>',
     editorProps: {

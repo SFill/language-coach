@@ -1,12 +1,14 @@
 import type { CSSProperties, Ref } from 'react';
 
-type FeedbackType = 'suggestion' | 'vocab' | 'grammar';
+type FeedbackType = 'suggestion' | 'vocab' | 'grammar' | 'wordlist';
 
 export interface FeedbackTooltipData {
   type: FeedbackType;
   annotation?: string;
   word?: string;
   phonetic?: string;
+  translation?: string;
+  examplePhrase?: string;
 }
 
 interface FeedbackTooltipProps {
@@ -27,6 +29,7 @@ export default function FeedbackTooltip({ data, setFloating, style, onMouseEnter
     suggestion: { label: '✏️ Suggestion', accentClass: 'hw-feedback-tooltip--suggestion' },
     vocab:      { label: '📖 Vocabulary', accentClass: 'hw-feedback-tooltip--vocab' },
     grammar:    { label: '📐 Grammar', accentClass: 'hw-feedback-tooltip--grammar' },
+    wordlist:   { label: '📖 Vocabulary', accentClass: 'hw-feedback-tooltip--vocab' },
   };
   const config = typeConfig[data.type] || typeConfig.suggestion;
 
@@ -51,6 +54,15 @@ export default function FeedbackTooltip({ data, setFloating, style, onMouseEnter
       )}
       {data.type === 'grammar' && data.annotation && (
         <div className="hw-feedback-tooltip-body">{data.annotation}</div>
+      )}
+      {data.type === 'wordlist' && (
+        <div className="hw-feedback-tooltip-body">
+          {data.word && <strong>{data.word}</strong>}
+          {data.translation && <span> — {data.translation}</span>}
+          {data.examplePhrase && (
+            <div className="hw-feedback-tooltip-phonetic">{data.examplePhrase}</div>
+          )}
+        </div>
       )}
     </div>
   );
